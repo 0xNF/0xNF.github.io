@@ -5,10 +5,28 @@
     <link>https://0xNF.github.io/</link>
     <description>Recent content on 0xNF, yo</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 05 Sep 2017 05:58:27 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 13 Sep 2017 18:31:56 -0700</lastBuildDate>
     
 	<atom:link href="https://0xNF.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Third-Post</title>
+      <link>https://0xNF.github.io/post/third-post/</link>
+      <pubDate>Wed, 13 Sep 2017 18:31:56 -0700</pubDate>
+      
+      <guid>https://0xNF.github.io/post/third-post/</guid>
+      <description>  from pygments.styles import get_all_styles  styles = list(get_all_styles())  print styles   </description>
+    </item>
+    
+    <item>
+      <title>Second-Post</title>
+      <link>https://0xNF.github.io/post/second-post/</link>
+      <pubDate>Wed, 13 Sep 2017 18:27:29 -0700</pubDate>
+      
+      <guid>https://0xNF.github.io/post/second-post/</guid>
+      <description> body { font-family: &#34;Noto Sans&#34;, sans-serif; }   </description>
+    </item>
     
     <item>
       <title>Welcome to my new website</title>
