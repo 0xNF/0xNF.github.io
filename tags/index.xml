@@ -5,28 +5,9 @@
     <link>https://0xNF.github.io/tags/</link>
     <description>Recent content in Tags on 0xNF, yo</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 05 Sep 2017 05:58:27 +0100</lastBuildDate>
     
 	<atom:link href="https://0xNF.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Hugo</title>
-      <link>https://0xNF.github.io/tags/hugo/</link>
-      <pubDate>Tue, 05 Sep 2017 05:58:27 +0100</pubDate>
-      
-      <guid>https://0xNF.github.io/tags/hugo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Small talk</title>
-      <link>https://0xNF.github.io/tags/small-talk/</link>
-      <pubDate>Tue, 05 Sep 2017 05:58:27 +0100</pubDate>
-      
-      <guid>https://0xNF.github.io/tags/small-talk/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>

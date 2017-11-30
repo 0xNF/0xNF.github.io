@@ -9,14 +9,5 @@
 	<atom:link href="https://0xNF.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
-    <item>
-      <title>Others</title>
-      <link>https://0xNF.github.io/categories/others/</link>
-      <pubDate>Wed, 13 Sep 2017 18:31:56 -0700</pubDate>
-      
-      <guid>https://0xNF.github.io/categories/others/</guid>
-      <description></description>
-    </item>
-    
   </channel>
 </rss>
