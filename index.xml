@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>0xNF&#39;s Blog - This site will never be updated</title>
+    <link>https://0xNF.github.io/</link>
+    <description>Recent content on 0xNF&#39;s Blog - This site will never be updated</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>0xNF</copyright>
+    <lastBuildDate>Thu, 30 Nov 2017 13:21:42 -0800</lastBuildDate>
+    
+	<atom:link href="https://0xNF.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Lyricall Architecture</title>
+      <link>https://0xNF.github.io/posts/lyricall-architecture-00/</link>
+      <pubDate>Thu, 30 Nov 2017 13:21:42 -0800</pubDate>
+      
+      <guid>https://0xNF.github.io/posts/lyricall-architecture-00/</guid>
+      <description>Architecture of lyricall.net Table of Contents  tl;dr [App Overview]()  [Front End]() [TypeScript]() [Redux]() [React]() [Back End]() [Database - PostgresQL]() [Why Postgres]() [Database Schema]()  [Lyricall Tables]() [Straggler Tables]() [ASP.NET / Entity Framework Tables]()  [Server - .NET Core 2.0 / ASP.NET Core 2.0]()  [Why .NET Core]()  [Intermission - the DotNetStandardSpotifyWebApi library]() [Intermission - the ASP.NET.Security.OAuth Project]() [Server Architecture]() [Hosting]()  [Digital Ocean]() [Microsoft Azure]()  [HTTPS with Let&amp;rsquo;s Encrypt]()   Technology tl;dr: Front End</description>
+    </item>
+    
+  </channel>
+</rss>
