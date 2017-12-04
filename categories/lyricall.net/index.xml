@@ -17,7 +17,7 @@
       <pubDate>Thu, 30 Nov 2017 13:21:42 -0800</pubDate>
       
       <guid>https://0xNF.github.io/posts/lyricall-architecture-00/</guid>
-      <description>Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  Redux React  Back End Database - PostgresQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&amp;rsquo;s Encrypt   Architecture of lyricall.</description>
+      <description>Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  Redux React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&amp;rsquo;s Encrypt   Architecture of lyricall.</description>
     </item>
     
   </channel>

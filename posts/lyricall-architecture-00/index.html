@@ -4,10 +4,10 @@
 <head>
   <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
-<meta name='description' content='Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  Redux React  Back End Database - PostgresQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&rsquo;s Encrypt   Architecture of lyricall.'>
+<meta name='description' content='Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  Redux React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&rsquo;s Encrypt   Architecture of lyricall.'>
 
 <meta property='og:title' content='Lyricall Architecture • 0xNF'>
-<meta property='og:description' content='Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  Redux React  Back End Database - PostgresQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&rsquo;s Encrypt   Architecture of lyricall.'>
+<meta property='og:description' content='Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  Redux React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&rsquo;s Encrypt   Architecture of lyricall.'>
 <meta property='og:url' content='https://0xNF.github.io/posts/lyricall-architecture-00/'>
 <meta property='og:site_name' content='0xNF&#39;s Blog - This site will never be updated'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:published_time' content='2017-11-30T13:21:42-08:00'/><meta property='article:modified_time' content='2017-11-30T13:21:42-08:00'/>
@@ -123,7 +123,7 @@
 <li><a href="#react">React</a></li>
 </ul></li>
 <li><a href="#back-end">Back End</a></li>
-<li><a href="#database---postgresql">Database - PostgresQL</a>
+<li><a href="#database---PostgreSQL">Database - PostgreSQL</a>
 
 <ul>
 <li><a href="#why-postgres">Why Postgres</a></li>
@@ -188,7 +188,7 @@
 <p>Database</p>
 
 <ul>
-<li>Postgresql</li>
+<li>PostgreSQL</li>
 </ul>
 
 <p>Hosting</p>
@@ -351,7 +351,7 @@ export interface FullSmartPlaylistsCacheShape {
 
 <h2 id="back-end">Back End</h2>
 
-<h3 id="database-postgresql">Database - PostgresQL</h3>
+<h3 id="database-postgresql">Database - PostgreSQL</h3>
 
 <p><img height="75" width="75" src="/img/lyricallarch/postgres.svg"></p>
 
@@ -363,7 +363,7 @@ export interface FullSmartPlaylistsCacheShape {
 
 <ul>
 <li>MySQL</li>
-<li>PostgresQL</li>
+<li>PostgreSQL</li>
 <li>SQL Server</li>
 <li>MongoDB</li>
 </ul>
@@ -384,7 +384,7 @@ export interface FullSmartPlaylistsCacheShape {
 
 <p>The idea that my data is unstructured, as a general statement, strikes me as profoundly wrong. Aside from certain fields like genomics where the data really can&rsquo;t be counted on to be structured, or in situations where massive horizontal sharding is required, a NoSQL solution seems like the wrong choice. Additionally, though perhaps more personally, the idea that a structured database with strong types slows down development time is ludicrous. For myself at least, strong types are necessary for moving fast.</p>
 
-<p>By process of elimination therefore, PostgresQL was the last man standing. I&rsquo;d like to note that the tooling is really what won it for Postgres. Although not quite as extensive as Mongo&rsquo;s tooling, there is just the right amount of excellent support for the database - a good enough GUI client; iron-clad official documentation; thousands of competently answered StackOverflow questions; And most importantly, a fabulous .NET Core library that both integrates with Entity Framework and allows for complete manual control.</p>
+<p>By process of elimination therefore, PostgreSQL was the last man standing. I&rsquo;d like to note that the tooling is really what won it for Postgres. Although not quite as extensive as Mongo&rsquo;s tooling, there is just the right amount of excellent support for the database - a good enough GUI client; iron-clad official documentation; thousands of competently answered StackOverflow questions; And most importantly, a fabulous .NET Core library that both integrates with Entity Framework and allows for complete manual control.</p>
 
 <p>If a a few of those, but most significantly the .NET Core library, were missing, I would have been forced to go with Mongo - thankfully I was able to avoid the swamp of misery that I&rsquo;ve been mired in before with that database, and was able to successfully and pleasantly work with Postgres. I couldn&rsquo;t be happier with this decision.</p>
 
