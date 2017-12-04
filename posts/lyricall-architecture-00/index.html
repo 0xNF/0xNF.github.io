@@ -574,26 +574,106 @@ These are included for completeness&rsquo; sake, but are completely auto-generat
 
 <p>There are presently 18 public endpoints structured as a REST application that a client may hit:</p>
 
-<p>method | endpoint
-- | -
-GET | /api/v1/revoke
-GET | /api/v1/playlists?id={id}
-PUT | /api/v1/playlists
-POST | /api/v1/playlists
-DELETE | /api/v1/playlists?id={id}
-DELETE | /api/v1/unfollow?id={id}
-DELETE | /api/v1/deletesmart?id={id}
-PUT | /api/v1/fetch?id={id}
-POST | /api/v1/playlists/update
-GET | /api/v1/me/smartplaylists
-GET | /api/v1/me/Spotifyplaylists
-GET | /api/v1/premade/
-PUT | /api/v1/fetch?id={id}&amp;force=[t/f]
-PUT | /api/v1/pause?id={id}
-PUT | /api/v1/resume?id={id}
-PUT | /api/v1/clear?id={id}
-GET | /api/v1/tracks?id={id}
-GET | /api/v1/listenerinfo</p>
+<table>
+<thead>
+<tr>
+<th>method</th>
+<th>endpoint</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>GET</td>
+<td>/api/v1/revoke</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/playlists?id={id}</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/playlists</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/api/v1/playlists</td>
+</tr>
+
+<tr>
+<td>DELETE</td>
+<td>/api/v1/playlists?id={id}</td>
+</tr>
+
+<tr>
+<td>DELETE</td>
+<td>/api/v1/unfollow?id={id}</td>
+</tr>
+
+<tr>
+<td>DELETE</td>
+<td>/api/v1/deletesmart?id={id}</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/fetch?id={id}</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/api/v1/playlists/update</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/me/smartplaylists</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/me/Spotifyplaylists</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/premade/</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/fetch?id={id}&amp;force=[t/f]</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/pause?id={id}</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/resume?id={id}</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/clear?id={id}</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/tracks?id={id}</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/listenerinfo</td>
+</tr>
+</tbody>
+</table>
 
 <h4 id="server-architecture">Server Architecture</h4>
 
