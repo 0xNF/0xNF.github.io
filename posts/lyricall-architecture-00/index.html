@@ -283,12 +283,15 @@ export interface FullSmartPlaylistsCacheShape {
 <p>It is my understanding that <code>null</code> is poor form and non-idiomatic TypeScript, but like many first iteration products, especially in a technology that the developer is completely new to, non-idiomatic patterns find their way into the codebase. Coming from a C# background with almost no substantial experience in JavaScript, nulls are a well-understood pattern. Making proper usage of TypeScript&rsquo;s <code>undefined</code> and optional arguments is slated for the next iteration.</p>
 </blockquote>
 
-<p>When a sign in is successful or when the session cookie is authenticated, the app performs a number of immediate actions:
-  * Setting the current User
-  * Zeroing out all the caches
-  * Fetching the user&rsquo;s pre-existing Smart Playlists
-  * Fetching the user&rsquo;s Spotify Playlists
-  * Fetching the pre-made Listeners</p>
+<p>When a sign in is successful or when the session cookie is authenticated, the app performs a number of immediate actions:</p>
+
+<ul>
+<li>Setting the current User</li>
+<li>Zeroing out all the caches</li>
+<li>Fetching the user&rsquo;s pre-existing Smart Playlists</li>
+<li>Fetching the user&rsquo;s Spotify Playlists</li>
+<li>Fetching the pre-made Listeners</li>
+</ul>
 
 <h4 id="redux">Redux</h4>
 
@@ -455,9 +458,12 @@ class RuleGroup  : Listener {
 <p>A <code>RuleGroup</code> can contain arbitrarily deep nested <code>Listeners</code>, which in turn may also contain arbitrarily deep nested <code>Listeners</code>.
 </br>Now we&rsquo;re getting into a fun problem.</p>
 
-<p>The solution is to use a mapping table with a loop. Each entry in the RuleMap points to either:
-* A <code>Rule</code> entry, or
-* A <code>RuleGroup</code> entry</p>
+<p>The solution is to use a mapping table with a loop. Each entry in the RuleMap points to either:</p>
+
+<ul>
+<li>A <code>Rule</code> entry, or</li>
+<li>A <code>RuleGroup</code> entry</li>
+</ul>
 
 <p>with the <code>IsRuleGroup</code> we&rsquo;re able to at least determine what kind of <code>Listener</code> we&rsquo;re looking at, but if we&rsquo;ve referenced a <code>RuleGroup</code>, then we still have the problem of getting the next layer of <code>Listeners</code> that <code>RuleGroup</code> has. Thus we have a <code>ParentRuleGroupId</code> field which is a key to both a <code>RuleGroup</code> and a recursive entry in <code>RuleMap</code>, solving our arbitrary nesting problem.</p>
 
