@@ -10,5 +10,14 @@
 	<atom:link href="https://0xNF.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
+    <item>
+      <title>Lyricall.net</title>
+      <link>https://0xNF.github.io/categories/lyricall.net/</link>
+      <pubDate>Thu, 30 Nov 2017 13:21:42 -0800</pubDate>
+      
+      <guid>https://0xNF.github.io/categories/lyricall.net/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
