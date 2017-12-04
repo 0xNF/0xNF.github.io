@@ -4,10 +4,10 @@
 <head>
   <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
-<meta name='description' content='Architecture of lyricall.net Table of Contents  tl;dr [App Overview]()  [Front End]() [TypeScript]() [Redux]() [React]() [Back End]() [Database - PostgresQL]() [Why Postgres]() [Database Schema]()  [Lyricall Tables]() [Straggler Tables]() [ASP.NET / Entity Framework Tables]()  [Server - .NET Core 2.0 / ASP.NET Core 2.0]()  [Why .NET Core]()  [Intermission - the DotNetStandardSpotifyWebApi library]() [Intermission - the ASP.NET.Security.OAuth Project]() [Server Architecture]() [Hosting]()  [Digital Ocean]() [Microsoft Azure]()  [HTTPS with Let&rsquo;s Encrypt]()   Technology tl;dr: Front End * React * Redux * TypeScript'>
+<meta name='description' content='Architecture of lyricall.net Table of Contents  tl;dr [App Overview]()  [Front End]() [TypeScript]() [Redux]() [React]() [Back End]() [Database - PostgresQL]() [Why Postgres]() [Database Schema]()  [Lyricall Tables]() [Straggler Tables]() [ASP.NET / Entity Framework Tables]()  [Server - .NET Core 2.0 / ASP.NET Core 2.0]()  [Why .NET Core]()  [Intermission - the DotNetStandardSpotifyWebApi library]() [Intermission - the ASP.NET.Security.OAuth Project]() [Server Architecture]() [Hosting]()  [Digital Ocean]() [Microsoft Azure]()  [HTTPS with Let&rsquo;s Encrypt]()   Technology tl;dr: Front End'>
 
 <meta property='og:title' content='Lyricall Architecture • 0xNF'>
-<meta property='og:description' content='Architecture of lyricall.net Table of Contents  tl;dr [App Overview]()  [Front End]() [TypeScript]() [Redux]() [React]() [Back End]() [Database - PostgresQL]() [Why Postgres]() [Database Schema]()  [Lyricall Tables]() [Straggler Tables]() [ASP.NET / Entity Framework Tables]()  [Server - .NET Core 2.0 / ASP.NET Core 2.0]()  [Why .NET Core]()  [Intermission - the DotNetStandardSpotifyWebApi library]() [Intermission - the ASP.NET.Security.OAuth Project]() [Server Architecture]() [Hosting]()  [Digital Ocean]() [Microsoft Azure]()  [HTTPS with Let&rsquo;s Encrypt]()   Technology tl;dr: Front End * React * Redux * TypeScript'>
+<meta property='og:description' content='Architecture of lyricall.net Table of Contents  tl;dr [App Overview]()  [Front End]() [TypeScript]() [Redux]() [React]() [Back End]() [Database - PostgresQL]() [Why Postgres]() [Database Schema]()  [Lyricall Tables]() [Straggler Tables]() [ASP.NET / Entity Framework Tables]()  [Server - .NET Core 2.0 / ASP.NET Core 2.0]()  [Why .NET Core]()  [Intermission - the DotNetStandardSpotifyWebApi library]() [Intermission - the ASP.NET.Security.OAuth Project]() [Server Architecture]() [Hosting]()  [Digital Ocean]() [Microsoft Azure]()  [HTTPS with Let&rsquo;s Encrypt]()   Technology tl;dr: Front End'>
 <meta property='og:url' content='https://0xNF.github.io/posts/lyricall-architecture-00/'>
 <meta property='og:site_name' content='0xNF&#39;s Blog - This site will never be updated'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:published_time' content='2017-11-30T13:21:42-08:00'/><meta property='article:modified_time' content='2017-11-30T13:21:42-08:00'/>
@@ -153,20 +153,32 @@
 
 <h2 id="technology-tl-dr">Technology tl;dr:</h2>
 
-<p>Front End
-  * React
-  * Redux
-  * TypeScript</p>
+<p>Front End</p>
 
-<p>Back End
-  * ASP.NET Core 2.0</p>
+<ul>
+<li>React</li>
+<li>Redux</li>
+<li>TypeScript</li>
+</ul>
 
-<p>Database
-  * Postgresql</p>
+<p>Back End</p>
 
-<p>Hosting
-  * Database: Digital Ocean
-  * Server: Microsoft Azure</p>
+<ul>
+<li>ASP.NET Core 2.0</li>
+</ul>
+
+<p>Database</p>
+
+<ul>
+<li>Postgresql</li>
+</ul>
+
+<p>Hosting</p>
+
+<ul>
+<li>Database: Digital Ocean</li>
+<li>Server: Microsoft Azure</li>
+</ul>
 
 <blockquote>
 <p>Developer Note:<br>
@@ -183,10 +195,13 @@ It&rsquo;s worth mentioning that prior to this endeavor, my experience in softwa
 
 <h2 id="front-end">Front End</h2>
 
-<p>The front end is split into three distinctive parts:
-* Static HTML
-* Server Rendered Razor Page
-* Client Rendered React-Redux app</p>
+<p>The front end is split into three distinctive parts:</p>
+
+<ul>
+<li>Static HTML</li>
+<li>Server Rendered Razor Page</li>
+<li>Client Rendered React-Redux app</li>
+</ul>
 
 <p>In the future reducing the number of different technologies involved in rendering various pages of the front end would be nice to do, but this is the present state of affairs.</p>
 
@@ -202,18 +217,24 @@ It&rsquo;s worth mentioning that prior to this endeavor, my experience in softwa
 
 <p>The front end is delivered as a React-Redux application, but is built as a TypeScript project, which, knowing nothing about Front End development, was made doable with <a href="https://github.com/Microsoft/TypeScript-React-Starter">Microsoft&rsquo;s react-typescript starter project</a>.</p>
 
-<p>The client has the following structure:
-* src/
-  * actions/
-    * actionCreators/
-    * actionInterfaces/
-    * actionTypes/
-  * components/
-  * containers/
-  * models/
-  * reducers/
-  * services/
-  * stores/</p>
+<p>The client has the following structure:</p>
+
+<ul>
+<li>src/
+
+<ul>
+<li>actions/</li>
+<li>actionCreators/</li>
+<li>actionInterfaces/</li>
+<li>actionTypes/</li>
+<li>components/</li>
+<li>containers/</li>
+<li>models/</li>
+<li>reducers/</li>
+<li>services/</li>
+<li>stores/</li>
+</ul></li>
+</ul>
 
 <p>Meanwhile this what the Redux State Store looks like.:</p>
 
@@ -277,10 +298,13 @@ export interface FullSmartPlaylistsCacheShape {
 
 <p>All of these actions are initiated by various Service functions located under <code>src/services/</code>, such as <code>GetUsersSmartPlaylists()</code> from the <code>SmartPlaylistService.ts</code> file.</p>
 
-<p>Each service method sends a notification to the Redux Action Creators under <code>src/actions/actionCreators/</code>, which, using the <code>Redux-Thunk</code> package, then asynchronously initiates a number of related Redux Actions:
-* a Requested action
-* a Failed action
-* a Succeeded action</p>
+<p>Each service method sends a notification to the Redux Action Creators under <code>src/actions/actionCreators/</code>, which, using the <code>Redux-Thunk</code> package, then asynchronously initiates a number of related Redux Actions:</p>
+
+<ul>
+<li>a Requested action</li>
+<li>a Failed action</li>
+<li>a Succeeded action</li>
+</ul>
 
 <p>When Redux is altered of a Requested action, depending on the operation, such as if it is a network transaction, the relevant sections of the Store have their <code>IsLoading</code> flag flipped, or set <code>IsModalOpen</code>, enabling the Loading Screen for the application.</p>
 
@@ -292,10 +316,13 @@ export interface FullSmartPlaylistsCacheShape {
 
 <p><img height="75" src="/static/img/lyricallarch/react.svg"/></p>
 
-<p>There are a number of components the project uses, most are located under <code>src/components/</code>, but some which require direct Redux access are located under <code>src/containers/</code>. Some of these controls include
-* PagingBox, which controls flipping through pages of Spotify Playlists, Smart Playlists, or Listeners
-* ListenerTree, which is a wrapper for <code>react-sortable-tree</code>, and
-* RuleNode / RuleGroupNode, which are how Lyricall displays its atomic units</p>
+<p>There are a number of components the project uses, most are located under <code>src/components/</code>, but some which require direct Redux access are located under <code>src/containers/</code>. Some of these controls include</p>
+
+<ul>
+<li>PagingBox, which controls flipping through pages of Spotify Playlists, Smart Playlists, or Listeners</li>
+<li>ListenerTree, which is a wrapper for <code>react-sortable-tree</code>, and</li>
+<li>RuleNode / RuleGroupNode, which are how Lyricall displays its atomic units</li>
+</ul>
 
 <p>These components were made as Stateless Function Components (SFC) by default, and upgraded to a full Class if necessary, such as is the case with with <code>ListenerTree</code>.</p>
 
@@ -313,16 +340,22 @@ export interface FullSmartPlaylistsCacheShape {
 
 <p>During the initial setup, I was conflicted on what to use for the Database. I have a lot of experience with SQLite, but as the developer says, SQLite is a replacement FOpen(), not a database. Lyricall is a small project that will likely see very few people using it, let alone concurrently. In this instance, SQLite would probably have been a fine choice for the back end database, but I took it as a learning project to get familiar with a real production database.</p>
 
-<p>The standard options for anyone wanting to deploy such a database includes the usual suspects:
-* MySQL
-* PostgresQL
-* SQL Server
-* MongoDB</p>
+<p>The standard options for anyone wanting to deploy such a database includes the usual suspects:</p>
 
-<p>In addition, there are a bunch of other non standard databases that are interesting as well:
-* RethinkDB
-* Cassandra
-* MariaDB</p>
+<ul>
+<li>MySQL</li>
+<li>PostgresQL</li>
+<li>SQL Server</li>
+<li>MongoDB</li>
+</ul>
+
+<p>In addition, there are a bunch of other non standard databases that are interesting as well:</p>
+
+<ul>
+<li>RethinkDB</li>
+<li>Cassandra</li>
+<li>MariaDB</li>
+</ul>
 
 <p>While surely useful in their niches and certainly interesting in their own right, it seemed like a good idea to steer clear of that second set of databases, leaving us in the first set. My impression upon hearing the word &ldquo;MySQL&rdquo; is to recoil - after all, it is an Oracle project, and separately has a reputation for being a stodgey old-timer. Although research revealed that modern day MySQL seems to have caught up to the pack, I just didn&rsquo;t feel like using it.</p>
 
@@ -432,19 +465,25 @@ class RuleGroup  : Listener {
 
 <p>To an experienced developer, this solution likely sounds either obvious or suboptimal. For a developer like myself who has much experience with SQL but only a handful of run-ins with tree data, this was, while not a huge challenge, certainly not obvious.</p>
 
-<p>There are a handful of other tables connected here. Their purposes are, briefly:
-* <code>ScansInProgress</code>: If a playlist is being scanned and hasn&rsquo;t completed, it goes here. Prevents launching multiple scans of the same Smart Playlist.
-* <code>StagedTracksAddedMap</code>: Tracks that meet the criteria for a Smart Playlist are placed here until they can be uploaded successfully. Prevents permanent non-addition of tracks due to server failure.
-* <code>TracksAddedMap</code>: Tracks that have been successfully added are removed from <code>StagedTracksAddedMap</code> and placed here. Prevents adding duplicate tracks to the same playlist. May be cleared by a <code>force</code> scan.
-* <code>LyricallConditions</code> and <code>LyricallProperties</code>: Database versions of Lyricall Rule Properties. Prevents tampering of incoming data, such as if someone were to supply a field for rule scans that didn&rsquo;t exist. This is essentially a source of truth. No operations by the server ever modify this.</p>
+<p>There are a handful of other tables connected here. Their purposes are, briefly:</p>
+
+<ul>
+<li><code>ScansInProgress</code>: If a playlist is being scanned and hasn&rsquo;t completed, it goes here. Prevents launching multiple scans of the same Smart Playlist.</li>
+<li><code>StagedTracksAddedMap</code>: Tracks that meet the criteria for a Smart Playlist are placed here until they can be uploaded successfully. Prevents permanent non-addition of tracks due to server failure.</li>
+<li><code>TracksAddedMap</code>: Tracks that have been successfully added are removed from <code>StagedTracksAddedMap</code> and placed here. Prevents adding duplicate tracks to the same playlist. May be cleared by a <code>force</code> scan.</li>
+<li><code>LyricallConditions</code> and <code>LyricallProperties</code>: Database versions of Lyricall Rule Properties. Prevents tampering of incoming data, such as if someone were to supply a field for rule scans that didn&rsquo;t exist. This is essentially a source of truth. No operations by the server ever modify this.</li>
+</ul>
 
 <h5 id="straggler-tables">Straggler Tables</h5>
 
-<p><img src="/static/img/lyricallarch/Misc.png"/>
-* <code>_EFMIgrationsHistory</code>: Entity Framework curated migration table. Not relevant to this technical discussion.
-*  <code>ScanLimits</code>: Records how many times a User has requested a scan in a single Lyricall-Day. Because I try to avoid maxing out my Spotify API rate limit, this table restricts users from spamming scans. The limit is set by the Server, but hovers around 10 scans a day.
-* <code>SpotifyAudioAnalysis</code>: A JSON store table keeping the extremely heavy <code>AudioAnalysis</code> objects from Spotify. This, along with <code>SpotifyAudioFeatures</code>, are caching tables which allow us to minimize calls to the Spotify API service.
-* <code>SpotifyAudioFeatures</code>: Caches from the <code>get-audio-features</code> Spotify endpoint.</p>
+<p><img src="/static/img/lyricallarch/Misc.png"/></p>
+
+<ul>
+<li><code>_EFMIgrationsHistory</code>: Entity Framework curated migration table. Not relevant to this technical discussion.</li>
+<li><code>ScanLimits</code>: Records how many times a User has requested a scan in a single Lyricall-Day. Because I try to avoid maxing out my Spotify API rate limit, this table restricts users from spamming scans. The limit is set by the Server, but hovers around 10 scans a day.</li>
+<li><code>SpotifyAudioAnalysis</code>: A JSON store table keeping the extremely heavy <code>AudioAnalysis</code> objects from Spotify. This, along with <code>SpotifyAudioFeatures</code>, are caching tables which allow us to minimize calls to the Spotify API service.</li>
+<li><code>SpotifyAudioFeatures</code>: Caches from the <code>get-audio-features</code> Spotify endpoint.</li>
+</ul>
 
 <h5 id="asp-net-entity-framework-tables">ASP.NET / Entity Framework Tables</h5>
 
@@ -465,11 +504,14 @@ These are included for completeness&rsquo; sake, but are completely auto-generat
 
 <p>Similar to the discussion preceding the choice of Postgres as my database, I also had to make the decision of what would be the primary server.</p>
 
-<p>The choices were:
-* Node (JavaScript)
-* Flask or Django (Python)
-* Rails (Ruby)
-* ASP.NET Core</p>
+<p>The choices were:</p>
+
+<ul>
+<li>Node (JavaScript)</li>
+<li>Flask or Django (Python)</li>
+<li>Rails (Ruby)</li>
+<li>ASP.NET Core</li>
+</ul>
 
 <p>Reading anything about web development over the last 5 years would lead one to believe that there is only NodeJS, and that all others are pretenders. Thankfully that isn&rsquo;t so, and despite the mind bogglingly immense amount of articles, StackOverflow posts and hackathons evangelizing it, there are numerous better alternatives.
 <br>And that&rsquo;s fabulous, because like Mongo, my experience with Node isn&rsquo;t amazing, and I&rsquo;d like to avoid it if I can get away with it.</p>
@@ -770,14 +812,17 @@ services.AddSingleton&lt;IHostedService, ScanCountResetService&gt;();
 <p>The constructor and supporting fields are omitted for clarity&rsquo;s sake, but they include a <code>private static Dictionary&lt;int, TrackProperty&gt;</code> for in-memory storage.</p>
 </blockquote>
 
-<p>A <code>TrackProperty</code> can be a listener assigned to a few specific fields:
-* Track Name
-* Available Markets
-* Disc Number
-* Duration
-* Explicit
-* Popularity
-* Track Number</p>
+<p>A <code>TrackProperty</code> can be a listener assigned to a few specific fields:</p>
+
+<ul>
+<li>Track Name</li>
+<li>Available Markets</li>
+<li>Disc Number</li>
+<li>Duration</li>
+<li>Explicit</li>
+<li>Popularity</li>
+<li>Track Number</li>
+</ul>
 
 <p>Each of those fields has specific value types and value ranges they accept, and are specified by their third constructor argument. For example, <code>StringCondition.AllConditions</code> means the field accepts <code>string</code> values, and its allowed conditions includes</p>
 
@@ -792,13 +837,16 @@ services.AddSingleton&lt;IHostedService, ScanCountResetService&gt;();
 <li>does not end with</li>
 </ul>
 
-<p>Meanwhile, <code>Duration</code> is <code>NumberCondition.AllConditions</code>, meaning it accepts integers (as specified by the Spotify API, duration is an integer not a long), and its allowed conditions include:
-* Less Than
-* Less Than Or Equal To
-* Greater Than
-* Greater Than Or Equal To
-* Equal To
-* Not Equal To</p>
+<p>Meanwhile, <code>Duration</code> is <code>NumberCondition.AllConditions</code>, meaning it accepts integers (as specified by the Spotify API, duration is an integer not a long), and its allowed conditions include:</p>
+
+<ul>
+<li>Less Than</li>
+<li>Less Than Or Equal To</li>
+<li>Greater Than</li>
+<li>Greater Than Or Equal To</li>
+<li>Equal To</li>
+<li>Not Equal To</li>
+</ul>
 
 <h5 id="validation">Validation</h5>
 
@@ -824,10 +872,13 @@ public class RuleGroup : Listener {
  }
 </code></pre>
 
-<p>When a rule, which is a combination of a specific <code>LyricallProperty</code> like <code>Duration</code> or <code>Artist Name</code> or <code>Danceability</code>, a a specific <code>LyricallCondition</code> like <code>Starts With</code> or <code>Greater Than</code>, and a value, it is run through a validation process which checks that:
-* The Property is a valid, existing property and wasn&rsquo;t mal- or maliciously formed. i.e., <code>Coolness Level</code> is not a valid property.
-* The Condition is valid and wasn&rsquo;t also maliciously formed, and that it is correct for the Property. i.e., <code>Track Name Greater Than &quot;hello&quot;</code> is invalid.
-* The value falls within the specified range of the field. For example, negative values don&rsquo;t make any sense for some fields, meanwhile other fields are doubles between  <code>0.0 and 1.0</code>.</p>
+<p>When a rule, which is a combination of a specific <code>LyricallProperty</code> like <code>Duration</code> or <code>Artist Name</code> or <code>Danceability</code>, a a specific <code>LyricallCondition</code> like <code>Starts With</code> or <code>Greater Than</code>, and a value, it is run through a validation process which checks that:</p>
+
+<ul>
+<li>The Property is a valid, existing property and wasn&rsquo;t mal- or maliciously formed. i.e., <code>Coolness Level</code> is not a valid property.</li>
+<li>The Condition is valid and wasn&rsquo;t also maliciously formed, and that it is correct for the Property. i.e., <code>Track Name Greater Than &quot;hello&quot;</code> is invalid.</li>
+<li>The value falls within the specified range of the field. For example, negative values don&rsquo;t make any sense for some fields, meanwhile other fields are doubles between  <code>0.0 and 1.0</code>.</li>
+</ul>
 
 <p>A supplied rule that validates any of these assumptions fails validation and the client is supplied with an error message representing the issue.</p>
 
@@ -847,12 +898,15 @@ public class RuleGroup : Listener {
 
 <p>Failures can include any number of things such as Spotify enabling rate-limiting on the account, network failures, or token revocations. All of these initiate the crash-failure protocol.</p>
 
-<p>The scanner has some optimizations in place to reduce load in various places:
-* If the user no longer follows the smart playlist on their Spotify account, the SmartPlaylist is deleted form the Lyricall database and the scan as a whole does not proceed.
-* If a source has no songs, the scan for that source is marked as &lsquo;complete&rsquo; and completes early.
-* If a source hasn&rsquo;t changed since the last scan on this SmartPlaylist was performed (through the ETag attribute, or the SnapshotId attribute), then the scan for that source is marked as &lsquo;complete&rsquo; and completes early.
-* If a source reaches all the way to end, where there is no longer a defined <code>next</code> page to request, the scan is marked as complete.
-* If a source has changed since last time, we complete the scan for that source when we reach the last known position of the previous scan, preventing us from double-scanning sources and wasting api calls and bandwidth.</p>
+<p>The scanner has some optimizations in place to reduce load in various places:</p>
+
+<ul>
+<li>If the user no longer follows the smart playlist on their Spotify account, the SmartPlaylist is deleted form the Lyricall database and the scan as a whole does not proceed.</li>
+<li>If a source has no songs, the scan for that source is marked as &lsquo;complete&rsquo; and completes early.</li>
+<li>If a source hasn&rsquo;t changed since the last scan on this SmartPlaylist was performed (through the ETag attribute, or the SnapshotId attribute), then the scan for that source is marked as &lsquo;complete&rsquo; and completes early.</li>
+<li>If a source reaches all the way to end, where there is no longer a defined <code>next</code> page to request, the scan is marked as complete.</li>
+<li>If a source has changed since last time, we complete the scan for that source when we reach the last known position of the previous scan, preventing us from double-scanning sources and wasting api calls and bandwidth.</li>
+</ul>
 
 <p>If the Smart Playlist has a rule that needs access to <code>AudioFeatures</code> or <code>AudioAnalysis</code>  data, the Database cache is checked for presence of the data-heavy Audio object before asking Spotify for more data. Of course, the <code>GetMany</code> variant of the Spotify API call is used to minimize API rate limiting. If a call is necessary, we check against what is already in the cache, and only request the ones that we need. Although this does not affect our rate limit, it does lower the overall bandwidth required. New data returned is subsequently cached into the Database.</p>
 
@@ -883,17 +937,20 @@ Within a <code>RuleGroup</code>, we check, depending on the flag, whether we nee
 
 <p>Because it is a publically available computer, steps had to be taken to secure both the database and the computer.</p>
 
-<p>An overview of the measures taken include:
-  * SSH only root login
-  * Non-default SSH port
-  * non-root account where any server actions are done
-  * SSH only remote login to that account
-  * Minimal other services running on machine
-  * System firewall (ufw) for only the SSH port and the Postgres port
-  * Randomized Postgres database name
-  * Randomized Postgres username
-  * Randomized Postgres password
-  * EnforceSSL only connections to Postgres, with one authorized user on one database</p>
+<p>An overview of the measures taken include:</p>
+
+<ul>
+<li>SSH only root login</li>
+<li>Non-default SSH port</li>
+<li>non-root account where any server actions are done</li>
+<li>SSH only remote login to that account</li>
+<li>Minimal other services running on machine</li>
+<li>System firewall (ufw) for only the SSH port and the Postgres port</li>
+<li>Randomized Postgres database name</li>
+<li>Randomized Postgres username</li>
+<li>Randomized Postgres password</li>
+<li>EnforceSSL only connections to Postgres, with one authorized user on one database</li>
+</ul>
 
 <p>Further security considerations include only allowing Postgres connections from the static IP of the ASP.NET server, or somehow putting it on a Private Network with that server.</p>
 
