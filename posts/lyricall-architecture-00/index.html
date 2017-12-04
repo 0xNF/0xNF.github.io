@@ -4,10 +4,10 @@
 <head>
   <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
-<meta name='description' content='Architecture of lyricall.net Table of Contents  tl;dr [App Overview]()  [Front End]() [TypeScript]() [Redux]() [React]() [Back End]() [Database - PostgresQL]() [Why Postgres]() [Database Schema]()  [Lyricall Tables]() [Straggler Tables]() [ASP.NET / Entity Framework Tables]()  [Server - .NET Core 2.0 / ASP.NET Core 2.0]()  [Why .NET Core]()  [Intermission - the DotNetStandardSpotifyWebApi library]() [Intermission - the ASP.NET.Security.OAuth Project]() [Server Architecture]() [Hosting]()  [Digital Ocean]() [Microsoft Azure]()  [HTTPS with Let&rsquo;s Encrypt]()   Technology tl;dr: Front End'>
+<meta name='description' content='Table of Contents  Architecture of lyricall.net  Table of Contents Technology tl;dr: App Overview Front End  Redux React  Back End Database - PostgresQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&rsquo;s Encrypt   Architecture of lyricall.'>
 
 <meta property='og:title' content='Lyricall Architecture • 0xNF'>
-<meta property='og:description' content='Architecture of lyricall.net Table of Contents  tl;dr [App Overview]()  [Front End]() [TypeScript]() [Redux]() [React]() [Back End]() [Database - PostgresQL]() [Why Postgres]() [Database Schema]()  [Lyricall Tables]() [Straggler Tables]() [ASP.NET / Entity Framework Tables]()  [Server - .NET Core 2.0 / ASP.NET Core 2.0]()  [Why .NET Core]()  [Intermission - the DotNetStandardSpotifyWebApi library]() [Intermission - the ASP.NET.Security.OAuth Project]() [Server Architecture]() [Hosting]()  [Digital Ocean]() [Microsoft Azure]()  [HTTPS with Let&rsquo;s Encrypt]()   Technology tl;dr: Front End'>
+<meta property='og:description' content='Table of Contents  Architecture of lyricall.net  Table of Contents Technology tl;dr: App Overview Front End  Redux React  Back End Database - PostgresQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&rsquo;s Encrypt   Architecture of lyricall.'>
 <meta property='og:url' content='https://0xNF.github.io/posts/lyricall-architecture-00/'>
 <meta property='og:site_name' content='0xNF&#39;s Blog - This site will never be updated'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:published_time' content='2017-11-30T13:21:42-08:00'/><meta property='article:modified_time' content='2017-11-30T13:21:42-08:00'/>
@@ -108,48 +108,67 @@
     <div class='entry-content'>
   
 
-<h1 id="architecture-of-lyricall-net">Architecture of lyricall.net</h1>
-
-<p><img height="75" width="75" src="/img/lyricallarch/lyricall.svg"/></p>
-
 <h2 id="table-of-contents">Table of Contents</h2>
 
 <ul>
-<li><a href="#technology-tl;dr">tl;dr</a></li>
-<li>[App Overview]()
+<li><a href="#architecture-of-lyricallnet">Architecture of lyricall.net</a>
 
 <ul>
-<li>[Front End]()</li>
-<li>[TypeScript]()</li>
-<li>[Redux]()</li>
-<li>[React]()</li>
-<li>[Back End]()</li>
-<li>[Database - PostgresQL]()</li>
-<li>[Why Postgres]()</li>
-<li>[Database Schema]()
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#technology-tldr">Technology tl;dr:</a></li>
+<li><a href="#app-overview">App Overview</a></li>
+<li><a href="#front-end">Front End</a>
 
 <ul>
-<li>[Lyricall Tables]()</li>
-<li>[Straggler Tables]()</li>
-<li>[ASP.NET / Entity Framework Tables]()</li>
+<li><a href="#redux">Redux</a></li>
+<li><a href="#react">React</a></li>
 </ul></li>
-<li>[Server - .NET Core 2.0 / ASP.NET Core 2.0]()
+<li><a href="#back-end">Back End</a></li>
+<li><a href="#database---postgresql">Database - PostgresQL</a>
 
 <ul>
-<li>[Why .NET Core]()</li>
+<li><a href="#why-postgres">Why Postgres</a></li>
+<li><a href="#database-schema">Database Schema</a></li>
+<li><a href="#lyricall-tables">Lyricall Tables</a></li>
+<li><a href="#straggler-tables">Straggler Tables</a></li>
+<li><a href="#aspnet--entity-framework-tables">ASP.NET / Entity Framework Tables</a></li>
 </ul></li>
-<li>[Intermission - the DotNetStandardSpotifyWebApi library]()</li>
-<li>[Intermission - the ASP.NET.Security.OAuth Project]()</li>
-<li>[Server Architecture]()</li>
-<li>[Hosting]()
+<li><a href="#server---net-core-20--aspnet-core-20">Server - .NET Core 2.0 / ASP.NET Core 2.0</a>
 
 <ul>
-<li>[Digital Ocean]()</li>
-<li>[Microsoft Azure]()</li>
+<li><a href="#why-net-core">Why .NET Core</a></li>
+<li><a href="#intermission---the-dotnetstandardspotifywebapi-library">Intermission - the DotNetStandardSpotifyWebApi library</a></li>
+<li><a href="#intermission---the-aspnet-security-project">Intermission - the ASP.NET Security Project</a></li>
+<li><a href="#api">API</a></li>
+<li><a href="#server-architecture">Server Architecture</a></li>
+<li><a href="#entity-framework-vs-hand-crafted-sql">Entity Framework vs Hand Crafted SQL</a></li>
+<li><a href="#automatic-timed-services">Automatic Timed Services</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#models">Models</a></li>
+<li><a href="#validation">Validation</a></li>
+<li><a href="#scanning">Scanning</a></li>
 </ul></li>
-<li>[HTTPS with Let&rsquo;s Encrypt]()</li>
+<li><a href="#hosting">Hosting</a></li>
+<li><a href="#digital-ocean">Digital Ocean</a>
+
+<ul>
+<li><a href="#security">Security</a></li>
+<li><a href="#backups">Backups</a></li>
+<li><a href="#cicd">CI/CD</a></li>
+</ul></li>
+<li><a href="#microsoft-azure">Microsoft Azure</a>
+
+<ul>
+<li><a href="#backups-1">Backups</a></li>
+<li><a href="#cicd-1">CI/CD</a></li>
+</ul></li>
+<li><a href="#lets-encrypt">Let&rsquo;s Encrypt</a></li>
 </ul></li>
 </ul>
+
+<h1 id="architecture-of-lyricall-net">Architecture of lyricall.net</h1>
+
+<p><img height="75" width="75" src="/img/lyricallarch/lyricall.svg"/></p>
 
 <h2 id="technology-tl-dr">Technology tl;dr:</h2>
 
