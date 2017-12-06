@@ -97,7 +97,7 @@
   
 </svg>
 
-    39 mins read
+    40 mins read
   </span>
   
 </div>
@@ -1024,6 +1024,10 @@ public class RuleGroup : Listener {
 <p>A supplied rule that validates any of these assumptions fails validation and the client is supplied with an error message representing the issue.</p>
 
 <p>This validation happens using specific <code>Staged</code> classes found under <code>Models/Staged/</code>. These classes are deserialized from json and usually ignore supplied Id fields, and are only allowed to touch certain parts of the inner applications. This prevents malicious or malformed input from affecting the system improperly.</p>
+
+<p>A similar validation check happens at every step where user input is supplied - supplied Spotify Sources are validated for both format and existence on Spotify. Edits to a SmartPlaylist not only ensure that the values, conditions and property combinations are valid, but also that the present user actually owns the SmartPlaylist they are attempting to edit, and that any rules don&rsquo;t have their Id tampered with such that a rogue user can edit the rules of another user.</p>
+
+<p>The User is an adversarial component, we do not trust that any of their inputs is legitimate or properly formatted. In a future update, we&rsquo;d like to treat the Database as an adversarial component as well.</p>
 
 <h5 id="scanning">Scanning</h5>
 
