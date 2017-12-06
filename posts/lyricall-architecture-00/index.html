@@ -4,10 +4,10 @@
 <head>
   <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
-<meta name='description' content='Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  Redux React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&rsquo;s Encrypt   Architecture of lyricall.'>
+<meta name='description' content='Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  TypeScript Why TypeScript Redux React Why React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&rsquo;s Encrypt   Architecture of lyricall.'>
 
 <meta property='og:title' content='Lyricall Architecture • 0xNF'>
-<meta property='og:description' content='Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  Redux React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&rsquo;s Encrypt   Architecture of lyricall.'>
+<meta property='og:description' content='Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  TypeScript Why TypeScript Redux React Why React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .NET Core 2.0 / ASP.NET Core 2.0  Why .NET Core Intermission - the DotNetStandardSpotifyWebApi library Intermission - the ASP.NET Security Project API Server Architecture Entity Framework vs Hand Crafted SQL Automatic Timed Services Services Models Validation Scanning  Hosting Digital Ocean  Security Backups CI/CD  Microsoft Azure  Backups CI/CD  Let&rsquo;s Encrypt   Architecture of lyricall.'>
 <meta property='og:url' content='https://0xNF.github.io/posts/lyricall-architecture-00/'>
 <meta property='og:site_name' content='0xNF&#39;s Blog - This site will never be updated'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:published_time' content='2017-11-30T13:21:42-08:00'/><meta property='article:modified_time' content='2017-11-30T13:21:42-08:00'/>
@@ -97,7 +97,7 @@
   
 </svg>
 
-    34 mins read
+    39 mins read
   </span>
   
 </div>
@@ -119,8 +119,11 @@
 <li><a href="#front-end">Front End</a>
 
 <ul>
+<li><a href="#typescipt">TypeScript</a></li>
+<li><a href="#why-typescript">Why TypeScript</a></li>
 <li><a href="#redux">Redux</a></li>
 <li><a href="#react">React</a></li>
+<li><a href="#why-react">Why React</a></li>
 </ul></li>
 <li><a href="#back-end">Back End</a></li>
 <li><a href="#database---PostgreSQL">Database - PostgreSQL</a>
@@ -233,6 +236,26 @@ It&rsquo;s worth mentioning that prior to this endeavor, my experience in softwa
 
 <p>The front end is delivered as a React-Redux application, but is built as a TypeScript project, which, knowing nothing about Front End development, was made doable with <a href="https://github.com/Microsoft/TypeScript-React-Starter">Microsoft&rsquo;s react-typescript starter project</a>.</p>
 
+<h5 id="why-typescript">Why TypeScript</h5>
+
+<p>There is a standard choice for web development, there are the add-on choices, and there are the esoteric choices. If were aiming for maximum esotericism, we&rsquo;d have gone with Elm - Haskell in the browser. If we were masochistic, we&rsquo;d go for plain JavaScript. But we are rational folk, so the JavaScript-Plus route seemed the way to go. That particular route has two main flavors - Flow, and TypeScript. Both are systems that add typing to JavaScript, and they have their perks and minuses. Flow boasts a sound type system, which means they guarantee that a value possesses the type that is specified, while TypeScript has some scenarios that do not produce such soundness, i.e., a value says it&rsquo;s an <code>Foo</code> but it may be a <code>Bar</code>. This can cause some occasional complications.</p>
+
+<p>TypeScript meanwhile has A-Class tooling, broad community support, geniuses behind the project in the form of Anders Heijsberg of Delphi, Turbo Pascal, and C# fame, and a truly extensive collection of available typings via the <a href="http://definitelytyped.org/">Definitely Typed</a> project. In addition, many major libraries include their own typings file.</p>
+
+<p>There are two main questions people ask when it comes to choosing the front-end language - the boring one is whether to use Flow or TypeScript. Both are great! I have chosen TypeScript because I wanted to, and because I think its the winning competitor in the front-end-language wars as of this writing (December, 2017).</p>
+
+<p>The other question, usually by people who haven&rsquo;t used a non dynamically typed language before, is why not just JavaScript?</p>
+
+<p>That&rsquo;s a more interesting question, because it touches upon the arguments of compilation vs interpretation, strong types vs weak types, dynamic typing vs static typing, and language design more generally. One of the common arguments against typings, which is also the most common argument in favor of NoSQL solutions, is that strong types slow down the developer and prevent rapid prototyping. I think this is patently false. In addition to not being encumbered by types, I find that having a static type system does wonders for my ability to hold a codebase in my head.</p>
+
+<p>I have to worry less about exactly what collection of properties an object has or what is needed by a method, and can instead collapse that collection into an object with a name. Mentally, this saves incredible amounts of processing. Additionally, for those of us who use an IDE or an otherwise fleshed out editor, static typings means the IDE can start to help us out a lot - painless refactoring, code completion, instant access to signatures and docstrings. This is an amazing boost to productivity.</p>
+
+<p>Being able to catch type mismatch errors at compile-time, or even at design-time if your editor or IDE has the ability means we increase our ability to produce better code, and our ability to produce code faster. The sooner we can catch an error, the better. This doesn&rsquo;t eliminate runtime errors of course - but we reduce their number by magnitudes.</p>
+
+<p>Once upon a time an argument could have been made that adding in a build-step was too much to ask for a front end project, but ever since Bower hit the scene, the idea that a compilation step (whether by gulp, webpack, or anything else) is a burden is no longer credible.</p>
+
+<h5 id="client-structure">Client Structure</h5>
+
 <p>The client has the following structure:</p>
 
 <ul>
@@ -334,6 +357,22 @@ export interface FullSmartPlaylistsCacheShape {
 <h4 id="react">React</h4>
 
 <p><img height="75" width="75" src="/img/lyricallarch/react.svg"/></p>
+
+<h5 id="why-react">Why React</h5>
+
+<p>What a mess front end development is. After nearly 70 years of doing desktop computing in various forms, and nearly 50 years of graphical computing, we as an industry have a set of front end toolkits that build in solid patterns, have been battle tested and are more or less easy to use. Qt, Windows Forms, Cocoa. And then web developers saw all that and said, &lsquo;nah&rsquo;, leaving us with a long trail of bodies as they struggled to find something even remotely resembling the desktop frameworks: Ember, Knockout, Polymer, Backbone, Meteor and countless others.</p>
+
+<p>For a period of time, it looked as though Angular would win the Front End Framework War, and gained a huge amount of traction as a well supported Google project. During the same period of time, an upstart React project was emerging out of Facebook. In time, we would see that although Angular was definitely a contender, it would begin to lose out to React in terms of popularity.</p>
+
+<p>It is of course important to draw attention to the fact that these two frameworks are not 1:1 compatible - Angular comes with an opinionated structure, with canonical ways to call out to third parties and how to set up your project, while React is much more lightweight, essentially only packaging a way to create view components. However, no sane project chooses to combine these - although they technically serve different purposes, it is an effectively  mutually exclusive choice.</p>
+
+<p>So why React? As someone on HackerNews said in a thread I cannot find anymore, React essentially did WebComponents better than WebComponents. WebComponents are of course, the proposed W3C spec for browsers standardizing custom reusable HTML5 components. React did this problem so well it seems to have put a serious damper on how fast the WebComponent spec is working through the committee. React is no Windows Forms, but it is very good.</p>
+
+<p>I would be remiss not to mention Vue.js. Just as React was an upstart, so too is Vue. There&rsquo;s a lot to like about it, and if you know React, it&rsquo;s easy to pick up View. Additionally, Vue has ginormous support by Chinese developers. The majority of front end projects that I encounter with Chinese authors choose Vue as their front end framework of choice.</p>
+
+<p>The choice here came down to the same reasons TypeScript was chosen - It looks like it is winning. If I were a betting man, I would bet that React will be here longer. The community is excited about React unlike Angular, companies are choosing React more than Angular, it even seems like it chilled the W3C. React seems like the more solid choice, and so React it is.</p>
+
+<h5 id="react-structure">React Structure</h5>
 
 <p>There are a number of components the project uses, most are located under <code>src/components/</code>, but some which require direct Redux access are located under <code>src/containers/</code>. Some of these controls include</p>
 
