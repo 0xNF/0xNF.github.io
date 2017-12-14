@@ -14,7 +14,14 @@
   </url>
   
   <url>
+    <loc>https://0xNF.github.io/categories/architecture/</loc>
+    <lastmod>2017-11-30T13:21:42-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://0xNF.github.io/categories/</loc>
+    <lastmod>2017-11-30T13:21:42-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -26,6 +33,12 @@
   
   <url>
     <loc>https://0xNF.github.io/posts/</loc>
+    <lastmod>2017-11-30T13:21:42-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://0xNF.github.io/categories/software/</loc>
     <lastmod>2017-11-30T13:21:42-08:00</lastmod>
     <priority>0</priority>
   </url>

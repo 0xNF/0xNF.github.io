@@ -555,7 +555,7 @@ These are included for completeness&rsquo; sake, but are completely auto-generat
 
 <p>We also store the users OAuth access and refresh tokens in the <code>AspNetUserTokens</code> table.</p>
 
-<p>In the future, I&rsquo;d like to Linux the deletion of a user to the automatic deletion of their SmartPlaylists/RuleGroups via a foreign key constraint on <code>SmartPlaylists.OwnerId</code> =&gt; <code>AspNetUser.Id</code>, but as it stands now, doing a manual query on matching OwnerIds is a perfectly fine process.</p>
+<p>In the future, I&rsquo;d like to link the deletion of a user to the automatic deletion of their SmartPlaylists/RuleGroups via a foreign key constraint on <code>SmartPlaylists.OwnerId</code> =&gt; <code>AspNetUser.Id</code>, but as it stands now, doing a manual query on matching OwnerIds is a perfectly fine process.</p>
 
 <h3 id="server-net-core-2-0-asp-net-core-2-0">Server - .NET Core 2.0 / ASP.NET Core 2.0</h3>
 
@@ -623,7 +623,7 @@ These are included for completeness&rsquo; sake, but are completely auto-generat
 
 <p>This was a successful endeavor, but it was hodgepodged together with kludges and certainly not best-practice development choices. As I later put it on a GitHub issue, it was a &ldquo;homeless amalgam&rdquo;. Bits from here, bits from there, and no real good place to put it for future use.</p>
 
-<p>After some additional research some number of days later, I came across a promising community project, Linuxed to from the official Microsoft docs, about OAuth processing for ASP.NET, called the <a href="https://github.com/aspnet/Security">ASP.NET Security</a> project, which contained dozens and dozens of pre-supplied and pre-tested OAuth plugins for providers like YouTube, Twitch, Baidu, and others. Unfortunately, their main branch, while massive and thorough, was only for <code>.NET Core 1.0</code>. The 1.0 release and the 2.0 release had enough breaking changes that it was impossible to use 1.0 libraries as a drop-in solution in 2.0 projects, and unfortunately, 2.0 is where I had invested my time.</p>
+<p>After some additional research some number of days later, I came across a promising community project, linked to from the official Microsoft docs, about OAuth processing for ASP.NET, called the <a href="https://github.com/aspnet/Security">ASP.NET Security</a> project, which contained dozens and dozens of pre-supplied and pre-tested OAuth plugins for providers like YouTube, Twitch, Baidu, and others. Unfortunately, their main branch, while massive and thorough, was only for <code>.NET Core 1.0</code>. The 1.0 release and the 2.0 release had enough breaking changes that it was impossible to use 1.0 libraries as a drop-in solution in 2.0 projects, and unfortunately, 2.0 is where I had invested my time.</p>
 
 <p>This led me to prowl around their issue tracker, where I found a thread asking about <code>.NET Core 2.0</code> versions of the project - although there had been a fair amount of activity in that thread, it looked pretty dead by the time I arrived. Nevertheless, I posted about my working-but-wonky Spotify authentication, and asked if there was work being done that I could contribute to.</p>
 
@@ -740,7 +740,7 @@ These are included for completeness&rsquo; sake, but are completely auto-generat
 
 <h4 id="server-architecture">Server Architecture</h4>
 
-<p>At the root level, the project is structured to contain multiple projects, including tests, and includes that aren&rsquo;t available on Nuget yet. That looks like this:</p>
+<p>At the root level, the project is structured to contain multiple projects, because they aren&rsquo;t available on Nuget yet, as well as projects for tests. That looks like this:</p>
 
 <pre><code>Lyricall/
     AspNet.Security.OAuth.Spotify/
@@ -767,9 +767,9 @@ These are included for completeness&rsquo; sake, but are completely auto-generat
 
 <p><code>wwwroot/</code> stores our deployed front end, which is the fully compiled forms of the TypeScript project, as well as the static html files found under <code>Client/</code>.</p>
 
-<p>Like all ASP.NET projects, the public API is defined by the controllers located under <code>Controllers/</code>. Logins are processed via <code>Home.cs</code> and <code>Account.cs</code>. These are holdovers from the default project where corresponding <code>Views/Home.cshtml</code> and <code>Views/Account.cshtml</code> views existed. Although the naming and structure is somewhat vestigial, their login and authentication functionality remains.</p>
+<p>Like all ASP.NET projects, the public API is defined by the controllers located under <code>Controllers/</code>. Logins are processed via <code>HomeController</code> and <code>AccountController</code>. These are holdovers from the default project where corresponding <code>Views/Home.cshtml</code> and <code>Views/Account.cshtml</code> views existed. Although the naming and structure is somewhat vestigial, their login and authentication functionality remains.</p>
 
-<p>The heavy lifting API is defined by the <code>Controller/SmartPlaylists.cs</code> file. This is where <code>GetAPlaylist()</code>, <code>Update()</code>, <code>ClearAddedTracks()</code>, and the rest of the public API reside.</p>
+<p>The heavy lifting API is defined by the <code>SmartPlaylistController</code> class. This is where <code>GetAPlaylist()</code>, <code>Update()</code>, <code>ClearAddedTracks()</code>, and the rest of the public API reside.</p>
 
 <p>Sign in and authentication happen by first hooking the Spotify OAuth project into the <code>Startup.ConfigureServices()</code> method:</p>
 
@@ -808,9 +808,9 @@ These are included for completeness&rsquo; sake, but are completely auto-generat
 
 <h5 id="entity-framework-vs-hand-crafted-sql">Entity Framework vs Hand Crafted SQL</h5>
 
-<p>There&rsquo;s a point of discrepancy which should be addressed at this point. We use Entity Framework to handle identity, but we constructed all the other relevant tables in the Lyricall database by hand. In fact, we never use Entity Framework, or any further ApplicationDbContexts at all beyond its one purpose. The reason for this is the embodiment of a long-running argument in the programming community about ORMs vs No ORMs. ORMs make it easy to do simple things like accessing one table with no dependencies on other tables, but performing joins or ensuring foreign key constraints quickly undoes the benefits of the ORM.</p>
+<p>There&rsquo;s a discrepancy which should be addressed at this point. We use Entity Framework to handle identity, but we constructed all the other relevant tables in the Lyricall database by hand. In fact, we never use Entity Framework, or any further ApplicationDbContexts at all beyond its one purpose. The reason for this is the embodiment of a long-running argument in the programming community about ORMs vs No ORMs. ORMs make it easy to do simple things like accessing one table with no dependencies on other tables, but performing joins or ensuring foreign key constraints quickly undoes the benefits of the ORM.</p>
 
-<p>Additionally, ORM&rsquo;s have a tendency to require that the code be mutilated to appease it - suddenly there are decorates everywhere, public methods, getter/setters on every field. Principles of least access and separation of concern are sacrificed to fit the code model that the ORM expects in order to function properly.</p>
+<p>Additionally, ORM&rsquo;s have a tendency to require that the code be mutilated to appease it - suddenly there are decorators everywhere, public methods, getter/setters on every field. Principles of least access and separation of concern are sacrificed to fit the code model that the ORM expects in order to function properly.</p>
 
 <p>An ORM is not without its benefits - they make migrations dead simple, easily auditable, trivially reproducible - but for me, the benefits do not counter the sheer weight they add to the project.</p>
 
@@ -927,7 +927,7 @@ services.AddSingleton&lt;IHostedService, ScanCountResetService&gt;();
 </code></pre>
 
 <blockquote>
-<p>All classes that get sent JSONified and sent to a client have two properties: a <code>const string Type</code> field which nominalizes the class for use in a JavaScript deserializer, and a <code>public JObject ToJson()</code> method, which does what it says on the tin, using the now-built-in <code>Newtonsoft.Json</code> library.</p>
+<p>All classes that get JSONified and sent to a client have two properties: a <code>const string Type</code> field which nominalizes the class for use in a JavaScript deserializer, and a <code>public JObject ToJson()</code> method, which does what it says on the tin, using the now-built-in <code>Newtonsoft.Json</code> library.</p>
 </blockquote>
 
 <p>The Smart Playlist is the complex, fully constructed main functional unit of the application. It&rsquo;s two most important aspects are the <code>Sources</code> field and the <code>Listeners</code> field.</p>
@@ -1021,7 +1021,7 @@ public class RuleGroup : Listener {
 <li>The value falls within the specified range of the field. For example, negative values don&rsquo;t make any sense for some fields, meanwhile other fields are doubles between  <code>0.0 and 1.0</code>.</li>
 </ul>
 
-<p>A supplied rule that validates any of these assumptions fails validation and the client is supplied with an error message representing the issue.</p>
+<p>A supplied rule that violates any of these assumptions fails validation and the client is supplied with an error message representing the issue.</p>
 
 <p>This validation happens using specific <code>Staged</code> classes found under <code>Models/Staged/</code>. These classes are deserialized from json and usually ignore supplied Id fields, and are only allowed to touch certain parts of the inner applications. This prevents malicious or malformed input from affecting the system improperly.</p>
 
@@ -1111,9 +1111,9 @@ Within a <code>RuleGroup</code>, we check, depending on the flag, whether we nee
 
 <p><img height="75" width="75" src="/img/lyricallarch/azure.svg"/></p>
 
-<p>Unlike the digital ocean offering, the Azure instance is a fully managed platform. Although they do offer open do-it-yourself VMs, for this project, I went with a managed Web-App. Technically it&rsquo;s using a windows server instance, but that&rsquo;s an implementation detail and can be changed at a later date with administrative minimal effort and zero programming effort.</p>
+<p>Unlike the digital ocean offering, the Azure instance is a fully managed platform. Although they do offer open do-it-yourself VMs, for this project, I went with a managed Web-App. Technically it&rsquo;s using a windows server instance, but that&rsquo;s an implementation detail and can be changed at a later date with minimal administrative effort and zero programming effort.</p>
 
-<p>Using an Azure Web App, we deploy our .Net Core 2.0 project via a git push. For most project dependencies, the .csproj file will specify what needs to be downloaded and the rest will handled by Azures deployment process. For the rest, such as <code>DotNetStandardSpotifyWebApi</code> and the unreleased <code>ASP.NET Security</code> branch, we bundle the projects directly with the release ourselves.</p>
+<p>Using an Azure Web App, we deploy our .Net Core 2.0 project via a <code>git push azure master</code>. For most project dependencies, the .csproj file will specify what needs to be downloaded and the rest will handled by Azure&rsquo;s deployment process. For the rest, such as <code>DotNetStandardSpotifyWebApi</code> and the unreleased <code>ASP.NET Security</code> branch, we bundle the projects directly with the release ourselves.</p>
 
 <p>Combined with custom domain names purchased from NameCheap, we point our DNS to the Azure websites IP, and we have a functioning back end / front end / database client-server application.</p>
 
@@ -1155,7 +1155,7 @@ Within a <code>RuleGroup</code>, we check, depending on the flag, whether we nee
 </svg>
 
   </span>
-  <span class='screen-reader'>Categories: </span><a class='category' href='/categories/lyricall.net'>Lyricall.net</a></div>
+  <span class='screen-reader'>Categories: </span><a class='category' href='/categories/lyricall.net'>Lyricall.net</a>, <a class='category' href='/categories/software'>Software</a>, <a class='category' href='/categories/architecture'>Architecture</a></div>
 
     
   

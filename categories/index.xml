@@ -6,9 +6,19 @@
     <description>Recent content in Categories on 0xNF&#39;s Blog - This site will never be updated</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>0xNF</copyright>
+    <lastBuildDate>Thu, 30 Nov 2017 13:21:42 -0800</lastBuildDate>
     
 	<atom:link href="https://0xNF.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Architecture</title>
+      <link>https://0xNF.github.io/categories/architecture/</link>
+      <pubDate>Thu, 30 Nov 2017 13:21:42 -0800</pubDate>
+      
+      <guid>https://0xNF.github.io/categories/architecture/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Lyricall.net</title>
@@ -16,6 +26,15 @@
       <pubDate>Thu, 30 Nov 2017 13:21:42 -0800</pubDate>
       
       <guid>https://0xNF.github.io/categories/lyricall.net/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Software</title>
+      <link>https://0xNF.github.io/categories/software/</link>
+      <pubDate>Thu, 30 Nov 2017 13:21:42 -0800</pubDate>
+      
+      <guid>https://0xNF.github.io/categories/software/</guid>
       <description></description>
     </item>
     
