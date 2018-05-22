@@ -1,51 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on 0xNF&#39;s Blog - This site will never be updated</title>
-    <link>https://0xNF.github.io/categories/</link>
-    <description>Recent content in Categories on 0xNF&#39;s Blog - This site will never be updated</description>
+    <title>Categories on Nothing in Particular</title>
+    <link>http://0xnf.github.io/categories/</link>
+    <description>Recent content in Categories on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>0xNF</copyright>
-    <lastBuildDate>Thu, 30 Nov 2017 13:21:42 -0800</lastBuildDate>
+    <language>en-us</language>
     
-	<atom:link href="https://0xNF.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://0xnf.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Architecture</title>
-      <link>https://0xNF.github.io/categories/architecture/</link>
-      <pubDate>Thu, 30 Nov 2017 13:21:42 -0800</pubDate>
-      
-      <guid>https://0xNF.github.io/categories/architecture/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Lyricall.net</title>
-      <link>https://0xNF.github.io/categories/lyricall.net/</link>
-      <pubDate>Thu, 30 Nov 2017 13:21:42 -0800</pubDate>
-      
-      <guid>https://0xNF.github.io/categories/lyricall.net/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Reports</title>
-      <link>https://0xNF.github.io/categories/reports/</link>
-      <pubDate>Wed, 10 Jan 2018 12:10:28 -0800</pubDate>
-      
-      <guid>https://0xNF.github.io/categories/reports/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Software</title>
-      <link>https://0xNF.github.io/categories/software/</link>
-      <pubDate>Thu, 30 Nov 2017 13:21:42 -0800</pubDate>
-      
-      <guid>https://0xNF.github.io/categories/software/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>

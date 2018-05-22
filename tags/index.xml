@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on 0xNF&#39;s Blog - This site will never be updated</title>
-    <link>https://0xNF.github.io/tags/</link>
-    <description>Recent content in Tags on 0xNF&#39;s Blog - This site will never be updated</description>
+    <title>Tags on Nothing in Particular</title>
+    <link>http://0xnf.github.io/tags/</link>
+    <description>Recent content in Tags on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>0xNF</copyright>
+    <language>en-us</language>
     
-	<atom:link href="https://0xNF.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://0xnf.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

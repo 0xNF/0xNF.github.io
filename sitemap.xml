@@ -3,74 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://0xNF.github.io/posts/neu-03/</loc>
-    <lastmod>2018-01-10T12:10:28-08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://0xNF.github.io/posts/neu-02/</loc>
-    <lastmod>2018-01-10T11:35:35-08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://0xNF.github.io/posts/neu-01/</loc>
-    <lastmod>2018-01-10T11:05:08-08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://0xNF.github.io/posts/neu-00/</loc>
-    <lastmod>2018-01-10T10:51:59-08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://0xNF.github.io/posts/lyricall-architecture-00/</loc>
-    <lastmod>2017-11-30T13:21:42-08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://0xNF.github.io/</loc>
-    <lastmod>2018-01-10T12:10:28-08:00</lastmod>
+    <loc>http://0xnf.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://0xNF.github.io/categories/architecture/</loc>
-    <lastmod>2017-11-30T13:21:42-08:00</lastmod>
+    <loc>http://0xnf.github.io/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://0xNF.github.io/categories/</loc>
-    <lastmod>2017-11-30T13:21:42-08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://0xNF.github.io/categories/lyricall.net/</loc>
-    <lastmod>2017-11-30T13:21:42-08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://0xNF.github.io/posts/</loc>
-    <lastmod>2018-01-10T12:10:28-08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://0xNF.github.io/categories/reports/</loc>
-    <lastmod>2018-01-10T12:10:28-08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://0xNF.github.io/categories/software/</loc>
-    <lastmod>2017-11-30T13:21:42-08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://0xNF.github.io/tags/</loc>
+    <loc>http://0xnf.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   
