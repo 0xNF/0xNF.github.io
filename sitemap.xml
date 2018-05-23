@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://0xnf.github.io/posts/lyricall-security-00/</loc>
+    <lastmod>2018-05-22T17:02:40-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://0xnf.github.io/posts/lyricall-architecture-00/</loc>
     <lastmod>2018-05-22T15:35:08-07:00</lastmod>
   </url>
@@ -34,13 +39,13 @@
   
   <url>
     <loc>http://0xnf.github.io/</loc>
-    <lastmod>2018-05-22T15:35:08-07:00</lastmod>
+    <lastmod>2018-05-22T17:02:40-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://0xnf.github.io/posts/</loc>
-    <lastmod>2018-05-22T15:35:08-07:00</lastmod>
+    <lastmod>2018-05-22T17:02:40-07:00</lastmod>
     <priority>0</priority>
   </url>
   
