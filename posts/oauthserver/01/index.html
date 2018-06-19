@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="http://0xnf.github.io/posts/oauthserver/01/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Implement an OAuth 2.0 Server (Part 01) - Nothing in Particular</title>
+    
+<meta name="description" content="This is the first part of a 19-part tutorial on how to implement an OAuth 2.0 / OpenIdConnect server. This tutorial will take us from start to finish using ASP.NET Core 2 from project creation to azure deployment.">
+
+<meta property="og:title" content="Implement an OAuth 2.0 Server (Part 01) - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://0xnf.github.io/posts/oauthserver/01/">
+<meta property="og:image" content="http://0xnf.github.ioimages/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="This is the first part of a 19-part tutorial on how to implement an OAuth 2.0 / OpenIdConnect server. This tutorial will take us from start to finish using ASP.NET Core 2 from project creation to azure deployment.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="http://0xnf.github.io/posts/oauthserver/01/">
+<meta name="twitter:title" content="Implement an OAuth 2.0 Server (Part 01) - Nothing in Particular">
+<meta name="twitter:description" content="This is the first part of a 19-part tutorial on how to implement an OAuth 2.0 / OpenIdConnect server. This tutorial will take us from start to finish using ASP.NET Core 2 from project creation to azure deployment.">
+<meta name="twitter:image" content="http://0xnf.github.ioimages/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://0xnf.github.io"
+    },
+    "headline": "Implement an OAuth 2.0 Server (Part 01) - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://0xnf.github.ioimages/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-06-06T16:15:39JST",
+    "dateModified": "2018-06-06T16:15:39JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://0xnf.github.ioimages/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "This is the first part of a 19-part tutorial on how to implement an OAuth 2.0 / OpenIdConnect server. This tutorial will take us from start to finish using ASP.NET Core 2 from project creation to azure deployment."
+  }
+</script>
+
+
+    <link href="http://0xnf.github.iocss/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://0xnf.github.io">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://0xnf.github.io"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://0xnf.github.ioposts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Implement an OAuth 2.0 Server (Part 01)</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-06T16:15:39JST">Jun 6, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://0xnf.github.ioposts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Implement an OAuth 2.0 Server (Part 01)</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>Welcome to the first part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+
+<p>The creator of the library, Kevin Chalet, has an excellent series of <a href="https://kevinchalet.com/2016/07/13/creating-your-own-openid-connect-server-with-asos-introduction/">blog posts</a>, that you are encouraged to read for more information, with less of a hands-on approach.</p>
+
+<p>The final product is available <a href="https://github.com/0xNF/OAuthTutorial">here on GitHub</a>, and at the end of each step the project as completed up to that point will be available on its respective branch.</p>
+
+<p>For a live demonstration of this application - <a href="http://oauthtutorial.azurewebsites.net/">visit the hosted version on Azure</a>, where you can do everything we&rsquo;ll describe.</p>
+
+<h2 id="tutorial-table-of-contents">Tutorial Table of Contents</h2>
+
+<ol>
+<li><a href="/posts/oauthserver/01">Introduction</a></li>
+<li><a href="/posts/oauthserver/02">Project Setup and Dependency Downloads</a></li>
+<li><a href="/posts/oauthserver/03">SQLite and Initial Migration</a></li>
+<li><a href="/posts/oauthserver/04">Public API Barebones Setup</a></li>
+<li><a href="/posts/oauthserver/05">Adding Models</a></li>
+<li><a href="/posts/oauthserver/06">OAuth Client CRUD - Controller and ViewModels</a></li>
+<li><a href="/posts/oauthserver/07">OAuth Client CRUD - Views</a></li>
+<li><a href="/posts/oauthserver/08">Adding Client Scopes</a></li>
+<li><a href="/posts/oauthserver/09">Authorization Provider - Authorize Methods</a></li>
+<li><a href="/posts/oauthserver/10">Authorization Provider - Token Methods</a></li>
+<li><a href="/posts/oauthserver/11">Services</a></li>
+<li><a href="/posts/oauthserver/12">Authorization Request Accept/Deny View</a></li>
+<li><a href="/posts/oauthserver/13">Claims, Identity, Authentication Tickets</a></li>
+<li><a href="/posts/oauthserver/14">Adding OAuth Token Validation</a></li>
+<li><a href="/posts/oauthserver/15">Scope Authorization with Policies, Requirements and Handlers</a></li>
+<li><a href="/posts/oauthserver/16">Token Revocation</a></li>
+<li><a href="/posts/oauthserver/17">Rate Limiting - Models and Provider Changes</a></li>
+<li><a href="/posts/oauthserver/18">Rate Limiting - Attribute Creation</a></li>
+<li><a href="/posts/oauthserver/19">Pushing to Azure</a></li>
+</ol>
+
+<h2 id="concepts">Concepts</h2>
+
+<p>Along the way you&rsquo;ll be exposed to these concepts:</p>
+
+<ol>
+<li>Beginner Concepts:
+
+<ol>
+<li>curl</li>
+<li>CRUD</li>
+<li>REST APIs</li>
+</ol></li>
+<li>Intermediate Concepts
+
+<ol>
+<li>Razor Pages 2.0</li>
+<li>Authentication</li>
+<li>OAuth 2</li>
+<li>Entity Framework Core</li>
+<li>Rate Limiting</li>
+</ol></li>
+<li>Advanced Concepts
+
+<ol>
+<li>Identity</li>
+<li>Claims</li>
+<li>Authentication Schemes</li>
+</ol></li>
+</ol>
+
+<h2 id="libraries">Libraries</h2>
+
+<p>We&rsquo;ll be using the following libraries in our application:</p>
+
+<ol>
+<li><a href="https://www.nuget.org/packages/AspNet.Security.OpenIdConnect.Extensions/">AspNet.Security.OpenIdConnect.Extensions</a></li>
+<li><a href="https://www.nuget.org/packages/AspNet.Security.OpenIdConnect.Primitives/">AspNet.Security.OpenIdConnect.Primitives</a></li>
+<li><a href="https://www.nuget.org/packages/AspNet.Security.OpenIdConnect.Server/">AspNet.Security.OpenIdConnect.Server</a></li>
+<li><a href="https://www.nuget.org/packages/AspNet.Security.OAuth.Introspection/">AspNet.Security.OAuth.Introspection</a></li>
+<li><a href="https://www.nuget.org/packages/AspNet.Security.OAuth.Validation/">AspNet.Security.OAuth.Validation</a></li>
+</ol>
+
+<h2 id="what-the-application-will-be-able-to-do">What the application will be able to do</h2>
+
+<p>At a high level, our final application will be able to do these things:</p>
+
+<ul>
+<li>Users will be able to register and login on the website, with persisted login sessions via cookie authentication.</li>
+<li>Users will be able to create/delete OAuth Client Applications, give them a name, a description, and a list of redirect URIs.</li>
+<li>Users will also be able to edit the description and regenerate the <code>client secret</code>.</li>
+<li>Our server will support issuing OAuth 2.0 access tokens to those applications with the three major flows:
+
+<ul>
+<li>Client Credentials</li>
+<li>Implicit</li>
+<li>Authorizatin Code</li>
+</ul></li>
+<li>Our server will have a small authenticated-access API that utilizes OAuth Scopes</li>
+<li>Finally, we&rsquo;ll support rate limiting of our endpoints</li>
+</ul>
+
+<h1 id="public-api">Public API</h1>
+
+<p>We&rsquo;ll have a small public API that supports the following unathenticated, authenticated, unscoped, and scoped endpoints:</p>
+
+<ul>
+<li>Unauthenticated Methods
+
+<ul>
+<li>GET <code>api/v1/hello</code>
+
+<ul>
+<li>Returns <code>&quot;Hello&quot;</code> in the body.</li>
+</ul></li>
+</ul></li>
+<li>Authenticated Methods
+
+<ul>
+<li>Unscoped Methods
+
+<ol>
+<li>GET <code>api/v1/clientcount</code>
+
+<ul>
+<li>Returns <code>number of clients you've registered</code> in the body</li>
+</ul></li>
+</ol></li>
+<li>Scoped Methods
+
+<ol>
+<li>GET <code>api/v1/birthdate</code>
+
+<ul>
+<li>Returns the <code>user's birthdate</code> in the body</li>
+</ul></li>
+<li>GET <code>api/v1/email</code>
+
+<ul>
+<li>Returns the <code>user's email</code></li>
+</ul></li>
+<li>PUT <code>api/v1/email</code>
+
+<ul>
+<li>Changes the <code>user's email</code></li>
+</ul></li>
+<li>PUT <code>api/v1/birthdate</code>
+
+<ul>
+<li>Changes the <code>user's birthdate</code></li>
+</ul></li>
+<li>GET <code>api/v1/me</code>
+
+<ul>
+<li>gets the user object, requires no scopes but additional information is returned if more scopes are present.</li>
+</ul></li>
+</ol></li>
+</ul></li>
+</ul>
+
+<h1 id="moving-on">Moving On</h1>
+
+<p>In the next section we&rsquo;ll set up the basic project structure and download our libraries.</p>
+
+<p><a href="/posts/oauthserver/02">Next</a></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="http://0xnf.github.iocategories/oauth-2.0/">OAuth 2.0</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/openidconnect/">OpenIdConnect</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/c/">C#</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/tutorial/">Tutorial</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/.net-core/">.NET Core</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/asp.net-core/">ASP.NET Core</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/19/" class="list-group-item">Implement an OAuth 2.0 Server (Part 19)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/18/" class="list-group-item">Implement an OAuth 2.0 Server (Part 18)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/17/" class="list-group-item">Implement an OAuth 2.0 Server (Part 17)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/16/" class="list-group-item">Implement an OAuth 2.0 Server (Part 16)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/15/" class="list-group-item">Implement an OAuth 2.0 Server (Part 15)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/14/" class="list-group-item">Implement an OAuth 2.0 Server (Part 14)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/13/" class="list-group-item">Implement an OAuth 2.0 Server (Part 13)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/12/" class="list-group-item">Implement an OAuth 2.0 Server (Part 12)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/11/" class="list-group-item">Implement an OAuth 2.0 Server (Part 11)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/10/" class="list-group-item">Implement an OAuth 2.0 Server (Part 10)</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://0xnf.github.iocategories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="http://0xnf.github.iocategories/asp.net-core" class="list-group-item">asp.net-core</a>
+      
+      <a href="http://0xnf.github.iocategories/c" class="list-group-item">c#</a>
+      
+      <a href="http://0xnf.github.iocategories/oauth-2.0" class="list-group-item">oauth-2.0</a>
+      
+      <a href="http://0xnf.github.iocategories/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="http://0xnf.github.iocategories/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="http://0xnf.github.iocategories/azure" class="list-group-item">azure</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="http://0xnf.github.io/posts/oauthserver/19/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Implement an OAuth 2.0 Server (Part 19) - Nothing in Particular</title>
+    
+<meta name="description" content="The final part of our OAuth tutorial where we deploy to Azure.">
+
+<meta property="og:title" content="Implement an OAuth 2.0 Server (Part 19) - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://0xnf.github.io/posts/oauthserver/19/">
+<meta property="og:image" content="http://0xnf.github.ioimages/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="The final part of our OAuth tutorial where we deploy to Azure.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="http://0xnf.github.io/posts/oauthserver/19/">
+<meta name="twitter:title" content="Implement an OAuth 2.0 Server (Part 19) - Nothing in Particular">
+<meta name="twitter:description" content="The final part of our OAuth tutorial where we deploy to Azure.">
+<meta name="twitter:image" content="http://0xnf.github.ioimages/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://0xnf.github.io"
+    },
+    "headline": "Implement an OAuth 2.0 Server (Part 19) - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://0xnf.github.ioimages/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-06-18T18:11:56JST",
+    "dateModified": "2018-06-18T18:11:56JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://0xnf.github.ioimages/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "The final part of our OAuth tutorial where we deploy to Azure."
+  }
+</script>
+
+
+    <link href="http://0xnf.github.iocss/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://0xnf.github.io">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://0xnf.github.io"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://0xnf.github.ioposts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Implement an OAuth 2.0 Server (Part 19)</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:56JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://0xnf.github.ioposts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Implement an OAuth 2.0 Server (Part 19)</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>Welcome to the ninteenth and final part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+
+<h1 id="pushing-to-azure">Pushing to Azure</h1>
+
+<p>To finish off this project, we&rsquo;ll be deploying our application to the free tier of Microsoft Azure. We&rsquo;ll be taking most of our cues from Nate Barbettini&rsquo;s excellent <a href="https://nbarbettini.gitbooks.io/little-asp-net-core-book/content/chapters/deploy-the-application/deploy-to-azure.html">Little ASP.NET Core Book</a></p>
+
+<p>For the purposes of this tutorial, I assume you already have a Microsoft account and are willing to use it to deploy to the cloud.</p>
+
+<h1 id="deployment-file">Deployment File</h1>
+
+<p>Like any other git tool that builds, like Travis or Circle CI, we need a file that describes what to build and what to output. This becomes doubly useful if you have separate test projects as part of your solution, like we probably should have done.</p>
+
+<p>At the root of your solution, in our case the base <code>OAuthTutorial/</code> folder, create a <code>.deployment</code> file and open it in your editor of choice. Make sure no file extensions like <code>.txt</code> were added. This is your standard extensionless dot-file.</p>
+
+<p><code>.deployment</code>:</p>
+
+<pre><code>[config]
+project = OAuthTutorial/OAuthTutorial.csproj
+</code></pre>
+
+<h1 id="azure-login">Azure Login</h1>
+
+<p>If you&rsquo;re already familiar with the Azure cli process, you can skip this step. Otherwise, you&rsquo;ll need to login first.</p>
+
+<p>Type this and then follow the prompts, which involve opening your browser and typing in a code, in a sort of reverse two-factor authentication step.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az login</code></pre></div>
+<h1 id="azure-creation">Azure Creation</h1>
+
+<p>We&rsquo;re going to create four things on Azure:</p>
+
+<ol>
+<li>a Resource Group</li>
+<li>an App Service plan</li>
+<li>a Web App template</li>
+<li>and an Azure User</li>
+</ol>
+
+<p>For the sake of the tutorial, we&rsquo;ve chosen <code>OAuthTutorial</code> as our name for the project and the final deployed website - but you won&rsquo;t be able to do so since websites on azure are globally unique. You should choose a different root name for your azure website. If you&rsquo;re feeling uncreative, you can call it <code>OAuthTutorial2</code> or something of a similar creative calibur.</p>
+
+<p>Be sure to properly suffix each of these items with <code>Group</code>, or <code>Plan</code>accordingly. You can leave <code>App</code> off, because the final Url will be prettier that way. Either way, you don&rsquo;t have to this, but it&rsquo;s good practice.</p>
+
+<h2 id="resource-group-creation">Resource Group Creation</h2>
+
+<p>If you&rsquo;ve never done this before, or you want to segregate this application from your other resources, then we&rsquo;ll need to create <code>resource group</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az group create -l eastus -n OAuthTutorialGroup</code></pre></div>
+<p>You should see a returned JSON object similar to the object shown below:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+  <span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/subscriptions/xxx-xxx-xxx-xxx-xxx/resourceGroups/OAuthTutorialGroup&#34;</span>,
+  <span style="color:#e6db74">&#34;location&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;eastus&#34;</span>,
+  <span style="color:#e6db74">&#34;managedBy&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+  <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;OAuthTutorialGroup&#34;</span>,
+  <span style="color:#e6db74">&#34;properties&#34;</span><span style="color:#f92672">:</span> {
+    <span style="color:#e6db74">&#34;provisioningState&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Succeeded&#34;</span>
+  },
+  <span style="color:#e6db74">&#34;tags&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>
+}
+</code></pre></div>
+<p>Consulte this map here for a list of locations better suited to you. <a href="https://azure.microsoft.com/en-ca/global-infrastructure/regions/">https://azure.microsoft.com/en-ca/global-infrastructure/regions/</a></p>
+
+<p>Or you can use the command: <code>az account list-locations</code></p>
+
+<h2 id="service-plan-creation">Service Plan Creation</h2>
+
+<p>We&rsquo;ll be using the <code>F1</code> tier, which is the Azure free tier.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az appservice plan create -g OAuthTutorialGroup -n OAuthTutorialPlan --sku F1</code></pre></div>
+<p>If successful, meaning that the name you&rsquo;ve chosen is available, you&rsquo;ll get back another JSON object that looks something like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">{
+  <span style="color:#e6db74">&#34;adminSiteName&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+  <span style="color:#e6db74">&#34;appServicePlanName&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;OAuthTutorialPlan&#34;</span>,
+  <span style="color:#e6db74">&#34;geoRegion&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;East US&#34;</span>,
+  <span style="color:#e6db74">&#34;hostingEnvironmentProfile&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+  <span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/subscriptions/xxx-xxx-xxx-xxx-xxx/resourceGroups/OAuthTutorialGroup/providers/Microsoft.Web/serverfarms/OAuthTutorialPlan&#34;</span>,
+  <span style="color:#e6db74">&#34;isSpot&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>,
+  <span style="color:#e6db74">&#34;kind&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;app&#34;</span>,
+  <span style="color:#e6db74">&#34;location&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;East US&#34;</span>,
+  <span style="color:#e6db74">&#34;maximumNumberOfWorkers&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>,
+  <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;OAuthTutorialPlan&#34;</span>,
+  <span style="color:#e6db74">&#34;numberOfSites&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>,
+  <span style="color:#e6db74">&#34;perSiteScaling&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>,
+  <span style="color:#e6db74">&#34;provisioningState&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Succeeded&#34;</span>,
+  <span style="color:#e6db74">&#34;reserved&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>,
+  <span style="color:#e6db74">&#34;resourceGroup&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;OAuthTutorialGroup&#34;</span>,
+  <span style="color:#e6db74">&#34;sku&#34;</span><span style="color:#f92672">:</span> {
+    <span style="color:#e6db74">&#34;capabilities&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+    <span style="color:#e6db74">&#34;capacity&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>,
+    <span style="color:#e6db74">&#34;family&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;F&#34;</span>,
+    <span style="color:#e6db74">&#34;locations&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+    <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;F1&#34;</span>,
+    <span style="color:#e6db74">&#34;size&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;F1&#34;</span>,
+    <span style="color:#e6db74">&#34;skuCapacity&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+    <span style="color:#e6db74">&#34;tier&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Free&#34;</span>
+  },
+  <span style="color:#e6db74">&#34;spotExpirationTime&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+  <span style="color:#e6db74">&#34;status&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Ready&#34;</span>,
+  <span style="color:#e6db74">&#34;subscription&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;xxx-xxx-xxx-xxx-xxx&#34;</span>,
+  <span style="color:#e6db74">&#34;tags&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+  <span style="color:#e6db74">&#34;targetWorkerCount&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>,
+  <span style="color:#e6db74">&#34;targetWorkerSizeId&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>,
+  <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Microsoft.Web/serverfarms&#34;</span>,
+  <span style="color:#e6db74">&#34;workerTierName&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>
+}
+</code></pre></div>
+<h2 id="web-app-creation">Web App Creation</h2>
+
+<p>If the resource group and service plan creation succeeded, we can create the repositiory for our web app:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az webapp create -g OAuthTutorialGroup -p OAuthTutorialPlan -n OAuthTutorial</code></pre></div>
+<p>You&rsquo;ll get back a huge JSON object and your website should be up and running at <a href="http://oauthtutorial.azurewebsites.net">http://oauthtutorial.azurewebsites.net</a> :</p>
+
+<p><img src="/oauthserver/part19/empty.png" alt="An empty website" /></p>
+
+<h2 id="create-the-azure-user">Create the Azure user</h2>
+
+<p>You&rsquo;ll need to create an account to administer the web app. This is separate from the login process from earlier.<br />
+This is the account that will be responsible for pushing the deployment.</p>
+
+<p>On my own machine, I named my user <code>admin</code> because I was out of ideas.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">user<span style="color:#f92672">=</span>YOUR_DESIRED_USERNAME_HERE
+az webapp deployment user set --user-name $user</code></pre></div>
+<p>Be aware that Azure&rsquo;s password policy is the following: <code>The password should be at least eight characters long and must contain lowercase and uppercase letters and numbers.</code></p>
+
+<h1 id="azure-deployment">Azure Deployment</h1>
+
+<h2 id="git-repo-generation">Git Repo Generation</h2>
+
+<p>We need to create a git deploy location for our app. We can generate one with this command:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az webapp deployment source config-local-git -g OAuthTutorialGroup -n OAuthTutorial --out tsv</code></pre></div>
+<p>We get back something like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">https://admin@oauthtutorial.scm.azurewebsites.net/OAuthTutorial.git</code></pre></div>
+<p>We&rsquo;ll use this to set an upstream remote our git repository.</p>
+
+<h2 id="set-git-upstream">Set Git Upstream</h2>
+
+<p>Using the returned url, use the command below to set the upstream repo. Replace <code>&lt;paste&gt;</code> with the value returned to you from the previous step.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git remote add azure &lt;paste&gt;</code></pre></div>
+<h2 id="git-deploy">Git Deploy</h2>
+
+<p>finally, just do a git push and watch the magic happen:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git push azure master</code></pre></div>
+<h2 id="site-deployed">Site Deployed</h2>
+
+<p>After a fairly lengthy period of time, you should be able to see your site running on your domain.</p>
+
+<p>In our case, you can see the demo application at <a href="http://oauthtutorial.azurewebsites.net">http://oauthtutorial.azurewebsites.net</a></p>
+
+<p><img src="/oauthserver/part19/full.png" alt="Our application, running in the cloud" /></p>
+
+<h1 id="end-notes">End Notes</h1>
+
+<p>There are huge number of other methods we could have implemented in our OAuth provider class. ASOS supports endpoints like <code>logout</code>, or <code>revoke</code> or <code>userinfo</code>, but not every application implements those. Or, if they are implemented, they might not be done the way ASOS is expecting. Our application is the same way.</p>
+
+<p>As far <code>logout</code> goes, we only support that by the cookie identification system that came standard with our project setup - there is no need to introduce another endpoint or handler for this action, especially because what would it mean to logout someone using access tokens? When a user logs in with a token, we don&rsquo;t set any session ids, nor do we record their status in some data-store as being &lsquo;logged in&rsquo;. There&rsquo;s no concept of logout that readily applies to our token system. Some other systems may do more in that respect than ours, but we don&rsquo;t need to worry about this one.</p>
+
+<p>User info is pretty simple to implement - we already did it earlier sections, we just never got around to telling ASOS about it. We&rsquo;ll just set the <code>options.UserInfoEndpoint</code> to <code>/api/v1/me</code> and be on our merry way.</p>
+
+<h1 id="wrap-up">Wrap Up</h1>
+
+<p>The OpenIdConnectServer library is deep enough to handle nearly anything you need when it comes to token based authentication. But that also means it carries with it some deep complexity. I had quite the struggle tyring to implement the server at the beginning when I needed it, and it took me months of on and off tinkering to figure it out. I hope this guide will be useful to people who may be in the same boat, and that maybe the documentation of my struggles will help you avoid the steep learning curve.</p>
+
+<p>Also, I&rsquo;d like to thank Kevin Chalet, the main developer and maintainer of the library - not only is he super helpful and answers nearly every question thrown at him on the <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">GitHub repo</a> for the project, he&rsquo;s also open to adding things to the library to make it more useful. For instance, not even 18 hours after I opened an issue about non-expiring tokens, he had a fix checked into the dev branch implementing it. It is &ldquo;not a good idea&rdquo; he said, but it has valid usecases so he added it.</p>
+
+<p>So, thanks Kevin, for a very powerful, if very complicated library.</p>
+
+<p>Also thanks to everyone else who I cited in the relevant posts that helped me out at various points in the way. We never interacted, but your blog posts and stack overflow questions were invaluable.</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="http://0xnf.github.iocategories/oauth-2.0/">OAuth 2.0</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/openidconnect/">OpenIdConnect</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/c/">C#</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/tutorial/">Tutorial</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/.net-core/">.NET Core</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/asp.net-core/">ASP.NET Core</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/azure/">Azure</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/19/" class="list-group-item">Implement an OAuth 2.0 Server (Part 19)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/18/" class="list-group-item">Implement an OAuth 2.0 Server (Part 18)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/17/" class="list-group-item">Implement an OAuth 2.0 Server (Part 17)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/16/" class="list-group-item">Implement an OAuth 2.0 Server (Part 16)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/15/" class="list-group-item">Implement an OAuth 2.0 Server (Part 15)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/14/" class="list-group-item">Implement an OAuth 2.0 Server (Part 14)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/13/" class="list-group-item">Implement an OAuth 2.0 Server (Part 13)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/12/" class="list-group-item">Implement an OAuth 2.0 Server (Part 12)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/11/" class="list-group-item">Implement an OAuth 2.0 Server (Part 11)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/10/" class="list-group-item">Implement an OAuth 2.0 Server (Part 10)</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://0xnf.github.iocategories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="http://0xnf.github.iocategories/asp.net-core" class="list-group-item">asp.net-core</a>
+      
+      <a href="http://0xnf.github.iocategories/c" class="list-group-item">c#</a>
+      
+      <a href="http://0xnf.github.iocategories/oauth-2.0" class="list-group-item">oauth-2.0</a>
+      
+      <a href="http://0xnf.github.iocategories/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="http://0xnf.github.iocategories/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="http://0xnf.github.iocategories/azure" class="list-group-item">azure</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

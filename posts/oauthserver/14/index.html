@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="http://0xnf.github.io/posts/oauthserver/14/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Implement an OAuth 2.0 Server (Part 14) - Nothing in Particular</title>
+    
+<meta name="description" content="In this section of our OAuth tutorial, we&#39;ll add OAuth Validation to our application and actually authenticate a user with their access tokens.">
+
+<meta property="og:title" content="Implement an OAuth 2.0 Server (Part 14) - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://0xnf.github.io/posts/oauthserver/14/">
+<meta property="og:image" content="http://0xnf.github.ioimages/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="In this section of our OAuth tutorial, we&#39;ll add OAuth Validation to our application and actually authenticate a user with their access tokens.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="http://0xnf.github.io/posts/oauthserver/14/">
+<meta name="twitter:title" content="Implement an OAuth 2.0 Server (Part 14) - Nothing in Particular">
+<meta name="twitter:description" content="In this section of our OAuth tutorial, we&#39;ll add OAuth Validation to our application and actually authenticate a user with their access tokens.">
+<meta name="twitter:image" content="http://0xnf.github.ioimages/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://0xnf.github.io"
+    },
+    "headline": "Implement an OAuth 2.0 Server (Part 14) - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://0xnf.github.ioimages/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-06-18T18:11:47JST",
+    "dateModified": "2018-06-18T18:11:47JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://0xnf.github.ioimages/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "In this section of our OAuth tutorial, we&#39;ll add OAuth Validation to our application and actually authenticate a user with their access tokens."
+  }
+</script>
+
+
+    <link href="http://0xnf.github.iocss/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://0xnf.github.io">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://0xnf.github.io"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://0xnf.github.ioposts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Implement an OAuth 2.0 Server (Part 14)</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:47JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://0xnf.github.ioposts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Implement an OAuth 2.0 Server (Part 14)</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>Welcome to the fourteenth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+
+<h1 id="adding-oauth-validation">Adding OAuth Validation</h1>
+
+<p>Our server successfully issues the three token types, but we don&rsquo;t have a way to actually force a token check on our endpoints yet. One of the packages we downloaded initially was <code>AspNet.Security.OAuth.Validation</code>. We&rsquo;re going to use that to add OAuth Validation to our server.</p>
+
+<p>In <code>Startup.cs's</code> <code>ConfigureServices</code>, add <code>.AddOAuthValidation()</code> to the Authentication chain:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1</span><span style="color:#75715e">// This method gets called by the runtime. Use this method to add services to the container.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4</span>    services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5</span>        options.UseSqlite(Configuration.GetConnectionString(<span style="color:#e6db74">&#34;DefaultConnection&#34;</span>)));
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7</span>    services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;((x) =&gt; {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8</span>        x.Password.RequiredLength = <span style="color:#ae81ff">6</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9</span>        x.Password.RequiredUniqueChars = <span style="color:#ae81ff">0</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10</span>        x.Password.RequireNonAlphanumeric = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11</span>        x.Password.RequireDigit = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12</span>        x.Password.RequireLowercase = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13</span>        x.Password.RequireUppercase = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14</span>    })
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15</span>        .AddEntityFrameworkStores&lt;ApplicationDbContext&gt;()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16</span>        .AddDefaultTokenProviders();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18</span>    services.AddAuthentication()
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19</span>        .AddOAuthValidation()
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20</span>        .AddOpenIdConnectServer(options =&gt; {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21</span>            options.UserinfoEndpointPath = <span style="color:#e6db74">&#34;/api/v1/me&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22</span>            options.TokenEndpointPath = <span style="color:#e6db74">&#34;/api/v1/token&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23</span>            options.AuthorizationEndpointPath = <span style="color:#e6db74">&#34;/authorize/&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24</span>            options.UseSlidingExpiration = <span style="color:#66d9ef">false</span>; <span style="color:#75715e">// False means that new Refresh tokens aren&#39;t issued. Our implementation will be doing a no-expiry refresh, and this is one part of it.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25</span><span style="color:#75715e"></span>            options.AllowInsecureHttp = <span style="color:#66d9ef">true</span>; <span style="color:#75715e">// ONLY FOR TESTING
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26</span><span style="color:#75715e"></span>            options.AccessTokenLifetime = TimeSpan.FromHours(<span style="color:#ae81ff">1</span>); <span style="color:#75715e">// An access token is valid for an hour - after that, a new one must be requested.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27</span><span style="color:#75715e"></span>            options.RefreshTokenLifetime = TimeSpan.FromDays(<span style="color:#ae81ff">365</span> * <span style="color:#ae81ff">1000</span>); <span style="color:#75715e">//NOTE - Later versions of the ASOS library support `TimeSpan?` for these lifetime fields, meaning no expiration. 
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28</span><span style="color:#75715e"></span>                                                                            <span style="color:#75715e">// The version we are using does not, so a long running expiration of one thousand years will suffice.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29</span><span style="color:#75715e"></span>            options.AuthorizationCodeLifetime = TimeSpan.FromSeconds(<span style="color:#ae81ff">60</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30</span>            options.IdentityTokenLifetime = options.AccessTokenLifetime;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31</span>            options.ProviderType = <span style="color:#66d9ef">typeof</span>(OAuthProvider);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32</span>        });
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34</span>    <span style="color:#75715e">// Add application services.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35</span><span style="color:#75715e"></span>    services.AddTransient&lt;IEmailSender, EmailSender&gt;();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36</span>    services.AddScoped&lt;OAuthProvider&gt;();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37</span>    services.AddTransient&lt;ValidationService&gt;();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38</span>    services.AddTransient&lt;TokenService&gt;();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40</span>    services.AddMvc();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41</span>}</code></pre></div>
+
+<p>If you want to specify a different Authentication scheme for the OAuth validation, for instance if you have two different areas of your server performinig OAuth validation on a different set of users, then you can specify the scheme by supplying a string in the method call. We will leave it blank because we&rsquo;re fine with the default.</p>
+
+<p>You can read more about Autentication Schemes on the <a href="https://docs.microsoft.com/en-us/aspnet/core/security/authorization/limitingidentitybyscheme?view=aspnetcore-2.1&amp;tabs=aspnetcore2x">Microsoft Docs</a>.</p>
+
+<h1 id="adding-authentication-schemes-to-our-app">Adding Authentication Schemes to our App</h1>
+
+<p>We&rsquo;ve left the OAuth Validation scheme as the default, but when we add endpoint authorization, we will need to specify what we&rsquo;re using - if we leave it as the default, the server will attempt to use a cookie identity, and will promptly fail because an incoming request with an OAuth token won&rsquo;t have the necessary cookie information.</p>
+
+<p>Open up <code>Controllers/APIController.cs</code> and add some Authorization attributes:</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1</span><span style="color:#75715e">// Authenticated Methdos - only available to those with a valid Access Token
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2</span><span style="color:#75715e">// Unscoped Methods - Authenticated methods that do not require any specific Scope
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3</span><span style="color:#75715e"></span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme)]
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4</span><span style="color:#a6e22e">[HttpGet(&#34;clientcount&#34;)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; ClientCount() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6</span>    <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Client Count Get Request was successful but this endpoint is not yet implemented&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9</span><span style="color:#75715e">// Scoped Methods - Authenticated methods that require certain scopes
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10</span><span style="color:#75715e"></span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme)]
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11</span><span style="color:#a6e22e">[HttpGet(&#34;birthdate&#34;)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12</span><span style="color:#66d9ef">public</span> IActionResult GetBirthdate() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13</span>    <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Birthdate Get Request was successful but this endpoint is not yet implemented&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14</span>}<span style="color:#a6e22e">
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15</span><span style="color:#a6e22e">
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme)]
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17</span><span style="color:#a6e22e">[HttpGet(&#34;email&#34;)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; GetEmail() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19</span>    <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Email Get Request was successful but this endpoint is not yet implemented&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20</span>}<span style="color:#a6e22e">
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21</span><span style="color:#a6e22e">
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme)]
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23</span><span style="color:#a6e22e">[HttpPut(&#34;birthdate&#34;)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24</span><span style="color:#66d9ef">public</span> IActionResult ChangeBirthdate(<span style="color:#66d9ef">string</span> birthdate) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25</span>    <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Birthdate Put successful but this endpoint is not yet implemented&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26</span>}<span style="color:#a6e22e">
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27</span><span style="color:#a6e22e">
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme)]
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29</span><span style="color:#a6e22e">[HttpPut(&#34;email&#34;)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; ChangeEmail(<span style="color:#66d9ef">string</span> email) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31</span>    <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Email Put request received, but function is not yet implemented&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34</span><span style="color:#75715e">// Dynamic Scope Methods - Authenticated methods that return additional information the more scopes are supplied
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35</span><span style="color:#75715e"></span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme)]
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36</span><span style="color:#a6e22e">[HttpGet(&#34;me&#34;)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; Me() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38</span>    <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;User Profile Get request received, but function is not yet implemented&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39</span>}</code></pre></div></p>
+
+<p>We&rsquo;ve added a standard <code>[Authorize]</code> attribute to our endpoints, but we&rsquo;ve told it what AuthenticationScheme to use. We left the scheme name blank in <code>ConfigureServices</code>, so it chose the default value of <code>AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme</code>. If you change the ConfigureServices default scheme name, you should reflect it here in the endpoints.</p>
+
+<h1 id="moving-on">Moving On</h1>
+
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/14-OAuthValidation">here on github</a>.</p>
+
+<p>In the next section, we&rsquo;ll cover adding policies, dymamically resolving them, and adding them to our endpoints.</p>
+
+<p><a href="/posts/oauthserver/15">Next</a></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="http://0xnf.github.iocategories/oauth-2.0/">OAuth 2.0</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/openidconnect/">OpenIdConnect</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/c/">C#</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/tutorial/">Tutorial</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/.net-core/">.NET Core</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/asp.net-core/">ASP.NET Core</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/19/" class="list-group-item">Implement an OAuth 2.0 Server (Part 19)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/18/" class="list-group-item">Implement an OAuth 2.0 Server (Part 18)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/17/" class="list-group-item">Implement an OAuth 2.0 Server (Part 17)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/16/" class="list-group-item">Implement an OAuth 2.0 Server (Part 16)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/15/" class="list-group-item">Implement an OAuth 2.0 Server (Part 15)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/14/" class="list-group-item">Implement an OAuth 2.0 Server (Part 14)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/13/" class="list-group-item">Implement an OAuth 2.0 Server (Part 13)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/12/" class="list-group-item">Implement an OAuth 2.0 Server (Part 12)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/11/" class="list-group-item">Implement an OAuth 2.0 Server (Part 11)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/10/" class="list-group-item">Implement an OAuth 2.0 Server (Part 10)</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://0xnf.github.iocategories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="http://0xnf.github.iocategories/asp.net-core" class="list-group-item">asp.net-core</a>
+      
+      <a href="http://0xnf.github.iocategories/c" class="list-group-item">c#</a>
+      
+      <a href="http://0xnf.github.iocategories/oauth-2.0" class="list-group-item">oauth-2.0</a>
+      
+      <a href="http://0xnf.github.iocategories/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="http://0xnf.github.iocategories/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="http://0xnf.github.iocategories/azure" class="list-group-item">azure</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="http://0xnf.github.io/posts/oauthserver/07/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Implement an OAuth 2.0 Server (Part 07) - Nothing in Particular</title>
+    
+<meta name="description" content="We&#39;ll wrap up creating the OAuth Client views by adding the actual razor page templated .cshtml views to our project.">
+
+<meta property="og:title" content="Implement an OAuth 2.0 Server (Part 07) - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://0xnf.github.io/posts/oauthserver/07/">
+<meta property="og:image" content="http://0xnf.github.ioimages/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="We&#39;ll wrap up creating the OAuth Client views by adding the actual razor page templated .cshtml views to our project.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="http://0xnf.github.io/posts/oauthserver/07/">
+<meta name="twitter:title" content="Implement an OAuth 2.0 Server (Part 07) - Nothing in Particular">
+<meta name="twitter:description" content="We&#39;ll wrap up creating the OAuth Client views by adding the actual razor page templated .cshtml views to our project.">
+<meta name="twitter:image" content="http://0xnf.github.ioimages/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://0xnf.github.io"
+    },
+    "headline": "Implement an OAuth 2.0 Server (Part 07) - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://0xnf.github.ioimages/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-06-07T19:12:13JST",
+    "dateModified": "2018-06-07T19:12:13JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://0xnf.github.ioimages/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "We&#39;ll wrap up creating the OAuth Client views by adding the actual razor page templated .cshtml views to our project."
+  }
+</script>
+
+
+    <link href="http://0xnf.github.iocss/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://0xnf.github.io">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://0xnf.github.io"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://0xnf.github.ioposts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Implement an OAuth 2.0 Server (Part 07)</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-07T19:12:13JST">Jun 7, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://0xnf.github.ioposts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Implement an OAuth 2.0 Server (Part 07)</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>Welcome to the seventh part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+
+<h1 id="oauth-client-crud-views">OAuth Client CRUD - Views</h1>
+
+<p>This is the second part of adding our OAauth Client management pages. In the previous section we generated a controller, which automatically generated some viewas for us. In this section, we&rsquo;ll make those views do what we need them to do.</p>
+
+<h2 id="details-and-delete-views">Details and Delete Views</h2>
+
+<p>Delete the following two cshtml files - we don&rsquo;t need them, because we&rsquo;ll be rolling their functions into the <code>Edit</code> view.</p>
+
+<ul>
+<li><code>Views/OAuthClients/Details.cshtml</code></li>
+<li><code>Views/OAuthClients/Delete.cshtml</code></li>
+</ul>
+
+<h2 id="index">Index</h2>
+
+<p><code>Views/OAuthClients/Index.cshtml</code></p>
+
+<p>First, since we deleted our <code>GET DELETE</code> and <code>GET DETAILS</code> methods, we&rsquo;re going to want to delete their references from Index. Delete the two <code>&lt;a&gt;</code> tags near the bottom of <code>index.cshtml</code> that reference the <code>details</code> and <code>delete</code> links.</p>
+
+<p>Second, it doesn&rsquo;t make sense to display the <code>client secret</code> so prominently, so let&rsquo;s change it to be the <code>client id</code> instead.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@model IEnumerable&lt;<span style="color:#f92672">OAuthTutorial.Models.OAuth.OAuthClient</span>&gt;
+@{
+    ViewData[&#34;Title&#34;] = &#34;Index&#34;;
+}
+&lt;<span style="color:#f92672">h2</span>&gt;Index&lt;/<span style="color:#f92672">h2</span>&gt;
+&lt;<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">asp-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Create&#34;</span>&gt;Create New&lt;/<span style="color:#f92672">a</span>&gt;
+&lt;/<span style="color:#f92672">p</span>&gt;
+&lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table&#34;</span>&gt;
+    &lt;<span style="color:#f92672">thead</span>&gt;
+        &lt;<span style="color:#f92672">tr</span>&gt;
+                &lt;<span style="color:#f92672">th</span>&gt;
+<span style="display:block;width:100%;background-color:#3c3d38">                    @Html.DisplayNameFor(model =&gt; model.ClientId)
+</span>                &lt;/<span style="color:#f92672">th</span>&gt;
+                &lt;<span style="color:#f92672">th</span>&gt;
+                    @Html.DisplayNameFor(model =&gt; model.ClientName)
+                &lt;/<span style="color:#f92672">th</span>&gt;
+                &lt;<span style="color:#f92672">th</span>&gt;
+                    @Html.DisplayNameFor(model =&gt; model.ClientDescription)
+                &lt;/<span style="color:#f92672">th</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;&lt;/<span style="color:#f92672">th</span>&gt;
+        &lt;/<span style="color:#f92672">tr</span>&gt;
+    &lt;/<span style="color:#f92672">thead</span>&gt;
+    &lt;<span style="color:#f92672">tbody</span>&gt;
+@foreach (var item in Model) {
+        &lt;<span style="color:#f92672">tr</span>&gt;
+            &lt;<span style="color:#f92672">td</span>&gt;
+<span style="display:block;width:100%;background-color:#3c3d38">                @Html.DisplayFor(modelItem =&gt; item.ClientId)
+</span>            &lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span>&gt;
+                @Html.DisplayFor(modelItem =&gt; item.ClientName)
+            &lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span>&gt;
+                @Html.DisplayFor(modelItem =&gt; item.ClientDescription)
+            &lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span>&gt;
+<span style="display:block;width:100%;background-color:#3c3d38">                &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">asp-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Edit&#34;</span> <span style="color:#a6e22e">asp-route-id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@item.ClientId&#34;</span>&gt;Edit&lt;/<span style="color:#f92672">a</span>&gt;
+</span>            &lt;/<span style="color:#f92672">td</span>&gt;
+        &lt;/<span style="color:#f92672">tr</span>&gt;
+}
+    &lt;/<span style="color:#f92672">tbody</span>&gt;
+&lt;/<span style="color:#f92672">table</span>&gt;</code></pre></div>
+
+<h2 id="create">Create</h2>
+
+<p><code>Views/OAuthClients/Create.cshtml</code></p>
+
+<p>Delete the <code>&lt;div class=&quot;form-group&quot;&gt;</code> containing the <code>ClientSecret</code> inputs.</p>
+
+<p>Also, in the <code>Model</code> up top, swap out the <code>OAuthClient</code> for our <code>OAuthClientsViewModes.CreateClientViewModel</code>.</p>
+
+<p>TODO HIGHLIGHT model
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="display:block;width:100%;background-color:#3c3d38">@model OAuthTutorial.Models.OAuthClientViewModels.CreateClientViewModel
+</span>@{
+    ViewData[&#34;Title&#34;] = &#34;Create&#34;;
+}
+&lt;<span style="color:#f92672">h2</span>&gt;Create&lt;/<span style="color:#f92672">h2</span>&gt;
+&lt;<span style="color:#f92672">h4</span>&gt;OAuthClient&lt;/<span style="color:#f92672">h4</span>&gt;
+&lt;<span style="color:#f92672">hr</span> /&gt;
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-4&#34;</span>&gt;
+        &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">asp-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Create&#34;</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">asp-validation-summary</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ModelOnly&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-danger&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">asp-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ClientName&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;control-label&#34;</span>&gt;&lt;/<span style="color:#f92672">label</span>&gt;
+                &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">asp-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ClientName&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> /&gt;
+                &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">asp-validation-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ClientName&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-danger&#34;</span>&gt;&lt;/<span style="color:#f92672">span</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">asp-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ClientDescription&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;control-label&#34;</span>&gt;&lt;/<span style="color:#f92672">label</span>&gt;
+                &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">asp-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ClientDescription&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> /&gt;
+                &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">asp-validation-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ClientDescription&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-danger&#34;</span>&gt;&lt;/<span style="color:#f92672">span</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Create&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn btn-default&#34;</span> /&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;/<span style="color:#f92672">form</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">asp-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Index&#34;</span>&gt;Back to List&lt;/<span style="color:#f92672">a</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+@section Scripts {
+    @{await Html.RenderPartialAsync(&#34;_ValidationScriptsPartial&#34;);}
+}</code></pre></div></p>
+
+<h2 id="edit">Edit</h2>
+
+<p><code>Views/OAuthClients/Edit.cshtml</code></p>
+
+<p>Replace the HTML with this:
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">50
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@model OAuthTutorial.Models.OAuthClientViewModels.EditClientViewModel
+@{ ViewData[&#34;Title&#34;] = &#34;Edit&#34;;
+}
+&lt;<span style="color:#f92672">h2</span>&gt;Edit&lt;/<span style="color:#f92672">h2</span>&gt;
+&lt;<span style="color:#f92672">h4</span>&gt;@Model.ClientName&lt;/<span style="color:#f92672">h4</span>&gt;
+&lt;<span style="color:#f92672">div</span>&gt;
+    Client Id: &lt;<span style="color:#f92672">p</span>&gt;@Model.ClientId&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">div</span>&gt;
+        &lt;<span style="color:#f92672">div</span>&gt;
+            Client Secret: &lt;<span style="color:#f92672">p</span>&gt;@Model.ClientSecret&lt;/<span style="color:#f92672">p</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span> <span style="color:#a6e22e">asp-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ResetSecret&#34;</span>&gt;
+            &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@Model.ClientId&#34;</span> /&gt;
+            &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn btn-xs btn-danger&#34;</span>&gt;RESET&lt;/<span style="color:#f92672">button</span>&gt;
+        &lt;/<span style="color:#f92672">form</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;<span style="color:#f92672">hr</span> /&gt;
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-4&#34;</span>&gt;
+        &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">asp-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Edit&#34;</span>&gt;            
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">asp-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@Model.ClientDescription&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;control-label&#34;</span>&gt;&lt;/<span style="color:#f92672">label</span>&gt;
+                &lt;<span style="color:#f92672">textarea</span> <span style="color:#a6e22e">asp-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@Model.ClientDescription&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span>&gt;&lt;/<span style="color:#f92672">textarea</span>&gt;
+                &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">asp-validation-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@Model.ClientDescription&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-danger&#34;</span>&gt;&lt;/<span style="color:#f92672">span</span>&gt;
+            &lt;/<span style="color:#f92672">div</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rdiDivs&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+                &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">asp-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@Model.RedirectUris&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;control-label&#34;</span> /&gt;
+                &lt;<span style="color:#f92672">br</span> /&gt;
+                @for (int i = 0; i &lt; <span style="color:#f92672">Model.RedirectUris.Length</span><span style="color:#960050;background-color:#1e0010">;</span> <span style="color:#a6e22e">i</span><span style="color:#960050;background-color:#1e0010">++)</span> <span style="color:#960050;background-color:#1e0010">{</span>
+                    <span style="color:#960050;background-color:#1e0010">&lt;</span><span style="color:#a6e22e">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rdiDiv_@i&#34;</span>&gt;
+                        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;RedirectUris&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@Model.RedirectUris[i]&#34;</span> /&gt;
+                        &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;RemoveRdiDiv(@i)&#34;</span>&gt;Remove&lt;/<span style="color:#f92672">button</span>&gt;
+                    &lt;/<span style="color:#f92672">div</span>&gt;
+                }
+            &lt;/<span style="color:#f92672">div</span>&gt;
+            &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;AddRdiDiv()&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span>&gt;Add Redirect URI&lt;/<span style="color:#f92672">button</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-group&#34;</span>&gt;
+<span style="display:block;width:100%;background-color:#3c3d38">                &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Save&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn btn-default&#34;</span> /&gt;
+</span>            &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;/<span style="color:#f92672">form</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+<span style="display:block;width:100%;background-color:#3c3d38">&lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span> <span style="color:#a6e22e">asp-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Delete&#34;</span>&gt;
+</span>    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@Model.ClientId&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn btn-xs btn-danger&#34;</span>&gt;DELETE&lt;/<span style="color:#f92672">button</span>&gt;
+&lt;/<span style="color:#f92672">form</span>&gt;
+&lt;<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">asp-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Index&#34;</span>&gt;Back to List&lt;/<span style="color:#f92672">a</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;</code></pre></td></tr></table>
+</div>
+</div>
+Take note of lines 39 and 44 for the <code>Add Redirect URI</code> and <code>Remove</code> buttons. They have <code>type=button</code>, which prevents them from submitting the whole form as a <code>POST</code> request, and they have references to two JavaScript methods, which we will add shortly.</p>
+
+<p>Finally, it&rsquo;s important to note that the <code>Redirect URI</code> inputs have <code>name=&quot;RediectUris&quot;</code>. When multipe inputs have the same <code>name</code>, their values get packaged and sent as a <code>string[]</code> to the server. This is how we can group them all together as actually being Redirect URIs.</p>
+
+<h4 id="javascript">JavaScript</h4>
+
+<p>Add the following <code>&lt;Script&gt;</code> above the <code>@section Scripts</code> section:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">script</span>&gt;
+
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">count</span> <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">Model</span>.<span style="color:#a6e22e">RedirectUris</span>.<span style="color:#a6e22e">Length</span>;
+
+    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">AddRdiDiv</span>() {
+        <span style="color:#a6e22e">count</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;ayyy&#34;</span>);
+        <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#rdiDivs&#34;</span>).<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#39;&lt;div id=&#34;rdiDiv_&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">count</span> <span style="color:#f92672">+</span><span style="color:#e6db74">&#39;&#34;&gt;&lt;input name=&#34;RedirectUris&#34; value=&#34;&#34;/&gt;&lt;button type=&#34;button&#34; onclick=&#34;RemoveRdiDiv(&#39;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">count</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#39;)&#34;&gt;remove&lt;/button&gt;&lt;/div&gt;&#39;</span>);
+    }
+
+    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">RemoveRdiDiv</span>(<span style="color:#a6e22e">id</span>) {
+        <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#rdiDiv_&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">id</span>).<span style="color:#a6e22e">remove</span>();
+    }
+
+&lt;/<span style="color:#f92672">script</span>&gt;</code></pre></div>
+<p>We initialize <code>count</code> to be however many <code>RedirectURIs</code> exist in this <code>OAuthClient</code>, which serves as a way to uniquely identify inputs for addition and removal.</p>
+
+<p><code>AddRdiDiv()</code> adds another empty Redirect URI input to the page, and <code>RemoveRdiDiv()</code> takes one away.</p>
+
+<h1 id="testing">Testing</h1>
+
+<p>At this point it&rsquo;s likely a good time to take a small break and see if our server is behaving.</p>
+
+<p>Start your server, register a new user or login with one you&rsquo;ve already created.</p>
+
+<pre><code>Note: If you created a user before, deleted the database and regenerated it, you'll remain logged in but encounter errors because you are cookie identified as a now non-existant user. Log out and try again.
+</code></pre>
+
+<p>Things to try:</p>
+
+<ol>
+<li>Create a new <code>OAuth Client Application</code></li>
+<li>Reset its <code>Client Secret</code></li>
+<li>Add some <code>Redirect URIs</code></li>
+<li>Delete the application</li>
+</ol>
+
+<p>You can find these options at <a href="http://localhost:5000/OAuthClients">http://localhost:5000/OAuthClients</a></p>
+
+<h1 id="moving-on">Moving On</h1>
+
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/07-ClientCRUDhtml">here on github</a>.</p>
+
+<p>In the next section, we&rsquo;ll add Scopes to our application.</p>
+
+<p><a href="/posts/oauthserver/08">Next</a></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="http://0xnf.github.iocategories/oauth-2.0/">OAuth 2.0</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/openidconnect/">OpenIdConnect</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/c/">C#</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/tutorial/">Tutorial</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/.net-core/">.NET Core</a></li>
+          
+          <li><a href="http://0xnf.github.iocategories/asp.net-core/">ASP.NET Core</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/19/" class="list-group-item">Implement an OAuth 2.0 Server (Part 19)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/18/" class="list-group-item">Implement an OAuth 2.0 Server (Part 18)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/17/" class="list-group-item">Implement an OAuth 2.0 Server (Part 17)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/16/" class="list-group-item">Implement an OAuth 2.0 Server (Part 16)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/15/" class="list-group-item">Implement an OAuth 2.0 Server (Part 15)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/14/" class="list-group-item">Implement an OAuth 2.0 Server (Part 14)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/13/" class="list-group-item">Implement an OAuth 2.0 Server (Part 13)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/12/" class="list-group-item">Implement an OAuth 2.0 Server (Part 12)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/11/" class="list-group-item">Implement an OAuth 2.0 Server (Part 11)</a>
+      
+      <a href="http://0xnf.github.io/posts/oauthserver/10/" class="list-group-item">Implement an OAuth 2.0 Server (Part 10)</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://0xnf.github.iocategories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="http://0xnf.github.iocategories/asp.net-core" class="list-group-item">asp.net-core</a>
+      
+      <a href="http://0xnf.github.iocategories/c" class="list-group-item">c#</a>
+      
+      <a href="http://0xnf.github.iocategories/oauth-2.0" class="list-group-item">oauth-2.0</a>
+      
+      <a href="http://0xnf.github.iocategories/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="http://0xnf.github.iocategories/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="http://0xnf.github.iocategories/azure" class="list-group-item">azure</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

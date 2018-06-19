@@ -3,54 +3,192 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://0xnf.github.io/posts/lyricall-security-00/</loc>
+    <loc>http://0xnf.github.io/posts/oauthserver/19/</loc>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/18/</loc>
+    <lastmod>2018-06-18T18:11:54-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/17/</loc>
+    <lastmod>2018-06-18T18:11:52-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/16/</loc>
+    <lastmod>2018-06-18T18:11:50-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/15/</loc>
+    <lastmod>2018-06-18T18:11:49-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/14/</loc>
+    <lastmod>2018-06-18T18:11:47-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/13/</loc>
+    <lastmod>2018-06-18T18:11:45-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/12/</loc>
+    <lastmod>2018-06-18T18:11:43-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/11/</loc>
+    <lastmod>2018-06-18T18:11:42-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/10/</loc>
+    <lastmod>2018-06-18T18:11:40-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/09/</loc>
+    <lastmod>2018-06-18T18:11:28-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/08/</loc>
+    <lastmod>2018-06-18T18:11:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/07/</loc>
+    <lastmod>2018-06-07T19:12:13-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/06/</loc>
+    <lastmod>2018-06-06T16:16:01-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/05/</loc>
+    <lastmod>2018-06-06T16:15:59-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/04/</loc>
+    <lastmod>2018-06-06T16:15:58-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/03/</loc>
+    <lastmod>2018-06-06T16:15:56-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/02/</loc>
+    <lastmod>2018-06-06T16:15:55-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/oauthserver/01/</loc>
+    <lastmod>2018-06-06T16:15:39-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/posts/lyricall/security/</loc>
     <lastmod>2018-05-22T17:02:40-07:00</lastmod>
   </url>
   
   <url>
-    <loc>http://0xnf.github.io/posts/lyricall-architecture-00/</loc>
+    <loc>http://0xnf.github.io/posts/lyricall/architecture/</loc>
     <lastmod>2018-05-22T15:35:08-07:00</lastmod>
   </url>
   
   <url>
-    <loc>http://0xnf.github.io/posts/neu-03/</loc>
+    <loc>http://0xnf.github.io/posts/neu/04/</loc>
     <lastmod>2018-05-22T15:34:47-07:00</lastmod>
   </url>
   
   <url>
-    <loc>http://0xnf.github.io/posts/neu-02/</loc>
+    <loc>http://0xnf.github.io/posts/neu/03/</loc>
     <lastmod>2018-05-22T15:34:44-07:00</lastmod>
   </url>
   
   <url>
-    <loc>http://0xnf.github.io/posts/neu-01/</loc>
+    <loc>http://0xnf.github.io/posts/neu/02/</loc>
     <lastmod>2018-05-22T15:34:43-07:00</lastmod>
   </url>
   
   <url>
-    <loc>http://0xnf.github.io/posts/neu-00/</loc>
+    <loc>http://0xnf.github.io/posts/neu/01/</loc>
     <lastmod>2018-05-22T15:34:41-07:00</lastmod>
   </url>
   
   <url>
+    <loc>http://0xnf.github.io/categories/.net-core/</loc>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/categories/asp.net-core/</loc>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/categories/azure/</loc>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/categories/c#/</loc>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://0xnf.github.io/categories/</loc>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://0xnf.github.io/</loc>
-    <lastmod>2018-05-22T17:02:40-07:00</lastmod>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/categories/oauth-2.0/</loc>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/categories/openidconnect/</loc>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://0xnf.github.io/posts/</loc>
-    <lastmod>2018-05-22T17:02:40-07:00</lastmod>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://0xnf.github.io/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://0xnf.github.io/categories/tutorial/</loc>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
     <priority>0</priority>
   </url>
   
