@@ -2,75 +2,129 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Nothing in Particular</title>
-    <link>http://0xnf.github.io/categories/</link>
+    <link>https://0xnf.github.io/categories/</link>
     <description>Recent content in Categories on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 18 Jun 2018 18:11:56 -0700</lastBuildDate>
     
-	<atom:link href="http://0xnf.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://0xnf.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>.Net Core</title>
-      <link>http://0xnf.github.io/categories/.net-core/</link>
+      <link>https://0xnf.github.io/categories/.net-core/</link>
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
-      <guid>http://0xnf.github.io/categories/.net-core/</guid>
+      <guid>https://0xnf.github.io/categories/.net-core/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Architecture</title>
+      <link>https://0xnf.github.io/categories/architecture/</link>
+      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/categories/architecture/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Asp.net Core</title>
-      <link>http://0xnf.github.io/categories/asp.net-core/</link>
+      <link>https://0xnf.github.io/categories/asp.net-core/</link>
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
-      <guid>http://0xnf.github.io/categories/asp.net-core/</guid>
+      <guid>https://0xnf.github.io/categories/asp.net-core/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Azure</title>
-      <link>http://0xnf.github.io/categories/azure/</link>
+      <link>https://0xnf.github.io/categories/azure/</link>
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
-      <guid>http://0xnf.github.io/categories/azure/</guid>
+      <guid>https://0xnf.github.io/categories/azure/</guid>
       <description></description>
     </item>
     
     <item>
       <title>C#</title>
-      <link>http://0xnf.github.io/categories/c#/</link>
+      <link>https://0xnf.github.io/categories/c#/</link>
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
-      <guid>http://0xnf.github.io/categories/c#/</guid>
+      <guid>https://0xnf.github.io/categories/c#/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Database Design</title>
+      <link>https://0xnf.github.io/categories/database-design/</link>
+      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/categories/database-design/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lyricall</title>
+      <link>https://0xnf.github.io/categories/lyricall/</link>
+      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/categories/lyricall/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Oauth 2.0</title>
-      <link>http://0xnf.github.io/categories/oauth-2.0/</link>
+      <link>https://0xnf.github.io/categories/oauth-2.0/</link>
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
-      <guid>http://0xnf.github.io/categories/oauth-2.0/</guid>
+      <guid>https://0xnf.github.io/categories/oauth-2.0/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Openidconnect</title>
-      <link>http://0xnf.github.io/categories/openidconnect/</link>
+      <link>https://0xnf.github.io/categories/openidconnect/</link>
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
-      <guid>http://0xnf.github.io/categories/openidconnect/</guid>
+      <guid>https://0xnf.github.io/categories/openidconnect/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>React</title>
+      <link>https://0xnf.github.io/categories/react/</link>
+      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/categories/react/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Security</title>
+      <link>https://0xnf.github.io/categories/security/</link>
+      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/categories/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Spotify</title>
+      <link>https://0xnf.github.io/categories/spotify/</link>
+      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/categories/spotify/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tutorial</title>
-      <link>http://0xnf.github.io/categories/tutorial/</link>
+      <link>https://0xnf.github.io/categories/tutorial/</link>
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
-      <guid>http://0xnf.github.io/categories/tutorial/</guid>
+      <guid>https://0xnf.github.io/categories/tutorial/</guid>
       <description></description>
     </item>
     

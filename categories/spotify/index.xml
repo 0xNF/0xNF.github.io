@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spotify on Nothing in Particular</title>
+    <link>https://0xnf.github.io/categories/spotify/</link>
+    <description>Recent content in Spotify on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 22 May 2018 15:35:08 -0700</lastBuildDate>
+    
+	<atom:link href="https://0xnf.github.io/categories/spotify/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Lyricall Architecture</title>
+      <link>https://0xnf.github.io/posts/lyricall/architecture/</link>
+      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/lyricall/architecture/</guid>
+      <description>This summary of the architecture was correct upon its initial posting (November 2017). Changes have since been made. There is no guarantee that this post remains accurate into the future.
+Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  TypeScript Why TypeScript Redux React Why React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .</description>
+    </item>
+    
+  </channel>
+</rss>
