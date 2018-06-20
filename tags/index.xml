@@ -6,9 +6,109 @@
     <description>Recent content in Tags on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Mon, 18 Jun 2018 18:11:56 -0700</lastBuildDate>
     
 	<atom:link href="https://0xnf.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>.Net Core</title>
+      <link>https://0xnf.github.io/tags/.net-core/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/.net-core/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Articulate Insights</title>
+      <link>https://0xnf.github.io/tags/articulate-insights/</link>
+      <pubDate>Tue, 22 May 2018 15:34:47 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/articulate-insights/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Command Line</title>
+      <link>https://0xnf.github.io/tags/command-line/</link>
+      <pubDate>Wed, 06 Jun 2018 21:38:01 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/command-line/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Csharp</title>
+      <link>https://0xnf.github.io/tags/csharp/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/csharp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://0xnf.github.io/tags/linux/</link>
+      <pubDate>Wed, 06 Jun 2018 21:38:01 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Northeastern University</title>
+      <link>https://0xnf.github.io/tags/northeastern-university/</link>
+      <pubDate>Tue, 22 May 2018 15:34:47 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/northeastern-university/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Oauth2.0</title>
+      <link>https://0xnf.github.io/tags/oauth2.0/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/oauth2.0/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Openidconnect</title>
+      <link>https://0xnf.github.io/tags/openidconnect/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/openidconnect/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tutorial</title>
+      <link>https://0xnf.github.io/tags/tutorial/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Windows</title>
+      <link>https://0xnf.github.io/tags/windows/</link>
+      <pubDate>Wed, 06 Jun 2018 21:38:01 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/windows/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Wsl</title>
+      <link>https://0xnf.github.io/tags/wsl/</link>
+      <pubDate>Wed, 06 Jun 2018 21:38:01 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/wsl/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

@@ -6,7 +6,7 @@
     <description>Recent content in Categories on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Jun 2018 18:11:56 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 22 May 2018 17:02:40 -0700</lastBuildDate>
     
 	<atom:link href="https://0xnf.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>.Net Core</title>
       <link>https://0xnf.github.io/categories/.net-core/</link>
-      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      <pubDate>Tue, 22 May 2018 17:02:40 -0700</pubDate>
       
       <guid>https://0xnf.github.io/categories/.net-core/</guid>
       <description></description>
@@ -23,34 +23,34 @@
     <item>
       <title>Architecture</title>
       <link>https://0xnf.github.io/categories/architecture/</link>
-      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      <pubDate>Tue, 22 May 2018 17:02:40 -0700</pubDate>
       
       <guid>https://0xnf.github.io/categories/architecture/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Asp.net Core</title>
-      <link>https://0xnf.github.io/categories/asp.net-core/</link>
+      <title>Authentication</title>
+      <link>https://0xnf.github.io/categories/authentication/</link>
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
-      <guid>https://0xnf.github.io/categories/asp.net-core/</guid>
+      <guid>https://0xnf.github.io/categories/authentication/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Azure</title>
-      <link>https://0xnf.github.io/categories/azure/</link>
+      <title>Authorization</title>
+      <link>https://0xnf.github.io/categories/authorization/</link>
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
-      <guid>https://0xnf.github.io/categories/azure/</guid>
+      <guid>https://0xnf.github.io/categories/authorization/</guid>
       <description></description>
     </item>
     
     <item>
       <title>C#</title>
       <link>https://0xnf.github.io/categories/c#/</link>
-      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      <pubDate>Tue, 22 May 2018 17:02:40 -0700</pubDate>
       
       <guid>https://0xnf.github.io/categories/c#/</guid>
       <description></description>
@@ -59,36 +59,36 @@
     <item>
       <title>Database Design</title>
       <link>https://0xnf.github.io/categories/database-design/</link>
-      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      <pubDate>Tue, 22 May 2018 17:02:40 -0700</pubDate>
       
       <guid>https://0xnf.github.io/categories/database-design/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>Identity</title>
+      <link>https://0xnf.github.io/categories/identity/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/categories/identity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Longform Thoughts</title>
+      <link>https://0xnf.github.io/categories/longform-thoughts/</link>
+      <pubDate>Tue, 22 May 2018 15:34:47 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/categories/longform-thoughts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Lyricall</title>
       <link>https://0xnf.github.io/categories/lyricall/</link>
-      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      <pubDate>Tue, 22 May 2018 17:02:40 -0700</pubDate>
       
       <guid>https://0xnf.github.io/categories/lyricall/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Oauth 2.0</title>
-      <link>https://0xnf.github.io/categories/oauth-2.0/</link>
-      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
-      
-      <guid>https://0xnf.github.io/categories/oauth-2.0/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Openidconnect</title>
-      <link>https://0xnf.github.io/categories/openidconnect/</link>
-      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
-      
-      <guid>https://0xnf.github.io/categories/openidconnect/</guid>
       <description></description>
     </item>
     
@@ -102,9 +102,18 @@
     </item>
     
     <item>
+      <title>Redux</title>
+      <link>https://0xnf.github.io/categories/redux/</link>
+      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/categories/redux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Security</title>
       <link>https://0xnf.github.io/categories/security/</link>
-      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
       <guid>https://0xnf.github.io/categories/security/</guid>
       <description></description>
@@ -113,18 +122,18 @@
     <item>
       <title>Spotify</title>
       <link>https://0xnf.github.io/categories/spotify/</link>
-      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
+      <pubDate>Tue, 22 May 2018 17:02:40 -0700</pubDate>
       
       <guid>https://0xnf.github.io/categories/spotify/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Tutorial</title>
-      <link>https://0xnf.github.io/categories/tutorial/</link>
-      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      <title>Typescript</title>
+      <link>https://0xnf.github.io/categories/typescript/</link>
+      <pubDate>Tue, 22 May 2018 15:35:08 -0700</pubDate>
       
-      <guid>https://0xnf.github.io/categories/tutorial/</guid>
+      <guid>https://0xnf.github.io/categories/typescript/</guid>
       <description></description>
     </item>
     

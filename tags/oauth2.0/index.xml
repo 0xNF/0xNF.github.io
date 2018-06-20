@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Oauth2.0 on Nothing in Particular</title>
+    <link>https://0xnf.github.io/tags/oauth2.0/</link>
+    <description>Recent content in Oauth2.0 on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Jun 2018 18:11:56 -0700</lastBuildDate>
+    
+	<atom:link href="https://0xnf.github.io/tags/oauth2.0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 19)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/19/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/19/</guid>
+      <description>Welcome to the ninteenth and final part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Pushing to Azure To finish off this project, we&amp;rsquo;ll be deploying our application to the free tier of Microsoft Azure. We&amp;rsquo;ll be taking most of our cues from Nate Barbettini&amp;rsquo;s excellent Little ASP.NET Core Book
+For the purposes of this tutorial, I assume you already have a Microsoft account and are willing to use it to deploy to the cloud.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 18)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/18/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:54 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/18/</guid>
+      <description>Welcome to the eighteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Rate Limiting - Attribute Creation We left off last section with rate limits being granted to the to clients and tokens at creation time, but we don&amp;rsquo;t yet have a way to check those limits when they call our API.
+To do so, we&amp;rsquo;ll be making an Attribute that we can use to decorate the controllers or methods that we want to be rate limited.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 17)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/17/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:52 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/17/</guid>
+      <description>Rate Limiting - Models and Provider Changes There are any number of different ways to implement rate limits - the approahc we will follow is outlined like so:
+ All endpoints under /v1/api are limited, no endpoint is free. All endpoints share a limit. Calling /me 1,999 times, then /albums once will rate limit you on the next call. (Assuming a limit of 2,000 for some timeframe.) Renewing a token counts towards the limit - after all, the token endpoint is underneath /api/v1/.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 16)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/16/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:50 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/16/</guid>
+      <description>Welcome to the sixteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Token Revocation Token revocation is the process of invalidating already issued tokens. Because tokens are serialized with server data taken at a snapshot in time, there is no way for a token to know whether it&amp;rsquo;s been invalidated, except for when it comes to its expiration date. Further, there&amp;rsquo;s no given way for the server to know a token has been revoked either - at least, not without a backing datastore.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 15)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/15/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:49 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/15/</guid>
+      <description>Welcome to the fifteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Scope Authorization with Policies, Requirements and Handlers Just adding Authorization attributes is insufficient for our purposes - our tokens have scopes associated with them, and our endpoint authorization checks should reflect that. To do so, we will use policies, which you can read about on the Microsoft Docs.
+Policies are fragments you can add to an authorization attribute that confirm whether a given HttpContext meets the requirements of the attribute, beyond simply being authenticated or not.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 14)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/14/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:47 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/14/</guid>
+      <description>Welcome to the fourteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Adding OAuth Validation Our server successfully issues the three token types, but we don&amp;rsquo;t have a way to actually force a token check on our endpoints yet. One of the packages we downloaded initially was AspNet.Security.OAuth.Validation. We&amp;rsquo;re going to use that to add OAuth Validation to our server.
+In Startup.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 13)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/13/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:45 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/13/</guid>
+      <description>Welcome to the thirteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Identity, Claims, and Authorization Tickets We&amp;rsquo;ve been skirting talking about claims and authentication tickets by hiding all of it behind our TicketCounter class. You can get a in-depth overview of what those are over at the Microsoft Docs.
+Claims are how the ASP.NET team has approached identity and authorization details since about 2016.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 12)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/12/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:43 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/12/</guid>
+      <description>Welcome to the twelth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Authorization Request Accept/Deny View Two of the the three flows we support, Implicit Grant and Authorization Code, are interactive flows - they require that the user be presented with a screen where they can accept or deny the authorization request.
+As a preview, this is what our auth page will look like: Add the ViewModel Under Models/, add a new folder AuthorizeViewModels/ and add a new AuthorizeViewModel class:</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 11)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/11/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:42 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/11/</guid>
+      <description>Welcome to the eleventh part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Services Our methods thus far have been peppered with a reference to a service named ValidationService. This lightweight class is a service that queries our databaase. Nothing is preventing us from doing these checks inside the OAuthProvider class itself, but the abstraction lends itself to a cleaner batch of methods.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 10)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/10/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:40 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/10/</guid>
+      <description>Welcome to the tenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Authorization Provider - Token Methods We&amp;rsquo;re still implementing the Providers/OAuthProvider.cs class we made in the previous section. Here we&amp;rsquo;re going to deal with the three Token methods we left un-overridden from last time: ValidateTokenRequest, HandleTokenRequest, ApplyTokenResponse.
+Validate Token Request As a small warning, the validate token request endpoint is one of the longest methods we&amp;rsquo;ll be implementing.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 09)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/09/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:28 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/09/</guid>
+      <description>Welcome to the ninth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Authorization Provider - Authorize Methods It&amp;rsquo;s worth taking a moment to have an overview of how the OpenIdConnectServer library actually works. You are encouraged to read Kevin Chalet&amp;rsquo;s post here.
+An authorization provider is an implementation of the OpenIdConnectServerProvider type which overrides the virtual methods we want to implement. We&amp;rsquo;re going to leave most of these un-overidden, but if you ever need additional functionality, you can always override it and inspect/implement that stage of the pipeline.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 08)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/08/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:26 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/08/</guid>
+      <description>Welcome to the eighth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Adding Client Scopes Scopes are ways to limit a client&amp;rsquo;s ability to act on behalf of the user. The scopes are defined by the Resource Server, like Spotify or Google. The client requests the scopes they want to work with, and those scopes are presented to the Resource Owner for authorization - they can then choose to accept or reject the authorization request, meaning that just because an application requests certain, potentially high-value access, doesn&amp;rsquo;t mean it automatically gets it.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 07)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/07/</link>
+      <pubDate>Thu, 07 Jun 2018 19:12:13 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/07/</guid>
+      <description>Welcome to the seventh part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+OAuth Client CRUD - Views This is the second part of adding our OAauth Client management pages. In the previous section we generated a controller, which automatically generated some viewas for us. In this section, we&amp;rsquo;ll make those views do what we need them to do.
+Details and Delete Views Delete the following two cshtml files - we don&amp;rsquo;t need them, because we&amp;rsquo;ll be rolling their functions into the Edit view.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 06)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/06/</link>
+      <pubDate>Wed, 06 Jun 2018 16:16:01 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/06/</guid>
+      <description>Welcome to the sixth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+OAuth Client CRUD - Controller and ViewModels This is the first part of adding our OAauth Client management pages. We&amp;rsquo;ll set up the controller and the viewmodel here. In next part, we&amp;rsquo;ll add the html views.
+View Models ViewModels are, at least in the context of ASP.NET (as opposed to UWP where the MVVM pattern changes what it means slightly), is a way of firewalling our models from our views.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 05)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/05/</link>
+      <pubDate>Wed, 06 Jun 2018 16:15:59 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/05/</guid>
+      <description>Welcome to the fifth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Adding Models We can&amp;rsquo;t do very much without creating some models of our domain objects, both in memory and in the database.
+At this point in time we only have two main things to worry about, and that&amp;rsquo;s what our OAuth Client Application looks like, and how are they owned by Users?</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 04)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/04/</link>
+      <pubDate>Wed, 06 Jun 2018 16:15:58 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/04/</guid>
+      <description>Welcome to the fourth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Public API Barebones Setup We&amp;rsquo;re going to have a very small public API that will entertain a few GET and PUT methods. At first, these methods will be entirely unauthenticated, but as time goes on we&amp;rsquo;ll eventualy put some of them behind OAuth authentication, then add Scope checks, and finally Rate Limiting.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 03)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/03/</link>
+      <pubDate>Wed, 06 Jun 2018 16:15:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/03/</guid>
+      <description>Welcome to the third part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+SQLite and Initial Migration If you tried to start the website we just initialized, you&amp;rsquo;d find that you won&amp;rsquo;t be able to login or register, receiving error messages instead of a welcome screen.
+Although an initial migration has been provided for us, it hasn&amp;rsquo;t been applied, and no database exists yet.</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 02)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/02/</link>
+      <pubDate>Wed, 06 Jun 2018 16:15:55 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/02/</guid>
+      <description>Welcome to the second part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Project Setup and Dependency Downloads Create a new ASP.NET Core Web Application named OAuthTutorial. You can use your own name, but make sure to get your namespaces correct if you do.
+It&amp;rsquo;s helpful if you have Create directory for solution and Create new Git repository checked.
+Select Web Application (Model-View-Controller)</description>
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 01)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/01/</link>
+      <pubDate>Wed, 06 Jun 2018 16:15:39 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/01/</guid>
+      <description>Welcome to the first part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+The creator of the library, Kevin Chalet, has an excellent series of blog posts, that you are encouraged to read for more information, with less of a hands-on approach.
+The final product is available here on GitHub, and at the end of each step the project as completed up to that point will be available on its respective branch.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -203,21 +203,6 @@ At first, these methods will be entirely unauthenticated, but as time goes on we
     <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;User Profile Get request received, but function is not yet implemented&#34;</span>);
 }</code></pre></div>
 
-<h1 id="changing-ports-disabling-ssl">Changing Ports + Disabling SSL</h1>
-
-<p>Strictly for development purposes of this demo application, we&rsquo;re going to disable SSL because its more trouble than it&rsquo;s worth at this stage. We don&rsquo;t want to have to keep accepting a new root certificate each time we reboot our development machine, and if you&rsquo;re <a href="/posts/use-wsl">using WSL</a>, then constantly forcing curl to ignore the invalid cert is also irritating.</p>
-
-<p>We&rsquo;re also going to choose a nicer port for our server. This tutorial will use <code>5000</code>.</p>
-
-<p>You can find these settings in the <code>Project -&gt; OAuthTutorial Properties</code> menu from the topbar, then selecting <code>Debug</code> from the side bar.</p>
-
-<p><img src="/oauthserver/part04/openprops.png" alt="open properties" /></p>
-
-<p>Uncheck <code>Enable SSL</code> and change the port in <code>App URL</code> to <code>5000</code> or something nicer.
-Finally, make sure you also change the <code>Launch Browser</code> setting to read <code>http://localhost:5000</code>. The important take away is to exchange <code>https</code> for regular <code>http</code> and to make the port the same as the one we selected.</p>
-
-<p><img src="/oauthserver/part04/changeusessl.png" alt="change the settings" /></p>
-
 <h1 id="testing-for-responses">Testing for Responses</h1>
 
 <p>Start the server and use your choice of <code>PowerShell</code> or <code>WSL</code> to hit a few of our endpoints to see if they respond as expected:</p>
@@ -295,23 +280,55 @@ you get</code></pre></div>
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://0xnf.github.io/categories/oauth-2.0/">OAuth 2.0</a></li>
+          <li><a href="https://0xnf.github.io/categories/security/">Security</a></li>
           
-          <li><a href="https://0xnf.github.io/categories/openidconnect/">OpenIdConnect</a></li>
+          <li><a href="https://0xnf.github.io/categories/identity/">Identity</a></li>
           
-          <li><a href="https://0xnf.github.io/categories/c/">C#</a></li>
+          <li><a href="https://0xnf.github.io/categories/authentication/">Authentication</a></li>
           
-          <li><a href="https://0xnf.github.io/categories/tutorial/">Tutorial</a></li>
-          
-          <li><a href="https://0xnf.github.io/categories/.net-core/">.NET Core</a></li>
-          
-          <li><a href="https://0xnf.github.io/categories/asp.net-core/">ASP.NET Core</a></li>
+          <li><a href="https://0xnf.github.io/categories/authorization/">Authorization</a></li>
           
         </ul>
       </div>
     </section>
     
     
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">SERIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server/">Implement an OAuth 2.0 Server</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/oauth2.0/">OAuth2.0</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/openidconnect/">OpenIdConnect</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/tutorial/">Tutorial</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/csharp/">CSharp</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/.net-core/">.NET Core</a></li>
+          
+        </ul>
+      </div>
+    </section>
     
     
   </footer>
@@ -328,7 +345,7 @@ you get</code></pre></div>
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATESTS</div>
+      <div class="panel-title">LATEST</div>
     </div>
     <div class="list-group">
       
@@ -362,21 +379,21 @@ you get</code></pre></div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
       <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
-      
-      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
-      
-      <a href="https://0xnf.github.io/categories/asp.net-core" class="list-group-item">asp.net-core</a>
-      
-      <a href="https://0xnf.github.io/categories/oauth-2.0" class="list-group-item">oauth-2.0</a>
-      
-      <a href="https://0xnf.github.io/categories/openidconnect" class="list-group-item">openidconnect</a>
-      
-      <a href="https://0xnf.github.io/categories/tutorial" class="list-group-item">tutorial</a>
       
       <a href="https://0xnf.github.io/categories/architecture" class="list-group-item">architecture</a>
       
-      <a href="https://0xnf.github.io/categories/azure" class="list-group-item">azure</a>
+      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
       
       <a href="https://0xnf.github.io/categories/database-design" class="list-group-item">database-design</a>
       
@@ -387,9 +404,42 @@ you get</code></pre></div>
   
   <section class="panel panel-default">
     <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
       <div class="panel-title">TAG</div>
     </div>
     <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/articulate-insights" class="list-group-item">articulate-insights</a>
+      
+      <a href="https://0xnf.github.io/tags/northeastern-university" class="list-group-item">northeastern-university</a>
+      
+      <a href="https://0xnf.github.io/tags/command-line" class="list-group-item">command-line</a>
+      
+      <a href="https://0xnf.github.io/tags/linux" class="list-group-item">linux</a>
+      
+      <a href="https://0xnf.github.io/tags/windows" class="list-group-item">windows</a>
       
     </div>
   </section>

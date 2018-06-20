@@ -16,21 +16,21 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
     <title>Lyricall Security - Nothing in Particular</title>
     
-<meta name="description" content="This is the Security Model for lyricall.net as of May 22nd, 2018.Security Model tl;dr: The servers are secure The services are secure Connections are secure Data is validated Ownership is checked  todo: Encrypt db at Rest Automatically rotate dbhost/dbname/dbuer/dbpassword values Spin out authentication server from api server Spin out client server from api server  Server Provisioning All machines are provisioned in the standard manner:">
+<meta name="description" content="Security overview of lyricall.net as of May 2018. We talk data ownership, data boundaries, encrypted connections, and validation.">
 
 <meta property="og:title" content="Lyricall Security - Nothing in Particular">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://0xnf.github.io/posts/lyricall/security/">
 <meta property="og:image" content="https://0xnf.github.io/images/default.png">
 <meta property="og:site_name" content="Nothing in Particular">
-<meta property="og:description" content="This is the Security Model for lyricall.net as of May 22nd, 2018.Security Model tl;dr: The servers are secure The services are secure Connections are secure Data is validated Ownership is checked  todo: Encrypt db at Rest Automatically rotate dbhost/dbname/dbuer/dbpassword values Spin out authentication server from api server Spin out client server from api server  Server Provisioning All machines are provisioned in the standard manner:">
+<meta property="og:description" content="Security overview of lyricall.net as of May 2018. We talk data ownership, data boundaries, encrypted connections, and validation.">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="Nothing in Particular">
 <meta name="twitter:url" content="https://0xnf.github.io/posts/lyricall/security/">
 <meta name="twitter:title" content="Lyricall Security - Nothing in Particular">
-<meta name="twitter:description" content="This is the Security Model for lyricall.net as of May 22nd, 2018.Security Model tl;dr: The servers are secure The services are secure Connections are secure Data is validated Ownership is checked  todo: Encrypt db at Rest Automatically rotate dbhost/dbname/dbuer/dbpassword values Spin out authentication server from api server Spin out client server from api server  Server Provisioning All machines are provisioned in the standard manner:">
+<meta name="twitter:description" content="Security overview of lyricall.net as of May 2018. We talk data ownership, data boundaries, encrypted connections, and validation.">
 <meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
 
 
@@ -65,17 +65,7 @@
         "height": 60
       }
     },
-    "description": "This is the Security Model for lyricall.net as of May 22nd, 2018.
-Security Model tl;dr:
- The servers are secure
- The services are secure
- Connections are secure
- Data is validated
- Ownership is checked
-  todo:
- Encrypt db at Rest
- Automatically rotate dbhost/dbname/dbuer/dbpassword values Spin out authentication server from api server
- Spin out client server from api server  Server Provisioning All machines are provisioned in the standard manner:"
+    "description": "Security overview of lyricall.net as of May 2018. We talk data ownership, data boundaries, encrypted connections, and validation."
   }
 </script>
 
@@ -324,6 +314,33 @@ The server runs Dot Net Core&rsquo;s Kestrel server, behind an nginx instance.</
     
     
     
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/lyricall/">lyricall</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/architecture/">architecture</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/c/">c#</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/security/">security</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/database-design/">database design</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/.net-core/">.net core</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/spotify/">spotify</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
     
     
     
@@ -341,7 +358,7 @@ The server runs Dot Net Core&rsquo;s Kestrel server, behind an nginx instance.</
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATESTS</div>
+      <div class="panel-title">LATEST</div>
     </div>
     <div class="list-group">
       
@@ -375,21 +392,21 @@ The server runs Dot Net Core&rsquo;s Kestrel server, behind an nginx instance.</
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
       <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
-      
-      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
-      
-      <a href="https://0xnf.github.io/categories/asp.net-core" class="list-group-item">asp.net-core</a>
-      
-      <a href="https://0xnf.github.io/categories/oauth-2.0" class="list-group-item">oauth-2.0</a>
-      
-      <a href="https://0xnf.github.io/categories/openidconnect" class="list-group-item">openidconnect</a>
-      
-      <a href="https://0xnf.github.io/categories/tutorial" class="list-group-item">tutorial</a>
       
       <a href="https://0xnf.github.io/categories/architecture" class="list-group-item">architecture</a>
       
-      <a href="https://0xnf.github.io/categories/azure" class="list-group-item">azure</a>
+      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
       
       <a href="https://0xnf.github.io/categories/database-design" class="list-group-item">database-design</a>
       
@@ -400,9 +417,42 @@ The server runs Dot Net Core&rsquo;s Kestrel server, behind an nginx instance.</
   
   <section class="panel panel-default">
     <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
       <div class="panel-title">TAG</div>
     </div>
     <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/articulate-insights" class="list-group-item">articulate-insights</a>
+      
+      <a href="https://0xnf.github.io/tags/northeastern-university" class="list-group-item">northeastern-university</a>
+      
+      <a href="https://0xnf.github.io/tags/command-line" class="list-group-item">command-line</a>
+      
+      <a href="https://0xnf.github.io/tags/linux" class="list-group-item">linux</a>
+      
+      <a href="https://0xnf.github.io/tags/windows" class="list-group-item">windows</a>
       
     </div>
   </section>
