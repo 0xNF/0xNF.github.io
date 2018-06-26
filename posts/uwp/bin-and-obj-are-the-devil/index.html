@@ -16,21 +16,21 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
     <title>Bin and Obj Are the Devil - Nothing in Particular</title>
     
-<meta name="description" content="tl;dr - close Visual Studio and delete your obj/ and bin/ directories if your project isn&amp;rsquo;t building and giving cryptic errors.Your project was working fine, but now all of a sudden it can&amp;rsquo;t find a reference whose location didn&amp;rsquo;t change. Or it won&amp;rsquo;t build because something is out of date. Or the version is incorrect.Maybe your project is suddenly throwing errors like cannot find source file or xxx does not exist in namespace yyy.">
+<meta name="description" content="the first in what is likely a series on cache invalidation being hard">
 
 <meta property="og:title" content="Bin and Obj Are the Devil - Nothing in Particular">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/">
 <meta property="og:image" content="https://0xnf.github.io/images/default.png">
 <meta property="og:site_name" content="Nothing in Particular">
-<meta property="og:description" content="tl;dr - close Visual Studio and delete your obj/ and bin/ directories if your project isn&amp;rsquo;t building and giving cryptic errors.Your project was working fine, but now all of a sudden it can&amp;rsquo;t find a reference whose location didn&amp;rsquo;t change. Or it won&amp;rsquo;t build because something is out of date. Or the version is incorrect.Maybe your project is suddenly throwing errors like cannot find source file or xxx does not exist in namespace yyy.">
+<meta property="og:description" content="the first in what is likely a series on cache invalidation being hard">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="Nothing in Particular">
 <meta name="twitter:url" content="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/">
 <meta name="twitter:title" content="Bin and Obj Are the Devil - Nothing in Particular">
-<meta name="twitter:description" content="tl;dr - close Visual Studio and delete your obj/ and bin/ directories if your project isn&amp;rsquo;t building and giving cryptic errors.Your project was working fine, but now all of a sudden it can&amp;rsquo;t find a reference whose location didn&amp;rsquo;t change. Or it won&amp;rsquo;t build because something is out of date. Or the version is incorrect.Maybe your project is suddenly throwing errors like cannot find source file or xxx does not exist in namespace yyy.">
+<meta name="twitter:description" content="the first in what is likely a series on cache invalidation being hard">
 <meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
 
 
@@ -65,9 +65,7 @@
         "height": 60
       }
     },
-    "description": "tl;dr - close Visual Studio and delete your obj/ and bin/ directories if your project isn&rsquo;t building and giving cryptic errors.
-Your project was working fine, but now all of a sudden it can&rsquo;t find a reference whose location didn&rsquo;t change. Or it won&rsquo;t build because something is out of date. Or the version is incorrect.
-Maybe your project is suddenly throwing errors like cannot find source file or xxx does not exist in namespace yyy."
+    "description": "the first in what is likely a series on cache invalidation being hard"
   }
 </script>
 
@@ -130,7 +128,9 @@ Maybe your project is suddenly throwing errors like cannot find source file or x
 
   
 
-  <div class="article-body"><p><em>tl;dr - close Visual Studio and delete your <code>obj/</code> and <code>bin/</code> directories if your project isn&rsquo;t building and giving cryptic errors.</em></p>
+  <div class="article-body"><p>the first in what is likely a series on cache invalidation being hard.</p>
+
+<p><em>tl;dr - close Visual Studio and delete your <code>obj/</code> and <code>bin/</code> directories if your project isn&rsquo;t building and giving cryptic errors.</em></p>
 
 <p>Your project was working fine, but now all of a sudden it can&rsquo;t find a reference whose location didn&rsquo;t change. Or it won&rsquo;t build because something is out of date. Or the version is incorrect.</p>
 
@@ -162,6 +162,8 @@ Maybe your project is suddenly throwing errors like cannot find source file or x
         <ul class="p-terms">
           
           <li><a href="https://0xnf.github.io/categories/uwp/">UWP</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/cache-invalidation/">Cache Invalidation</a></li>
           
         </ul>
       </div>

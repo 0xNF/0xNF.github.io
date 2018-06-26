@@ -17,7 +17,8 @@
       <pubDate>Tue, 19 Jun 2018 09:06:33 -0700</pubDate>
       
       <guid>https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/</guid>
-      <description>tl;dr - close Visual Studio and delete your obj/ and bin/ directories if your project isn&amp;rsquo;t building and giving cryptic errors.
+      <description>the first in what is likely a series on cache invalidation being hard.
+tl;dr - close Visual Studio and delete your obj/ and bin/ directories if your project isn&amp;rsquo;t building and giving cryptic errors.
 Your project was working fine, but now all of a sudden it can&amp;rsquo;t find a reference whose location didn&amp;rsquo;t change. Or it won&amp;rsquo;t build because something is out of date. Or the version is incorrect.
 Maybe your project is suddenly throwing errors like cannot find source file or xxx does not exist in namespace yyy.</description>
     </item>
