@@ -242,7 +242,7 @@ The main part of the provider that we&rsquo;re interested is the overridden <cod
 <pre><code>Note: you are free to implement the non-async GetPolicy if that suits your project requirements better.
 </code></pre>
 
-<p>For any policy, defined simply as being a string, that this provider encounters, it checks to see if an existing one is alreadfy registered. If it is, then we simply pass the found policy along.
+<p>For any policy, defined simply as being a string, that this provider encounters, it checks to see if an existing one is already registered. If it is, then we simply pass the found policy along.
 If the policy is not yet defined, then we create one on the fly using <code>AuthorizationPolicyBuilder</code> and give it a single <code>HasScopeRequirement</code> from earlier.</p>
 
 <p>The created requirement is given the name of the new string, and an issuer of <code>LOCAL AUTHORITY</code>, which the default issuer name for claims. Again, this is relevant for <code>OpenID</code> providers, which you may or may not be.</p>

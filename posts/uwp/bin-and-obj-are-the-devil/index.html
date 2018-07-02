@@ -143,7 +143,7 @@
 
 <p>Before you pull your hair out, I think I might know what&rsquo;s wrong. Chances are your <code>obj/</code> and <code>bin/</code> folders are the problem.</p>
 
-<p>These two folders have been the cause of the vast majority of my UWP development headaches. Ostensibly they exist to provide debug symbols and infomration when stepping through your project, and to provide incremental compilation so your <code>build/rebuild</code> goes faster. These are nice when they work, but when they don&rsquo;t, the whole thing goes to hell.</p>
+<p>These two folders have been the cause of the vast majority of my UWP development headaches. Ostensibly they exist to provide debug symbols and information when stepping through your project, and to provide incremental compilation so your <code>build/rebuild</code> goes faster. These are nice when they work, but when they don&rsquo;t, the whole thing goes to hell.</p>
 
 <p>Sometimes these folders get stuck in a halfway state between the previous build and the new build. Maybe the files were locked by Visual Studio and weren&rsquo;t released before the build process got to it. Maybe Roslyn just messed up. Either way, these two folders are proabably the cause of your migraines.  Close Visual Studio, delete <code>obj/</code> and <code>bin/</code>, and try again.</p>
 

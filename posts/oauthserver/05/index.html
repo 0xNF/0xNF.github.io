@@ -187,22 +187,24 @@
 </span><span style="color:#a6e22e">    [ForeignKey(&#34;Id&#34;)]</span>
     <span style="color:#66d9ef">public</span> ApplicationUser Owner { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
 
-    <span style="color:#75715e">/* This field, combined with the RedirectURI.OAuthClient field, lets EntityFramework know that this is a (1 : Many} mapping */</span>
+    <span style="color:#75715e">/* This field, combined with the RedirectURI.OAuthClient field, lets EntityFramework know that this is a (1 : Many) mapping */</span>
     <span style="color:#66d9ef">public</span> List&lt;RedirectURI&gt; RedirectURIs { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> List&lt;RedirectURI&gt;();
 
     <span style="color:#75715e">/*  Like above, this notifies EntityFramework of another (1 : Many) mapping */</span>
-    <span style="color:#66d9ef">public</span> List&lt;Token&gt; UserApplicationTokens { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> List&lt;Token&gt;();<span style="color:#a6e22e"> 
-</span><span style="color:#a6e22e">
+    <span style="color:#66d9ef">public</span> List&lt;Token&gt; UserApplicationTokens { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> List&lt;Token&gt;(); 
+
+    <span style="color:#75715e">/* Each App needs a Name, which is submitted by the user at Creation time */</span><span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [Required]
 </span><span style="color:#a6e22e">    [MinLength(2)]
 </span><span style="color:#a6e22e">    [MaxLength(100)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// Each App needs a Name, which is submutted by the user at Creation
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } 
+
+    <span style="color:#75715e">/* Each App needs a Description, which is submitted by the user at Edit time */</span><span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [Required]
 </span><span style="color:#a6e22e">    [MinLength(1)]
 </span><span style="color:#a6e22e">    [MaxLength(300)]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientDescription { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// Each App needs a Description, which is submitted by the Creation
-</span><span style="color:#75715e"></span>}</code></pre></div>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientDescription { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } 
+}</code></pre></div>
 
 <p>We don&rsquo;t have the <code>RedirectURI</code> or <code>Token</code> classes yet, but we will soon.</p>
 
