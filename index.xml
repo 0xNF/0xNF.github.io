@@ -6,10 +6,20 @@
     <description>Recent content on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Jun 2018 09:06:33 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 05 Jul 2018 07:20:43 -0700</lastBuildDate>
     
 	<atom:link href="https://0xnf.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Towards a Secure and Private Firefox Installation</title>
+      <link>https://0xnf.github.io/posts/misc/firefox-user-security/</link>
+      <pubDate>Thu, 05 Jul 2018 07:20:43 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/misc/firefox-user-security/</guid>
+      <description>With the massive overhaul that was Firefox Quantum (FF57), it&amp;rsquo;s worth checking out how to make a modern Firefox install secure.
+Much of modern Firefox&amp;rsquo;s security comes from the fact that in addition to doing extensive work on the architecture underlying the browser as a whole, they also removed the old extensions system. That has been a double-edged sword, because many beloved extensions relied on the that old architecture, but the Firefox developers have been working closely with the authors of popular extensions to add back in the necessary pieces they require.</description>
+    </item>
     
     <item>
       <title>Bin and Obj Are the Devil</title>

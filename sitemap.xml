@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://0xnf.github.io/posts/misc/firefox-user-security/</loc>
+    <lastmod>2018-07-05T07:20:43-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/</loc>
     <lastmod>2018-06-19T09:06:33-07:00</lastmod>
   </url>
@@ -143,14 +148,14 @@
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/categories/.net-core/</loc>
-    <lastmod>2018-05-22T17:02:40-07:00</lastmod>
+    <loc>https://0xnf.github.io/tags/.net-core/</loc>
+    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/tags/.net-core/</loc>
-    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
+    <loc>https://0xnf.github.io/categories/.net-core/</loc>
+    <lastmod>2018-05-22T17:02:40-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -179,6 +184,12 @@
   </url>
   
   <url>
+    <loc>https://0xnf.github.io/categories/browser/</loc>
+    <lastmod>2018-07-05T07:20:43-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://0xnf.github.io/categories/c#/</loc>
     <lastmod>2018-05-22T17:02:40-07:00</lastmod>
     <priority>0</priority>
@@ -203,14 +214,14 @@
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/categories/csharp/</loc>
-    <lastmod>2018-06-18T19:53:31-07:00</lastmod>
+    <loc>https://0xnf.github.io/tags/csharp/</loc>
+    <lastmod>2018-06-19T09:06:33-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/tags/csharp/</loc>
-    <lastmod>2018-06-19T09:06:33-07:00</lastmod>
+    <loc>https://0xnf.github.io/categories/csharp/</loc>
+    <lastmod>2018-06-18T19:53:31-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -223,6 +234,12 @@
   <url>
     <loc>https://0xnf.github.io/tags/debugging/</loc>
     <lastmod>2018-06-19T09:06:33-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://0xnf.github.io/tags/firefox/</loc>
+    <lastmod>2018-07-05T07:20:43-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -264,7 +281,7 @@
   
   <url>
     <loc>https://0xnf.github.io/</loc>
-    <lastmod>2018-06-19T09:06:33-07:00</lastmod>
+    <lastmod>2018-07-05T07:20:43-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -281,8 +298,20 @@
   </url>
   
   <url>
+    <loc>https://0xnf.github.io/tags/overview/</loc>
+    <lastmod>2018-07-05T07:20:43-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://0xnf.github.io/posts/</loc>
-    <lastmod>2018-06-19T09:06:33-07:00</lastmod>
+    <lastmod>2018-07-05T07:20:43-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://0xnf.github.io/categories/privacy/</loc>
+    <lastmod>2018-07-05T07:20:43-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -300,7 +329,7 @@
   
   <url>
     <loc>https://0xnf.github.io/categories/security/</loc>
-    <lastmod>2018-06-18T18:11:56-07:00</lastmod>
+    <lastmod>2018-07-05T07:20:43-07:00</lastmod>
     <priority>0</priority>
   </url>
   
