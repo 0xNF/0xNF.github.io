@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Event Routing on Nothing in Particular</title>
+    <link>https://0xnf.github.io/tags/event-routing/</link>
+    <description>Recent content in Event Routing on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Jul 2018 15:31:28 -0700</lastBuildDate>
+    
+	<atom:link href="https://0xnf.github.io/tags/event-routing/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>UWP: Simple Events</title>
+      <link>https://0xnf.github.io/posts/uwp/simple-events/</link>
+      <pubDate>Thu, 19 Jul 2018 15:31:28 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/uwp/simple-events/</guid>
+      <description>Notes [07/19/2018] Note: This post refers to the library Microsoft.NETCore.UniversalWindowsPlatform, version 6.2.0-Preview1-26502-02.
+Events Some problems are just made so much easier in XAML based apps if you use the Event pub/sub model.
+We&amp;rsquo;ll structure our events the way the excellent Template10 does:
+ One event
+ One EventRaised method  Untyped Events These events carry no information aside form the fact that it occurred.
+In the class that the event originates from:</description>
+    </item>
+    
+  </channel>
+</rss>
