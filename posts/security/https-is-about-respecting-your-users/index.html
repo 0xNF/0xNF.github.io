@@ -136,7 +136,7 @@
 
 <p>A site without https is vulnerable to Man-In-The-Middle (MITM) attacks, which Troy Hunt shows off convincingly over at <a href="https://www.troyhunt.com/heres-why-your-static-website-needs-https/">https://www.troyhunt.com/heres-why-your-static-website-needs-https/</a></p>
 
-<p>That site is all about demonstrating through words, video, and actions, what happens when you don&rsquo;t have https. What I want to tough on why, morally speaking, https is a good thing.</p>
+<p>That site is all about demonstrating through words, video, and actions, what happens when you don&rsquo;t have https. What I want to touch on is why, morally speaking, https is a good thing.</p>
 
 <p>https is an encryption method that encrypts:</p>
 
@@ -151,7 +151,7 @@
 
 <p>What this means in practice is that ISP&rsquo;s can&rsquo;t <a href="https://zdnet2.cbsistatic.com/hub/i/r/2015/11/23/296d2de3-4bb9-466c-b5a4-0a302b833e68/resize/770xauto/7f2485f3149b0b1b8d0caf736a76f1ec/comcast-stack.jpg">shove unwanted messages</a> into your user&rsquo;s faces, their local coffee shop script kiddie can&rsquo;t use hidden fields to try to steal their credentials, Ukrainian hackers can&rsquo;t make their browser do cryptomining, and they can&rsquo;t be unintentionally redirected to some other site.</p>
 
-<p>None of this has any benefit to you, the site owner. Not directly. Your site is exactly as secure (or insecure) as it would be without https. Your administrative credentials are exactly as secure, your server processes are exactly as memory-safe, the files being served remain as unmodified and readonly as they were before.</p>
+<p>None of this has any benefit to you, the site owner<sup><a href="#3">3</a></sup>. Not directly. Your site is exactly as secure (or insecure) as it would be without https. Your administrative credentials are exactly as secure, your server processes are exactly as memory-safe, the files being served remain as unmodified and readonly as they were before.</p>
 
 <p>The security is for the user. The user can trust your site more. What you intended to deliver is what was delivered. Https is about respecting your users. It&rsquo;s about respecting their time, their machine&rsquo;s resources, and their privacy.</p>
 
@@ -165,7 +165,11 @@
 
 <h6 id="small-2-small"><small>2</small></h6>
 
-<p>https guarantees that the data received is the data sent - if you choose to embed malicious iframes or load Googles&rsquo;s tracking script, the user is still being put at risk but it will be intentional on your part.
+<p>https guarantees that the data received is the data sent - if you choose to embed malicious iframes or load Googles&rsquo;s tracking script, the user is still being put at risk but it will be intentional on your part.</p>
+
+<h5 id="small-3-small"><small>3</small></h5>
+
+<p>In some cases you, the site owner, actually do directly benefit. Imagine that you have a client-server application, and your server is sending data to the client. An attacker could corrupt, or worse, modify, your data in-flight causing your application to perform erroneously or operate on incorrect data. This is not the majority use-case for https, but it is no less legitimate a reason for enabling it.
 </small></p>
 </div>
 
