@@ -8,29 +8,29 @@
 
 
 
-<link rel="canonical" href="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/">
+<link rel="canonical" href="https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>Bin and Obj Are the Devil - Nothing in Particular</title>
+    <title>https Is About Respecting Your Users - Nothing in Particular</title>
     
-<meta name="description" content="the first in what is likely a series on cache invalidation being hard, where we explore what to do with UWP projects that try to use intermediate compilation and caching, but end up asking us to resolve &#39;system.string&#39;.">
+<meta name="description" content="One common misconception about https is that it is way to secure your site - this is incorrect. It is about ensuring the integrity of your data and respecting your users.">
 
-<meta property="og:title" content="Bin and Obj Are the Devil - Nothing in Particular">
+<meta property="og:title" content="https Is About Respecting Your Users - Nothing in Particular">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/">
+<meta property="og:url" content="https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/">
 <meta property="og:image" content="https://0xnf.github.io/images/default.png">
 <meta property="og:site_name" content="Nothing in Particular">
-<meta property="og:description" content="the first in what is likely a series on cache invalidation being hard, where we explore what to do with UWP projects that try to use intermediate compilation and caching, but end up asking us to resolve &#39;system.string&#39;.">
+<meta property="og:description" content="One common misconception about https is that it is way to secure your site - this is incorrect. It is about ensuring the integrity of your data and respecting your users.">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="Nothing in Particular">
-<meta name="twitter:url" content="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/">
-<meta name="twitter:title" content="Bin and Obj Are the Devil - Nothing in Particular">
-<meta name="twitter:description" content="the first in what is likely a series on cache invalidation being hard, where we explore what to do with UWP projects that try to use intermediate compilation and caching, but end up asking us to resolve &#39;system.string&#39;.">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/">
+<meta name="twitter:title" content="https Is About Respecting Your Users - Nothing in Particular">
+<meta name="twitter:description" content="One common misconception about https is that it is way to secure your site - this is incorrect. It is about ensuring the integrity of your data and respecting your users.">
 <meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
 
 
@@ -42,15 +42,15 @@
       "@type": "WebPage",
       "@id":"https://0xnf.github.io/"
     },
-    "headline": "Bin and Obj Are the Devil - Nothing in Particular",
+    "headline": "https Is About Respecting Your Users - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
       "url": "https://0xnf.github.io/images/default.png",
       "height": 800,
       "width": 800
     },
-    "datePublished": "2018-06-19T09:06:33JST",
-    "dateModified": "2018-06-19T09:06:33JST",
+    "datePublished": "2018-07-24T16:47:57JST",
+    "dateModified": "2018-07-24T16:47:57JST",
     "author": {
       "@type": "Person",
       "name": "Nothing in Particular"
@@ -65,7 +65,7 @@
         "height": 60
       }
     },
-    "description": "the first in what is likely a series on cache invalidation being hard, where we explore what to do with UWP projects that try to use intermediate compilation and caching, but end up asking us to resolve &#39;system.string&#39;."
+    "description": "One common misconception about https is that it is way to secure your site - this is incorrect. It is about ensuring the integrity of your data and respecting your users."
   }
 </script>
 
@@ -111,43 +111,62 @@
         
         <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
         
-        <li class="active">Bin and Obj Are the Devil</li>
+        <li class="active">https Is About Respecting Your Users</li>
       </ol>
     </nav>
 
     <article class="single">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-19T09:06:33JST">Jun 19, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-07-24T16:47:57JST">Jul 24, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
 
-    <h1 class="title">Bin and Obj Are the Devil</h1>
+    <h1 class="title">https Is About Respecting Your Users</h1>
   </header>
 
   
 
-  <div class="article-body"><p>the first in what is likely a series on cache invalidation being hard.</p>
+  <div class="article-body">
 
-<p><em>tl;dr - close Visual Studio and delete your <code>obj/</code> and <code>bin/</code> directories if your project isn&rsquo;t building and giving cryptic errors.</em></p>
+<h3 id="respect-your-users">Respect Your Users</h3>
 
-<p>Your project was working fine, but now all of a sudden it can&rsquo;t find a reference whose location didn&rsquo;t change. Or it won&rsquo;t build because something is out of date. Or the version is incorrect.</p>
+<p>As of July 24th, 2018, Google Chrome is visibly marking all non-https sites as &ldquo;not secure&rdquo;. In light of this, it might be prudent to elaborate on what exactly https is meant to do.</p>
 
-<p>Maybe your project is suddenly throwing errors like <code>cannot find source file</code> or <code>xxx does not exist in namespace yyy</code>. Or maybe <code>System.String can't be found</code>, or <code>byte[] is not a valid type</code>, or <code>System.ValueTuple2 cannot be found</code>.</p>
+<p>A site without https is vulnerable to Man-In-The-Middle (MITM) attacks, which Troy Hunt shows off convincingly over at <a href="https://www.troyhunt.com/heres-why-your-static-website-needs-https/">https://www.troyhunt.com/heres-why-your-static-website-needs-https/</a></p>
 
-<p>Nothing changed in your project, except that it was working before and now it can&rsquo;t even find your classes.</p>
+<p>That site is all about demonstrating through words, video, and actions, what happens when you don&rsquo;t have https. What I want to tough on why, morally speaking, https is a good thing.</p>
 
-<p><code>Clean</code> succeeds but doesn&rsquo;t help.<br />
-<code>Rebuild</code> either fails, or is useless.</p>
+<p>https is an encryption method that encrypts:</p>
 
-<p>Before you pull your hair out, I think I might know what&rsquo;s wrong. Chances are your <code>obj/</code> and <code>bin/</code> folders are the problem.</p>
+<ol>
+<li>Page URL (although not the domain name)</li>
+<li>Page Content</li>
+</ol>
 
-<p>These two folders have been the cause of the vast majority of my UWP development headaches. Ostensibly they exist to provide debug symbols and information when stepping through your project, and to provide incremental compilation so your <code>build/rebuild</code> goes faster. These are nice when they work, but when they don&rsquo;t, the whole thing goes to hell.</p>
+<p>The only two entities who can decrypt an https page are the server sending the page and the entity requesting the page. This entity is usually, but not always, a browser like Chrome or Firefox.</p>
 
-<p>Sometimes these folders get stuck in a halfway state between the previous build and the new build. Maybe the files were locked by Visual Studio and weren&rsquo;t released before the build process got to it. Maybe Roslyn just messed up. Either way, these two folders are proabably the cause of your migraines.  Close Visual Studio, delete <code>obj/</code> and <code>bin/</code>, and try again.</p>
+<p>The primary benefit of this is that the user can trust that the data is correct. It cannot be tampered with in-flight.<sup><a href="#1">1</a></sup> With https, the user has obtained <a href="https://en.wikipedia.org/wiki/Information_Assurance">Information Assurance</a>, and thus a level of confidence they did not possess prior. They can be sure that the data you intended to deliver is the data that they received, without anything modified, deleted, or added on by anyone else.<sup><a href="#2">2</a></sup></p>
 
-<p>The next time you rebuid your project, things should just work.</p>
+<p>What this means in practice is that ISP&rsquo;s can&rsquo;t <a href="https://zdnet2.cbsistatic.com/hub/i/r/2015/11/23/296d2de3-4bb9-466c-b5a4-0a302b833e68/resize/770xauto/7f2485f3149b0b1b8d0caf736a76f1ec/comcast-stack.jpg">shove unwanted messages</a> into your user&rsquo;s faces, their local coffee shop script kiddie can&rsquo;t use hidden fields to try to steal their credentials, Ukrainian hackers can&rsquo;t make their browser do cryptomining, and they can&rsquo;t be unintentionally redirected to some other site.</p>
+
+<p>None of this has any benefit to you, the site owner. Not directly. Your site is exactly as secure (or insecure) as it would be without https. Your administrative credentials are exactly as secure, your server processes are exactly as memory-safe, the files being served remain as unmodified and readonly as they were before.</p>
+
+<p>The security is for the user. The user can trust your site more. What you intended to deliver is what was delivered. Https is about respecting your users. It&rsquo;s about respecting their time, their machine&rsquo;s resources, and their privacy.</p>
+
+<p>Be a good internet citizen, enable https today.</p>
+
+<p><small></p>
+
+<h6 id="small-1-small"><small>1</small></h6>
+
+<p>In theory, an attacker with immense resources like a nation-state could use, for example, statistical analyses techniques to alter the bits in-transit to something meaningful, but this is a theortical, highly targeted, and necessarily resource intensive attack. If this is happening to you, you have much larger things to worry about.</p>
+
+<h6 id="small-2-small"><small>2</small></h6>
+
+<p>https guarantees that the data received is the data sent - if you choose to embed malicious iframes or load Googles&rsquo;s tracking script, the user is still being put at risk but it will be intentional on your part.
+</small></p>
 </div>
 
   <footer class="article-footer">
@@ -161,9 +180,7 @@
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://0xnf.github.io/categories/uwp/">UWP</a></li>
-          
-          <li><a href="https://0xnf.github.io/categories/cache-invalidation/">Cache Invalidation</a></li>
+          <li><a href="https://0xnf.github.io/categories/security/">security</a></li>
           
         </ul>
       </div>
@@ -180,9 +197,7 @@
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://0xnf.github.io/tags/debugging/">debugging</a></li>
-          
-          <li><a href="https://0xnf.github.io/tags/csharp/">csharp</a></li>
+          <li><a href="https://0xnf.github.io/tags/https/">https</a></li>
           
         </ul>
       </div>

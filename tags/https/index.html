@@ -6,70 +6,16 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="generator" content="Hugo 0.40.3" />
 
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://0xnf.github.io/tags/https/index.xml">
 
-
-<link rel="canonical" href="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/">
+<link rel="canonical" href="https://0xnf.github.io/tags/https/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>Bin and Obj Are the Devil - Nothing in Particular</title>
+    <title>Https - Nothing in Particular</title>
     
-<meta name="description" content="the first in what is likely a series on cache invalidation being hard, where we explore what to do with UWP projects that try to use intermediate compilation and caching, but end up asking us to resolve &#39;system.string&#39;.">
-
-<meta property="og:title" content="Bin and Obj Are the Devil - Nothing in Particular">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/">
-<meta property="og:image" content="https://0xnf.github.io/images/default.png">
-<meta property="og:site_name" content="Nothing in Particular">
-<meta property="og:description" content="the first in what is likely a series on cache invalidation being hard, where we explore what to do with UWP projects that try to use intermediate compilation and caching, but end up asking us to resolve &#39;system.string&#39;.">
-<meta property="og:locale" content="ja_JP">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="Nothing in Particular">
-<meta name="twitter:url" content="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/">
-<meta name="twitter:title" content="Bin and Obj Are the Devil - Nothing in Particular">
-<meta name="twitter:description" content="the first in what is likely a series on cache invalidation being hard, where we explore what to do with UWP projects that try to use intermediate compilation and caching, but end up asking us to resolve &#39;system.string&#39;.">
-<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
-
-
-<script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "NewsArticle",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
-    },
-    "headline": "Bin and Obj Are the Devil - Nothing in Particular",
-    "image": {
-      "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
-      "height": 800,
-      "width": 800
-    },
-    "datePublished": "2018-06-19T09:06:33JST",
-    "dateModified": "2018-06-19T09:06:33JST",
-    "author": {
-      "@type": "Person",
-      "name": "Nothing in Particular"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Nothing in Particular",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
-        "width": 600,
-        "height": 60
-      }
-    },
-    "description": "the first in what is likely a series on cache invalidation being hard, where we explore what to do with UWP projects that try to use intermediate compilation and caching, but end up asking us to resolve &#39;system.string&#39;."
-  }
-</script>
-
-
     <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
     
 
@@ -105,98 +51,41 @@
 <div class="row">
   <div class="col-md-8">
 
-    <nav class="p-crumb">
-      <ol class="breadcrumb">
-        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-        
-        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
-        
-        <li class="active">Bin and Obj Are the Devil</li>
-      </ol>
-    </nav>
+    
+    <header class="page-header">
+      <h1>Https</h1>
+    </header>
+    
 
-    <article class="single">
+    <ul class="p-articles">
+      
+      <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-19T09:06:33JST">Jun 19, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-07-24T16:47:57JST">Jul 24, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-
-    <h1 class="title">Bin and Obj Are the Devil</h1>
+    <h2 class="title"><a href="https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/">https Is About Respecting Your Users</a></h2>
   </header>
 
   
+  <div class="summary">One common misconception about https is that it is way to secure your site - this is incorrect. It is about ensuring the integrity of your data and respecting your users.</div>
 
-  <div class="article-body"><p>the first in what is likely a series on cache invalidation being hard.</p>
-
-<p><em>tl;dr - close Visual Studio and delete your <code>obj/</code> and <code>bin/</code> directories if your project isn&rsquo;t building and giving cryptic errors.</em></p>
-
-<p>Your project was working fine, but now all of a sudden it can&rsquo;t find a reference whose location didn&rsquo;t change. Or it won&rsquo;t build because something is out of date. Or the version is incorrect.</p>
-
-<p>Maybe your project is suddenly throwing errors like <code>cannot find source file</code> or <code>xxx does not exist in namespace yyy</code>. Or maybe <code>System.String can't be found</code>, or <code>byte[] is not a valid type</code>, or <code>System.ValueTuple2 cannot be found</code>.</p>
-
-<p>Nothing changed in your project, except that it was working before and now it can&rsquo;t even find your classes.</p>
-
-<p><code>Clean</code> succeeds but doesn&rsquo;t help.<br />
-<code>Rebuild</code> either fails, or is useless.</p>
-
-<p>Before you pull your hair out, I think I might know what&rsquo;s wrong. Chances are your <code>obj/</code> and <code>bin/</code> folders are the problem.</p>
-
-<p>These two folders have been the cause of the vast majority of my UWP development headaches. Ostensibly they exist to provide debug symbols and information when stepping through your project, and to provide incremental compilation so your <code>build/rebuild</code> goes faster. These are nice when they work, but when they don&rsquo;t, the whole thing goes to hell.</p>
-
-<p>Sometimes these folders get stuck in a halfway state between the previous build and the new build. Maybe the files were locked by Visual Studio and weren&rsquo;t released before the build process got to it. Maybe Roslyn just messed up. Either way, these two folders are proabably the cause of your migraines.  Close Visual Studio, delete <code>obj/</code> and <code>bin/</code>, and try again.</p>
-
-<p>The next time you rebuid your project, things should just work.</p>
-</div>
-
-  <footer class="article-footer">
-    
-    
-    
-    <section class="bordered">
-      <header>
-        <div class="panel-title">CATEGORIES</div>
-      </header>
-      <div>
-        <ul class="p-terms">
-          
-          <li><a href="https://0xnf.github.io/categories/uwp/">UWP</a></li>
-          
-          <li><a href="https://0xnf.github.io/categories/cache-invalidation/">Cache Invalidation</a></li>
-          
-        </ul>
-      </div>
-    </section>
-    
-    
-    
-    
-    
-    <section class="bordered">
-      <header>
-        <div class="panel-title">TAGS</div>
-      </header>
-      <div>
-        <ul class="p-terms">
-          
-          <li><a href="https://0xnf.github.io/tags/debugging/">debugging</a></li>
-          
-          <li><a href="https://0xnf.github.io/tags/csharp/">csharp</a></li>
-          
-        </ul>
-      </div>
-    </section>
-    
-    
+  
+  <footer>
+    <a href="https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/" title="https Is About Respecting Your Users">Read More…</a>
   </footer>
-
+  
 </article>
-
+</li>
+      
+    </ul>
 
     
-  </div>
 
+
+  </div>
   <div class="col-md-4">
     
 <aside class="l-sidebar">
