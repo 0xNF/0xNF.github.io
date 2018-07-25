@@ -246,12 +246,11 @@ and leave the rest as the defaults.</p>
 
 <p>If you&rsquo;re not familiar with Entity Framework Core, models with additional models on them, like our <code>Owner</code> on the <code>OAuthClient</code> are not populated by default when querying. This is to save on bandwidth and I/O costs, but it can be a surprise if you&rsquo;re not expecting a sudden Null Pointer. The solution is to call <code>.Include()</code> on the <code>DbSet</code> with the field we need. In this case, the method chain looks like <code>_context.ClientApplications.Include(x =&gt; x.Owner)...</code></p>
 
-<p>TODO HIGHLIGHT middle
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// GET: OAuthClients
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; Index() {
 <span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">string</span> uid = _userManager.GetUserId(<span style="color:#66d9ef">this</span>.User);
 </span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">return</span> View(<span style="color:#66d9ef">await</span> _context.ClientApplications.Include(x =&gt; x.Owner).Where(x =&gt; x.Owner.Id == uid).ToListAsync());
-</span>}</code></pre></div></p>
+</span>}</code></pre></div>
 
 <h3 id="details">Details</h3>
 
