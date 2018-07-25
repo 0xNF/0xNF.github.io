@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://0xnf.github.io/posts/security/what-good-are-vpns/</loc>
+    <lastmod>2018-07-24T18:00:02-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/</loc>
     <lastmod>2018-07-24T16:47:57-07:00</lastmod>
   </url>
@@ -308,7 +313,7 @@
   
   <url>
     <loc>https://0xnf.github.io/</loc>
-    <lastmod>2018-07-24T16:47:57-07:00</lastmod>
+    <lastmod>2018-07-24T18:00:02-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -332,13 +337,13 @@
   
   <url>
     <loc>https://0xnf.github.io/posts/</loc>
-    <lastmod>2018-07-24T16:47:57-07:00</lastmod>
+    <lastmod>2018-07-24T18:00:02-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://0xnf.github.io/categories/privacy/</loc>
-    <lastmod>2018-07-05T07:20:43-07:00</lastmod>
+    <lastmod>2018-07-24T18:00:02-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -356,7 +361,7 @@
   
   <url>
     <loc>https://0xnf.github.io/categories/security/</loc>
-    <lastmod>2018-07-24T16:47:57-07:00</lastmod>
+    <lastmod>2018-07-24T18:00:02-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -399,6 +404,12 @@
   <url>
     <loc>https://0xnf.github.io/categories/uwp/</loc>
     <lastmod>2018-07-19T15:31:28-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://0xnf.github.io/tags/vpn/</loc>
+    <lastmod>2018-07-24T18:00:02-07:00</lastmod>
     <priority>0</priority>
   </url>
   
