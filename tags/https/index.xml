@@ -23,14 +23,14 @@ Some of these arguments apply systemically, i.e., because of choices made by the
     </item>
     
     <item>
-      <title>https Is About Respecting Your Users</title>
+      <title>HTTPS Is About Respecting Your Users</title>
       <link>https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/</link>
       <pubDate>Tue, 24 Jul 2018 16:47:57 -0700</pubDate>
       
       <guid>https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/</guid>
-      <description>Respect Your Users As of July 24th, 2018, Google Chrome is visibly marking all non-https sites as &amp;ldquo;not secure&amp;rdquo;. In light of this, it might be prudent to elaborate on what exactly https is meant to do.
-A site without https is vulnerable to Man-In-The-Middle (MITM) attacks, which Troy Hunt shows off convincingly over at https://www.troyhunt.com/heres-why-your-static-website-needs-https/
-That site is all about demonstrating through words, video, and actions, what happens when you don&amp;rsquo;t have https.</description>
+      <description>Respect Your Users As of July 24th, 2018, Google Chrome is visibly marking all non-HTTPS sites as &amp;ldquo;not secure&amp;rdquo;. In light of this, it might be prudent to elaborate on what exactly HTTPS is meant to do.
+A site without HTTPS is vulnerable to Man-In-The-Middle (MITM) attacks, which Troy Hunt shows off convincingly over at https://www.troyhunt.com/heres-why-your-static-website-needs-https/
+That site is all about demonstrating through words, video, and actions, what happens when you don&amp;rsquo;t have HTTPS.</description>
     </item>
     
   </channel>
