@@ -366,11 +366,11 @@
     }
     <span style="color:#66d9ef">return</span> token;
 }</code></pre></div>
-<p>We only need this because we can&rsquo;t get the actual token being used from the helper methods on the context - so we have to get it ourselves. We can do this because the context that is passed to the origial <code>OnExecutingAction</code> function is also passed the <code>HttpContext</code>, which contains the header information necessary.</p>
+<p>We only need this because we can&rsquo;t get the actual token being used from the helper methods on the context - so we have to get it ourselves. We can do this because the context that is passed to the original <code>OnExecutingAction</code> function is also passed the <code>HttpContext</code>, which contains the header information necessary.</p>
 
 <p>We use the default OAuth validation scheme name (&ldquo;Bearer&rdquo;), but we should stick to the defaults and avoid the hardcoded stuff were possible.</p>
 
-<p>One thing to pay attention to is that when we split the bearer token, we add a space - this is just how http headers are formed, so we accomodate for that.</p>
+<p>One thing to pay attention to is that when we split the bearer token, we add a space - this is just how http headers are formed, so we accommodate for that.</p>
 
 <h1 id="ratelimitcounter">RateLimitCounter</h1>
 
@@ -465,7 +465,7 @@ You have issued too many requests. Please check the retry-after headers and <spa
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/18-RateLimitAttribute">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/18-RateLimitAttribute">here on GitHub</a>.</p>
 
 <p>In the next and final section, we&rsquo;ll push our application to Azure.</p>
 
