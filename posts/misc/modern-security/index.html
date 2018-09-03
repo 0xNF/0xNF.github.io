@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="https://0xnf.github.io/posts/misc/modern-security/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Modern Security - Nothing in Particular</title>
+    
+<meta name="description" content="Target Audience A tech savvy computer user. Not a programmer, or even an IT repair guy, but not your average joe either.Dissection Security is a loaded term so we&amp;rsquo;ll break it out.There are two overarching categories, and a bunch of others that fall underneath them. Privacy: Concealing information from others  Authorization  Integrity: Making sure that information is not tampered, sabotoged, or changed  Permissions">
+
+<meta property="og:title" content="Modern Security - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://0xnf.github.io/posts/misc/modern-security/">
+<meta property="og:image" content="https://0xnf.github.io/images/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="Target Audience A tech savvy computer user. Not a programmer, or even an IT repair guy, but not your average joe either.Dissection Security is a loaded term so we&amp;rsquo;ll break it out.There are two overarching categories, and a bunch of others that fall underneath them. Privacy: Concealing information from others  Authorization  Integrity: Making sure that information is not tampered, sabotoged, or changed  Permissions">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/misc/modern-security/">
+<meta name="twitter:title" content="Modern Security - Nothing in Particular">
+<meta name="twitter:description" content="Target Audience A tech savvy computer user. Not a programmer, or even an IT repair guy, but not your average joe either.Dissection Security is a loaded term so we&amp;rsquo;ll break it out.There are two overarching categories, and a bunch of others that fall underneath them. Privacy: Concealing information from others  Authorization  Integrity: Making sure that information is not tampered, sabotoged, or changed  Permissions">
+<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://0xnf.github.io/"
+    },
+    "headline": "Modern Security - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://0xnf.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-06-29T16:55:18JST",
+    "dateModified": "2018-06-29T16:55:18JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://0xnf.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Target Audience A tech savvy computer user. Not a programmer, or even an IT repair guy, but not your average joe either.
+Dissection Security is a loaded term so we&rsquo;ll break it out.
+There are two overarching categories, and a bunch of others that fall underneath them.
+ Privacy: Concealing information from others  Authorization  Integrity: Making sure that information is not tampered, sabotoged, or changed  Permissions"
+  }
+</script>
+
+
+    <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://0xnf.github.io/">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Modern Security</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-29T16:55:18JST">Jun 29, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Modern Security</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<h1 id="target-audience">Target Audience</h1>
+
+<p>A tech savvy computer user. Not a programmer, or even an IT repair guy, but not your average joe either.</p>
+
+<h1 id="dissection">Dissection</h1>
+
+<p>Security is a loaded term so we&rsquo;ll break it out.</p>
+
+<p>There are two overarching categories, and a bunch of others that fall underneath them.</p>
+
+<ol>
+<li>Privacy: Concealing information from others
+
+<ol>
+<li>Authorization</li>
+</ol></li>
+<li>Integrity: Making sure that information is not tampered, sabotoged, or changed</li>
+</ol>
+
+<p>Permissions<br />
+Untrusted Code<br />
+Buffer overflow<br />
+Tracking<br />
+Data collection<br />
+fingerprinting<br />
+data leakage</p>
+
+<h1 id="encryption-is-not-integrity-encrypton-is-privacy">Encryption is not integrity, encrypton is privacy</h1>
+
+<h1 id="hashing-is-not-privacy-hashing-is-integrity">Hashing is not privacy, hashing is integrity</h1>
+
+<h1 id="stay-safe-online">Stay Safe Online:</h1>
+
+<ol>
+<li>Anti Tracking (tracking)</li>
+<li>Adblocking (untrusted code, tracking)</li>
+<li>No Scripts (untrusted code, tracking)</li>
+</ol>
+
+<h1 id="stay-safe-on-your-computer">Stay safe on your computer</h1>
+
+<ol>
+<li>Patches (untrusted, data leakage)</li>
+</ol>
+
+<h1 id="general">General</h1>
+
+<ol>
+<li>Strong passwords (unauthorized access)</li>
+<li>Two-Factor Auth (unauthorized access/password fallback)</li>
+</ol>
+
+<p>VPNs are nice, but they really just punt the problem.
+(non-https connections become secured between you and the vpn server, but are again insecure from vpn to the server. Your ISP no longer knows where your traffic is going, but the ISP out of your VPN server does.)</p>
+
+<h1 id="a-programming-language-has-no-performance-characteristics">A Programming Language has no performance characteristics</h1>
+
+<p>The Assembly produced by the compilation has performance characteristics.</p>
+
+<h1 id="a-programming-language-is-not-garbage-collected">A Programming Language is not garbage collected</h1>
+
+<p>Its runtime is</p>
+
+<h1 id="a-programming-language-is-not-its-standard-library">A Programming Language is not its standard library</h1>
+
+<h1 id="what-is-a-pl">What is a PL</h1>
+
+<p>{ syntax, tokens }</p>
+
+<h1 id="compilation">Compilation?</h1>
+
+<p>{ Lexer, parser, tokenizer }</p>
+
+<h1 id="runtime">Runtime?</h1>
+
+<p>{JIT / VM }</p>
+
+<h1 id="final-product">Final Product?</h1>
+
+<p>{ Assembly Code }</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/security/">security</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/overview/">overview</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATEST</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/posts/esk8bst/esk8bst/" class="list-group-item">Adventures in Email and FAAS, ft. React</a>
+      
+      <a href="https://0xnf.github.io/posts/security/what-good-are-vpns/" class="list-group-item">What Good Are VPNs?</a>
+      
+      <a href="https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/" class="list-group-item">https Is About Respecting Your Users</a>
+      
+      <a href="https://0xnf.github.io/posts/uwp/simple-events/" class="list-group-item">UWP: Simple Events</a>
+      
+      <a href="https://0xnf.github.io/posts/uwp/listview-row-height/" class="list-group-item">UWP: ListView Row Height</a>
+      
+      <a href="https://0xnf.github.io/posts/misc/firefox-user-security/" class="list-group-item">Towards a Secure and Private Firefox Installation</a>
+      
+      <a href="https://0xnf.github.io/posts/misc/modern-security/" class="list-group-item">Modern Security</a>
+      
+      <a href="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/" class="list-group-item">Bin and Obj Are the Devil</a>
+      
+      <a href="https://0xnf.github.io/posts/misc/regionisfine/" class="list-group-item">#region Is Fine</a>
+      
+      <a href="https://0xnf.github.io/posts/oauthserver/19/" class="list-group-item">Implement an OAuth 2.0 Server (Part 19)</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
+      <a href="https://0xnf.github.io/categories/privacy" class="list-group-item">privacy</a>
+      
+      <a href="https://0xnf.github.io/categories/uwp" class="list-group-item">uwp</a>
+      
+      <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/categories/architecture" class="list-group-item">architecture</a>
+      
+      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/articulate-insights" class="list-group-item">articulate-insights</a>
+      
+      <a href="https://0xnf.github.io/tags/northeastern-university" class="list-group-item">northeastern-university</a>
+      
+      <a href="https://0xnf.github.io/tags/overview" class="list-group-item">overview</a>
+      
+      <a href="https://0xnf.github.io/tags/command-line" class="list-group-item">command-line</a>
+      
+      <a href="https://0xnf.github.io/tags/debugging" class="list-group-item">debugging</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p>Contact: blog&lt;at>winetech.com </p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

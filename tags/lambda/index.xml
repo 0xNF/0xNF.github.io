@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lambda on Nothing in Particular</title>
+    <link>https://0xnf.github.io/tags/lambda/</link>
+    <description>Recent content in Lambda on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 03 Sep 2018 07:22:07 -0700</lastBuildDate>
+    
+	<atom:link href="https://0xnf.github.io/tags/lambda/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ESK8BST -  Electric Skateboard Buy / Sell / Trade</title>
+      <link>https://0xnf.github.io/posts/esk8bst/esk8bst/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/esk8bst/esk8bst/</guid>
+      <description>The Finished Product Raison D&amp;rsquo;etre Structure  Front End  React  Components Pages  Services  FindThread.ts GetNewestData.ts Determining BST Status Determining Price and Currency Determining Product and Company Other Data   Backend  .NET Core  Database  ScanData Subscribers Preconfirmed   Third-Party Services  Netlify Firebase AWS Serverless / Lambda  Serverless Project Functions Logging  MailGun  Types of Email Email Deliverability Email Services Mailgun&amp;rsquo;s Services  Double Opt-In + Unsubscribe Automated Security Scan    Privacy and Security  Firebase Rules / Service Accounts Reddit triggering Tracking Protection   The Finished Product Available at https://esk8bst.</description>
+    </item>
+    
+  </channel>
+</rss>

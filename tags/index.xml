@@ -57,11 +57,38 @@
     </item>
     
     <item>
+      <title>Email</title>
+      <link>https://0xnf.github.io/tags/email/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/email/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Event Routing</title>
       <link>https://0xnf.github.io/tags/event-routing/</link>
       <pubDate>Thu, 19 Jul 2018 15:31:28 -0700</pubDate>
       
       <guid>https://0xnf.github.io/tags/event-routing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Faas</title>
+      <link>https://0xnf.github.io/tags/faas/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/faas/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Firebase</title>
+      <link>https://0xnf.github.io/tags/firebase/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/firebase/</guid>
       <description></description>
     </item>
     
@@ -84,11 +111,29 @@
     </item>
     
     <item>
+      <title>Lambda</title>
+      <link>https://0xnf.github.io/tags/lambda/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/lambda/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Linux</title>
       <link>https://0xnf.github.io/tags/linux/</link>
       <pubDate>Wed, 06 Jun 2018 21:38:01 -0700</pubDate>
       
       <guid>https://0xnf.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mailgun</title>
+      <link>https://0xnf.github.io/tags/mailgun/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/mailgun/</guid>
       <description></description>
     </item>
     
@@ -129,11 +174,47 @@
     </item>
     
     <item>
+      <title>React</title>
+      <link>https://0xnf.github.io/tags/react/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/react/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Serverless</title>
+      <link>https://0xnf.github.io/tags/serverless/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/serverless/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Smtp</title>
+      <link>https://0xnf.github.io/tags/smtp/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/smtp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Tutorial</title>
       <link>https://0xnf.github.io/tags/tutorial/</link>
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
       <guid>https://0xnf.github.io/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Typescript</title>
+      <link>https://0xnf.github.io/tags/typescript/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/typescript/</guid>
       <description></description>
     </item>
     
