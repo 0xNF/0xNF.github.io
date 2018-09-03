@@ -158,7 +158,7 @@
 
 <p>You should use different SSH Keys for each service, much like how you should use different passwords for each service. <code>~/.ssh/config</code> supports this to make it easy.</p>
 
-<p>While we&rsquo;re talking about good SSH hygiene, when you create a key you should encrypt it with a passphrase. <em>But be sure to use <code>-o</code></em>. <a href="http://www.daemonology.net/papers/scrypt-slides.pdf">don&rsquo;t</a> <a href="https://news.ycombinator.com/item?id=17682946">accept</a> <a href="https://latacora.singles/2018/08/03/the-default-openssh.html">the</a> <a href="https://blog.g3rt.nl/upgrade-your-ssh-keys.html">defaults</a>.</p>
+<p>While we&rsquo;re talking about good SSH hygiene, when you create a key you should encrypt it with a passphrase. <em>But be sure to use <code>-o</code></em>. <a href="http://www.daemonology.net/papers/scrypt-slides.pdf">Don&rsquo;t</a> <a href="https://news.ycombinator.com/item?id=17682946">accept</a> <a href="https://latacora.singles/2018/08/03/the-default-openssh.html">the</a> <a href="https://blog.g3rt.nl/upgrade-your-ssh-keys.html">defaults</a>.</p>
 
 <p>Also you should use some kind of proper key storage, because any old userspace process on your system can read your <code>~/.ssh</code> directory. Do you trust your development machine? You probably shouldn&rsquo;t.</p>
 </div>
