@@ -19,7 +19,7 @@
       <guid>https://0xnf.github.io/posts/security/long-lived-ssh-keys-considered-harmful/</guid>
       <description>Disclaimer: This advice goes for any credential, including and especially passwords
 tl;dr: You should, at regular intervals, change out and retire old SSH keys.
-SSH keys are dangerous An SSH key should be considered a short-lived resource as such and should be refreshed periodically. Here are a few reasons why:
+SSH keys are dangerous An SSH key should be considered a short-lived resource and as such and should be refreshed periodically. Here are a few reasons why:
  They can be compromised They are highly privileged They can be automatically generated They can easily be replaced on many services  Refreshing your SSH keys has the added benefit of following the Let&amp;rsquo;s Encrypt School of Critical Process Management:</description>
     </item>
     
