@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="https://0xnf.github.io/posts/security/arguments-against-https/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Arguments Against HTTPS - Nothing in Particular</title>
+    
+<meta name="description" content="HTTPS is a great but not unmitigated good and there are some real arguments against it. Here we address some of those concerns.">
+
+<meta property="og:title" content="Arguments Against HTTPS - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://0xnf.github.io/posts/security/arguments-against-https/">
+<meta property="og:image" content="https://0xnf.github.io/images/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="HTTPS is a great but not unmitigated good and there are some real arguments against it. Here we address some of those concerns.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/security/arguments-against-https/">
+<meta name="twitter:title" content="Arguments Against HTTPS - Nothing in Particular">
+<meta name="twitter:description" content="HTTPS is a great but not unmitigated good and there are some real arguments against it. Here we address some of those concerns.">
+<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://0xnf.github.io/"
+    },
+    "headline": "Arguments Against HTTPS - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://0xnf.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-09-03T14:50:34JST",
+    "dateModified": "2018-09-03T14:50:34JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://0xnf.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "HTTPS is a great but not unmitigated good and there are some real arguments against it. Here we address some of those concerns."
+  }
+</script>
+
+
+    <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://0xnf.github.io/">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Arguments Against HTTPS</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-09-03T14:50:34JST">Sep 3, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Arguments Against HTTPS</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p><em>Disclaimer: I think HTTPS everywhere is a generally good thing, but it isn&rsquo;t unmitigated. See <a href="/posts/security/https-is-about-respecting-your-users/">this earlier post</a> about why HTTPS is good and why you should do it.</em></p>
+
+<p>That being said, there are arguments against it that ought to be taken seriously.</p>
+
+<p>Some of these arguments apply systemically, i.e., because of choices made by the browser vendors, such as the decision to mark all non-HTTPS sites as insecure by default.</p>
+
+<p>Other arguments apply only if you&rsquo;ve opted to make your site HTTPS-only, such as CA-uptime.</p>
+
+<h1 id="issues">Issues</h1>
+
+<p>There are essentially two main arguments:</p>
+
+<p>A) Loss of control<br />
+B) Increased maintenance cost</p>
+
+<h2 id="partly-outsourced-site-availability-a">Partly outsourced site-availability (A)</h2>
+
+<p>As long as you&rsquo;re opting for an HTTPS only experience, because anything less would be about as good as not offering it at all, then if your certificate has expired and the certificate authority that issued your cert is unreachable for one reason or another, then your site will be unreachable because you can&rsquo;t renew it.</p>
+
+<p>This is a somewhat fringe concern, but not one to be dismissed out of hand.</p>
+
+<h2 id="the-ca-decides-your-fate-a">The CA decides your fate (A)</h2>
+
+<p>If a certificate authority decides to revoke your cert then your site becomes inaccessible. Whether the CA has due cause or not is irrelevant if your site is offline.</p>
+
+<h2 id="the-browser-vendors-decide-your-fate-a">The browser vendors decide your fate (A)</h2>
+
+<p>A cert that gets marked as invalid or otherwise untrusted (see <a href="HTTPS://wiki.mozilla.org/CA:Symantec_Issues">Symantec</a>) renders your site inaccessible.</p>
+
+<p>This could happen with DigiCert or Comodo on the whims of Google and no one could do a thing about it.</p>
+
+<h2 id="additional-complexity-cert-maintenance-b">Additional complexity: Cert Maintenance (B)</h2>
+
+<p>Despite all the advances, Let&rsquo;s Encrypt and the EFF&rsquo;s CertBot are still not as easy to use as they should be to obtain and renew certs. To say nothing of what to do with other certificate vendors, or self-signed certs.</p>
+
+<p>Although short-dated expiration dates on business critical functions is a great way to keep the process in institutional memory, and also encourages strong automation facilities, there&rsquo;s still just enough weirdness with how these programs function to make it non-trivial.</p>
+
+<p>Ignore anyone who demeans you by saying Lets Encrypt is drop-dead simple. It is better but it is not yet good enough.</p>
+
+<h2 id="additional-complexity-software-integrations-b">Additional Complexity: Software Integrations (B)</h2>
+
+<p>Things like Postgres or mail servers need to be updated with new certificate chain information every time a cert is added or renewed. This can range from simple, to complicated and opaque, and either way it is additional complexity.</p>
+
+<h1 id="remediation">Remediation</h1>
+
+<h2 id="automation-improvements">Automation Improvements</h2>
+
+<p>The situation can be largely improved, both software complexity wise, and certificate maintenance wise with continued investment in automated procedures.</p>
+
+<p>But with respect to the additional complexity of software integrations, the situation can get better but will likely never be alleviated completely. Each piece of software is just too unique to properly account for, and even some standard was developed and adopted, it would inevitably fracture and have their own silly pitfalls, as they all do.</p>
+
+<p>That being said, if CertBot received continued improvements, and SSL-using software like Postgres supplied their own ease of use tools for managing certs, this situation could get a lot better.</p>
+
+<h2 id="decentralization">Decentralization</h2>
+
+<p>A big problem right now is that Lets Encrypt is the only real player in the free SSL certificate space, which means centralization of your critical resources.</p>
+
+<p>Lets Encrypt is benevolent, at least for now, and is a positive force on the world, but it doesn&rsquo;t always have to be that way.</p>
+
+<p>Similarly, Lets Encrypt certs are in good standing with Google and Firefox, but it might not always be that way.</p>
+
+<p>And if Lets Encrypt has uptime issues, the whole internet will know it. If there were more widely used free cert services, we could federate this single-point-of-failure and gain a lot more sense of control back.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>The conclusion isn&rsquo;t much different than the introduction. HTTPS is a worthy cause and a general good, but there are legitimate reasons to be suspicious. We do ourselves a disservice by rejecting the arguments against it. There are real problems to solve with the certificate system, and we should start thinking about how to address them.</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/security/">Security</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/web/">Web</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/https/">HTTPS</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/tls/">tls</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/centralization/">centralization</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATEST</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/posts/security/arguments-against-https/" class="list-group-item">Arguments Against HTTPS</a>
+      
+      <a href="https://0xnf.github.io/posts/esk8bst/esk8bst/" class="list-group-item">ESK8BST -  Electric Skateboard Buy / Sell / Trade</a>
+      
+      <a href="https://0xnf.github.io/posts/security/what-good-are-vpns/" class="list-group-item">What Good Are VPNs?</a>
+      
+      <a href="https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/" class="list-group-item">https Is About Respecting Your Users</a>
+      
+      <a href="https://0xnf.github.io/posts/uwp/simple-events/" class="list-group-item">UWP: Simple Events</a>
+      
+      <a href="https://0xnf.github.io/posts/uwp/listview-row-height/" class="list-group-item">UWP: ListView Row Height</a>
+      
+      <a href="https://0xnf.github.io/posts/misc/firefox-user-security/" class="list-group-item">Towards a Secure and Private Firefox Installation</a>
+      
+      <a href="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/" class="list-group-item">Bin and Obj Are the Devil</a>
+      
+      <a href="https://0xnf.github.io/posts/misc/regionisfine/" class="list-group-item">#region Is Fine</a>
+      
+      <a href="https://0xnf.github.io/posts/oauthserver/19/" class="list-group-item">Implement an OAuth 2.0 Server (Part 19)</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
+      <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
+      
+      <a href="https://0xnf.github.io/categories/privacy" class="list-group-item">privacy</a>
+      
+      <a href="https://0xnf.github.io/categories/uwp" class="list-group-item">uwp</a>
+      
+      <a href="https://0xnf.github.io/categories/architecture" class="list-group-item">architecture</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/articulate-insights" class="list-group-item">articulate-insights</a>
+      
+      <a href="https://0xnf.github.io/tags/northeastern-university" class="list-group-item">northeastern-university</a>
+      
+      <a href="https://0xnf.github.io/tags/https" class="list-group-item">https</a>
+      
+      <a href="https://0xnf.github.io/tags/centralization" class="list-group-item">centralization</a>
+      
+      <a href="https://0xnf.github.io/tags/command-line" class="list-group-item">command-line</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p>Contact: blog&lt;at>winetech.com </p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
