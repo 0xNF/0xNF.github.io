@@ -17,9 +17,9 @@
       <pubDate>Mon, 18 Jun 2018 19:53:31 -0700</pubDate>
       
       <guid>https://0xnf.github.io/posts/misc/regionisfine/</guid>
-      <description>Ocassionally you&amp;rsquo;ll encounter someone whining about using C#&amp;rsquo;s #region / #endregion feature in your code.
+      <description>Occasionally you&amp;rsquo;ll encounter someone whining about using C#&amp;rsquo;s #region / #endregion feature in your code.
 The complaints always boil down to one thing: Overuse of regions is indicative of bad design because it promotes hiding flaws in class structure. Mostly they mean that the class is too big and should be split up.
-That&amp;rsquo;s not a necessarily bad observation on its face, but it&amp;rsquo;s farcial to blame bad design on using regions.</description>
+That&amp;rsquo;s not a necessarily bad observation on its face, but it&amp;rsquo;s farcical to blame bad design on using regions.</description>
     </item>
     
   </channel>

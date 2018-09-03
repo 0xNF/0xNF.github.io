@@ -164,10 +164,10 @@
 <li>Standard SSH port is changed to be non-standard below 1024 to stop automated attacks on port 22
 
 <ul>
-<li>Ports below 1024 are priviliged and can&rsquo;t be re-bound by another service.</li>
+<li>Ports below 1024 are privileged and can&rsquo;t be re-bound by another service.</li>
 </ul></li>
 <li>No Root sign-on. Root only available via <code>sudo su</code> from an authenticated user</li>
-<li>Access is done under an unpriviliged user with an entry in <code>sudoers</code></li>
+<li>Access is done under an unprivileged user with an entry in <code>sudoers</code></li>
 <li>UFW is running with only the necessary service ports open.
 
 <ul>
@@ -189,7 +189,7 @@
                                         + &lt;--&gt; Database Server (3)
 </code></pre>
 
-<p>Data is validated on both ends of each boundary before passing along or using, with the exception of the Spotify Server which we don&rsquo;t control, and therefore cannot validate on their end. We do however, validate data coming back from it and going into it, according to the specs published on the <a href="https://developer.spotify.com">https://developer.spotify.com</a> documenation site.</p>
+<p>Data is validated on both ends of each boundary before passing along or using, with the exception of the Spotify Server which we don&rsquo;t control, and therefore cannot validate on their end. We do however, validate data coming back from it and going into it, according to the specs published on the <a href="https://developer.spotify.com">https://developer.spotify.com</a> documentation site.</p>
 
 <h3 id="transport-security">Transport Security</h3>
 
@@ -199,7 +199,7 @@
 
 <h2 id="basic-guarantees">Basic Guarantees</h2>
 
-<p>Because we use C# with strong models, we have a minimum guarantee of runtime safety and data validation. As long as the models are conceptually correct, a lot of errors are automatically eliminated. Barring any incorrect implementations in the underlying libaries, buffer overflows or invalid states are impossible.</p>
+<p>Because we use C# with strong models, we have a minimum guarantee of runtime safety and data validation. As long as the models are conceptually correct, a lot of errors are automatically eliminated. Barring any incorrect implementations in the underlying libraries, buffer overflows or invalid states are impossible.</p>
 
 <h2 id="database-side">Database Side</h2>
 
@@ -221,10 +221,10 @@
 
 <ol>
 <li>Main database uses a strong, secure, randomly generated 64-character string</li>
-<li>Database is only accessible via a specific, lowest-privilige user, whose name is an equally random 64-character string.</li>
+<li>Database is only accessible via a specific, lowest-privilege user, whose name is an equally random 64-character string.</li>
 <li>This user has an equally random 64-character string password</li>
 
-<li><p>This user only has access to the app-database, and can not modify other Databases. It is not even an Administrator on the database. It has read-write access to most tables, but a second, more priviliged Administrator user exists to execute various administrative tasks, like manually adjusting a users subscription.</p>
+<li><p>This user only has access to the app-database, and can not modify other Databases. It is not even an Administrator on the database. It has read-write access to most tables, but a second, more privileged Administrator user exists to execute various administrative tasks, like manually adjusting a users subscription.</p>
 
 <pre><code>In the future, these values will be rotated out occasionally.
 </code></pre></li>
@@ -236,7 +236,7 @@
 
 <p>For example, <code>CONSTRAINT &quot;Ensure Max Redemptions is uint&quot; CHECK ((&quot;MaxRedemptions&quot; &gt;= 0))</code> makes sure that we don&rsquo;t submit any negative numbers to a field where it wouldn&rsquo;t make any sense if we did.</p>
 
-<p>Foreign Key relationships also exist in most tables to help with cascading deletes as well as data integrity to protect against non-existant users or malicious/malformed data.</p>
+<p>Foreign Key relationships also exist in most tables to help with cascading deletes as well as data integrity to protect against non-existent users or malicious/malformed data.</p>
 
 <h2 id="api-server">API Server</h2>
 
@@ -280,7 +280,7 @@ The server runs Dot Net Core&rsquo;s Kestrel server, behind an nginx instance.</
 <li>For pagination requests, we validate that the limits and offsets are within bounds.</li>
 <li>For updates, we check that any given Spotify Playlists are in the correct format according to the Spotify specifications</li>
 <li>We check that a Spotify playlist still exists on Spotify&rsquo;s servers</li>
-<li>If a playlist is being modified, we check that the resource is owned by the requesting user. Tampering with someone elses playlist is not allowed, even if the ID of the playlist is known.</li>
+<li>If a playlist is being modified, we check that the resource is owned by the requesting user. Tampering with someone else&rsquo;s playlist is not allowed, even if the ID of the playlist is known.</li>
 <li>For Rules, we validate that the data is well formatted, and follows the Limits for the user. i.e., respects the Max_Nesting_Depth, and Max_Sources_Per_Playlist.</li>
 <li>We also check that Rule values are within acceptable ranges. A field that operates upon doubles between 0.0 and 1.0 should refuse values outside that range. Similarly, it should fail for non-double values like strings or bytes.</li>
 <li>Rules are also checked that the supplied field is valid. There is no rule by the property name of <code>nonexistantrulelol</code>, so the presence of a  supplied field not matching a known property results in rejection.</li>

@@ -138,13 +138,13 @@
 
 <p>Claims are how the ASP.NET team has approached identity and authorization details since about 2016. The short of it is that claims are a way of specifying permissions - certain things have claims, other things have claim requirements, and if your claim matches the claims requirement, then you can access the resource locked behind the claim. They&rsquo;re a bit like <code>roles</code>, but more low level: roles are just a special claim on an <code>IdentityUser</code>.</p>
 
-<p>A collection of claims represents an <code>Identity</code>, specifically in our circumstances, they&rsquo;re represented by the <code>ClaimsIdentity</code> class. Identity is itself a complicated topic, but it&rsquo;s the fundamental unit behind what we&rsquo;re doing setting up an OAuth server in the first place. Identities and Claims are the two pillars of the &lsquo;I&rsquo; and the &lsquo;A&rsquo; of Identity and Access Management. The &rsquo;M&rsquo; is the easily revokable and scope-separated OAuth layer we&rsquo;re adding.</p>
+<p>A collection of claims represents an <code>Identity</code>, specifically in our circumstances, they&rsquo;re represented by the <code>ClaimsIdentity</code> class. Identity is itself a complicated topic, but it&rsquo;s the fundamental unit behind what we&rsquo;re doing setting up an OAuth server in the first place. Identities and Claims are the two pillars of the &lsquo;I&rsquo; and the &lsquo;A&rsquo; of Identity and Access Management. The &rsquo;M&rsquo; is the easily revocable and scope-separated OAuth layer we&rsquo;re adding.</p>
 
 <p>Finally, an <code>AuthenticationTicket</code> is a container for one or more identities belonging to a single owning-entity. It&rsquo;s possible for me to have multiple accounts on one service for instance - this would help resolve that. Importantly, it also holds the authentication scheme in charge of handling the authentication process when the server receives the ticket. For our tutorial, we give it the ASOS default of <code>OpenIdConnectServerDefaults.AuthenticationScheme</code>.</p>
 
 <p>We didn&rsquo;t register that explicitly in startup, but because it is the default setting whenever an instance of <code>OpenIdConnectServer</code> is registered, it is implicitly specified to be associated with that same authentication scheme.</p>
 
-<p>When it comes to creating AuthenticationTickets though, we do have to explitly specify what scheme want to handle it - so in all the tickets we generate, we&rsquo;ll be supplying that same scheme.</p>
+<p>When it comes to creating AuthenticationTickets though, we do have to explicitly specify what scheme want to handle it - so in all the tickets we generate, we&rsquo;ll be supplying that same scheme.</p>
 
 <h1 id="ticketcounter">TicketCounter</h1>
 
@@ -197,9 +197,9 @@
 
 <h2 id="interactive-claims">Interactive Claims</h2>
 
-<p>The claims and ticket constructed from using the interactive authorizaton flows are more complicated than the client credentials claims.</p>
+<p>The claims and ticket constructed from using the interactive authorization flows are more complicated than the client credentials claims.</p>
 
-<p>Because we&rsquo;re dealing with a user now, we have to find some way to put their information into the ticket. To do this, we aadd a <code>NameIdentifier</code> claim with the user&rsquo;s id, we add <code>Name</code> claim with the user&rsquo;s user name, and we manually include the Security Stamp as well.</p>
+<p>Because we&rsquo;re dealing with a user now, we have to find some way to put their information into the ticket. To do this, we add a <code>NameIdentifier</code> claim with the user&rsquo;s id, we add <code>Name</code> claim with the user&rsquo;s user name, and we manually include the Security Stamp as well.</p>
 
 <p>The SecurityStamp is an ASP.NET Identity feature that implements a cryptographic hash of all the attributes of a user that are important from an identity and access standpoint. If the user&rsquo;s email changes, the stamp changes. If the user&rsquo;s password changes, the stamp changes. If you have some kind of user biography or self-description and that changes, the stamp does not change.</p>
 
@@ -271,9 +271,9 @@
 
     <span style="color:#66d9ef">return</span> ticket;
 }</code></pre></div>
-<p>Pay attention to the commets regarding the OpenId token - we&rsquo;re not implementing that in this tutorial, but if you are, this is the spot to add it in.</p>
+<p>Pay attention to the comments regarding the OpenId token - we&rsquo;re not implementing that in this tutorial, but if you are, this is the spot to add it in.</p>
 
-<p>One quirk of the ASOS library to be aware of is that in order to get a refresh token, you have to add the <code>OfflineAccess</code> scope. That is not a self-explanatory description of a refresh token, but thats the only way to get one.</p>
+<p>One quirk of the ASOS library to be aware of is that in order to get a refresh token, you have to add the <code>OfflineAccess</code> scope. That is not a self-explanatory description of a refresh token, but that&rsquo;s the only way to get one.</p>
 
 <p>And of course, you should only issue a refresh token if the grant type is for a <code>Code</code>, or depending on the requirements, for a grant type of <code>refresh_token</code>.</p>
 
@@ -281,7 +281,7 @@
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/13-Claims">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/13-Claims">here on GitHub</a>.</p>
 
 <p>In the next section we&rsquo;ll enable OAuth authentication for our endpoints, including handling scopes using ASP.NET <code>Polcies</code>.</p>
 

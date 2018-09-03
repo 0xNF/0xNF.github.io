@@ -205,11 +205,11 @@
         <span style="color:#66d9ef">return</span> _AllScopes.First(x =&gt; x.Name == name);
     }
 }</code></pre></div>
-<p>We define a static collection of our scopes that any application that needs to lookup if a scope exists or not can do so. We also allow public access to an <code>IReadOnlyList</code> version of the same collection so that any consumer can request a non-modifyable list of scopes.</p>
+<p>We define a static collection of our scopes that any application that needs to lookup if a scope exists or not can do so. We also allow public access to an <code>IReadOnlyList</code> version of the same collection so that any consumer can request a non-modifiable list of scopes.</p>
 
 <p>Scopes have a description so that the end-user being presented with an authorization request doesn&rsquo;t have to decipher the techno-jargon of our internal naming schemes.</p>
 
-<p>We also add a few helper methods that let us quickly check those collections. Like the base collections the class is built around, accessing without confirming the existance of the requested key may result in an <code>ArgumentException</code>.</p>
+<p>We also add a few helper methods that let us quickly check those collections. Like the base collections the class is built around, accessing without confirming the existence of the requested key may result in an <code>ArgumentException</code>.</p>
 
 <p>A Scope&rsquo;s name is unique- you are free to disable this requirement, but only if it makes sense for you.</p>
 
@@ -263,7 +263,7 @@
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/08-Scopes">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/08-Scopes">here on GitHub</a>.</p>
 
 <p>In the next section, start investigating the heart of the ASOS library and implement the first bits of the Authorization Provider.</p>
 

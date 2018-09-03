@@ -433,7 +433,7 @@ It’s worth mentioning that prior to this endeavor, my experience in software d
 <li>MariaDB</li>
 </ul>
 
-<p>While surely useful in their niches and certainly interesting in their own right, it seemed like a good idea to steer clear of that second set of databases, leaving us in the first set. My impression upon hearing the word “MySQL” is to recoil - after all, it is an Oracle project, and separately has a reputation for being a stodgey old-timer. Although research revealed that modern day MySQL seems to have caught up to the pack, I just didn’t feel like using it.</p>
+<p>While surely useful in their niches and certainly interesting in their own right, it seemed like a good idea to steer clear of that second set of databases, leaving us in the first set. My impression upon hearing the word “MySQL” is to recoil - after all, it is an Oracle project, and separately has a reputation for being a stodgy old-timer. Although research revealed that modern day MySQL seems to have caught up to the pack, I just didn’t feel like using it.</p>
 
 <p>SQL Server is, I hear, a fantastic database, but it is a Microsoft enterprise offering meaning that it comes with an incredible price tag. I am not averse to paying money for a good solution, but the database space is special in that there’s really no reason to. The open source solutions are cutting edge, stable, and well documented. Why pay for what I don’t have to?</p>
 
@@ -860,7 +860,7 @@ services.AddSingleton&lt;IHostedService, ScanCountResetService&gt;();</code></pr
 <ul>
 <li>LyricallCondition.cs</li>
 <li>StringCondition.cs</li>
-<li>NumberConditon.cs</li>
+<li>NumberCondition.cs</li>
 <li>BooleanCondition.cs</li>
 </ul></li>
 <li>LyricallObject/
@@ -918,7 +918,7 @@ services.AddSingleton&lt;IHostedService, ScanCountResetService&gt;();</code></pr
 <li>StagedRule.cs</li>
 </ul></li>
 <li>StagedSmartPlaylist.cs</li>
-<li>ValidationReasult.cs</li>
+<li>ValidationResult.cs</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -1044,7 +1044,7 @@ services.AddSingleton&lt;IHostedService, ScanCountResetService&gt;();</code></pr
 
 <p>When a scan is requested, or when a scan is automatically triggered, an asynchronous scan is kicked off with the <code>NaiveScanner</code> class.</p>
 
-<p><code>NaiveScanner</code> is so named because future iterations are planned where playlists with similar sources will be batched together and matched at the same time, reducing our overall workload as well as stress on Spotify’s servers. At the moment of writing however, this optimization does not occur, hence it is a naive scan.</p>
+<p><code>NaiveScanner</code> is so named because future iterations are planned where playlists with similar sources will be batched together and matched at the same time, reducing our overall workload as well as stress on Spotify’s servers. At the moment of writing however, this optimization does not occur, hence it is a naïve scan.</p>
 
 <p>The scanner first loads a <code>SmartPlaylist</code> from the database by its Id, counts its sources, and then queue them up for scanning.</p>
 

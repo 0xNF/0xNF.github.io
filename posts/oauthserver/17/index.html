@@ -132,7 +132,7 @@
 
 <h1 id="rate-limiting-models-and-provider-changes">Rate Limiting - Models and Provider Changes</h1>
 
-<p>There are any number of different ways to implement rate limits - the approahc we will follow is outlined like so:</p>
+<p>There are any number of different ways to implement rate limits - the approach we will follow is outlined like so:</p>
 
 <ol>
 <li>All endpoints under <code>/v1/api</code> are limited, no endpoint is free.</li>
@@ -154,7 +154,7 @@
 
 <ul>
 <li>The overall limit of a client can be overridden, and</li>
-<li>The limits granted to subordinate tokens can be overriden</li>
+<li>The limits granted to subordinate tokens can be overridden</li>
 </ul></li>
 <li>Rate Limits are on a rolling timespan of <code>1 hour</code>
 
@@ -180,7 +180,7 @@
 <li><a href="https://github.com/stefanprodan/AspNetCoreRateLimit">https://github.com/stefanprodan/AspNetCoreRateLimit</a></li>
 </ul>
 
-<p>Without these resources, our rate limiting implementation would be a whole lot messier. If either of these solutions fit your use-case better, please refer to them insted. However, they do not readily support ASOS, or a two-tiered rate limit structure like we will implement, so we&rsquo;re going to create our own.</p>
+<p>Without these resources, our rate limiting implementation would be a whole lot messier. If either of these solutions fit your use-case better, please refer to them instead. However, they do not readily support ASOS, or a two-tiered rate limit structure like we will implement, so we&rsquo;re going to create our own.</p>
 
 <h1 id="rate-limit-model">Rate Limit Model</h1>
 
@@ -188,8 +188,8 @@
 
 <ol>
 <li>The actual rate limit that gets read and written from the database</li>
-<li>The service that reads and writes limits to an efficent cache</li>
-<li>And the efficient object represening our rate limit inside that cache.</li>
+<li>The service that reads and writes limits to an efficient cache</li>
+<li>And the efficient object representing our rate limit inside that cache.</li>
 </ol>
 
 <p>First, let&rsquo;s make our main model. Under <code>Models/OAuth/</code>, create a <code>RateLimit.cs</code> file with a <code>RateLimit</code> class:</p>
@@ -215,13 +215,13 @@
 <p>It&rsquo;s pretty simple - a Key to denote to Entity Framework what item gets what Rate Limit, and two nullable fields.
 <code>Limit</code> stores the raw number requests that this Rate Limit will be governed by before considering any additional request to be locked out, and <code>Window</code> is the timeframe for when a limit is considered lifted.</p>
 
-<p>We make these fields nullable to indicate that a Rate Limit does not actually apply. Our service class later on will interpret thse nullable values.</p>
+<p>We make these fields nullable to indicate that a Rate Limit does not actually apply. Our service class later on will interpret these nullable values.</p>
 
 <p>The other fields exist to placate the Entity Framework for the relationships we&rsquo;ll set up in a bit.</p>
 
 <h1 id="token-adjustments">Token Adjustments</h1>
 
-<p>Recall that our rate limit implementation will restrict on clients and also on tokens - which means our tokens will need to account for their assigned rate limit, independant of whatever the clients rate limit is.</p>
+<p>Recall that our rate limit implementation will restrict on clients and also on tokens - which means our tokens will need to account for their assigned rate limit, independent of whatever the clients rate limit is.</p>
 
 <p>Open up the <code>Models/OAuth/Token.cs</code> class and add a field for its limit:</p>
 
@@ -247,7 +247,7 @@
 
 <h1 id="oauth-client-adjustment">OAuth Client Adjustment</h1>
 
-<p>Our implementation allows for double overrides of limits - a client&rsquo;s overall client limit can be changed, and the limits that each token generated for the client can be changed. This means we need to two additonal fields in our <code>OAuthClient</code> class:</p>
+<p>Our implementation allows for double overrides of limits - a client&rsquo;s overall client limit can be changed, and the limits that each token generated for the client can be changed. This means we need to two additional fields in our <code>OAuthClient</code> class:</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuthClient</span> {
 
@@ -276,7 +276,7 @@
     <span style="color:#75715e">/* A rate limit objects for tokens issued to this client - usually null
 </span><span style="color:#75715e">    * but if a client has been granted special overrides, the limits specified here will be issued to the tokens, 
 </span><span style="color:#75715e">    * as opposed to the default grant_type token limits.
-</span><span style="color:#75715e">    * This allows us to offer specific applications increaed overall limtis, and incresed per-user limits, if so desired. */</span>
+</span><span style="color:#75715e">    * This allows us to offer specific applications increased overall limits, and increased per-user limits, if so desired. */</span>
 <span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> RateLimit SubordinateTokenLimits { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }<span style="color:#a6e22e">
 </span></span><span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [Required]
@@ -290,7 +290,7 @@
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientDescription { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// Each App needs a Description, which is submitted by the Creation
 </span><span style="color:#75715e"></span>}</code></pre></div>
 
-<p>The comments explain it, but to recap, SubdordinateTokens, if not null, is our override for the limits that a given token issued against this client will receive. If null, then they receive the standard defaults. Meanwhile, the regular <code>RateLimit</code> field is the record for what this client&rsquo;s overall limit across all users will be.</p>
+<p>The comments explain it, but to recap, SubordinateTokens, if not null, is our override for the limits that a given token issued against this client will receive. If null, then they receive the standard defaults. Meanwhile, the regular <code>RateLimit</code> field is the record for what this client&rsquo;s overall limit across all users will be.</p>
 
 <h1 id="third-migration">Third Migration</h1>
 
@@ -356,7 +356,7 @@
 
 <p>At this point we should add our third migration. Of course, with SQLite, that means deleting everything and re-creating our existing migrations.</p>
 
-<p>Remember to delete everything under the <code>Migrations/</code> folder, including <code>xxxx_WithModels.cs</code> or any other migrations you may have created, any <code>.Designer</code> files includes in thsoe migrations, as well as the <code>ApplicationDbContextModelSnapshot.cs</code>.</p>
+<p>Remember to delete everything under the <code>Migrations/</code> folder, including <code>xxxx_WithModels.cs</code> or any other migrations you may have created, any <code>.Designer</code> files includes in those migrations, as well as the <code>ApplicationDbContextModelSnapshot.cs</code>.</p>
 
 <p>Be sure to delete the <code>OAuthTutorial.sqlite</code> file as well.</p>
 
@@ -544,7 +544,7 @@
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/17-RateLimitAssignment">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/17-RateLimitAssignment">here on GitHub</a>.</p>
 
 <p>In the next section, we&rsquo;ll add a <code>[RateLimit]</code> attribute that we can decorate our controllers with.</p>
 

@@ -130,14 +130,14 @@
 
   <div class="article-body">
 
-<p>Welcome to the twelth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+<p>Welcome to the twelfth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
 
 <h1 id="authorization-request-accept-deny-view">Authorization Request Accept/Deny View</h1>
 
 <p>Two of the the three flows we support, <code>Implicit Grant</code> and <code>Authorization Code</code>, are <code>interactive</code> flows - they require that the user be presented with a screen where they can <code>accept</code> or <code>deny</code> the authorization request.</p>
 
 <p>As a preview, this is what our auth page will look like:
-<img src="/oauthserver/part09/authpagepreview.png" alt="Our auth confirmatino page" /></p>
+<img src="/oauthserver/part09/authpagepreview.png" alt="Our auth confirmation page" /></p>
 
 <h1 id="add-the-viewmodel">Add the ViewModel</h1>
 
@@ -209,7 +209,7 @@ Unlike before, we aren&rsquo;t generating this one automatically, and will inste
         State = request.State
     };
 }            </code></pre></div>
-<p>Te only way to his this page is to be directed to it via the OpenIdConnectServer - because if you recall, we registered <code>/authorization/</code> with it in Startup. That means that we will either have an invalid request, in which case the missing features will be presented to the user by ASOS, or we will have a valid request, and therefore our requests will have a filled-out <code>OpenIdConnectRequest</code> field on them. If you&rsquo;re having trouble finding that method, it&rsquo;s located under the <code>Microsoft.Extensions.DependencyInjection</code> namespace.</p>
+<p>The only way to hit this page is to be directed to it via the OpenIdConnectServer - because if you recall, we registered <code>/authorization/</code> with it in Startup. That means that we will either have an invalid request, in which case the missing features will be presented to the user by ASOS, or we will have a valid request, and therefore our requests will have a filled-out <code>OpenIdConnectRequest</code> field on them. If you&rsquo;re having trouble finding that method, it&rsquo;s located under the <code>Microsoft.Extensions.DependencyInjection</code> namespace.</p>
 
 <h2 id="deny">Deny</h2>
 
@@ -333,7 +333,7 @@ Unlike before, we aren&rsquo;t generating this one automatically, and will inste
 &lt;/<span style="color:#f92672">div</span>&gt;</code></pre></div>
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/12-AuthorizationView">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/12-AuthorizationView">here on GitHub</a>.</p>
 
 <p>In the next section we&rsquo;ll implement the <code>TicketCounter</code> and talk about <code>Claims</code>, <code>AuthenticationTickets</code> and more.</p>
 

@@ -140,7 +140,7 @@
 
 <p>As a small warning, the validate token request endpoint is one of the longest methods we&rsquo;ll be implementing. To make it easier to digest, each significant sub-part has been split into its own mini section.</p>
 
-<p>You&rsquo;ll notice that each of the request types is handled like the authorization validation was - check the existance of our client id, that the supplied redirects, if necessary, match properly, and if a client secret is supplied, we check that its the correct secret for the client requesting permission.</p>
+<p>You&rsquo;ll notice that each of the request types is handled like the authorization validation was - check the existence of our client id, that the supplied redirects, if necessary, match properly, and if a client secret is supplied, we check that its the correct secret for the client requesting permission.</p>
 
 <h3 id="check-for-supported-grant-types">Check for supported grant types</h3>
 
@@ -418,7 +418,7 @@
 
 <h2 id="apply-token-response">Apply Token Response</h2>
 
-<p>Once a given token flow has succeeded and been serialized into the response by ASOS, we need to write the new tokens to our database. We take note of the token type, the grant type, and the raw value, then we send it off to our not-yet-existant TokenService to be written to the database.</p>
+<p>Once a given token flow has succeeded and been serialized into the response by ASOS, we need to write the new tokens to our database. We take note of the token type, the grant type, and the raw value, then we send it off to our not-yet-existent TokenService to be written to the database.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Our Token Request was successful - we should write the returned values to the database.
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task ApplyTokenResponse(ApplyTokenResponseContext context) {
     <span style="color:#66d9ef">if</span> (context.Error != <span style="color:#66d9ef">null</span>) {
@@ -470,7 +470,7 @@
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/10-OAuthProviderB">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/10-OAuthProviderB">here on GitHub</a>.</p>
 
 <p>In the next section we&rsquo;ll implement the TokenService and ValidationService classes that we&rsquo;ve been referencing.<br />
 <a href="/posts/oauthserver/11">Next</a></p>

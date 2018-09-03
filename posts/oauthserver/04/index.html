@@ -135,9 +135,9 @@
 <h1 id="public-api-barebones-setup">Public API Barebones Setup</h1>
 
 <p>We&rsquo;re going to have a very small public API that will entertain a few <code>GET</code> and <code>PUT</code> methods.
-At first, these methods will be entirely unauthenticated, but as time goes on we&rsquo;ll eventualy put some of them behind <code>OAuth</code> authentication, then add <code>Scope</code> checks, and finally <code>Rate Limiting</code>. But for now, we&rsquo;re just going to implement some stub methods.</p>
+At first, these methods will be entirely unauthenticated, but as time goes on we&rsquo;ll eventually put some of them behind <code>OAuth</code> authentication, then add <code>Scope</code> checks, and finally <code>Rate Limiting</code>. But for now, we&rsquo;re just going to implement some stub methods.</p>
 
-<h2 id="controller-implemetation">Controller Implemetation</h2>
+<h2 id="controller-implementation">Controller Implementation</h2>
 
 <p>Create a new controller under <code>OAuthTutorial/Controllers/</code> named <code>APIController</code>.</p>
 
@@ -169,7 +169,7 @@ At first, these methods will be entirely unauthenticated, but as time goes on we
     <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Hello&#34;</span>);
 }
 
-<span style="color:#75715e">// Authenticated Methdos - only available to those with a valid Access Token
+<span style="color:#75715e">// Authenticated Methods - only available to those with a valid Access Token
 </span><span style="color:#75715e">// Unscoped Methods - Authenticated methods that do not require any specific Scope
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">[HttpGet(&#34;clientcount&#34;)]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; ClientCount() {
@@ -263,7 +263,7 @@ you get</code></pre></div>
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/04-PublicAPI">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/04-PublicAPI">here on GitHub</a>.</p>
 
 <p>In the next part, we&rsquo;ll add the models our server will depend on, and then do our second migration.<br />
 <a href="/posts/oauthserver/05">Next</a></p>

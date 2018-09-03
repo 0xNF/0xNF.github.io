@@ -138,7 +138,7 @@
 
 <p>At this point in time we only have two main things to worry about, and that&rsquo;s what our <code>OAuth Client Application</code> looks like, and how are they owned by <code>Users</code>?</p>
 
-<p>The model for OAuth is that there is a provider (<code>Resource Server</code>), a user (<code>Resource Owner</code>), and an application (<code>Client</code>) that a user interfaces with. The OAuth model is useful for being able to provide targeted and pinpoint permissions, while also being able to revoke access to the server with minimal interruption, fanfare, and maintainence.</p>
+<p>The model for OAuth is that there is a provider (<code>Resource Server</code>), a user (<code>Resource Owner</code>), and an application (<code>Client</code>) that a user interfaces with. The OAuth model is useful for being able to provide targeted and pinpoint permissions, while also being able to revoke access to the server with minimal interruption, fanfare, and maintenance.</p>
 
 <p>It&rsquo;s overkill if all you have is a single application, but it opens up an effective security model by allowing a provider to split their services into small pieces. These pieces can be first party, or more commonly, third-party. Users on a platform can create applications that interface with platform resources on behalf of a platform user.</p>
 
@@ -293,7 +293,7 @@ The first is to provide a list of locations to permit sending a serialized acces
 <span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> List&lt;OAuthClient&gt; UsersOAuthClients { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> List&lt;OAuthClient&gt;(); 
 </span>}</code></pre></div>
 
-<h1 id="modying-the-database-context">Modying the Database Context</h1>
+<h1 id="modifying-the-database-context">Modifying the Database Context</h1>
 
 <p>We&rsquo;ll need to let our <code>ApplicationDbContext</code> know that we expect it to handle some new relationships.</p>
 
@@ -362,7 +362,7 @@ The first is to provide a list of locations to permit sending a serialized acces
 
 <p>Some relationships can&rsquo;t be specified accurately enough via the data annotations that were using above, so we need to dip into Entity Frameworks <code>Fluent API</code> to assist it with constructing our database.</p>
 
-<p>What we&rsquo;re doing here is specifying what the <code>Foreign Keys</code> are, and setting dependant properties to <code>ON DELETE CASCADE</code>. If we skipped doing these things, we&rsquo;d end up with primary key conflicts in our database because the default behavior for dependant deletes is to <code>Restrict</code>, aka, null-out the values but leave the keys in-tact, which is exactly not what we want.</p>
+<p>What we&rsquo;re doing here is specifying what the <code>Foreign Keys</code> are, and setting dependent properties to <code>ON DELETE CASCADE</code>. If we skipped doing these things, we&rsquo;d end up with primary key conflicts in our database because the default behavior for dependent deletes is to <code>Restrict</code>, aka, null-out the values but leave the keys in-tact, which is exactly not what we want.</p>
 
 <h1 id="second-migration">Second Migration</h1>
 
@@ -397,7 +397,7 @@ At line<span style="color:#960050;background-color:#1e0010">:</span>1 char<span 
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/05-Models">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/05-Models">here on GitHub</a>.</p>
 
 <p>Join us for the next section, where we&rsquo;ll handle the first half of setting up a client management page - the viewmodel and controllers.
 <a href="/posts/oauthserver/06">Next</a></p>

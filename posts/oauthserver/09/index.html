@@ -136,7 +136,7 @@
 
 <p>It&rsquo;s worth taking a moment to have an overview of how the <code>OpenIdConnectServer</code> library actually works. You are encouraged to read Kevin Chalet&rsquo;s post <a href="https://kevinchalet.com/2016/07/13/creating-your-own-openid-connect-server-with-asos-creating-your-own-authorization-provider/">here</a>.</p>
 
-<p>An authorization provider is an implementation of the <code>OpenIdConnectServerProvider</code> type which overrides the virtual methods we want to implement. We&rsquo;re going to leave most of these un-overidden, but if you ever need additional functionality, you can always override it and inspect/implement that stage of the pipeline.</p>
+<p>An authorization provider is an implementation of the <code>OpenIdConnectServerProvider</code> type which overrides the virtual methods we want to implement. We&rsquo;re going to leave most of these un-overridden, but if you ever need additional functionality, you can always override it and inspect/implement that stage of the pipeline.</p>
 
 <h2 id="provider-stub">Provider Stub</h2>
 
@@ -193,7 +193,7 @@
 
 <p><code>TokenEndpointPath</code> is where the server knows to send incoming requests that want a Token. This is for <code>Client Credentials</code>, and <code>Refresh Token</code> grants.</p>
 
-<p><code>AuthorizationEndpointPath</code> is for interactive flows like <code>Implicit (token)</code> and the beginning of ther <code>Authorization Code</code> flows.</p>
+<p><code>AuthorizationEndpointPath</code> is for interactive flows like <code>Implicit (token)</code> and the beginning of their <code>Authorization Code</code> flows.</p>
 
 <p><code>UseSlidingExpiration</code> is so that ASOS knows not to try to regenerate a refresh token. You may have different requirements, but in our implementation, a user is given only one refresh token, unless other things like their security stamp changes.</p>
 
@@ -203,9 +203,9 @@
 
 <p><code>RefreshTokenLifetime</code> is the same for a refresh token. Like the comment says, later versions of ASOS allow for nullable <code>TimeSpan?</code> for infinite lifetimes - but we&rsquo;ll make do with 1,000 years here.</p>
 
-<p><code>IdentityTokenLifeTime</code> is a feature of the <code>OpenIdConnect</code> spec, which is tangental to what we&rsquo;re impleneting - but if you do decide to implement it, it&rsquo;s fine to have it set to the same as the access token.</p>
+<p><code>IdentityTokenLifeTime</code> is a feature of the <code>OpenIdConnect</code> spec, which is tangential to what we&rsquo;re implementing - but if you do decide to implement it, it&rsquo;s fine to have it set to the same as the access token.</p>
 
-<p><code>ProviderType</code> is how the service knows what provider to use - you could potentially have multiple different proividers, and in theory, multiple different intances of an OpenIdConnectServer running. We&rsquo;re making sure that this instance knows to use our custom one. There are a few other ways to specify the provider, including in-line object creation, or setting the concrete instance of the provider with <code>Options.Provider</code>, but we&rsquo;re sticking with type resolution.</p>
+<p><code>ProviderType</code> is how the service knows what provider to use - you could potentially have multiple different providers, and in theory, multiple different instances of an OpenIdConnectServer running. We&rsquo;re making sure that this instance knows to use our custom one. There are a few other ways to specify the provider, including in-line object creation, or setting the concrete instance of the provider with <code>Options.Provider</code>, but we&rsquo;re sticking with type resolution.</p>
 
 <p>That means we also have to register our provider as a <code>ScopedService</code>, which lets the server dynamically resolve the provider as needed.</p>
 
@@ -253,9 +253,9 @@
 }</code></pre></div>
 <p>The control flow of the ASOS library is for a given endpoint registered to it is to flow through <code>Validate</code>, then to <code>Handle</code>, then to <code>Apply</code>.</p>
 
-<p>For example, because we&rsquo;ve told ASOS that our Token endpoint is <code>/api/v1/token</code>, any incoming http request to our server at that path will be sent to the <code>TokenRequest</code> line of methods. First it will be passed to <code>ValidateTokenRequest</code>, then to <code>HandleTokenRequest</code>, then to <code>ApplyTokenResponse</code>. At any stage, a request may be rejcted and returned to the user immediately. If that happens, the remaining methods will not be executed.</p>
+<p>For example, because we&rsquo;ve told ASOS that our Token endpoint is <code>/api/v1/token</code>, any incoming http request to our server at that path will be sent to the <code>TokenRequest</code> line of methods. First it will be passed to <code>ValidateTokenRequest</code>, then to <code>HandleTokenRequest</code>, then to <code>ApplyTokenResponse</code>. At any stage, a request may be rejected and returned to the user immediately. If that happens, the remaining methods will not be executed.</p>
 
-<p>In the most minimal possible of all ASOS set ups, it&rsquo;s not necessary to override all of the avaialble virtual methods - in fact, we don&rsquo;t even have to override the ones we&rsquo;re going to. In order for ASOS to minimally function, you only need to implement <code>ValidateAuthorizationRequest</code> and <code>ValidateTokenRequest</code> - You&rsquo;ll be left with a barely functional server, but it will work.</p>
+<p>In the most minimal possible of all ASOS set ups, it&rsquo;s not necessary to override all of the available virtual methods - in fact, we don&rsquo;t even have to override the ones we&rsquo;re going to. In order for ASOS to minimally function, you only need to implement <code>ValidateAuthorizationRequest</code> and <code>ValidateTokenRequest</code> - You&rsquo;ll be left with a barely functional server, but it will work.</p>
 
 <p>One thing to note is that although the flow is from validate, to handle, to apply, we don&rsquo;t need to implement each step unless we really want to - for instance, we are not implementing <code>HandleAuthorizationRequest</code>. We are essentially going to outsource the events that would normally be under its purview to a different part of our application later.</p>
 
@@ -394,7 +394,7 @@
 
     <span style="color:#66d9ef">await</span> TService.WriteNewTokenToDatabase(context.Request.ClientId, access, claimsUser);
 }</code></pre></div>
-<p>The first step is to check if there was an error - rejcted contexts, or contexts that have otherwise suffered some kind of error have a non-null <code>Error</code> field, a string for the error message. If we somehow get this far with an invalid context, we&rsquo;d like to leave before we do more work.</p>
+<p>The first step is to check if there was an error - rejected contexts, or contexts that have otherwise suffered some kind of error have a non-null <code>Error</code> field, a string for the error message. If we somehow get this far with an invalid context, we&rsquo;d like to leave before we do more work.</p>
 
 <p>We ask for the ApplicationDbService in the event that the authoring OAuth client has been deleted between when the token has been requested and when it is granted. If it&rsquo;s MIA, we leave before persisting the token.</p>
 
@@ -402,7 +402,7 @@
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/09-OAuthProviderA">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/09-OAuthProviderA">here on GitHub</a>.</p>
 
 <p>In the next section we&rsquo;ll implement the three token methods.<br />
 <a href="/posts/oauthserver/10">Next</a></p>

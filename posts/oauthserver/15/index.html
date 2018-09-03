@@ -168,7 +168,7 @@ To do so, we will use policies, which you can read about on the <a href="https:/
 
 <h1 id="has-scope-handler">Has Scope Handler</h1>
 
-<p>Also under <code>Policies/</code>, create a <code>HasScopeHandler</code> class, inherting from <code>AuthorizationHandler&lt;T&gt;</code>:</p>
+<p>Also under <code>Policies/</code>, create a <code>HasScopeHandler</code> class, inheriting from <code>AuthorizationHandler&lt;T&gt;</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HasScopeHandler</span> : AuthorizationHandler&lt;HasScopeRequirement&gt; {
     <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Task HandleRequirementAsync(AuthorizationHandlerContext context, HasScopeRequirement requirement) {
         IEnumerable&lt;Claim&gt; scopeClaims = context.User.FindAll(x =&gt; x.Type == <span style="color:#e6db74">&#34;scope&#34;</span> &amp;&amp; x.Issuer == requirement.Issuer);
@@ -445,7 +445,7 @@ The next time a requirement of this scope is requested, it will be able to pull 
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/15-Policies">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/15-Policies">here on GitHub</a>.</p>
 
 <p>In the next section, we&rsquo;ll implement Token Revocation, along with some pages under <code>/manage</code> to make it easy for users to do so.</p>
 

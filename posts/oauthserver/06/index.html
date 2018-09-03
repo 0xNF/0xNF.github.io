@@ -134,7 +134,7 @@
 
 <h1 id="oauth-client-crud-controller-and-viewmodels">OAuth Client CRUD - Controller and ViewModels</h1>
 
-<p>This is the first part of adding our OAauth Client management pages. We&rsquo;ll set up the controller and the viewmodel here. <a href="/posts/oauthserver/part07">In next part</a>, we&rsquo;ll add the html views.</p>
+<p>This is the first part of adding our OAuth Client management pages. We&rsquo;ll set up the controller and the viewmodel here. <a href="/posts/oauthserver/part07">In next part</a>, we&rsquo;ll add the html views.</p>
 
 <h2 id="view-models">View Models</h2>
 
@@ -167,7 +167,7 @@
 
 <p>We&rsquo;ll send over many of the same fields that make up a regular client, but the only thing we expect back is the client description, which may or may not have changed. The user is allowed to view but not edit the other fields.</p>
 
-<p>We set the RedirectURis to be a <code>string[]</code> because we&rsquo;ll be using Razor Page binding techniques to automatically group submitted urls together into one field.</p>
+<p>We set the RedirectURIs to be a <code>string[]</code> because we&rsquo;ll be using Razor Page binding techniques to automatically group submitted urls together into one field.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EditClientViewModel</span> {<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [Required]
 </span><span style="color:#a6e22e">    [MinLength(1)]
@@ -203,7 +203,7 @@ and leave the rest as the defaults.</p>
 
 <h3 id="authorization">Authorization</h3>
 
-<p>First off we need to add an <code>[Authorize]</code> attribute to the controller. Unauthorized vistors, aka, users that are not signed in, will be redirected to the home page.</p>
+<p>First off we need to add an <code>[Authorize]</code> attribute to the controller. Unauthorized visitors, aka, users that are not signed in, will be redirected to the home page.</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[Authorize]</span>
 </span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuthClientsController</span> : Controller
@@ -403,7 +403,7 @@ To match the viewmodel&rsquo;s fields, we transform any existing <code>RedirectU
 
 <h3 id="post-delete">POST Delete</h3>
 
-<p>Attmempting to post a delete forces a client/user check.</p>
+<p>Attempting to post a delete forces a client/user check.</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// POST: OAuthClients/Delete/5
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">[HttpPost, ActionName(&#34;Delete&#34;)]
@@ -432,7 +432,7 @@ To match the viewmodel&rsquo;s fields, we transform any existing <code>RedirectU
 
 <p>This is a custom method we&rsquo;re going to add - it did not come generated in the controller.</p>
 
-<p>We supply this method so a user can regenerate their <code>client secret</code> in the event they mistakenly check it into source control, or if it&rsquo;s leaked by any other means. The implications of this are that when a user&rsquo;s authentication tokens come up for renewal, they&rsquo;ll need to restart the entire process. If the client is on a phome, or is otherwise an installed application as opposed to a web app, the user will need to download a new build of the application containing the new secret.</p>
+<p>We supply this method so a user can regenerate their <code>client secret</code> in the event they mistakenly check it into source control, or if it&rsquo;s leaked by any other means. The implications of this are that when a user&rsquo;s authentication tokens come up for renewal, they&rsquo;ll need to restart the entire process. If the client is on a phone, or is otherwise an installed application as opposed to a web app, the user will need to download a new build of the application containing the new secret.</p>
 
 <p>As a side note, this is why iOS and Android apps seem to update so frequently without adding anything in their release notes - they&rsquo;re cycling their application keys according to some schedule as a security precaution.</p>
 
@@ -465,7 +465,7 @@ To match the viewmodel&rsquo;s fields, we transform any existing <code>RedirectU
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/06-ClientCRUDVMs">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/06-ClientCRUDVMs">here on GitHub</a>.</p>
 
 <p>In the next section we&rsquo;ll deal with the second half of this unit and modify the generated Views.
 <a href="/posts/oauthserver/07">Next</a></p>

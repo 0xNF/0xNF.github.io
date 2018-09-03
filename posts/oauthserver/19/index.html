@@ -130,7 +130,7 @@
 
   <div class="article-body">
 
-<p>Welcome to the ninteenth and final part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+<p>Welcome to the nineteenth and final part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
 
 <h1 id="pushing-to-azure">Pushing to Azure</h1>
 
@@ -167,7 +167,7 @@ project = OAuthTutorial/OAuthTutorial.csproj
 <li>and an Azure User</li>
 </ol>
 
-<p>For the sake of the tutorial, we&rsquo;ve chosen <code>OAuthTutorial</code> as our name for the project and the final deployed website - but you won&rsquo;t be able to do so since websites on azure are globally unique. You should choose a different root name for your azure website. If you&rsquo;re feeling uncreative, you can call it <code>OAuthTutorial2</code> or something of a similar creative calibur.</p>
+<p>For the sake of the tutorial, we&rsquo;ve chosen <code>OAuthTutorial</code> as our name for the project and the final deployed website - but you won&rsquo;t be able to do so since websites on azure are globally unique. You should choose a different root name for your azure website. If you&rsquo;re feeling uncreative, you can call it <code>OAuthTutorial2</code> or something of a similar creative caliber.</p>
 
 <p>Be sure to properly suffix each of these items with <code>Group</code>, or <code>Plan</code>accordingly. You can leave <code>App</code> off, because the final Url will be prettier that way. Either way, you don&rsquo;t have to this, but it&rsquo;s good practice.</p>
 
@@ -187,7 +187,7 @@ project = OAuthTutorial/OAuthTutorial.csproj
   <span style="color:#e6db74">&#34;tags&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>
 }
 </code></pre></div>
-<p>Consulte this map here for a list of locations better suited to you. <a href="https://azure.microsoft.com/en-ca/global-infrastructure/regions/">https://azure.microsoft.com/en-ca/global-infrastructure/regions/</a></p>
+<p>Consult this map here for a list of locations better suited to you. <a href="https://azure.microsoft.com/en-ca/global-infrastructure/regions/">https://azure.microsoft.com/en-ca/global-infrastructure/regions/</a></p>
 
 <p>Or you can use the command: <code>az account list-locations</code></p>
 
@@ -234,7 +234,7 @@ project = OAuthTutorial/OAuthTutorial.csproj
 </code></pre></div>
 <h2 id="web-app-creation">Web App Creation</h2>
 
-<p>If the resource group and service plan creation succeeded, we can create the repositiory for our web app:</p>
+<p>If the resource group and service plan creation succeeded, we can create the repository for our web app:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az webapp create -g OAuthTutorialGroup -p OAuthTutorialPlan -n OAuthTutorial</code></pre></div>
 <p>You&rsquo;ll get back a huge JSON object and your website should be up and running at <a href="http://oauthtutorial.azurewebsites.net">http://oauthtutorial.azurewebsites.net</a> :</p>
 
@@ -286,7 +286,7 @@ az webapp deployment user set --user-name $user</code></pre></div>
 
 <h1 id="wrap-up">Wrap Up</h1>
 
-<p>The OpenIdConnectServer library is deep enough to handle nearly anything you need when it comes to token based authentication. But that also means it carries with it some deep complexity. I had quite the struggle tyring to implement the server at the beginning when I needed it, and it took me months of on and off tinkering to figure it out. I hope this guide will be useful to people who may be in the same boat, and that maybe the documentation of my struggles will help you avoid the steep learning curve.</p>
+<p>The OpenIdConnectServer library is deep enough to handle nearly anything you need when it comes to token based authentication. But that also means it carries with it some deep complexity. I had quite the struggle trying to implement the server at the beginning when I needed it, and it took me months of on and off tinkering to figure it out. I hope this guide will be useful to people who may be in the same boat, and that maybe the documentation of my struggles will help you avoid the steep learning curve.</p>
 
 <p>Also, I&rsquo;d like to thank Kevin Chalet, the main developer and maintainer of the library - not only is he super helpful and answers nearly every question thrown at him on the <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">GitHub repo</a> for the project, he&rsquo;s also open to adding things to the library to make it more useful. For instance, not even 18 hours after I opened an issue about non-expiring tokens, he had a fix checked into the dev branch implementing it. It is &ldquo;not a good idea&rdquo; he said, but it has valid usecases so he added it.</p>
 

@@ -180,9 +180,9 @@
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40</span>    services.AddMvc();
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41</span>}</code></pre></div>
 
-<p>If you want to specify a different Authentication scheme for the OAuth validation, for instance if you have two different areas of your server performinig OAuth validation on a different set of users, then you can specify the scheme by supplying a string in the method call. We will leave it blank because we&rsquo;re fine with the default.</p>
+<p>If you want to specify a different Authentication scheme for the OAuth validation, for instance if you have two different areas of your server performing OAuth validation on a different set of users, then you can specify the scheme by supplying a string in the method call. We will leave it blank because we&rsquo;re fine with the default.</p>
 
-<p>You can read more about Autentication Schemes on the <a href="https://docs.microsoft.com/en-us/aspnet/core/security/authorization/limitingidentitybyscheme?view=aspnetcore-2.1&amp;tabs=aspnetcore2x">Microsoft Docs</a>.</p>
+<p>You can read more about Authentication Schemes on the <a href="https://docs.microsoft.com/en-us/aspnet/core/security/authorization/limitingidentitybyscheme?view=aspnetcore-2.1&amp;tabs=aspnetcore2x">Microsoft Docs</a>.</p>
 
 <h1 id="adding-authentication-schemes-to-our-app">Adding Authentication Schemes to our App</h1>
 
@@ -190,7 +190,7 @@
 
 <p>Open up <code>Controllers/APIController.cs</code> and add some Authorization attributes:</p>
 
-<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1</span><span style="color:#75715e">// Authenticated Methdos - only available to those with a valid Access Token
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1</span><span style="color:#75715e">// Authenticated Methods - only available to those with a valid Access Token
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2</span><span style="color:#75715e">// Unscoped Methods - Authenticated methods that do not require any specific Scope
 </span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3</span><span style="color:#75715e"></span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme)]
 </span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4</span><span style="color:#a6e22e">[HttpGet(&#34;clientcount&#34;)]</span>
@@ -234,9 +234,9 @@
 
 <h1 id="moving-on">Moving On</h1>
 
-<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/14-OAuthValidation">here on github</a>.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/14-OAuthValidation">here on GitHub</a>.</p>
 
-<p>In the next section, we&rsquo;ll cover adding policies, dymamically resolving them, and adding them to our endpoints.</p>
+<p>In the next section, we&rsquo;ll cover adding policies, dynamically resolving them, and adding them to our endpoints.</p>
 
 <p><a href="/posts/oauthserver/15">Next</a></p>
 </div>

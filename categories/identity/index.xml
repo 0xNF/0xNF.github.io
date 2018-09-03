@@ -17,7 +17,7 @@
       <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
       
       <guid>https://0xnf.github.io/posts/oauthserver/19/</guid>
-      <description>Welcome to the ninteenth and final part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+      <description>Welcome to the nineteenth and final part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
 Pushing to Azure To finish off this project, we&amp;rsquo;ll be deploying our application to the free tier of Microsoft Azure. We&amp;rsquo;ll be taking most of our cues from Nate Barbettini&amp;rsquo;s excellent Little ASP.NET Core Book
 For the purposes of this tutorial, I assume you already have a Microsoft account and are willing to use it to deploy to the cloud.</description>
     </item>
@@ -39,7 +39,7 @@ To do so, we&amp;rsquo;ll be making an Attribute that we can use to decorate the
       <pubDate>Mon, 18 Jun 2018 18:11:52 -0700</pubDate>
       
       <guid>https://0xnf.github.io/posts/oauthserver/17/</guid>
-      <description>Rate Limiting - Models and Provider Changes There are any number of different ways to implement rate limits - the approahc we will follow is outlined like so:
+      <description>Rate Limiting - Models and Provider Changes There are any number of different ways to implement rate limits - the approach we will follow is outlined like so:
  All endpoints under /v1/api are limited, no endpoint is free. All endpoints share a limit. Calling /me 1,999 times, then /albums once will rate limit you on the next call. (Assuming a limit of 2,000 for some timeframe.) Renewing a token counts towards the limit - after all, the token endpoint is underneath /api/v1/.</description>
     </item>
     
@@ -92,7 +92,7 @@ Claims are how the ASP.NET team has approached identity and authorization detail
       <pubDate>Mon, 18 Jun 2018 18:11:43 -0700</pubDate>
       
       <guid>https://0xnf.github.io/posts/oauthserver/12/</guid>
-      <description>Welcome to the twelth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+      <description>Welcome to the twelfth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
 Authorization Request Accept/Deny View Two of the the three flows we support, Implicit Grant and Authorization Code, are interactive flows - they require that the user be presented with a screen where they can accept or deny the authorization request.
 As a preview, this is what our auth page will look like: Add the ViewModel Under Models/, add a new folder AuthorizeViewModels/ and add a new AuthorizeViewModel class:</description>
     </item>
@@ -104,7 +104,7 @@ As a preview, this is what our auth page will look like: Add the ViewModel Under
       
       <guid>https://0xnf.github.io/posts/oauthserver/11/</guid>
       <description>Welcome to the eleventh part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
-Services Our methods thus far have been peppered with a reference to a service named ValidationService. This lightweight class is a service that queries our databaase. Nothing is preventing us from doing these checks inside the OAuthProvider class itself, but the abstraction lends itself to a cleaner batch of methods.</description>
+Services Our methods thus far have been peppered with a reference to a service named ValidationService. This lightweight class is a service that queries our database. Nothing is preventing us from doing these checks inside the OAuthProvider class itself, but the abstraction lends itself to a cleaner batch of methods.</description>
     </item>
     
     <item>
@@ -126,7 +126,7 @@ Validate Token Request As a small warning, the validate token request endpoint i
       <guid>https://0xnf.github.io/posts/oauthserver/09/</guid>
       <description>Welcome to the ninth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
 Authorization Provider - Authorize Methods It&amp;rsquo;s worth taking a moment to have an overview of how the OpenIdConnectServer library actually works. You are encouraged to read Kevin Chalet&amp;rsquo;s post here.
-An authorization provider is an implementation of the OpenIdConnectServerProvider type which overrides the virtual methods we want to implement. We&amp;rsquo;re going to leave most of these un-overidden, but if you ever need additional functionality, you can always override it and inspect/implement that stage of the pipeline.</description>
+An authorization provider is an implementation of the OpenIdConnectServerProvider type which overrides the virtual methods we want to implement. We&amp;rsquo;re going to leave most of these un-overridden, but if you ever need additional functionality, you can always override it and inspect/implement that stage of the pipeline.</description>
     </item>
     
     <item>
@@ -146,7 +146,7 @@ Adding Client Scopes Scopes are ways to limit a client&amp;rsquo;s ability to ac
       
       <guid>https://0xnf.github.io/posts/oauthserver/07/</guid>
       <description>Welcome to the seventh part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
-OAuth Client CRUD - Views This is the second part of adding our OAauth Client management pages. In the previous section we generated a controller, which automatically generated some viewas for us. In this section, we&amp;rsquo;ll make those views do what we need them to do.
+OAuth Client CRUD - Views This is the second part of adding our OAuth Client management pages. In the previous section we generated a controller, which automatically generated some views for us. In this section, we&amp;rsquo;ll make those views do what we need them to do.
 Details and Delete Views Delete the following two cshtml files - we don&amp;rsquo;t need them, because we&amp;rsquo;ll be rolling their functions into the Edit view.</description>
     </item>
     
@@ -157,7 +157,7 @@ Details and Delete Views Delete the following two cshtml files - we don&amp;rsqu
       
       <guid>https://0xnf.github.io/posts/oauthserver/06/</guid>
       <description>Welcome to the sixth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
-OAuth Client CRUD - Controller and ViewModels This is the first part of adding our OAauth Client management pages. We&amp;rsquo;ll set up the controller and the viewmodel here. In next part, we&amp;rsquo;ll add the html views.
+OAuth Client CRUD - Controller and ViewModels This is the first part of adding our OAuth Client management pages. We&amp;rsquo;ll set up the controller and the viewmodel here. In next part, we&amp;rsquo;ll add the html views.
 View Models ViewModels are, at least in the context of ASP.NET (as opposed to UWP where the MVVM pattern changes what it means slightly), is a way of firewalling our models from our views.</description>
     </item>
     
@@ -179,7 +179,7 @@ At this point in time we only have two main things to worry about, and that&amp;
       
       <guid>https://0xnf.github.io/posts/oauthserver/04/</guid>
       <description>Welcome to the fourth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
-Public API Barebones Setup We&amp;rsquo;re going to have a very small public API that will entertain a few GET and PUT methods. At first, these methods will be entirely unauthenticated, but as time goes on we&amp;rsquo;ll eventualy put some of them behind OAuth authentication, then add Scope checks, and finally Rate Limiting.</description>
+Public API Barebones Setup We&amp;rsquo;re going to have a very small public API that will entertain a few GET and PUT methods. At first, these methods will be entirely unauthenticated, but as time goes on we&amp;rsquo;ll eventually put some of them behind OAuth authentication, then add Scope checks, and finally Rate Limiting.</description>
     </item>
     
     <item>

@@ -151,7 +151,7 @@
 
 <h2 id="caches">Caches</h2>
 
-<p>We&rsquo;ll be utilizing the .NET <code>MemoryCache</code> class for our rate limiting. These caches contain various algorithmic optimizations that we would surely be worse off implementing ourselves, and they have a neat feature of automnatic removal-upon-expiration.</p>
+<p>We&rsquo;ll be utilizing the .NET <code>MemoryCache</code> class for our rate limiting. These caches contain various algorithmic optimizations that we would surely be worse off implementing ourselves, and they have a neat feature of automatic removal-upon-expiration.</p>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1</span><span style="color:#a6e22e">[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RateLimitAttribute</span> : ActionFilterAttribute {
@@ -193,7 +193,7 @@
     ...
 
     <span style="color:#75715e">/* Closures representing the way to get the rate limit of the relevant item, if necessary.
-</span><span style="color:#75715e">    * These are lazily executed functions and won&#39;t be called unlesss a given id isn&#39;t in our cache. */</span>
+</span><span style="color:#75715e">    * These are lazily executed functions and won&#39;t be called unless a given id isn&#39;t in our cache. */</span>
 <span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">async</span> Task&lt;RateLimit&gt; RateLimitFromToken() {
 </span><span style="display:block;width:100%;background-color:#3c3d38">        RateLimit rl = (<span style="color:#66d9ef">await</span> db.Tokens.Include(x =&gt; x.RateLimit).FirstOrDefaultAsync(x =&gt; x.Value == token))?.RateLimit;
 </span><span style="display:block;width:100%;background-color:#3c3d38">        <span style="color:#66d9ef">return</span> rl;
@@ -208,7 +208,7 @@
 
 <p>With an empty cache or with an item whose limit has already expired, we won&rsquo;t have the necessary rate limit information and won&rsquo;t be able to accurately increment or check the limit counts. We solve this by adding two internal functions that are ready-to-execute and return the necessary information. Like the comment says, they are lazy, and won&rsquo;t be executed every time. We just need to store the how, not the what.</p>
 
-<p>Additionally, the returns use the <code>safe navigation operator (?.)</code> so that any errors that occur in the fecthing will also return null, instead of throwing an exception. This returned null value will be interpreted as a signal to short circuit the operation.</p>
+<p>Additionally, the returns use the <code>safe navigation operator (?.)</code> so that any errors that occur in the fetching will also return null, instead of throwing an exception. This returned null value will be interpreted as a signal to short circuit the operation.</p>
 
 <h3 id="cache-apply">Cache Apply</h3>
 
@@ -243,7 +243,7 @@
     }
 
     <span style="color:#75715e">/* Closures representing the way to get the rate limit of the relevant item, if necessary.
-</span><span style="color:#75715e">    * These are lazily executed functions and won&#39;t be called unlesss a given id isn&#39;t in our cache. */</span>
+</span><span style="color:#75715e">    * These are lazily executed functions and won&#39;t be called unless a given id isn&#39;t in our cache. */</span>
     <span style="color:#66d9ef">async</span> Task&lt;RateLimit&gt; RateLimitFromToken() {
         RateLimit rl = (<span style="color:#66d9ef">await</span> db.Tokens.Include(x =&gt; x.RateLimit).FirstOrDefaultAsync(x =&gt; x.Value == token))?.RateLimit;
         <span style="color:#66d9ef">return</span> rl;
@@ -286,7 +286,7 @@
 
 <p>If the item isn&rsquo;t found in the cache at all, we execute our lazy function to get the rate limits, and insert it into the cache. Side note, if an error occurs, we fail open.</p>
 
-<p>Finally, if the item is found in the cache, we increment the limit coumnt with another helper function.</p>
+<p>Finally, if the item is found in the cache, we increment the limit count with another helper function.</p>
 
 <h2 id="helper-2-insert-limit">Helper 2 - Insert Limit</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">/* Inserts the limit as a LimitCounter struct tied to the given id, and expiring when the Window lapses.
@@ -342,7 +342,7 @@
 }</code></pre></div>
 <p>Because we can&rsquo;t actually update an item in the cache, we&rsquo;ll have to overwrite it with a new entry that is functionally identical except for its incremented call count.</p>
 
-<p>To make up for the fact that we&rsquo;re actually inserting a new item, we&rsquo;ll give it a time-to-expiration that is the reamining time of the old item.</p>
+<p>To make up for the fact that we&rsquo;re actually inserting a new item, we&rsquo;ll give it a time-to-expiration that is the remaining time of the old item.</p>
 
 <h2 id="helper-4-token-from-context">Helper 4 - Token From Context</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">/* Because Tokens are not serialized into themselves, we cannot extract the relevant info 
