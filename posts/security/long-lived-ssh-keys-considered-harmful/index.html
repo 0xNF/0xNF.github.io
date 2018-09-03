@@ -6,16 +6,70 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="generator" content="Hugo 0.40.3" />
 
-<link rel="alternate" type="application/rss+xml" title="RSS" href="https://0xnf.github.io/categories/architecture/index.xml">
 
-<link rel="canonical" href="https://0xnf.github.io/categories/architecture/">
+
+<link rel="canonical" href="https://0xnf.github.io/posts/security/long-lived-ssh-keys-considered-harmful/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>Architecture - Nothing in Particular</title>
+    <title>Long Lived SSH Keys Considered Harmful - Nothing in Particular</title>
     
+<meta name="description" content="A small post on why long-lived highly privileged credentials are bad.">
+
+<meta property="og:title" content="Long Lived SSH Keys Considered Harmful - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://0xnf.github.io/posts/security/long-lived-ssh-keys-considered-harmful/">
+<meta property="og:image" content="https://0xnf.github.io/images/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="A small post on why long-lived highly privileged credentials are bad.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/security/long-lived-ssh-keys-considered-harmful/">
+<meta name="twitter:title" content="Long Lived SSH Keys Considered Harmful - Nothing in Particular">
+<meta name="twitter:description" content="A small post on why long-lived highly privileged credentials are bad.">
+<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://0xnf.github.io/"
+    },
+    "headline": "Long Lived SSH Keys Considered Harmful - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://0xnf.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-09-03T15:01:45JST",
+    "dateModified": "2018-09-03T15:01:45JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://0xnf.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "A small post on why long-lived highly privileged credentials are bad."
+  }
+</script>
+
+
     <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
     
 
@@ -51,62 +105,109 @@
 <div class="row">
   <div class="col-md-8">
 
-    
-    <header class="page-header">
-      <h1>Architecture</h1>
-    </header>
-    
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Long Lived SSH Keys Considered Harmful</li>
+      </ol>
+    </nav>
 
-    <ul class="p-articles">
-      
-      <li><article class="li">
+    <article class="single">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-05-22T17:02:40JST">May 22, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-09-03T15:01:45JST">Sep 3, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/lyricall/security/">Lyricall Security</a></h2>
+
+    <h1 class="title">Long Lived SSH Keys Considered Harmful</h1>
   </header>
 
   
-  <div class="summary">Security overview of lyricall.net as of May 2018. We talk data ownership, data boundaries, encrypted connections, and validation.</div>
 
-  
-  <footer>
-    <a href="https://0xnf.github.io/posts/lyricall/security/" title="Lyricall Security">Read More…</a>
+  <div class="article-body">
+
+<p><em>Disclaimer: This advice goes for any credential, including and especially passwords</em></p>
+
+<p>tl;dr:  You should, at regular intervals, change out and retire old SSH keys.</p>
+
+<h2 id="ssh-keys-are-dangerous">SSH keys are dangerous</h2>
+
+<p>An SSH key should be considered a short-lived resource as such and should be refreshed periodically. Here are a few reasons why:</p>
+
+<ul>
+<li>They can be compromised</li>
+<li>They are highly privileged</li>
+<li>They can be automatically generated</li>
+<li>They can easily be replaced on many services</li>
+</ul>
+
+<p>Refreshing your SSH keys has the added benefit of following the Let&rsquo;s Encrypt School of Critical Process Management:</p>
+
+<pre><code>The important things should be performed at regular intervals to keep institutional memory of the process fresh and resilient against irregular but inevitable failures like employee turnover.
+</code></pre>
+
+<p>I am paraphrasing the above, but its definitely a philosophy they follow.</p>
+
+<p>This goes for any long-lived highly privileged credential. Passwords too. Even if you <a href="INSERT_LINK_HERE___">practice good password management</a> you should still cycle out your passwords. This is annoying to do when you try to commit your passwords to memory, but if you are practicing good management, it becomes no bigger an issue than just copy and pasting your password.</p>
+
+<h3 id="side-notes">Side Notes</h3>
+
+<p>You should use different SSH Keys for each service, much like how you should use different passwords for each service. <code>~/.ssh/config</code> supports this to make it easy.</p>
+
+<p>While we&rsquo;re talking about good SSH hygiene, when you create a key you should encrypt it with a passphrase. <em>But be sure to use <code>-o</code></em>. <a href="http://www.daemonology.net/papers/scrypt-slides.pdf">don&rsquo;t</a> <a href="https://news.ycombinator.com/item?id=17682946">accept</a> <a href="https://latacora.singles/2018/08/03/the-default-openssh.html">the</a> <a href="https://blog.g3rt.nl/upgrade-your-ssh-keys.html">defaults</a>.</p>
+
+<p>Also you should use some kind of proper key storage, because any old userspace process on your system can read your <code>~/.ssh</code> directory. Do you trust your development machine? You probably shouldn&rsquo;t.</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/security/">Security</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/authentication/">Authentication</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/ssh/">SSH</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
   </footer>
-  
-</article>
-</li>
-      
-      <li><article class="li">
-  <header>
-    <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-05-22T15:35:08JST">May 22, 2018</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
-      
-    </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/lyricall/architecture/">Lyricall Architecture</a></h2>
-  </header>
 
-  
-  <div class="summary">Architecture summary of lyricall.net as of November 2017 - this is no longer consistent with the current implementation, but remains a bssic overview all the same.</div>
-
-  
-  <footer>
-    <a href="https://0xnf.github.io/posts/lyricall/architecture/" title="Lyricall Architecture">Read More…</a>
-  </footer>
-  
 </article>
-</li>
-      
-    </ul>
+
 
     
-
-
   </div>
+
   <div class="col-md-4">
     
 <aside class="l-sidebar">
