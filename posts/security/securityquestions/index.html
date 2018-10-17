@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="https://0xnf.github.io/posts/security/securityquestions/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>A system for approaching security questions - Nothing in Particular</title>
+    
+<meta name="description" content="Security questions are user hostile and advantage the attacker, but we are likely stuck with them. How best should an end-user approach them?">
+
+<meta property="og:title" content="A system for approaching security questions - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://0xnf.github.io/posts/security/securityquestions/">
+<meta property="og:image" content="https://0xnf.github.io/images/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="Security questions are user hostile and advantage the attacker, but we are likely stuck with them. How best should an end-user approach them?">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/security/securityquestions/">
+<meta name="twitter:title" content="A system for approaching security questions - Nothing in Particular">
+<meta name="twitter:description" content="Security questions are user hostile and advantage the attacker, but we are likely stuck with them. How best should an end-user approach them?">
+<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://0xnf.github.io/"
+    },
+    "headline": "A system for approaching security questions - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://0xnf.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-10-17T11:11:18JST",
+    "dateModified": "2018-10-17T11:11:18JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://0xnf.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Security questions are user hostile and advantage the attacker, but we are likely stuck with them. How best should an end-user approach them?"
+  }
+</script>
+
+
+    <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://0xnf.github.io/">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">A system for approaching security questions</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-17T11:11:18JST">Oct 17, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">A system for approaching security questions</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<ul>
+<li><a href="#security-questions-are-user-hostile-and-advantage-the-attacker">Security questions are user hostile and advantage the attacker</a>
+
+<ul>
+<li><a href="#why-security-questions-suck">Why security questions suck</a>
+
+<ul>
+<li><a href="#theyre-based-on-publicly-available-information">They&rsquo;re based on publicly available information.</a></li>
+<li><a href="#theyre-based-on-capricious-and-changing-feelings">They&rsquo;re based on capricious and changing feelings</a></li>
+<li><a href="#theyre-based-on-murky-and-easily-misremembered-factoids">They&rsquo;re based on murky and easily misremembered factoids</a></li>
+<li><a href="#theyre-based-on-certain-assumptions-of-the-world-that-are-not-universally-true">They&rsquo;re based on certain assumptions of the world that are not universally true</a></li>
+</ul></li>
+<li><a href="#what-to-do">What to do?</a></li>
+<li><a href="#social-engineering">Social Engineering</a></li>
+</ul></li>
+<li><a href="#a-system-for-security-questions">A system for security questions</a>
+
+<ul>
+<li><a href="#system-requirements">System Requirements</a></li>
+<li><a href="#system-1---design-considerations">System #1 - Design Considerations</a>
+
+<ul>
+<li><a href="#the-must-not-items">The MUST-NOT Items</a></li>
+<li><a href="#the-may-items">The MAY Items</a>
+
+<ul>
+<li><a href="#some-example-system-1">Some Example System 1</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#system-2---design-considerations">System #2 - Design Considerations</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+
+<h1 id="security-questions-are-user-hostile-and-advantage-the-attacker">Security questions are user hostile and advantage the attacker</h1>
+
+<p>Security questions are a terrible concept and should be abolished. Unfortunately, they won&rsquo;t be, and even if they will be at some future point, they&rsquo;re here now and we&rsquo;re forced to participate.</p>
+
+<p>Given that, how should you, the account holder forced into this system, craft your security questions to make them as least-bad and most-secure as possible?</p>
+
+<h1 id="why-security-questions-suck">Why security questions suck</h1>
+
+<h2 id="assuming-organization-assigned-security-questions">Assuming organization-assigned security questions</h2>
+
+<p>First, what&rsquo;s wrong with security questions? Assuming that security questions are pre-selected by the organization and you cannot craft your own:</p>
+
+<h3 id="they-re-based-on-publicly-available-information">They&rsquo;re based on publicly available information.</h3>
+
+<p>Questions like <code>What high school did you go to?</code> are available to almost anyone with an ounce of Google skills, or to anyone willing to pay $0.99 for a report from any of the major information dealers.</p>
+
+<p>How is this a secret?</p>
+
+<h3 id="they-re-based-on-capricious-and-changing-feelings">They&rsquo;re based on capricious and changing feelings</h3>
+
+<p><code>What is your favorite color?</code></p>
+
+<p>Who knows? A long time ago I would have said green, then for a time I would have said purple, now I&rsquo;m not even sure I have a favorite color.</p>
+
+<p>I now have to remember how I felt when I was setting the account up, and that&rsquo;s going to be real hard for me, the legitimate user, to remember.</p>
+
+<h3 id="they-re-based-on-murky-and-easily-misremembered-factoids">They&rsquo;re based on murky and easily misremembered factoids</h3>
+
+<p><code>What was the name of your first pet?</code></p>
+
+<p>Well, what is a pet, exactly? I started with a Pet Rock, but it&rsquo;s not strictly speaking, a &ldquo;pet&rdquo;, and then I had two cats and a dog, and the first one was when I was 6 and his name was Mr. Paws, but&hellip; wait, maybe Fido was first? I know I had Fido when I was around 6 as well&hellip; Or was I 7?</p>
+
+<p>And is all of this case-sensitive?</p>
+
+<p>All this to say, who knows what my first pet was? I sure don&rsquo;t.</p>
+
+<h3 id="they-re-based-on-certain-assumptions-of-the-world-that-are-not-universally-true">They&rsquo;re based on certain assumptions of the world that are not universally true</h3>
+
+<p>Referring back to the pet question, what if I never had a pet? Not everyone had pets.</p>
+
+<p>Or things like &ldquo;Who was your best friend in high school?&rdquo;. Some of my friends were homeschooled. They didn&rsquo;t go to high school, so how could they have a best friend there? Should they answer with who their best friend was during the time period of their life where someone would normally attend high school? Or what if they transferred between high schools, which one in specific are we talking about here?</p>
+
+<p>Some banks ask you what make and model your first car was. I never had a car! I got away with my parents vehicles, public transit, and then Uber. How am I supposed to answer this question?</p>
+
+<h2 id="assuming-self-chosen-security-questions">Assuming self-chosen security questions</h2>
+
+<p>Don&rsquo;t get fooled into thinking that you should create a security question that mimics others you&rsquo;ve seen before. Choose something that only you will know the answer to.</p>
+
+<pre><code>Q: 42
+A: rob
+</code></pre>
+
+<p>Maybe 42 has special meaning to you, and maybe that special meaning is rob. Get creative.</p>
+
+<p>Really though, we&rsquo;re not concerned with self-administered questions. They are uncommon and not the your greatest risk. What&rsquo;s risky is the organization that forces you to choose from a dropdown of curated questions.</p>
+
+<h2 id="what-to-do">What to do?</h2>
+
+<p>The problem with (curated) security questions is that they advantage an attacker and disadvantage the user, which is like Description Number One for any bad security system.</p>
+
+<p>If we assume that some attacker has it out for you and is trying to break into your bank account, we can assume that they&rsquo;ve done some research, both on you, and on the bank.</p>
+
+<p>They know what kind of questions a bank is going to ask, and they&rsquo;ll have paid the information brokers and credit agencies for a small dossier on you. They&rsquo;ll be ready for the questions that come their way, and you won&rsquo;t be.</p>
+
+<p>A common recommendation from some security minded people is to use a password generator to create a long string of gibberish to be used as a replacement for actually answering the question asked.</p>
+
+<p>This transforms the question/answer from:</p>
+
+<pre><code>Q: What high school did you go to?
+A: Local 6th Senior High
+</code></pre>
+
+<p>to:</p>
+
+<pre><code>Q: What high school did you go to?
+A: TABgJ\k=_b`sG.g/D+Vy:~MEk!*
+</code></pre>
+
+<p>The main problem with this approach is that we&rsquo;ve now entered into social engineering territory.</p>
+
+<h2 id="social-engineering">Social Engineering</h2>
+
+<p>Taking our above example, lets say some attacker phones up support and pretending to be you. Support asks the attacker the security question, and says something like &ldquo;Oh man, yeah. Actually it&rsquo;s just a bunch of gibberish, I ran my hand across the keyboard and it just came out to be a handful of numbers and letters.&rdquo;</p>
+
+<p>And support will likely say &ldquo;fantastic, yeah that makes sense who would actually write this as their security question lol&rdquo;.</p>
+
+<p>And then the attacker is in.</p>
+
+<p>Don&rsquo;t think that passphrases like those described in the <a href="https://xkcd.com/936/">famous XKCD</a> will save you either. The attacker can just claim &ldquo;oh you know I just brought out a dictionary and started choosing random words rofl&rdquo;.</p>
+
+<p>Obviously some support at some organizations will be better than this, but as is a common refrain in security, humans are the weakest link. Don&rsquo;t count on the support staff to not fail on this.</p>
+
+<h1 id="a-system-for-security-questions">A system for security questions</h1>
+
+<p>So let&rsquo;s figure out what we should do to secure these systems, from our standpoint as an end-user.</p>
+
+<h2 id="system-requirements">System Requirements</h2>
+
+<p>Our primary concern here is to make a security answer that is some combination of:</p>
+
+<ol>
+<li>Easy to remember for the legit user</li>
+<li>Hard to guess for the attacker</li>
+<li>Resistant to social engineering</li>
+<li>Maximally generalizable to every potential website</li>
+</ol>
+
+<p>The other constraints we&rsquo;re dealing with are the standard set of user-hostile bullshit that websites will throw your way:</p>
+
+<ol>
+<li>Character length limits or requirements</li>
+<li>Special character restrictions</li>
+<li>Unannounced length truncations</li>
+</ol>
+
+<p>To ensure that whatever system we come up with is as generally applicable as possible, we should limit our answers to something that is restricted to:</p>
+
+<ol>
+<li>Upper and lowercase A-Z, numerals 0-9.</li>
+<li>80 characters or less, a value empirically chosen.</li>
+</ol>
+
+<p>And because no matter how many times we bring it up in the security community, SQL-injection will be a thing for a very long time, we&rsquo;re going to avoid the potential landmines of special characters like commas, semi-colons, and spaces.</p>
+
+<p>With respect to the attacker, what we&rsquo;re guarding against is an someone who:</p>
+
+<ol>
+<li>Is targeting you</li>
+<li>Knows, generally speaking, what questions will be asked</li>
+<li>Has access to accurate, publicly available information on you</li>
+<li>Is good at social engineering, in case of nonsensical answers</li>
+</ol>
+
+<p>Note:
+I&rsquo;m making the assumption that the service in question offers ascii-based, Anglo-centric security questions. You might be dealing with a system where the questions are Japanese, Arabic, or with extended Latin characters. In which case  <code>¯\_(ツ)_/¯</code>.</p>
+
+<h2 id="system-1-design-considerations">System #1 - Design Considerations</h2>
+
+<p>Our first assumption about our end system is that the user will not be using a password manager of any sort. We will consider what our final answer would look like if users can be expected to use a password manager in the next section.</p>
+
+<p>The first conclusion to draw is that when designing answers to a security question, you should never actually answer the question - that makes it easy for the attacker.</p>
+
+<p>The second is to avoid gibberish answers or something that is otherwise fungible to a human support staffer - this also makes it easy for the attacker.</p>
+
+<p>The third, and perhaps most important aspect, is to make sure that if an attacker gets access to one or two answers from one service that they cannot easily figure out the system and use it against another service. Note that this is a limitation of not requiring a password manager or other kind of record keeping system.</p>
+
+<!-- The third, and perhaps most important aspect, is to make sure that if an attacker figures out the system, that your security answers will remain uncompromised. There must be some type of salting involved.  -->
+
+<p>So we need security answers that are unique per institution per question.</p>
+
+<h3 id="the-must-not-items">The MUST-NOT Items</h3>
+
+<p>Because security questions are often presented during authentication-time out-of-order, that is, not the order that you answered them in at set-up, incorporating the position of the question during set-up in the answer is not acceptable.</p>
+
+<p>Because companies may be re-branded or undergo name changes, incorporating the name of the product or company is not acceptable. (See: Microsoft Passport; Bank of America Merril Lynch)</p>
+
+<p>Because companies or products may be acquired, incorporating the purpose of the product is not acceptable. (See: Twilio, a phone API, purchasing SendGrid, an email API)</p>
+
+<p>Because security questions may be answered over the phone, and thus wont have upper or lowercasing information available, performing any kind of cryptographic hashing over, or otherwise incorporating casing or other such non-verbally communicated information is not acceptable.</p>
+
+<h3 id="the-may-items">The MAY Items</h3>
+
+<p>Having never encountered a system where the security questions have changed their wording, we can assume that a security question, as presented, will be a word-for-word replica of the question we were presented with at set-up. Although see above for why we can&rsquo;t make an assumption at the character level.</p>
+
+<p>On this assumption, incorporating the question into the answer is acceptable, and is probably the only real thing we have to work with.</p>
+
+<p>Because during an attempted takeover attempt, a human on the phone will be the last line of defense for our account, we are allowed to craft messages for whoever is on the other end. Putting messages meant to be read by a human is acceptable.</p>
+
+<p>Although hashing over a cased question is unacceptable, hashing over some normalized form of the question is acceptable. For example, lowercasing everything, replacing special characters with the empty string, and concatenating everything together is fine, assuming that you have some way to easily remembering your hashing algorithm.</p>
+
+<h4 id="some-example-system-1">Some Example System 1</h4>
+
+<ol>
+<li>Reverse the question</li>
+<li>Remove all numbers, spaces, and special characters from the question</li>
+<li>Lowercase the entire question</li>
+<li>Add the salt to the beginning</li>
+</ol>
+
+<p>For example:</p>
+
+<pre><code>Q: &quot;Who was your best friend in high school?&quot;
+</code></pre>
+
+<ol>
+<li>Reverse the question:
+
+<ul>
+<li><code>?school high in friend best your was Who</code></li>
+</ul></li>
+<li>Remove all numbers, spaces, and special characters from the question:
+
+<ul>
+<li><code>schoolhighinfriendbestyourwasWho</code></li>
+</ul></li>
+<li>Lowercase the question:
+
+<ul>
+<li><code>schoolhighinfriendbestyourwaswho</code></li>
+</ul></li>
+<li>Add the salt to the beginning:
+
+<ul>
+<li><code>force me to say schoolhighinfriendbestyourwaswho</code></li>
+</ul></li>
+</ol>
+
+<hr />
+
+<p>What boxes from our requirements does this method tick?</p>
+
+<ul>
+<li>Easy for you to remember, because there are few steps and each step is simple:
+
+<ul>
+<li>Reverse, Remove, Lower, Salt<br /></li>
+</ul></li>
+<li>Hard for an attacker with no knowledge of your scheme to guess, because your answer is not an answer to the content of the question.</li>
+<li>Resistant to social engineering because it&rsquo;s not just gibberish and contains a human phrase at the beginning. It&rsquo;s not &ldquo;just the question backward&rdquo;, there&rsquo;s a salting in there too.</li>
+</ul>
+
+<p>The problems with this approach are that, for one, is this algorithm actually easy to remember? Lowercase, no special is easy enough, but reversing might be tricky. And where do we place the salt-phrase? Is it at the start, or the end?</p>
+
+<p>Additionally, how do you choose your salt? If your method is compromised, the only thing that&rsquo;s stopping an attacker from successfully impersonating you is the salt, which, because this system assumed that no recording of any information has taken place by the user, will likely be a static salt across all questions and sites.</p>
+
+<p>Finally, this method achieved uniqueness per question, but does not achieve uniqueness per question per institution. Any other organization that uses the same questions will have their questions compromised by the leak, or guessing, of this question, assuming that they are word-for-word matches.</p>
+
+<h2 id="system-2-design-considerations">System #2 - Design Considerations</h2>
+
+<p>If we can assume that a user is willing to record information at set-up time, either with a notepad, or with a password manager, we can achieve a system that is both simpler, and more effective:</p>
+
+<ol>
+<li>Generate a relatively short random sequence of characters and numbers that you are comfortable potentially reading out over the phone</li>
+<li>Add a custom human-readable phrase to the front</li>
+</ol>
+
+<p>For example:<br />
+<code>force me to say f 12 g h 5 5 q w</code></p>
+
+<p>We take this system to be easy for a human to remember, because your password manager remembers the whole thing for you.</p>
+
+<p>This system is hard for an attacker to guess because you have a random string in there.</p>
+
+<p>And finally this system is resistant to social engineering because you&rsquo;ve included a message directed at the human on the other end in the answer</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>If you&rsquo;re unwilling or otherwise unable to use a password manager to store your security questions, I think a system like #1 is the best option, otherwise the second system is better.</p>
+
+<p>In either case, I think it&rsquo;s critical to include a short message aimed directly at some potential human support staff that, in effect, preps them to be on guard against social engineers who are going to try to fudge the answer.</p>
+
+<p>At the end of the day, the human is still the weakest link and will continue to get gamed, but a system like what we&rsquo;ve come up with here works to reduce the room a human operator has for error.</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/security/">security</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/web/">web</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/security-question/">security question</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATEST</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/posts/security/securityquestions/" class="list-group-item">A system for approaching security questions</a>
+      
+      <a href="https://0xnf.github.io/posts/security/long-lived-ssh-keys-considered-harmful/" class="list-group-item">Long Lived SSH Keys Considered Harmful</a>
+      
+      <a href="https://0xnf.github.io/posts/security/arguments-against-https/" class="list-group-item">Arguments Against HTTPS</a>
+      
+      <a href="https://0xnf.github.io/posts/esk8bst/esk8bst/" class="list-group-item">ESK8BST -  Electric Skateboard Buy / Sell / Trade</a>
+      
+      <a href="https://0xnf.github.io/posts/security/what-good-are-vpns/" class="list-group-item">What Good Are VPNs?</a>
+      
+      <a href="https://0xnf.github.io/posts/security/https-is-about-respecting-your-users/" class="list-group-item">HTTPS Is About Respecting Your Users</a>
+      
+      <a href="https://0xnf.github.io/posts/uwp/simple-events/" class="list-group-item">UWP: Simple Events</a>
+      
+      <a href="https://0xnf.github.io/posts/uwp/listview-row-height/" class="list-group-item">UWP: ListView Row Height</a>
+      
+      <a href="https://0xnf.github.io/posts/misc/firefox-user-security/" class="list-group-item">Towards a Secure and Private Firefox Installation</a>
+      
+      <a href="https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/" class="list-group-item">Bin and Obj Are the Devil</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
+      <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
+      
+      <a href="https://0xnf.github.io/categories/privacy" class="list-group-item">privacy</a>
+      
+      <a href="https://0xnf.github.io/categories/uwp" class="list-group-item">uwp</a>
+      
+      <a href="https://0xnf.github.io/categories/architecture" class="list-group-item">architecture</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/articulate-insights" class="list-group-item">articulate-insights</a>
+      
+      <a href="https://0xnf.github.io/tags/northeastern-university" class="list-group-item">northeastern-university</a>
+      
+      <a href="https://0xnf.github.io/tags/https" class="list-group-item">https</a>
+      
+      <a href="https://0xnf.github.io/tags/centralization" class="list-group-item">centralization</a>
+      
+      <a href="https://0xnf.github.io/tags/command-line" class="list-group-item">command-line</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p>Contact: blog&lt;at>winetech.com </p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

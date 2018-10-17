@@ -6,10 +6,19 @@
     <description>Recent content in Web on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Sep 2018 14:50:34 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 17 Oct 2018 11:11:18 -0700</lastBuildDate>
     
 	<atom:link href="https://0xnf.github.io/categories/web/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A system for approaching security questions</title>
+      <link>https://0xnf.github.io/posts/security/securityquestions/</link>
+      <pubDate>Wed, 17 Oct 2018 11:11:18 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/security/securityquestions/</guid>
+      <description>Security questions are user hostile and advantage the attacker  Why security questions suck  They&amp;rsquo;re based on publicly available information. They&amp;rsquo;re based on capricious and changing feelings They&amp;rsquo;re based on murky and easily misremembered factoids They&amp;rsquo;re based on certain assumptions of the world that are not universally true  What to do? Social Engineering  A system for security questions  System Requirements System #1 - Design Considerations  The MUST-NOT Items The MAY Items  Some Example System 1   System #2 - Design Considerations  Conclusion  Security questions are user hostile and advantage the attacker Security questions are a terrible concept and should be abolished.</description>
+    </item>
     
     <item>
       <title>Arguments Against HTTPS</title>

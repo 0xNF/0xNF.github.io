@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://0xnf.github.io/posts/security/securityquestions/</loc>
+    <lastmod>2018-10-17T11:11:18-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://0xnf.github.io/posts/security/long-lived-ssh-keys-considered-harmful/</loc>
     <lastmod>2018-09-03T15:01:45-07:00</lastmod>
   </url>
@@ -364,7 +369,7 @@
   
   <url>
     <loc>https://0xnf.github.io/</loc>
-    <lastmod>2018-09-03T15:01:45-07:00</lastmod>
+    <lastmod>2018-10-17T11:11:18-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -388,7 +393,7 @@
   
   <url>
     <loc>https://0xnf.github.io/posts/</loc>
-    <lastmod>2018-09-03T15:01:45-07:00</lastmod>
+    <lastmod>2018-10-17T11:11:18-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -418,7 +423,13 @@
   
   <url>
     <loc>https://0xnf.github.io/categories/security/</loc>
-    <lastmod>2018-09-03T15:01:45-07:00</lastmod>
+    <lastmod>2018-10-17T11:11:18-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://0xnf.github.io/tags/security-question/</loc>
+    <lastmod>2018-10-17T11:11:18-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -502,7 +513,7 @@
   
   <url>
     <loc>https://0xnf.github.io/categories/web/</loc>
-    <lastmod>2018-09-03T14:50:34-07:00</lastmod>
+    <lastmod>2018-10-17T11:11:18-07:00</lastmod>
     <priority>0</priority>
   </url>
   
