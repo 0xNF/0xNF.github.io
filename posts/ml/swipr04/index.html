@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="https://0xnf.github.io/posts/ml/swipr04/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Swipr - Data Collection (Part 2 of 2) - Nothing in Particular</title>
+    
+<meta name="description" content="Part 4 of the Swipr series. In which we discuss downloading 100 GB of pictures.">
+
+<meta property="og:title" content="Swipr - Data Collection (Part 2 of 2) - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://0xnf.github.io/posts/ml/swipr04/">
+<meta property="og:image" content="https://0xnf.github.io/images/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="Part 4 of the Swipr series. In which we discuss downloading 100 GB of pictures.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/ml/swipr04/">
+<meta name="twitter:title" content="Swipr - Data Collection (Part 2 of 2) - Nothing in Particular">
+<meta name="twitter:description" content="Part 4 of the Swipr series. In which we discuss downloading 100 GB of pictures.">
+<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://0xnf.github.io/"
+    },
+    "headline": "Swipr - Data Collection (Part 2 of 2) - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://0xnf.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "0001-01-01T00:00:00JST",
+    "dateModified": "0001-01-01T00:00:00JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://0xnf.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Part 4 of the Swipr series. In which we discuss downloading 100 GB of pictures."
+  }
+</script>
+
+
+    <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://0xnf.github.io/">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Swipr - Data Collection (Part 2 of 2)</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="0001-01-01T00:00:00JST">Jan 1, 0001</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Swipr - Data Collection (Part 2 of 2)</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<h1 id="downloading-from-instagram">Downloading from Instagram</h1>
+
+<p>There are a number of solutions for scraping Instagram, and it&rsquo;s mostly a pick-your-poison kind of affair. we picked the first well-supported google result for &ldquo;Instagram scaper&rdquo; and came up with <a href="https://github.com/althonos/InstaLooter">Instalooter</a>. It seemed to come with good documentation and sufficient automation facilities.</p>
+
+<h2 id="rate-limits">Rate Limits</h2>
+
+<p>We are told that prior to April 2018, downloading from Instagram was a much more lackadaisical affair. There was allegedly a generous rate limit for a given Instagram login token, upwards of 5,000 page requests per hour. This mythical time must have been the golden era for Instagram scraping.</p>
+
+<p>Instagram has since dramatically reduced the limit to roughly 20 API calls per hour, where each call corresponds to about 50 images returned per request.</p>
+
+<p>This severely increases the time it takes to download.</p>
+
+<h2 id="paging-limits">Paging Limits</h2>
+
+<p>Additionally due to the way Instagram does paging, no one involved with Instalooter knows how to jump to a specific page for any given user. The tl;dr here is that it is impossible to download any given user&rsquo;s complete post history provided they have more than 20 pages (1,000 pictures) of posts.</p>
+
+<p>This is not that big a deal, because 1,000 pictures of one user is really more than good enough. we consider this and a few a few upcoming parts of the pipeline to be kind of like the UDP protocol. we don&rsquo;t need all of it, just enough of it to make sense.</p>
+
+<h2 id="instalooter-usability-ilm">Instalooter Usability / ILM</h2>
+
+<p>Instalooter has a useful batch feature that takes in a structured file and attempts to download each profile. Unfortunately it is not, as the engineers would say, &ldquo;robust to failure&rdquo; and will stop execution the moment something fails even a little bit. The most common problem is encountering a timeout, but other errors can occur like an improperly formatted url string, an invalid username, or that the supplied profile might not be public.</p>
+
+<p>In all of these cases, Instalooter&rsquo;s batch processing function will stop and not pick up.</p>
+
+<p>This lead us to write a python script, a sort of framework that sits on top of and around Instalooter that manages and monitors Instalooter for errors during batch processing and can recover with as much grace as possible.</p>
+
+<p>You can find more on the GitHub page for the project, called ILM, or <a href="https://github.com/0xNF/ilm">Instalooter Monitor</a>.</p>
+
+<p>The big idea behind ILM is that given a list of profiles to download, it will download until it errors out on a profile, wait for the expiration of a timeout if applicable, and continue downloading the list. It attempts to minimize user input, meaning you can let it run across  days unmonitored while it does its thing.</p>
+
+<h2 id="final-picture-count">Final Picture Count</h2>
+
+<p>After letting ILM run for about 10 days due to the low rate limits (curse you Instagram), we amassed 279,262 pictures totaling approximately 100 GB of data. This necessitated busting out an old 1TB hard drive we had in order to store everything.</p>
+
+<p>Additionally, like we alluded to earlier, we supplemented our Instagram data with the data from the People&rsquo;s Republic of Tinder. This accounted for an additional 2GB of data, bringing our total to about 102GB of data.</p>
+
+<h1 id="transferring-to-paperspace">Transferring to Paperspace</h1>
+
+<p>An equally hard problem to downloading 100GB of data is uploading 100GB of data.</p>
+
+<p>Between space requirements and network instability, transferring a raw 100GB with no plan for recovery would be absolute madness.</p>
+
+<h2 id="tar-gz">tar.gz</h2>
+
+<p>To get around this, we&rsquo;ll divvy up our pictures into their main groupings. For each major category of image we turn each into a tarball with <code>tar -czf</code>.</p>
+
+<p>It only later occurred to us that <code>gzipping</code> each archive wasn&rsquo;t just a waste of time but actually harmful to some things we wanted to do later with respect to mitigating the constraints of the sizing on our remote hard drive.</p>
+
+<p>JPEGs, especially of natural shapes like photographs of the real world are high entropy and are essentially as compressed as they can already be. Gzipping will at best shave off a few megabytes from the entire multi-gigabyte package, and at worse add a few given the overhead of adding a gzip header for each file. This was a bad idea, but by the time we realized that we was too far into the data transfer to back out.</p>
+
+<p>Don&rsquo;t gzip your JPEGs, kids.</p>
+
+<h2 id="split">split</h2>
+
+<p>Just gzipping gave us an archive file for each category-folder that still totaled  between 7GB and 60GB, which remains madness to attempt to transfer as-is.</p>
+
+<p>To our rescue is the GNU tool <code>split</code>, which does what it says on the tin and cuts files into pieces specified by various command line arguments.</p>
+
+<p>We settled on a sizable 350MB for each chunk, using the following command:</p>
+
+<pre><code>split -b 350MB -d ./inputfile
+</code></pre>
+
+<p>This gives us a variable number of 350MB chunks of data, giving us something much easier to upload. In the event of a network failure during transfer, we will only ever lose the work associated with a single chunk, allowing for graceful and economical recoveries.</p>
+
+<h2 id="rsync">rsync</h2>
+
+<p>Continuing the thought process of mad ideas, it would be mad to attempt to use a simple protocol like <code>scp</code> to transfer the sheer amount of files. In comes the stalwart <code>rsync</code>, with such options like automatic retry, read-from-list capability, remove-completed-from-list functionality, and the ability to show progress bars.</p>
+
+<p>For such a massive procedure like this, rsync is our saving grace.</p>
+
+<p>Our go-to rsync command looked like this:</p>
+
+<pre><code> rsync --files-from=./file_list.txt --remove-source-files --progress -avz . serverAddress:~/data/swipr/
+</code></pre>
+
+<p>It took approximately 18 hours to upload all 102 GB of data.</p>
+
+<h2 id="cat">cat</h2>
+
+<p>After the transfer of all this data was completed, we were able to finally use <code>cat</code> the way it was intended, concatenating files together at the bit level. Using <code>cat</code>, we re-created the tarballs that we split from before the transfer, and then untarballed everything to get back the 300,000 files.</p>
+
+<h1 id="moving-on">Moving On</h1>
+
+<p>In the next section, we&rsquo;ll discuss doing data cleanup with DFace.</p>
+
+<p><a href="/posts/ml/swipr05">Next Section - Data Cleanup</a></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/machine-learning/">machine learning</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/fast.ai/">fast.ai</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">SERIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/series/swipr/">Swipr</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/cnn/">CNN</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/web-scraping/">web scraping</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/data-collection/">data collection</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/architecture/">architecture</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATEST</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr03/" class="list-group-item">Swipr - Data Collection (Part 1 of 2)</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr02/" class="list-group-item">Swipr - Scope</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr01/" class="list-group-item">Swipr - Overview</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/mk2/" class="list-group-item">Machine Levine Mk. II</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/fast.ai" class="list-group-item">fast.ai</a>
+      
+      <a href="https://0xnf.github.io/categories/machine-learning" class="list-group-item">machine-learning</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
+      <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
+      
+      <a href="https://0xnf.github.io/categories/nlp" class="list-group-item">nlp</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/swipr" class="list-group-item">swipr</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+      <a href="https://0xnf.github.io/series/machine-levine" class="list-group-item">machine-levine</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/web-scraping" class="list-group-item">web-scraping</a>
+      
+      <a href="https://0xnf.github.io/tags/architecture" class="list-group-item">architecture</a>
+      
+      <a href="https://0xnf.github.io/tags/cnn" class="list-group-item">cnn</a>
+      
+      <a href="https://0xnf.github.io/tags/data-collection" class="list-group-item">data-collection</a>
+      
+      <a href="https://0xnf.github.io/tags/articulate-insights" class="list-group-item">articulate-insights</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p>Contact: blog&lt;at>winetech.com </p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="https://0xnf.github.io/posts/ml/machinelevine/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Machine Levine - Nothing in Particular</title>
+    
+<meta name="description" content="Part 1 of the Machine Levine series, where we explore some Machine/Deep Learning. To that end, I have documented my pet problem of getting a machine to write articles like Matt Levine. What more noble goal is there than to increase the quantity of Money Stuff available to us?">
+
+<meta property="og:title" content="Machine Levine - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://0xnf.github.io/posts/ml/machinelevine/">
+<meta property="og:image" content="https://0xnf.github.io/images/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="Part 1 of the Machine Levine series, where we explore some Machine/Deep Learning. To that end, I have documented my pet problem of getting a machine to write articles like Matt Levine. What more noble goal is there than to increase the quantity of Money Stuff available to us?">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/ml/machinelevine/">
+<meta name="twitter:title" content="Machine Levine - Nothing in Particular">
+<meta name="twitter:description" content="Part 1 of the Machine Levine series, where we explore some Machine/Deep Learning. To that end, I have documented my pet problem of getting a machine to write articles like Matt Levine. What more noble goal is there than to increase the quantity of Money Stuff available to us?">
+<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://0xnf.github.io/"
+    },
+    "headline": "Machine Levine - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://0xnf.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-11-01T19:08:56JST",
+    "dateModified": "2018-11-01T19:08:56JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://0xnf.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Part 1 of the Machine Levine series, where we explore some Machine/Deep Learning. To that end, I have documented my pet problem of getting a machine to write articles like Matt Levine. What more noble goal is there than to increase the quantity of Money Stuff available to us?"
+  }
+</script>
+
+
+    <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://0xnf.github.io/">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Machine Levine</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-11-01T19:08:56JST">Nov 1, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Machine Levine</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<h1 id="the-goal">The Goal</h1>
+
+<p>In order to better understand machine learning, I decided to see if I could get a neural network to write articles like Matt Levine. The original goal was to sort Spotify songs by male or female vocals, but I had been learning all of this stuff by following along with the <a href="https://course.fast.ai/">fast.ai</a> courses, and that specific use case was a bit afield of the coursework and forum discussions happening in the MOOC. Fast.ai, great as is it, has a focus on image data and NLP applications. As a compromise, I decided to learn by creating a bot that writes just like <a href="https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine">Matt Levine</a> of Bloomberg.</p>
+
+<p>This new project would be much more within the course scope, and thus have a lot more material available if I ran into problems.</p>
+
+<h1 id="the-finished-product">The Finished Product</h1>
+
+<p>As I started playing around and getting some results with this project, I decided to turn it into something a little bigger. Now it is something akin to a bot zoo. Available at <a href="http://machinelevine.winetech.com">machinelevine.winetech.com</a>, you can see articles written by various generations of Matt Bots, as well as generate new ones written by the bot of your choosing.</p>
+
+<h2 id="the-bots">The Bots</h2>
+
+<p>If you&rsquo;d like to read about each bot, along with the specifics that went into them such as different tokenizations, variations in network structure, updated data techniques, etc., you find that at these links:</p>
+
+<ul>
+<li><a href="/posts/ml/mk1">Machine Levine Mk I</a></li>
+<li><a href="/posts/ml/mk2">Machine Levine Mk II</a></li>
+<li>[Machine Levine Mk III]()</li>
+</ul>
+
+<h1 id="fastai">FastAI</h1>
+
+<p>The ace up the sleeve of anyone trying to teach themselves modern machine learning has got to be the free lectures by Jeremy Howard of <a href="https://www.fast.ai/">Fast.ai</a>. These courses are a top-down, practical approach, focused on getting you up and running with the tools and becoming productive as soon as possible. Once you have a taste for the various bits and functions of ML, they dive deeper and start teaching the concepts behind neural networks.</p>
+
+<p>I am extremely grateful to Jeremy for creating these works and making them freely available.</p>
+
+<h1 id="matt-bot">Matt Bot</h1>
+
+<p>To create a bot like Matt Levine, we train a neural network on samples of <a href="https://www.bloomberg.com/view/topics/money-stuff">Money Stuff</a>, which is a daily financial newsletter the real matt writes. The final model of a given set of training data that produces some basically reasonable output is considered to be a Matt Bot.</p>
+
+<h1 id="data-collection">Data Collection</h1>
+
+<p>As of June 28th 2018, Matt had 571 Money Stuff articles written for Bloomberg Opinion<a href="#correction-1">*</a>. These articles form the basis of the Matt Bot input data.</p>
+
+<h1 id="data-curation">Data Curation</h1>
+
+<p>Just using the raw html would have included far too much noise, so the html had to undergo a lot of curation in order to be in a format appropriate for training.</p>
+
+<p>The first thing to do is figure out where in the actual html does Bloomberg store the article being presented. After identifying the main div, a python script, using the excellent if slightly cumbersome BeautifulSoup to extract the article contents. Additionally, we replace every <code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code>, and <code>&lt;p&gt;</code> with the interior text.</p>
+
+<p>Once this is done, we extract the text-only nodes and save them to a text file. Our input has gone from looking like</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;body-copy fence-body&#34;</span>&gt;\n            &lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">strong</span>&gt;Radical truth.&lt;/<span style="color:#f92672">strong</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hardwall&#34;</span> <span style="color:#a6e22e">data-position</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;softwall&#34;</span> <span style="color:#a6e22e">data-position</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;&lt;<span style="color:#f92672">p</span>&gt;&#34;The hero comes back from this mysterious adventure with the power to bestow boons on his [...]</code></pre></div>
+<p>to</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Radical truth. &#34;The hero comes back from this mysterious adventure with the power to bestow boons on his <span style="color:#e6db74">[</span>...<span style="color:#e6db74">]</span></code></pre></div>
+<p>Each article by Matt gets its own text file.</p>
+
+<h1 id="neural-network-structure">Neural Network Structure</h1>
+
+<p>I used the default FastAI learner object, which dynamically selects the proper NN structure for the given input data. In this case, it&rsquo;s an LTSM-flavored RNN with an input size of <code>21,480</code>, an embedding size of <code>456</code>, some dropouts, and an output of <code>21,480</code>. This number of inputs and outputs is the cardinality of tokens, that is, all &ldquo;word-like&rdquo; things that exist in the input corpus.</p>
+
+<h1 id="productionizing">Productionizing</h1>
+
+<p>It does us no good to have a model available only on an expensive GPU machine, so I spent a bit of time getting everything ready to make sure the model runs on a low-budget CPU machine.</p>
+
+<p>The easiest way to package a PyTorch model is to save all the weights and encodings in CPU format with the <code>.cpu()</code> call. PyTorch makes this super simple.</p>
+
+<p>The more complicated aspects are making sure that some of the custom functions for sending data to and from the model are also in CPU format. This involves some fine tuning (read: guessing blindly) about what kinds of PyTorch data structures (Vectors? Tensors?) are GPU bound or not. Errors about incorrect arities of inputs can drive you berserk, but the answers are out there.</p>
+
+<p>The biggest hurdle to getting all of the necessary parts onto a CPU machine is installing PyTorch, FastAI, and their dependencies on an ultra low-budget $5/month Digital Ocean server.</p>
+
+<p>I spent many hours over multiple days fighting with the PyTorch installer, and specifically the Spacey tokenizer, to install in a low RAM environment.</p>
+
+<p>The tl;dr is that you should increase the swapfile (<a href="https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04">https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04</a>). An extra 1GB of swap space turns the problematic install into smooth sailing.</p>
+
+<h1 id="iceberg">Iceberg</h1>
+
+<p>As a fun experiment, I decided to <del>steal</del> borrow the html/css from Bloomberg Opinion, so that any generated <del>Money Stuff</del> Currency Things will look just like it came from Bloomberg.</p>
+
+<p>I decided to call this respectful imitation Iceberg.</p>
+
+<h1 id="follow-ups">Follow Ups</h1>
+
+<p>Each iteration of the Matt Bots has various tweaks and changes, not all of which are covered here. For example, MK I uses a simple character level model, Mk II uses a further curated dataset with added start/end tags for subsection titles, and Mk III uses a more refined dataset with titles and dates. Each bot is linked above, where you can read about their individual construction in more detail.</p>
+
+<h3 id="footnotes">Footnotes</h3>
+
+<h6 id="correction-1">Correction 1</h6>
+
+<p><sub>* Due to a quirk of how Bloomberg&rsquo;s website displays article lists, the 571 number was an accidentally too-early cut-off point that didn&rsquo;t accurately reflect how much Matt had actually written. This was corrected for Matt Bots of Mk II and greater.</sub></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/machine-learning/">Machine Learning</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/nlp/">NLP</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/fast.ai/">fast.ai</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">SERIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/series/machine-levine/">Machine Levine</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/rnn/">rnn</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/parsing/">parsing</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/web-scraping/">web scraping</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/data-cleanup/">data cleanup</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATEST</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr03/" class="list-group-item">Swipr - Data Collection (Part 1 of 2)</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr02/" class="list-group-item">Swipr - Scope</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr01/" class="list-group-item">Swipr - Overview</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/mk2/" class="list-group-item">Machine Levine Mk. II</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/fast.ai" class="list-group-item">fast.ai</a>
+      
+      <a href="https://0xnf.github.io/categories/machine-learning" class="list-group-item">machine-learning</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
+      <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
+      
+      <a href="https://0xnf.github.io/categories/nlp" class="list-group-item">nlp</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/swipr" class="list-group-item">swipr</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+      <a href="https://0xnf.github.io/series/machine-levine" class="list-group-item">machine-levine</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/web-scraping" class="list-group-item">web-scraping</a>
+      
+      <a href="https://0xnf.github.io/tags/architecture" class="list-group-item">architecture</a>
+      
+      <a href="https://0xnf.github.io/tags/cnn" class="list-group-item">cnn</a>
+      
+      <a href="https://0xnf.github.io/tags/data-collection" class="list-group-item">data-collection</a>
+      
+      <a href="https://0xnf.github.io/tags/articulate-insights" class="list-group-item">articulate-insights</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p>Contact: blog&lt;at>winetech.com </p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

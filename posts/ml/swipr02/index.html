@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="https://0xnf.github.io/posts/ml/swipr02/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Swipr - Scope - Nothing in Particular</title>
+    
+<meta name="description" content="Part 2 of a series exploring machine learning &#43; tinder. In this post we talk requirements project scope.">
+
+<meta property="og:title" content="Swipr - Scope - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://0xnf.github.io/posts/ml/swipr02/">
+<meta property="og:image" content="https://0xnf.github.io/images/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="Part 2 of a series exploring machine learning &#43; tinder. In this post we talk requirements project scope.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/ml/swipr02/">
+<meta name="twitter:title" content="Swipr - Scope - Nothing in Particular">
+<meta name="twitter:description" content="Part 2 of a series exploring machine learning &#43; tinder. In this post we talk requirements project scope.">
+<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://0xnf.github.io/"
+    },
+    "headline": "Swipr - Scope - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://0xnf.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-12-11T11:04:42JST",
+    "dateModified": "2018-12-11T11:04:42JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://0xnf.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Part 2 of a series exploring machine learning &#43; tinder. In this post we talk requirements project scope."
+  }
+</script>
+
+
+    <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://0xnf.github.io/">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Swipr - Scope</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-11T11:04:42JST">Dec 11, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Swipr - Scope</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>From the outset we wanted to have, at the most basic level, the ability to use a CPU-only machine to judge whether or not we should swipe right on a given photograph.</p>
+
+<p>Additionally, it does us no good to just have a model that does this, it needs to be useful in some form beyond merely existing, meaning it has to exist as some kind of accessible application.</p>
+
+<p>Finally, it would be preferable to have this system be accessible from anywhere. Binding it to our local machine is useful insofar as this being an academic exercise is concerned, but it&rsquo;d be a lot nicer to turn it on and off as we see fit, when we see fit.</p>
+
+<p>From this, we can piece together our main requirements:</p>
+
+<ol>
+<li>We need to train a model on our preferences</li>
+<li>We need a remote server capable of running that model.
+
+<ul>
+<li>Because we are focused on fast.ai, we will concentrate on PyTorch here.</li>
+<li>Because we are not made of money, we need these models to run on the CPU</li>
+</ul></li>
+<li>We need a way to send and receive data to and from the pytorch model</li>
+<li>We need an interface to turn this program on and off</li>
+<li>To know what state our program is in, we need a datastore</li>
+<li>We need to send and receive data from Tinder</li>
+</ol>
+
+<p>Additionally, some nice-to-haves will be the following abilities:</p>
+
+<ol>
+<li>Handle multiple users and not just us developers</li>
+<li>Fine-tune our tinder selection process before asking the model for a judgement</li>
+<li>See the results of each match</li>
+<li>Tell the server whether a given AI like/pass was appropriate (i.e., retrain the model)</li>
+</ol>
+
+<h1 id="implementation">Implementation</h1>
+
+<p>To implement this, we&rsquo;ll be using the following technologies:</p>
+
+<h2 id="main-server">Main Server</h2>
+
+<ol>
+<li>The server will run ASP.NET Core 2.1</li>
+<li>The datastore will be SQLite</li>
+<li>We will make a python script to communicate with our Model</li>
+<li>We will install the <code>fast.ai cpu-only</code> Conda environment from their GitHub</li>
+<li>We will use a fork of <a href="https://github.com/0xNF/sharp-tinder">Sharp-Tinder</a> usable on .NET Core to interact with Tinder</li>
+</ol>
+
+<h2 id="ml-server">ML Server</h2>
+
+<p>Our model training server will use the standard model training server from our other ML experiments: Fast.ai&rsquo;s prebuilt paperspace GPU instance.</p>
+
+<h1 id="moving-on">Moving On</h1>
+
+<p>In the next post, we&rsquo;ll talk about how we approached the data collection aspect of training the model. Turns out, like most things, it&rsquo;s more complicated than one might think at the start.</p>
+
+<p><a href="/posts/ml/swipr03">Next Section - Data Collection (1 / 2)</a></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/machine-learning/">machine learning</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/fast.ai/">fast.ai</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">SERIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/series/swipr/">Swipr</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/cnn/">CNN</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/web-scraping/">web scraping</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/data-collection/">data collection</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/architecture/">architecture</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATEST</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr03/" class="list-group-item">Swipr - Data Collection (Part 1 of 2)</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr02/" class="list-group-item">Swipr - Scope</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr01/" class="list-group-item">Swipr - Overview</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/mk2/" class="list-group-item">Machine Levine Mk. II</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/fast.ai" class="list-group-item">fast.ai</a>
+      
+      <a href="https://0xnf.github.io/categories/machine-learning" class="list-group-item">machine-learning</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
+      <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
+      
+      <a href="https://0xnf.github.io/categories/nlp" class="list-group-item">nlp</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/swipr" class="list-group-item">swipr</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+      <a href="https://0xnf.github.io/series/machine-levine" class="list-group-item">machine-levine</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/web-scraping" class="list-group-item">web-scraping</a>
+      
+      <a href="https://0xnf.github.io/tags/architecture" class="list-group-item">architecture</a>
+      
+      <a href="https://0xnf.github.io/tags/cnn" class="list-group-item">cnn</a>
+      
+      <a href="https://0xnf.github.io/tags/data-collection" class="list-group-item">data-collection</a>
+      
+      <a href="https://0xnf.github.io/tags/articulate-insights" class="list-group-item">articulate-insights</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p>Contact: blog&lt;at>winetech.com </p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

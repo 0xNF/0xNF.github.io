@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="https://0xnf.github.io/posts/ml/mk1/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Machine Levine Mk. I - Nothing in Particular</title>
+    
+<meta name="description" content="Part 2 of the Machine Levine series, in which we discuss how the original Matt Bot came to be.">
+
+<meta property="og:title" content="Machine Levine Mk. I - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://0xnf.github.io/posts/ml/mk1/">
+<meta property="og:image" content="https://0xnf.github.io/images/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="Part 2 of the Machine Levine series, in which we discuss how the original Matt Bot came to be.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/ml/mk1/">
+<meta name="twitter:title" content="Machine Levine Mk. I - Nothing in Particular">
+<meta name="twitter:description" content="Part 2 of the Machine Levine series, in which we discuss how the original Matt Bot came to be.">
+<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://0xnf.github.io/"
+    },
+    "headline": "Machine Levine Mk. I - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://0xnf.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-11-02T20:08:56JST",
+    "dateModified": "2018-11-02T20:08:56JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://0xnf.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Part 2 of the Machine Levine series, in which we discuss how the original Matt Bot came to be."
+  }
+</script>
+
+
+    <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://0xnf.github.io/">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Machine Levine Mk. I</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-11-02T20:08:56JST">Nov 2, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Machine Levine Mk. I</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>This is a description of how the first of the Matt Bots came into existence. Few things in this document should be interpreted as the best or even a correct way to do anything - this bot is an academic exercise. That being said, here is how he was made.</p>
+
+<h1 id="data-collection">Data Collection</h1>
+
+<p>Like the <a href="/posts/ml/machinelevine">general post</a> describes, the data used to train the Matt model was derived from Matt Levine&rsquo;s at-the-time 571-count archive of <a href="https://www.bloomberg.com/view/topics/money-stuff">Money Stuff</a> articles.</p>
+
+<p>The data was downloaded using a simple web scraper to collect the URLs of each article, which were then downloaded in a way which definitely tripped the Bloomberg anti-scraping mechanisms.</p>
+
+<h2 id="data-cleanup">Data Cleanup</h2>
+
+<p>The cleanup script can be found at [html2taggedtext.py]().</p>
+
+<p>Once all the articles had been downloaded, they were passed into a python script using <a href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> to extract the meaningful pieces of information.</p>
+
+<h3 id="extraneous-html">Extraneous HTML</h3>
+
+<p>Before further processing, some of the HTML was transformed in various ways to facilitate data extraction. For example:</p>
+
+<ul>
+<li><p>Some of the downloaded html tags weren&rsquo;t meaningful, so I struck them from the html tree. Any <code>&lt;aside&gt;</code> tags, or <code>&lt;div&gt;</code> with any classes matching <code>hardwall</code>, <code>softwall</code>, <code>page-ad</code>, <code>trashling</code>, <code>disclaimer</code>, etc is removed without consideration.</p></li>
+
+<li><p>Any <code>&lt;br&gt;</code> tags are replaced with newlines <code>\n</code>.</p></li>
+
+<li><p>Any links are replaced with their inline text.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">You can find the link &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;www.someurl.com&#34;</span>&gt;here&lt;/<span style="color:#f92672">a</span>&gt;.</code></pre></div>
+<p>becomes</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">You can find the link here.</code></pre></div></li>
+</ul>
+
+<h3 id="tagging">Tagging</h3>
+
+<p>We surround each sub-section of a given Money Stuff article with enclosing <code>&lt;</code> and <code>&gt;</code> tags. This hopefully allows the neural network to learn that what a section is.</p>
+
+<h3 id="mistakes">Mistakes</h3>
+
+<p>Due to an oversight, I forgot to include three pieces of information that would be really useful:</p>
+
+<p>The title of the article, the subtitle, and the date the article was published.</p>
+
+<p>This means that any model created using the data that has been collected will be incapable of generating article titles and subtitles. As a workaround, I have a post-processing script that assembles article these things from generated section titles, but it is a less than perfect state of affairs.</p>
+
+<h3 id="saving">Saving</h3>
+
+<p>Once the data from a given article has been cleaned to an acceptable extent, it is saved into a different folder as a bunch of raw text. A single cleaned article will look like:</p>
+
+<p><code>active-funds-and-hidden-commissions.html.txt</code>
+and its contents will look like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt"><span style="color:#e6db74">&lt;Should</span> <span style="color:#e6db74">active</span> <span style="color:#e6db74">management</span> <span style="color:#e6db74">be</span> <span style="color:#e6db74">illegal</span><span style="color:#960050;background-color:#1e0010">?</span><span style="color:#e6db74">&gt;</span> Look, you know the things<span style="color:#f92672">:</span>The average active manager will underperform the average passive manager, because of fees.
+<span style="color:#e6db74">[</span>...<span style="color:#e6db74">]</span></code></pre></div>
+<h1 id="ml-setup">ML Setup</h1>
+
+<p>The details of the setup can be found under [MattAttempt.ipynb]().</p>
+
+<h2 id="validation-and-test-sets">Validation and Test Sets</h2>
+
+<p>Although we failed to encode it in our data, the articles are actually time-dependent. Topics in one article may be referenced in a future article, and the language Matt uses may match that. In fact he does this very often. &ldquo;We talked yesterday about &hellip;&rdquo; is a common refrain in Money Stuff.</p>
+
+<p>Because of this, we&rsquo;ll simply say that our validation set is the last <code>x%</code> of articles in our dataset.</p>
+
+<p>The question to grapple with is what is our <code>x</code>? Jeremy of Fast.ai recommends 20% on any given dataset, which is an empirical number he finds to be generally useful. Unfortunately because I&rsquo;m working with such a small dataset, I decided to halve that to 10%.</p>
+
+<p>I also dedicated an additional 10% of articles to the Test set.</p>
+
+<h1 id="loading-data">Loading Data</h1>
+
+<h2 id="concatenation">Concatenation</h2>
+
+<p>TorchText, which sits below FastAIs NLP APIs prefers to load all NLP data as a single big string, where each observation (in our case, a single article), is concatenated to the end of the previous observation.</p>
+
+<p>Unfortunately the tagging phase for Mk. I didn&rsquo;t include any kind of article start or end information, so all the articles run together. This means that Mk. I will not be able to gain any sense of how long an article is, how many sections an article has, or how articles are typically ended. We leave this to Mk. II and beyond.</p>
+
+<h2 id="tokenization">Tokenization</h2>
+
+<p>For this first Matt Bot, we elect not to tokenize beyond simply creating a list of each output character. Rather than using a word-level output, Mk. 1 uses a character-level output, meaning that he will construct words character by character. With respect to tokenization, this just means that we only need a list of the ascii values. Enough to encode English words and punctuation.</p>
+
+<h2 id="frequency-counting">Frequency Counting</h2>
+
+<p>To avoid having the bot attempt to learn unpredictable and rare characters, we eliminate any characters that were seen below a certain frequency. For our experiments, we say that any character that occurs less than 3 times gets replaced by a character representing an unknown value. This way, the model can learn an average encoding for all words and apply it, rather than attempting to correctly weight rarely seen and likely misencoded data.</p>
+
+<h2 id="strings-to-numbers">Strings to Numbers</h2>
+
+<p>Of course a computer can&rsquo;t weight a character, so we create a mapping that moves the character to an integer representation, and another mapping that goes backwards.</p>
+
+<p>This way we can hand the model a list of characters as input, and receive a list of characters as output.</p>
+
+<h1 id="model">Model</h1>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>Our actual PyTorch model that we used to train Mk. 1 looks like the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CharSeqStatefulLSTM</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, vocab_size, emb_size, batch_size, num_layers):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>vocab_size,self<span style="color:#f92672">.</span>num_layers <span style="color:#f92672">=</span> vocab_size,num_layers
+        self<span style="color:#f92672">.</span>e <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Embedding(vocab_size, emb_size)
+        self<span style="color:#f92672">.</span>rnn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>LSTM(emb_size, num_hidden, num_layers, dropout<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>)
+        self<span style="color:#f92672">.</span>l_out <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(num_hidden, vocab_size)
+        self<span style="color:#f92672">.</span>init_hidden(batch_size)
+        
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, cs):
+        batch_size <span style="color:#f92672">=</span> cs[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)
+        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>h[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">!=</span> batch_size: self<span style="color:#f92672">.</span>init_hidden(batch_size)
+        outp,h <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>rnn(self<span style="color:#f92672">.</span>e(cs), self<span style="color:#f92672">.</span>h)
+        self<span style="color:#f92672">.</span>h <span style="color:#f92672">=</span> repackage_var(h)
+        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>log_softmax(self<span style="color:#f92672">.</span>l_out(outp), dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, self<span style="color:#f92672">.</span>vocab_size)
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">init_hidden</span>(self, batch_size):
+        self<span style="color:#f92672">.</span>h <span style="color:#f92672">=</span> (V(torch<span style="color:#f92672">.</span>zeros(self<span style="color:#f92672">.</span>num_layers, batch_size, num_hidden)),
+                  V(torch<span style="color:#f92672">.</span>zeros(self<span style="color:#f92672">.</span>num_layers, batch_size, num_hidden)))</code></pre></div>
+<p>What we&rsquo;ve chosen to encode here is that we&rsquo;re going to have an embeddings matrix with <code>vocab_size</code> rows and <code>emb_size</code> columns, where vocab_size is how many unique tokens we found in our input text, and <code>emb_size</code> is a number chosen by us at our discretion.</p>
+
+<p>This will operate like Word2Vec does, but rather that being the first and last step, will be simply the first block of our network.</p>
+
+<p>Our second block will be a <code>num_hidden</code> size LSTM RNN, with an input size of <code>emb_hidden</code>, because it will be fed the output of the embeddings layer. We give it a dropout of 50% because dropout is an easy way to reduce overfitting and increase model performance. Why 50%? Why not. It works, basically.</p>
+
+<p>Our final block is a simple linear layer going from <code>num_hidden</code> to <code>vocab_size</code>, where the output will be a <code>vocab_size</code> list of probabilities of the likeliest next character.</p>
+
+<p>We take what is essentially the item with the highest probability from that list to construct our final output character.</p>
+
+<h2 id="fitting">Fitting</h2>
+
+<p>Our hyperparameters are setup as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>
+backprop<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>
+emb_size<span style="color:#f92672">=</span><span style="color:#ae81ff">42</span> 
+num_hidden <span style="color:#f92672">=</span> <span style="color:#ae81ff">512</span>
+num_layers <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span></code></pre></div>
+<p>We use the FastAI library to create a model data object, which is responsible for moving and loading our data and handing it to our model architecture as such:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;path/to/text/files/to/load/&#34;</span>
+TEXT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;path/to/pre-saved/tokens.npy&#34;</span>
+md <span style="color:#f92672">=</span> LanguageModelData<span style="color:#f92672">.</span>from_text_files(PATH, TEXT, <span style="color:#f92672">**</span>FILES, bs<span style="color:#f92672">=</span>batch_size, bptt<span style="color:#f92672">=</span>backprop, min_freq<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)</code></pre></div>
+<p>We can then instantiate a model like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m <span style="color:#f92672">=</span> CharSeqStatefulLSTM(num_tokens, emb_size, batch_size, num_layers)<span style="color:#f92672">.</span>cuda()
+lo <span style="color:#f92672">=</span> LayerOptimizer(optim<span style="color:#f92672">.</span>Adam, m, <span style="color:#ae81ff">1e-2</span>, <span style="color:#ae81ff">1e-5</span>)</code></pre></div>
+<p>Where <code>lo</code> is an object that manages our learning rate. We want it to use the <code>Adam</code> gradient descent optimizer, and use to anneal it&rsquo;s learning rate from a relatively high <code>0.01</code> to <code>0.0001</code></p>
+
+<p>Finally we can call <code>fit</code> with the following parameters:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">35</span>
+fit(m, md, epochs, lo<span style="color:#f92672">.</span>opt, F<span style="color:#f92672">.</span>nll_loss)</code></pre></div>
+<p>The key in all of this is picking the right hyperparameters, especially the learning rate. This is a game that falls somewhere between blind dart-throwing and intuition, so you just have to keep at it and try a bunch of different things, although keeping the learning rate really close to zero is usually a good idea.</p>
+
+<p>After training for a few hours, we end up with training/validation losses of []</p>
+
+<h2 id="pulling-data">Pulling data</h2>
+
+<p>We use the following methods to pull data out from our newly generated model:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_next</span>(inp):
+    idxs <span style="color:#f92672">=</span> TEXT<span style="color:#f92672">.</span>numericalize(inp)<span style="color:#f92672">.</span>cpu() <span style="color:#75715e"># Comment to enable GPU computation. Be sure to also undo gpu stuff in Forward</span>
+    t <span style="color:#f92672">=</span> idxs<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)
+    v <span style="color:#f92672">=</span> V(t)
+    p <span style="color:#f92672">=</span> m(v)
+    p <span style="color:#f92672">=</span> m(V(idxs<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)))
+    r <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>multinomial(p[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>exp(), <span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">return</span> TEXT<span style="color:#f92672">.</span>vocab<span style="color:#f92672">.</span>itos[to_np(r)[<span style="color:#ae81ff">0</span>]]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_next_n</span>(inp, n):
+    res <span style="color:#f92672">=</span> inp
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n):
+        c <span style="color:#f92672">=</span> get_next(inp)
+        res <span style="color:#f92672">+=</span> c
+        inp <span style="color:#f92672">=</span> inp[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">+</span>c
+    <span style="color:#66d9ef">return</span> res</code></pre></div>
+<p>Let&rsquo;s see what we get with it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nt <span style="color:#f92672">=</span> get_next_n(<span style="color:#e6db74">&#39;goldman&#39;</span>, <span style="color:#ae81ff">200</span>)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&#39;goldman\&#39;s craby floor 10\\)-2,000 insurann, and divorced by the deduction.&gt;and the service point, the model. &#34;economi soussip ipo.&gt;you &#34;i already momimiolist, because including, but i as new y-based coins. pa&#39;</code></pre></div>
+<p>It&rsquo;s a bit gibberish, but it does kind of look a little like the finance-y writings of Matt.</p>
+
+<p>As far as first foray into machine learning goes, I&rsquo;m quite pleased with this as an introductory result!</p>
+
+<h2 id="the-finished-product">The Finished Product</h2>
+
+<p>You can see other articles generated by this Matt Bot, as well as generate your own articles using it, over here at <a href="http://machinelevine.winetech.com/bots/ml1">machinelevine.winetech.com</a></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/machine-learning/">Machine Learning</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/nlp/">NLP</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/fast.ai/">fast.ai</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">SERIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/series/machine-levine/">Machine Levine</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/rnn/">rnn</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/parsing/">parsing</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/web-scraping/">web scraping</a></li>
+          
+          <li><a href="https://0xnf.github.io/tags/data-cleanup/">data cleanup</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATEST</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr03/" class="list-group-item">Swipr - Data Collection (Part 1 of 2)</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr02/" class="list-group-item">Swipr - Scope</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr01/" class="list-group-item">Swipr - Overview</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/mk2/" class="list-group-item">Machine Levine Mk. II</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/fast.ai" class="list-group-item">fast.ai</a>
+      
+      <a href="https://0xnf.github.io/categories/machine-learning" class="list-group-item">machine-learning</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
+      <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
+      
+      <a href="https://0xnf.github.io/categories/nlp" class="list-group-item">nlp</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/swipr" class="list-group-item">swipr</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+      <a href="https://0xnf.github.io/series/machine-levine" class="list-group-item">machine-levine</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/web-scraping" class="list-group-item">web-scraping</a>
+      
+      <a href="https://0xnf.github.io/tags/architecture" class="list-group-item">architecture</a>
+      
+      <a href="https://0xnf.github.io/tags/cnn" class="list-group-item">cnn</a>
+      
+      <a href="https://0xnf.github.io/tags/data-collection" class="list-group-item">data-collection</a>
+      
+      <a href="https://0xnf.github.io/tags/articulate-insights" class="list-group-item">articulate-insights</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p>Contact: blog&lt;at>winetech.com </p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

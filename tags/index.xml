@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>Architecture</title>
+      <link>https://0xnf.github.io/tags/architecture/</link>
+      <pubDate>Thu, 13 Dec 2018 17:01:51 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/architecture/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Articulate Insights</title>
       <link>https://0xnf.github.io/tags/articulate-insights/</link>
       <pubDate>Tue, 22 May 2018 15:34:47 -0700</pubDate>
@@ -39,6 +48,15 @@
     </item>
     
     <item>
+      <title>Cnn</title>
+      <link>https://0xnf.github.io/tags/cnn/</link>
+      <pubDate>Thu, 13 Dec 2018 17:01:51 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/cnn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Command Line</title>
       <link>https://0xnf.github.io/tags/command-line/</link>
       <pubDate>Wed, 06 Jun 2018 21:38:01 -0700</pubDate>
@@ -53,6 +71,24 @@
       <pubDate>Tue, 19 Jun 2018 09:06:33 -0700</pubDate>
       
       <guid>https://0xnf.github.io/tags/csharp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Cleanup</title>
+      <link>https://0xnf.github.io/tags/data-cleanup/</link>
+      <pubDate>Sat, 03 Nov 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/data-cleanup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Collection</title>
+      <link>https://0xnf.github.io/tags/data-collection/</link>
+      <pubDate>Thu, 13 Dec 2018 17:01:51 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/data-collection/</guid>
       <description></description>
     </item>
     
@@ -183,11 +219,29 @@
     </item>
     
     <item>
+      <title>Parsing</title>
+      <link>https://0xnf.github.io/tags/parsing/</link>
+      <pubDate>Sat, 03 Nov 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/parsing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>React</title>
       <link>https://0xnf.github.io/tags/react/</link>
       <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
       
       <guid>https://0xnf.github.io/tags/react/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rnn</title>
+      <link>https://0xnf.github.io/tags/rnn/</link>
+      <pubDate>Sat, 03 Nov 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/rnn/</guid>
       <description></description>
     </item>
     
@@ -260,6 +314,15 @@
       <pubDate>Tue, 24 Jul 2018 18:00:02 -0700</pubDate>
       
       <guid>https://0xnf.github.io/tags/vpn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Web Scraping</title>
+      <link>https://0xnf.github.io/tags/web-scraping/</link>
+      <pubDate>Thu, 13 Dec 2018 17:01:51 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/web-scraping/</guid>
       <description></description>
     </item>
     
