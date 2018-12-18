@@ -45,7 +45,7 @@ Like all deep learning projects, before we can consider training our model or ev
     <item>
       <title>Swipr - Data Collection (Part 2 of 2)</title>
       <link>https://0xnf.github.io/posts/ml/swipr04/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 11 Dec 2018 13:29:43 -0800</pubDate>
       
       <guid>https://0xnf.github.io/posts/ml/swipr04/</guid>
       <description>Downloading from Instagram There are a number of solutions for scraping Instagram, and it&amp;rsquo;s mostly a pick-your-poison kind of affair. we picked the first well-supported google result for &amp;ldquo;Instagram scaper&amp;rdquo; and came up with Instalooter. It seemed to come with good documentation and sufficient automation facilities.

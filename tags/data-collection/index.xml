@@ -76,6 +76,16 @@ A bunch of Instagram photos, no matter from whose profile, are of course not pur
     </item>
     
     <item>
+      <title>Swipr - Data Collection (Part 2 of 2)</title>
+      <link>https://0xnf.github.io/posts/ml/swipr04/</link>
+      <pubDate>Tue, 11 Dec 2018 13:29:43 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/ml/swipr04/</guid>
+      <description>Downloading from Instagram There are a number of solutions for scraping Instagram, and it&amp;rsquo;s mostly a pick-your-poison kind of affair. we picked the first well-supported google result for &amp;ldquo;Instagram scaper&amp;rdquo; and came up with Instalooter. It seemed to come with good documentation and sufficient automation facilities.
+Rate Limits We are told that prior to April 2018, downloading from Instagram was a much more lackadaisical affair. There was allegedly a generous rate limit for a given Instagram login token, upwards of 5,000 page requests per hour.</description>
+    </item>
+    
+    <item>
       <title>Swipr - Data Collection (Part 1 of 2)</title>
       <link>https://0xnf.github.io/posts/ml/swipr03/</link>
       <pubDate>Tue, 11 Dec 2018 12:29:43 -0800</pubDate>
@@ -104,16 +114,6 @@ Finally, it would be preferable to have this system be accessible from anywhere.
       <guid>https://0xnf.github.io/posts/ml/swipr01/</guid>
       <description>The Goal Continuing the quest to learn modern Machine Learning, I thought it would be fun to create a Tinder auto-swiper that could potentially reject matches I don&amp;rsquo;t want and accept matches I do want.
 One of my friends had the brilliant idea of naming this tinderbot &amp;ldquo;Swiper&amp;rdquo;, like the fox from Dora the Explorer, famous for being repelled by the intrepid protagonists with the incantation of &amp;ldquo;Swiper, no swiping!</description>
-    </item>
-    
-    <item>
-      <title>Swipr - Data Collection (Part 2 of 2)</title>
-      <link>https://0xnf.github.io/posts/ml/swipr04/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://0xnf.github.io/posts/ml/swipr04/</guid>
-      <description>Downloading from Instagram There are a number of solutions for scraping Instagram, and it&amp;rsquo;s mostly a pick-your-poison kind of affair. we picked the first well-supported google result for &amp;ldquo;Instagram scaper&amp;rdquo; and came up with Instalooter. It seemed to come with good documentation and sufficient automation facilities.
-Rate Limits We are told that prior to April 2018, downloading from Instagram was a much more lackadaisical affair. There was allegedly a generous rate limit for a given Instagram login token, upwards of 5,000 page requests per hour.</description>
     </item>
     
   </channel>
