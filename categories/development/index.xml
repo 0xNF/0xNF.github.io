@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Development on Nothing in Particular</title>
+    <link>https://0xnf.github.io/categories/development/</link>
+    <description>Recent content in Development on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 25 Feb 2019 05:10:26 -0800</lastBuildDate>
+    
+	<atom:link href="https://0xnf.github.io/categories/development/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>It&#39;s always DNS</title>
+      <link>https://0xnf.github.io/posts/misc/alwaysdns/</link>
+      <pubDate>Mon, 25 Feb 2019 05:10:26 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/misc/alwaysdns/</guid>
+      <description>I had decided that I was going to re-visit the way Lyricall&amp;rsquo;s infrastructure is deployed, because while functional, it was many complicated and esoteric steps away from &amp;ldquo;one-click deploy&amp;rdquo;. Near the completion of the .NET Core side of the deploy where it became time to test production-like connections to the primary, real database, problems started to arise.
+No matter the configuration, .NET was spewing connection refused errors to the postgres backend.</description>
+    </item>
+    
+  </channel>
+</rss>

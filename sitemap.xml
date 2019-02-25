@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://0xnf.github.io/posts/misc/alwaysdns/</loc>
+    <lastmod>2019-02-25T05:10:26-08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://0xnf.github.io/posts/ml/swipr10/</loc>
     <lastmod>2018-12-13T17:01:51-08:00</lastmod>
   </url>
@@ -258,26 +263,26 @@
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/categories/.net-core/</loc>
-    <lastmod>2018-09-03T07:22:07-07:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://0xnf.github.io/tags/.net-core/</loc>
     <lastmod>2018-06-18T18:11:56-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/categories/architecture/</loc>
-    <lastmod>2018-05-22T17:02:40-07:00</lastmod>
+    <loc>https://0xnf.github.io/categories/.net-core/</loc>
+    <lastmod>2018-09-03T07:22:07-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://0xnf.github.io/tags/architecture/</loc>
     <lastmod>2018-12-13T17:01:51-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://0xnf.github.io/categories/architecture/</loc>
+    <lastmod>2018-05-22T17:02:40-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -348,14 +353,14 @@
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/categories/csharp/</loc>
-    <lastmod>2018-06-18T19:53:31-07:00</lastmod>
+    <loc>https://0xnf.github.io/tags/csharp/</loc>
+    <lastmod>2018-06-19T09:06:33-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/tags/csharp/</loc>
-    <lastmod>2018-06-19T09:06:33-07:00</lastmod>
+    <loc>https://0xnf.github.io/categories/csharp/</loc>
+    <lastmod>2018-06-18T19:53:31-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -380,6 +385,18 @@
   <url>
     <loc>https://0xnf.github.io/tags/debugging/</loc>
     <lastmod>2018-06-19T09:06:33-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://0xnf.github.io/categories/development/</loc>
+    <lastmod>2019-02-25T05:10:26-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://0xnf.github.io/tags/dotnet/</loc>
+    <lastmod>2019-02-25T05:10:26-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -486,6 +503,12 @@
   </url>
   
   <url>
+    <loc>https://0xnf.github.io/tags/networking/</loc>
+    <lastmod>2019-02-25T05:10:26-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://0xnf.github.io/categories/nlp/</loc>
     <lastmod>2018-11-03T07:22:07-07:00</lastmod>
     <priority>0</priority>
@@ -499,7 +522,7 @@
   
   <url>
     <loc>https://0xnf.github.io/</loc>
-    <lastmod>2018-12-13T17:01:51-08:00</lastmod>
+    <lastmod>2019-02-25T05:10:26-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -528,8 +551,14 @@
   </url>
   
   <url>
+    <loc>https://0xnf.github.io/tags/postgres/</loc>
+    <lastmod>2019-02-25T05:10:26-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://0xnf.github.io/posts/</loc>
-    <lastmod>2018-12-13T17:01:51-08:00</lastmod>
+    <lastmod>2019-02-25T05:10:26-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -540,14 +569,14 @@
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/categories/react/</loc>
-    <lastmod>2018-05-22T15:35:08-07:00</lastmod>
+    <loc>https://0xnf.github.io/tags/react/</loc>
+    <lastmod>2018-09-03T07:22:07-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/tags/react/</loc>
-    <lastmod>2018-09-03T07:22:07-07:00</lastmod>
+    <loc>https://0xnf.github.io/categories/react/</loc>
+    <lastmod>2018-05-22T15:35:08-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -636,14 +665,14 @@
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/categories/typescript/</loc>
-    <lastmod>2018-05-22T15:35:08-07:00</lastmod>
+    <loc>https://0xnf.github.io/tags/typescript/</loc>
+    <lastmod>2018-09-03T07:22:07-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://0xnf.github.io/tags/typescript/</loc>
-    <lastmod>2018-09-03T07:22:07-07:00</lastmod>
+    <loc>https://0xnf.github.io/categories/typescript/</loc>
+    <lastmod>2018-05-22T15:35:08-07:00</lastmod>
     <priority>0</priority>
   </url>
   
