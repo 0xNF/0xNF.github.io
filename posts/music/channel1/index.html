@@ -203,8 +203,8 @@
 
 <p>With the exception of Majestic Casual, no one seems to seed their channel. That makes things easy on us.</p>
 
-<p><strong>Question:</strong>   How many videos should we seed our channel with?<br />
-<strong>Answer:</strong>     None</p>
+<p><em>Question:</em>   How many videos should we seed our channel with?<br />
+<em>Answer:</em>     None</p>
 
 <h2 id="upload-pace">Upload Pace?</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">SELECT</span> 
@@ -340,8 +340,8 @@
 
 <p>These stats are a bit wonky because each channel tends to have 3 or 4 super-outliers. For example, TheSoundYouNeed&rsquo;s <a href="https://www.youtube.com/watch?v=4ZHwu0uut3k">Tom Odell - Another Love (Zwette Edit)</a> has 395 million views, which is a full 20% of that channels views. There&rsquo;s more statistical magic we could do involving outlier removal and standard deviations, but we&rsquo;re just going to leave it is and say that we should try to target one upload every one or two days.</p>
 
-<p><strong>Question:</strong>   How often should we upload?<br />
-<strong>Answer:</strong>     Every day, or every other day.</p>
+<p><em>Question</em>   How often should we upload?<br />
+<em>Answer:</em>     Every day, or every other day.</p>
 
 <h2 id="batch-uploads">Batch Uploads?</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">SELECT</span> Channel, <span style="color:#66d9ef">Count</span> <span style="color:#66d9ef">AS</span> BatchSize, <span style="color:#66d9ef">COUNT</span>(<span style="color:#66d9ef">Count</span>) <span style="color:#66d9ef">AS</span> TimesUploaded <span style="color:#66d9ef">FROM</span> ChannelPublish <span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> Channel, <span style="color:#66d9ef">Count</span> <span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> Channel, TimesUploaded <span style="color:#66d9ef">DESC</span></code></pre></div>
@@ -497,8 +497,8 @@
 
 <p>As we can see, on days that a channel uploads, they only upload one song. There&rsquo;s a small amount of variation within most channels, and the MikuMusicNetwork is an outlier that uploads twice a day roughly a quarter of the time, but it seems with only some exceptions that once-per-upload-day is the norm.</p>
 
-<p><strong>Question:</strong>   Should we upload more than video at once?<br />
-<strong>Answer:</strong>     No.</p>
+<p><em>Question:</em>   Should we upload more than video at once?<br />
+<em>Answer:</em>     No.</p>
 
 <h2 id="upload-gaps">Upload Gaps?</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">SELECT</span> 
@@ -578,8 +578,8 @@
 
 <p>Of course this basically fits with our impression of YouTube, right? Regular uploads are better than sporadic uploads.</p>
 
-<p><strong>Question:</strong>   How long can we wait between uploads if something goes wrong?<br />
-<strong>Answer:</strong>     Try to keep it below 150 days, but don&rsquo;t sweat it.</p>
+<p><em>Question:</em>   How long can we wait between uploads if something goes wrong?<br />
+<em>Answer:</em>     Try to keep it below 150 days, but don&rsquo;t sweat it.</p>
 
 <h1 id="summary">Summary</h1>
 
