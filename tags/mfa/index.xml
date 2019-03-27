@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mfa on Nothing in Particular</title>
+    <link>https://0xnf.github.io/tags/mfa/</link>
+    <description>Recent content in Mfa on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 26 Aug 2018 14:55:21 -0700</lastBuildDate>
+    
+	<atom:link href="https://0xnf.github.io/tags/mfa/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Proper 2-Factor Auth</title>
+      <link>https://0xnf.github.io/posts/security/proper2fa/</link>
+      <pubDate>Sun, 26 Aug 2018 14:55:21 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/security/proper2fa/</guid>
+      <description>If your 2FA is an SMS message to your phone, you are not doing proper 2FA If you only have one 2FA device per account, you will get screwed when that device is lost or dies. If you use a manual TOTP 2FA and do not write down your security codes, you will get screwed when that device is lost or dies. You should probably use a U2F key instead, because [insert link here] fishing can happen, even to you.</description>
+    </item>
+    
+  </channel>
+</rss>

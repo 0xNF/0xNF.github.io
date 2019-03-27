@@ -6,18 +6,85 @@
     <description>Recent content in Defaulttag on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Aug 2018 07:22:07 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 26 Oct 2018 18:04:43 -0700</lastBuildDate>
     
 	<atom:link href="https://0xnf.github.io/tags/defaulttag/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Adventures in Email and FAAS, ft. React</title>
-      <link>https://0xnf.github.io/posts/esk8bst/esk8bst/</link>
-      <pubDate>Fri, 17 Aug 2018 07:22:07 -0700</pubDate>
+      <title>Channel3</title>
+      <link>https://0xnf.github.io/posts/music/channel3/</link>
+      <pubDate>Fri, 26 Oct 2018 18:04:43 -0700</pubDate>
       
-      <guid>https://0xnf.github.io/posts/esk8bst/esk8bst/</guid>
+      <guid>https://0xnf.github.io/posts/music/channel3/</guid>
+      <description>Branding Choices Last time we looked at 7 channels and examined their branding, which included their choice of name, iconography, video style, and video information.
+Today, we&amp;rsquo;ll make some choices of our own.
+We&amp;rsquo;re going to ask some questions here:
+ What is our channel name What will our main graphics be?  What will our Crest be What will our Stamp be  What will our videos look like?</description>
+    </item>
+    
+    <item>
+      <title>Tshirts0</title>
+      <link>https://0xnf.github.io/posts/triple_s/tshirts0/</link>
+      <pubDate>Tue, 16 Oct 2018 14:44:41 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/triple_s/tshirts0/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>Music Channel Part 2 - Stats</title>
+      <link>https://0xnf.github.io/posts/music/channel1/</link>
+      <pubDate>Sun, 14 Oct 2018 15:50:58 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/music/channel1/</guid>
+      <description>Your Questions, Answered We left off last time with a freshly created database full of information we could query. We sought to answer a few questions. As a reminder, those questions were:
+ How many videos should we seed our channel with? How often should we upload? Should we upload more than video at once? How long can we wait between uploads if something goes wrong?  Channel Seeding? We&amp;rsquo;ll take the first upload date of each of our channels and see what their total upload count is:</description>
+    </item>
+    
+    <item>
+      <title>Music Channel Part 3 - Branding</title>
+      <link>https://0xnf.github.io/posts/music/channel2/</link>
+      <pubDate>Sun, 14 Oct 2018 13:44:13 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/music/channel2/</guid>
+      <description>Branding As a review, we&amp;rsquo;re basing our channel the behavioral patterns of some other channels:
+ TheSoundYouNeed MajesticCasual MrSuicideSheep Chill Nation Eton Messy MonsterCat MikuMusicNetwork  Among their other patterns, we&amp;rsquo;re going use them as a base for how to brand our channel as well.
+Branding in this sense is going to include:
+ Channel Name Main graphics, including:  icon
+ font choices
+ style, like whether it is just text or includes some form of art  Video Style, including:  text layover background choice animations if applicable  Additional graphics, like channel banners  The types of music we&amp;rsquo;re going to upload, as well as what we&amp;rsquo;ll put in each video description, is a concern for later.</description>
+    </item>
+    
+    <item>
+      <title>Music Channel Part 1 - Data</title>
+      <link>https://0xnf.github.io/posts/music/channel0/</link>
+      <pubDate>Sat, 13 Oct 2018 18:17:32 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/music/channel0/</guid>
+      <description>Background Data Collection First, I wanted to get a sense of how these channels upload songs, which would help inform me on how run my own channel. The questions that I wanted answers to before starting were:
+ How many videos should we seed our channel with? How often should we upload? Should we upload more than video at once? How long can we wait between uploads if something goes wrong?</description>
+    </item>
+    
+    <item>
+      <title>Mfsong</title>
+      <link>https://0xnf.github.io/posts/ml/mfsong/</link>
+      <pubDate>Mon, 01 Oct 2018 07:39:47 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/ml/mfsong/</guid>
+      <description>Data Collection Using the Spotify API, we collect as many songs as possible, ideally from as diverse genres as possible.
+In our case, we collected my Library, which consists of about 2,000 songs, mostly of various EDM and American pop flavors. We also collected the nearly 6,000 song collection of my father, which is almost entirely country, bluegrass, and soft-rock.
+Hopefully this spread of genres will be broad enough that any given model will not overfit into one particular genre.</description>
+    </item>
+    
+    <item>
+      <title>Unredactor</title>
+      <link>https://0xnf.github.io/posts/security/unredactor/</link>
+      <pubDate>Sun, 26 Aug 2018 15:54:28 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/security/unredactor/</guid>
+      <description>Given an image of text, where some of that text is blacked out, attempt to fit a sequence of characters that lines up with the edges of that text.
+ Detect overall Skew (i.e., rotate -23 degrees in order to make it flat) Detect (or be given) a Font Detect (or be told) number of lines Detect (or be told) where the line breaks are Detect (or be told) the anchor points  Need at least one, and preferably two, ideally n-many anchor points around the redacted zone.</description>
     </item>
     
   </channel>

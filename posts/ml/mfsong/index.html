@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+
+
+<link rel="canonical" href="https://0xnf.github.io/posts/ml/mfsong/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Mfsong - Nothing in Particular</title>
+    
+<meta name="description" content="Post Summary">
+
+<meta property="og:title" content="Mfsong - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://0xnf.github.io/posts/ml/mfsong/">
+<meta property="og:image" content="https://0xnf.github.io/images/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="Post Summary">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/ml/mfsong/">
+<meta name="twitter:title" content="Mfsong - Nothing in Particular">
+<meta name="twitter:description" content="Post Summary">
+<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://0xnf.github.io/"
+    },
+    "headline": "Mfsong - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://0xnf.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-10-01T07:39:47JST",
+    "dateModified": "2018-10-01T07:39:47JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://0xnf.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Post Summary"
+  }
+</script>
+
+
+    <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://0xnf.github.io/">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Mfsong</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-01T07:39:47JST">Oct 1, 2018</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Mfsong</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<h1 id="data-collection">Data Collection</h1>
+
+<p>Using the Spotify API, we collect as many songs as possible, ideally from as diverse genres as possible.</p>
+
+<p>In our case, we collected my Library, which consists of about 2,000 songs, mostly of various EDM and American pop flavors. We also collected the nearly 6,000 song collection of my father, which is almost entirely country, bluegrass, and soft-rock.</p>
+
+<p>Hopefully this spread of genres will be broad enough that any given model will not overfit into one particular genre.</p>
+
+<h1 id="data-tagging">Data Tagging</h1>
+
+<p>Using Classy for Spotify, we classify as many songs as possible into a number of distinct categories:</p>
+
+<ol>
+<li>Male</li>
+<li>Female</li>
+<li>Instrumental</li>
+<li>Ambiguous</li>
+</ol>
+
+<p>The categorizations are relatively complicated because some are mutually exclusive while others are not.</p>
+
+<p>For example, a song can be both Male and Female, indicating that it is a duet, or otherwise has multiple singers. Meanwhile, a song cannot be both Male and Instrumental for obvious reasons.</p>
+
+<p>Ambiguous indicates that the song has neither a strong male or female vocal tint.</p>
+
+<h1 id="training-and-validation-sets">Training and Validation Sets</h1>
+
+<p>Once we&rsquo;ve classified a sufficent number songs this way, we use the export feature to assemble a CSV of songs and their associated tags. The CSV is in the format of:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csv" data-lang="csv">Spotify Id, quality_a, quality_b, quality_c, etc</code></pre></div>
+<p>For example,</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csv" data-lang="csv">Spotify Id,Androgynous,Instrumental,Female,Male
+4L5XnD2PMJrc9A4Mcp1asi,,,,,Male
+1V9KNH4YAyJ1JchUELTCUk,,Instrumental,,
+0p0XWfIcOKZRhTIOrNF0kA,,,Female,Male</code></pre></div>
+<p>A blank space indicates that the quality was not found on the song.</p>
+
+<p>For the validation set, we&rsquo;ll randomly take 20% of the ids and place them into a <code>/validation</code> folder. Because our data is discrete, i.e., no song has any relationship to any other song, we don&rsquo;t need to take any further precautions in constructing our set.</p>
+
+<pre><code>why 20%? Because Jeremy says it's good. It is empirical, not scientific.
+</code></pre>
+
+<p>As optional step which we may revist depending on performance needs, a possible validation set improvement would be to graph the number of songs and their lengths, and make sure that our validation set contains a similar ratio of <code>short songs : average songs : long songs</code>. This would help the model not overfit to songs of a certain length.</p>
+
+<h1 id="input-data">Input Data</h1>
+
+<p>With the data collected and tagged, we now consider what we&rsquo;ll actually hand into our model.</p>
+
+<p>The Audio Analysis endpoint returns a massive JSON object for each song containing nearly every important piece of information about a song except for the raw audio itself. After reading [a]() [few]() [papers]() on the subject of gender identification in songs, it seems that the most important single determining factor is timbre, possibly followed by pitch.</p>
+
+<p>Thankfully this endpoint, among other things, returns two arrays, one of pitches, and one of timbres. The number of entries in each array varies depending on the length of the song, but each array entry itself contains a 12-dimensional array of values.  The dimensions of each array are therefore <code>x * 12</code> where x is the number of &lsquo;beats&rsquo; in the track.</p>
+
+<p>After trimming down the excess in each analysis object returned, the input data for a given track will amount to a <code>x * 12</code> array looking like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csv" data-lang="csv"> [0.245, 0.192, 0.588, 0.134, 0.09, 0.1, 0.113, 0.223, 0.218, 1.0, 0.157, 0.086],
+ [0.694, 0.05, 0.04, 0.033, 0.048, 0.088, 0.037, 0.093, 0.079, 1.0, 0.054, 0.075],
+ [0.558, 0.327, 1.0, 0.094, 0.052, 0.072, 0.045, 0.073, 0.076, 0.419, 0.14, 0.071]
+ ...</code></pre></div>
+<p>Each track has its own file of the form <code>$spotify_id.txt</code>, such as <code>4L5XnD2PMJrc9A4Mcp1asi.txt</code>, filled with the above array data.</p>
+
+<p>n.b. for this first experiment we will just hand in the Timbres array.</p>
+
+<h1 id="setting-up-the-notebook">Setting up the Notebook</h1>
+
+<h1 id="data-augmentation">Data Augmentation</h1>
+
+<p>Data augmentation is a great way to reduce the chances of overfitting. In the case of images, rotating at various angles, skewing a bit left to right, and zooming in a little are all ways to augment the data. The contents of the image, though a bit warped, remain the same. A cat at an angle remains a cat.</p>
+
+<p>Methods of augmenting images are known and understood. Augmenting other types of data is still an emerging subfield of ML.</p>
+
+<h2 id="augmentation-1-reverse-order">Augmentation 1 - Reverse Order</h2>
+
+<p>In the case of our data, which is a time-linear sequence of pitches, we can reverse the order of the array entries. Instead of reading our <code>x * 12</code> matrix from top to bottom, we can read it from bottom to top. Although we can reverse the order of the matrix rows, it is important that we <em>do not</em> reverse the order of the matrix columns. The order of those 12 columns, which amounts to some kind of unknown (to us. Echo nest didn&rsquo;t leave Spotify with great documentation on their properties.) embeddings array is important.</p>
+
+<h2 id="augmentation-2-value-adjustment">Augmentation 2 - Value Adjustment</h2>
+
+<p>Because the Timbres are on a scale of -infinity to +infinity, and tend to hover between -100 and +100, we can also slightly modify the timbres. Each entry is continuous, meaning the difference between 42 and 43 means only a slight nudge towards whatever the cell represents, and doesn&rsquo;t necessarily represent a rollover into a new category.</p>
+
+<p>Given this, we could, within small bounds, add random positive or negative values to some cells. A song whose values have been augmented this way should by and large continue to represent the same song.</p>
+
+<p>Given that we do not know the exact nature of these embeddings however, this might be a risky strategy, since modiying one of these variables one way while modifying a different one another way may not make logical sense. There&rsquo;s now way to know though - there&rsquo;s no documentaion on them.</p>
+
+<h1 id="testing-accuracy-vs">Testing Accuracy vs</h1>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/defaultcategory/">defaultcategory</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/defaulttag/">defaulttag</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATEST</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr04/" class="list-group-item">Swipr - Data Collection (Part 2 of 2)</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr03/" class="list-group-item">Swipr - Data Collection (Part 1 of 2)</a>
+      
+      <a href="https://0xnf.github.io/posts/ml/swipr02/" class="list-group-item">Swipr - Scope</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/fast.ai" class="list-group-item">fast.ai</a>
+      
+      <a href="https://0xnf.github.io/categories/machine-learning" class="list-group-item">machine-learning</a>
+      
+      <a href="https://0xnf.github.io/categories/defaultcategory" class="list-group-item">defaultcategory</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
+      <a href="https://0xnf.github.io/categories/nlp" class="list-group-item">nlp</a>
+      
+      <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/swipr" class="list-group-item">swipr</a>
+      
+      <a href="https://0xnf.github.io/series/machine-levine" class="list-group-item">machine-levine</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/web-scraping" class="list-group-item">web-scraping</a>
+      
+      <a href="https://0xnf.github.io/tags/architecture" class="list-group-item">architecture</a>
+      
+      <a href="https://0xnf.github.io/tags/cnn" class="list-group-item">cnn</a>
+      
+      <a href="https://0xnf.github.io/tags/data-collection" class="list-group-item">data-collection</a>
+      
+      <a href="https://0xnf.github.io/tags/defaulttag" class="list-group-item">defaulttag</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p>Contact: blog&lt;at>winetech.com </p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
