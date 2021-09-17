@@ -261,7 +261,7 @@ Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&
 <span style="color:#75715e">/// Given a Function that returns a T, check if it&#39;s an error, and then do some error handling
 </span><span style="color:#75715e"></span>Future<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> _redoer<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(_PrimaryFunctor<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> tryThis, _ErrorChecker<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> isErrorChecker, _OnError<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> onError) {
     <span style="color:#75715e">/* First, try the primary function */</span>
-    T res1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> mainFunction();
+    T res1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> tryThis();
     <span style="color:#75715e">/* Test the result for some arbitrarily defined failure */</span>    
     <span style="color:#66d9ef">if</span> (isErrorChecker(res1)) { 
          <span style="color:#75715e">/* if it failed, run and return the onError function */</span>
