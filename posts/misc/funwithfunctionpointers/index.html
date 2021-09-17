@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+
+<link rel="canonical" href="https://0xnf.github.io/posts/misc/funwithfunctionpointers/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Fun With Generic First Class Functions - Nothing in Particular</title>
+    
+<meta name="description" content="Using generic functions with parameters that are also generic functions to simplify my life a little bit">
+
+<meta property="og:title" content="Fun With Generic First Class Functions - Nothing in Particular">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://0xnf.github.io/posts/misc/funwithfunctionpointers/">
+<meta property="og:image" content="https://0xnf.github.io/images/default.png">
+<meta property="og:site_name" content="Nothing in Particular">
+<meta property="og:description" content="Using generic functions with parameters that are also generic functions to simplify my life a little bit">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="Nothing in Particular">
+<meta name="twitter:url" content="https://0xnf.github.io/posts/misc/funwithfunctionpointers/">
+<meta name="twitter:title" content="Fun With Generic First Class Functions - Nothing in Particular">
+<meta name="twitter:description" content="Using generic functions with parameters that are also generic functions to simplify my life a little bit">
+<meta name="twitter:image" content="https://0xnf.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/0xnf.github.io\/"
+    },
+    "headline": "Fun With Generic First Class Functions - Nothing in Particular",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-09-17T16:32:12JST",
+    "dateModified": "2021-09-17T16:32:12JST",
+    "author": {
+      "@type": "Person",
+      "name": "Nothing in Particular"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nothing in Particular",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Using generic functions with parameters that are also generic functions to simplify my life a little bit"
+  }
+</script>
+
+
+    <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://0xnf.github.io/">Nothing in Particular</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://0xnf.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://0xnf.github.io/posts/" itemprop="url"><span itemprop="title">posts</span></a></li>
+        
+        <li class="active">Fun With Generic First Class Functions</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-09-17T16:32:12JST">Sep 17, 2021</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
+      
+    </ul>
+
+    <h1 class="title">Fun With Generic First Class Functions</h1>
+  </header>
+
+  
+
+  <div class="article-body"><p>Dart, like most modern languages worth using, has generics.</p>
+<p>It actually has some pretty powerful generics.</p>
+<p>Generic functions that take generic parameters which themselves are generic functions and then produce generic results.</p>
+<p>Sound confusing? It is. But it&rsquo;s also not that bad, and we can use them to do some really useful things.</p>
+<h2 id="tldr">tl;dr</h2>
+<p>Fancy <a href="#solution-3">schamncy functional generic</a> stuff for smoother re-authorization.</p>
+<h2 id="the-problem">The Problem</h2>
+<p>We have a client application that connects to a server to do some processing.<br>
+That server requires an active login session in order to do anything.
+We can log in, get our session token, and then do our processing and that works just fine. But login sessions aren&rsquo;t forever, so what happens when it expires and we get logged out?</p>
+<p>From the user&rsquo;s perspective, they&rsquo;re still logged in, and why wouldn&rsquo;t they be? After all, they never logged out. We can ask then to manually re-authenticate all the time, but that&rsquo;s pretty bad UX.</p>
+<p>The right thing to do is to handle the reauth flow ourselves, silently from behind the scenes.</p>
+<h3 id="solution-1">Solution 1</h3>
+<p>Our first attempt might involve taking each auth-required API call and wrapping it in some kind of <code>IsAuthoized()</code> check:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">// App::page_device.dart
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;package:LibServer/api.dart&#39;</span>;
+
+<span style="color:#75715e">/// Fetches the users Device from the server
+</span><span style="color:#75715e">/// If successful, returns an Ok(device), if not, returns an Error
+</span><span style="color:#75715e"></span>Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&lt;</span>Device<span style="color:#f92672">&gt;&gt;</span> checkUserDevice() <span style="color:#66d9ef">async</span> {
+    User user <span style="color:#f92672">=</span> getUser();
+    Result<span style="color:#f92672">&lt;</span>Device<span style="color:#f92672">&gt;</span> res <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> api.checkDevice(user);
+    <span style="color:#66d9ef">if</span> (res.code <span style="color:#f92672">==</span> <span style="color:#ae81ff">401</span>) {
+        <span style="color:#66d9ef">await</span> api.reAuthorize(user);
+        res <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> api.checkDevice(user);
+    }
+    <span style="color:#66d9ef">return</span> res;
+}
+</code></pre></div><p>This works but has three problems:</p>
+<ol>
+<li>Its a lot of extra boiler plate to add when we&rsquo;d need to do this every time we call any of our APIs</li>
+<li>we have to manually call the actual method twice</li>
+</ol>
+<p>This works, but it&rsquo;s not very nice to use.</p>
+<h3 id="solution-2">Solution 2</h3>
+<p>We could an add an application level indirection layer that performs the reauth without having to do it ourselves every time we call our function.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">// App::page_device.dart
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;package:App/api_intermediary.dart&#39;</span>;
+
+Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&lt;</span>Device<span style="color:#f92672">&gt;&gt;</span> checkUserDevice() <span style="color:#66d9ef">async</span> {
+    User user <span style="color:#f92672">=</span> getUser();
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> api_intermediary.checkDevice(user);
+}
+
+
+
+<span style="color:#75715e">// App::api_intermediary.dart
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;package:LibServer/api.dart&#39;</span>;
+
+Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&lt;</span>Device<span style="color:#f92672">&gt;&gt;</span> checkUserDevice(User user) <span style="color:#66d9ef">async</span> {
+    Result<span style="color:#f92672">&lt;</span>Device<span style="color:#f92672">&gt;</span> res <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> api.checkDevice(user);
+    <span style="color:#66d9ef">if</span> (res.code <span style="color:#f92672">==</span> <span style="color:#ae81ff">401</span>) {
+        <span style="color:#66d9ef">await</span> api.reAuthorize(user);
+        res <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> api.checkDevice(user);
+    }
+    <span style="color:#66d9ef">return</span> res;
+}
+</code></pre></div><p>We&rsquo;ve solved one problem from the previous example with this method. We no longer have to be worried about auth logic for every new call-site of the api. That&rsquo;s nice, but it&rsquo;s not nice enough because we still have plenty of remaining problems:</p>
+<ol>
+<li>It&rsquo;s still a lot of boiler-plate</li>
+<li>We still have to manually call our functions twice</li>
+<li>We now have to essentially re-create the underlying API interface</li>
+</ol>
+<p>The first two problems are the same as before, but the third one is its own special annoyance.</p>
+<p>Every time an API gets added to the underlying library, we have to add another wrapper function to our intermediary layer, which is just irritating. There are benefits to going through such an intermediary, but if we&rsquo;re only interested in adding an auth check, it seems like a disproportionate amount of work, not to mention the ongoing future maintenance burden it creates.</p>
+<h3 id="solution-3">Solution 3</h3>
+<p>We&rsquo;re trying to solve a problem in our application layer when this is actually a problem in our library layer. Why does our application need to be so explicitly concerned with a detail like session expiry? Its good to have some insight into that, but we shouldn&rsquo;t have to be stressing over it like we have been in the previous two examples.</p>
+<p>Assuming it&rsquo;s possible to do so, lets move this problem to the library layer, where we won&rsquo;t have to re-create every single api call.</p>
+<p>Here&rsquo;s the function we&rsquo;re working with, in it&rsquo;s unmodified state:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">// LibServer::api.dart
+</span><span style="color:#75715e"></span>
+Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&lt;</span>Device<span style="color:#f92672">&gt;&gt;</span> checkDevice(User user) <span style="color:#66d9ef">async</span> {
+    Client c <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Http.Client();
+    Response r <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> c.<span style="color:#66d9ef">get</span>(
+        <span style="color:#66d9ef">new</span> Uri(<span style="color:#e6db74">&#34;api.example.com/v1/checkDevice&#34;</span>),
+        headers: h[<span style="color:#e6db74">&#34;cookie&#34;</span>] <span style="color:#f92672">=</span> user.cookie,
+    };
+    <span style="color:#66d9ef">if</span> (r.statusCode <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">300</span>) {
+        <span style="color:#66d9ef">if</span> (r.statusCode <span style="color:#f92672">==</span> <span style="color:#ae81ff">401</span>) {
+            <span style="color:#66d9ef">return</span> Result.Err(r.statusCode, <span style="color:#e6db74">&#34;gotta log back in&#34;</span>);
+        }
+        <span style="color:#66d9ef">throw</span> Result.Err(r.statusCode, <span style="color:#e6db74">&#34;¯</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">_(ツ)_/¯&#34;</span>);
+    }
+    Map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">String</span>, <span style="color:#66d9ef">Object</span><span style="color:#f92672">?&gt;</span> jsonBody <span style="color:#f92672">=</span> convert.jsonDecode(r.body);
+    Device d <span style="color:#f92672">=</span> Device.fromJson(jsonBody);
+    Result.Ok(d);
+}
+</code></pre></div><p>Here&rsquo;s what we&rsquo;ll end up with once we finish:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">// LibServer::api.dart
+</span><span style="color:#75715e"></span>
+Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&lt;</span>Device<span style="color:#f92672">&gt;&gt;</span> checkDevice(User user) <span style="color:#66d9ef">async</span> {
+    
+    <span style="color:#75715e">/* a Function Object, of the same signature, holding a lambda function which will execute the real logic */</span>
+    Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&lt;</span>Device<span style="color:#f92672">&gt;&gt;</span> Function() functor <span style="color:#f92672">=</span> () <span style="color:#66d9ef">async</span> {
+        Client c <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Http.Client();
+        Response r <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> c.<span style="color:#66d9ef">get</span>(
+            <span style="color:#66d9ef">new</span> Uri(<span style="color:#e6db74">&#34;api.example.com/v1/checkDevice&#34;</span>),
+            headers: h[<span style="color:#e6db74">&#34;cookie&#34;</span>] <span style="color:#f92672">=</span> user.cookie,
+        };
+        <span style="color:#66d9ef">if</span> (r.statusCode <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">300</span>) {
+            <span style="color:#66d9ef">if</span> (r.statusCode <span style="color:#f92672">==</span> <span style="color:#ae81ff">401</span>) {
+                <span style="color:#66d9ef">return</span> Result.Err(r.statusCode, <span style="color:#e6db74">&#34;gotta log back in&#34;</span>);
+            }
+            <span style="color:#66d9ef">throw</span> Result.Err(r.statusCode, <span style="color:#e6db74">&#34;¯</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">_(ツ)_/¯&#34;</span>);
+        }
+        Map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">String</span>, <span style="color:#66d9ef">Object</span><span style="color:#f92672">?&gt;</span> jsonBody <span style="color:#f92672">=</span> convert.jsonDecode(r.body);
+        Device d <span style="color:#f92672">=</span> Device.fromJson(jsonBody);
+        Result.Ok(d);
+    }
+
+    <span style="color:#75715e">/* A call to some Generic Function wizardry that will take care of the details for us */</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> _reauthorizer(functor, user);
+}
+</code></pre></div><p>Our strategy is going to be something like this:</p>
+<ol>
+<li>Create a function that will try something once, check for a failure, and then do a potentially different something in response</li>
+<li>Use that function to create a new function that uses (1) to explicitly handles authorization errors</li>
+<li>Modify each API call to use (2) to automatically reauth and retry if necessary</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">// LibServer::api.dart
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/// Any function which can take one input, and check if it is an error
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> _ErrorChecker<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">bool</span> Function(T result);
+
+<span style="color:#75715e">/// Any function with no arguments which returns a Future&lt;T&gt; 
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> _OnError<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Future<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> Function();
+
+<span style="color:#75715e">/// Any function with no arguments that returns a Future&lt;T&gt;
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> _PrimaryFunctor <span style="color:#f92672">=</span> Future<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> Function();
+
+<span style="color:#75715e">/// Given a Function that returns a T, check if it&#39;s an error, and then do some error handling
+</span><span style="color:#75715e"></span>Future<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> _redoer<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(_PrimaryFunctor<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> tryThis, _ErrorChecker<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> isErrorChecker, _OnError<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> onError) {
+    <span style="color:#75715e">/* First, try the primary function */</span>
+    T res1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> mainFunction();
+    <span style="color:#75715e">/* Test the result for some arbitrarily defined failure */</span>    
+    <span style="color:#66d9ef">if</span> (isErrorChecker(res1)) { 
+         <span style="color:#75715e">/* if it failed, run and return the onError function */</span>
+        T res2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> onError(res1);
+    }
+    <span style="color:#75715e">/* If there was no failure, return the initial result */</span>
+    <span style="color:#66d9ef">return</span> res1;
+}
+</code></pre></div><p><code>_redoer</code> is our base generic function upon which the rest of the solution stands.</p>
+<p>What is noteworthy here is that the <code>onError</code> and <code>tryThis</code> can be different functions if required. After all, just blindly redoing the first failure operation after changing nothing wouldn&rsquo;t get us very far.</p>
+<p>Next, lets create two methods that correspond to <code>onError</code> and <code>isErrorChecker</code> for our specific reauth usecase:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">// LibServer::api.dart
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/// a ServerFunction is any function with no arguments that produces an awaitable Result&lt;T&gt;
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> ServerFunction<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&gt;</span> Function();
+
+<span style="color:#75715e">/// An auth error is defined as the result having a 401 error code. 
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> _isAuthError<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(Result<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> result) {
+    <span style="color:#66d9ef">return</span> result.code <span style="color:#f92672">==</span> <span style="color:#ae81ff">401</span>;
+}
+
+<span style="color:#75715e">/// Reauthenticate with the server, and then try the primaary method again if reauth was successful
+</span><span style="color:#75715e"></span>Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&gt;</span> _onAuthError<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(ServerFunction<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> tryThis, User user) <span style="color:#66d9ef">async</span> {
+    Result<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">bool</span><span style="color:#f92672">&gt;</span> authResult <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> _reAuthenticate(user); <span style="color:#75715e">/* we presume that the _reAuthenticate function stores a successful response somewhere by itself. */</span>
+    <span style="color:#66d9ef">if</span> (authResult.code <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">300</span>) {
+        <span style="color:#66d9ef">return</span> Result.Error(authResult)
+    }
+    Result<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> tryAgain <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> tryThis;
+    <span style="color:#66d9ef">return</span> tryAgain;
+}
+</code></pre></div><p>Now we have all the pieces we need to construct the last piece of the puzzle:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">// LibServer::api.dart
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/// Attempts to run `tryThis`, and if the server says our session is expired,
+</span><span style="color:#75715e">/// we re-authenticate, and then run `tryThis` a second time
+</span><span style="color:#75715e"></span>Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&gt;</span> _reauthorizer(ServerFunction<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> tryThis, User user) <span style="color:#66d9ef">async</span> {
+    Result<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> _redoer(tryThis, _isAuthError, (_) <span style="color:#f92672">=&gt;</span> _onAuthError(tryThis, user));
+}
+</code></pre></div><h2 id="summary">Summary</h2>
+<p>With this new redoer in place, we can leave it to our library to handle the gnarly details of whether a session is active or not, and a client application using that library doesn&rsquo;t have to care about sessions unless something really bad has happened, like a connection failure or a password change.</p>
+<p>Our application code can now look like we probably wanted it to look all along:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">// App::page_device.dart
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;package:LibServer/api.dart&#39;</span>;
+
+<span style="color:#75715e">/// Fetches the users Device from the server
+</span><span style="color:#75715e">/// If successful, returns an Ok(device), if not, returns an Error
+</span><span style="color:#75715e"></span>Future<span style="color:#f92672">&lt;</span>Result<span style="color:#f92672">&lt;</span>Device<span style="color:#f92672">&gt;&gt;</span> checkUserDevice() <span style="color:#66d9ef">async</span> {
+    User user <span style="color:#f92672">=</span> getUser();
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> api.checkDevice(user);
+}
+
+<span style="color:#75715e">// We can also now do a bunch of other api calls too, without worrying about copious amounst of auth checks
+</span><span style="color:#75715e"></span>Future<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span><span style="color:#f92672">&gt;</span> doLotsOfStuff(User u) <span style="color:#66d9ef">async</span> {
+    Result<span style="color:#f92672">&lt;</span>Device<span style="color:#f92672">&gt;</span> devices <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> api.checkDevice(user);
+    Result<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">bool</span><span style="color:#f92672">&gt;</span> updateName <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> api.changeName(user, <span style="color:#e6db74">&#34;fancy new name&#34;</span>);
+    Result<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> howManyThings <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> apu.getThingCounter(user);
+}
+</code></pre></div><p>Is this a perfect solution? No, of course not. But it does address a number of problems:</p>
+<ol>
+<li>It&rsquo;s light on the boiler-plate. We don&rsquo;t have to write a bunch of redundant IsAuthed() logic everywhere</li>
+<li>It obviates the need for an unwanted middle layer of re-implemented API calls in our application logic</li>
+</ol>
+<p>In return, we pay a price of some cognitive complexity. We&rsquo;ve entered &ldquo;Clever Code&rdquo; territory, which is usually worth avoiding in favor of simplicity. In specific:</p>
+<ol>
+<li>Aliasing function types (<code>typedef</code>), while valid and useful, isn&rsquo;t super common</li>
+<li>A function whose parameters are entirely other functions can take some getting used to</li>
+</ol>
+<p>It&rsquo;s always a trade-off, and here the additional cognitive load when reading this part of the library code migght very well be worth it for the reduction of boiler-plate elsewhere.</p>
+<h3 id="ps">p.s.</h3>
+<p>The <code>reAuthorize(User user)</code> method seems a bit suspect doesn&rsquo;t it? What kind of design must we have concocted to allow the library to perform reauthorization on its own? Does the library cache the login token / user credentials somewhere in its address space? Or perhaps even worse, is the information plainly available on the <code>User</code> object, hanging out in RAM all the time, possibly being written to and from disk and read by any kind of object that can see the User?</p>
+<p>That&rsquo;s for another time, but the short answer is &lsquo;no&rsquo;, the library is not actually able to just casually reauthroize all by itself. We can address that particular item in a future post.</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/categories/misc/">misc</a></li>
+          
+          <li><a href="https://0xnf.github.io/categories/programming/">programming</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://0xnf.github.io/tags/dart/">dart</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/dart/" class="list-group-item">dart</a>
+      
+      <a href="https://0xnf.github.io/posts/misc/funwithfunctionpointers/" class="list-group-item">Fun With Generic First Class Functions</a>
+      
+      <a href="https://0xnf.github.io/categories/misc/" class="list-group-item">misc</a>
+      
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
+      
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
+      
+      <a href="https://0xnf.github.io/categories/programming/" class="list-group-item">programming</a>
+      
+      <a href="https://0xnf.github.io/tags/" class="list-group-item">Tags</a>
+      
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/categories/security" class="list-group-item">security</a>
+      
+      <a href="https://0xnf.github.io/categories/authentication" class="list-group-item">authentication</a>
+      
+      <a href="https://0xnf.github.io/categories/authorization" class="list-group-item">authorization</a>
+      
+      <a href="https://0xnf.github.io/categories/identity" class="list-group-item">identity</a>
+      
+      <a href="https://0xnf.github.io/categories/fast.ai" class="list-group-item">fast.ai</a>
+      
+      <a href="https://0xnf.github.io/categories/machine-learning" class="list-group-item">machine-learning</a>
+      
+      <a href="https://0xnf.github.io/categories/longform-thoughts" class="list-group-item">longform-thoughts</a>
+      
+      <a href="https://0xnf.github.io/categories/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/categories/c" class="list-group-item">c#</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel" class="list-group-item">music-channel</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">SERIES</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/series/implement-an-oauth-2.0-server" class="list-group-item">implement-an-oauth-2.0-server</a>
+      
+      <a href="https://0xnf.github.io/series/swipr" class="list-group-item">swipr</a>
+      
+      <a href="https://0xnf.github.io/series/the-northeastern-report" class="list-group-item">the-northeastern-report</a>
+      
+      <a href="https://0xnf.github.io/series/machine-levine" class="list-group-item">machine-levine</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel" class="list-group-item">music-channel</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://0xnf.github.io/tags/csharp" class="list-group-item">csharp</a>
+      
+      <a href="https://0xnf.github.io/tags/.net-core" class="list-group-item">.net-core</a>
+      
+      <a href="https://0xnf.github.io/tags/oauth2.0" class="list-group-item">oauth2.0</a>
+      
+      <a href="https://0xnf.github.io/tags/openidconnect" class="list-group-item">openidconnect</a>
+      
+      <a href="https://0xnf.github.io/tags/tutorial" class="list-group-item">tutorial</a>
+      
+      <a href="https://0xnf.github.io/tags/web-scraping" class="list-group-item">web-scraping</a>
+      
+      <a href="https://0xnf.github.io/tags/architecture" class="list-group-item">architecture</a>
+      
+      <a href="https://0xnf.github.io/tags/cnn" class="list-group-item">cnn</a>
+      
+      <a href="https://0xnf.github.io/tags/data-collection" class="list-group-item">data-collection</a>
+      
+      <a href="https://0xnf.github.io/tags/articulate-insights" class="list-group-item">articulate-insights</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; Nothing in Particular</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

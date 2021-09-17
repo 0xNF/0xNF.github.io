@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>misc on Nothing in Particular</title>
+    <link>https://0xnf.github.io/categories/misc/</link>
+    <description>Recent content in misc on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 17 Sep 2021 16:32:12 +0900</lastBuildDate><atom:link href="https://0xnf.github.io/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fun With Generic First Class Functions</title>
+      <link>https://0xnf.github.io/posts/misc/funwithfunctionpointers/</link>
+      <pubDate>Fri, 17 Sep 2021 16:32:12 +0900</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/misc/funwithfunctionpointers/</guid>
+      <description>Dart, like most modern languages worth using, has generics.
+It actually has some pretty powerful generics.
+Generic functions that take generic parameters which themselves are generic functions and then produce generic results.
+Sound confusing? It is. But it&amp;rsquo;s also not that bad, and we can use them to do some really useful things.
+tl;dr Fancy schamncy functional generic stuff for smoother re-authorization.
+The Problem We have a client application that connects to a server to do some processing.</description>
+    </item>
+    
+  </channel>
+</rss>
