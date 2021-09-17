@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Implement an OAuth 2.0 Server (Part 03) - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,12 +60,12 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
     },
-    "description": "We&#39;re still at the beginning of our OAuth 2 server tutorial, where we spend some time getting familiar with password requirements and Entity Framework migrations. Also we show how to make an ASP.NET Core project use SQLite instead of SQL Server."
+    "description": "We\u0027re still at the beginning of our OAuth 2 server tutorial, where we spend some time getting familiar with password requirements and Entity Framework migrations. Also we show how to make an ASP.NET Core project use SQLite instead of SQL Server."
   }
 </script>
 
@@ -128,25 +128,15 @@
 
   
 
-  <div class="article-body">
-
-<p>Welcome to the third part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
-
+  <div class="article-body"><p>Welcome to the third part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
 <h1 id="sqlite-and-initial-migration">SQLite and Initial Migration</h1>
-
 <p>If you tried to start the website we just initialized, you&rsquo;d find that you won&rsquo;t be able to login or register, receiving error messages instead of a welcome screen.</p>
-
 <p>Although an initial migration has been provided for us, it hasn&rsquo;t been applied, and no database exists yet. And if we&rsquo;re not careful and rush to apply the migration ourselves we&rsquo;ll end up with a <code>SQL Server</code> dump file. We&rsquo;re going to switch our database provider to <code>SQLite</code>, and we&rsquo;re going to change our default <code>connection string</code> to reflect this.</p>
-
 <h2 id="setting-the-default-connection-string">Setting the Default Connection String</h2>
-
 <p>Open the <code>appsettings.json</code> file and change the &ldquo;DefaultConnection&rdquo; field to</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"> <span style="color:#e6db74">&#34;DefaultConnection&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Data Source=OAuthTutorial.sqlite&#34;</span>
-</code></pre></div>
-<h2 id="using-sqlite">Using SQLite</h2>
-
+</code></pre></div><h2 id="using-sqlite">Using SQLite</h2>
 <p>In <code>Startup.cs</code>, change the highlighted line so that we&rsquo;re using <code>SQLite</code> instead of <code>SQLServer</code></p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
 {
     services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;
@@ -160,13 +150,11 @@
 </span><span style="color:#75715e"></span>    services.AddTransient&lt;IEmailSender, EmailSender&gt;();
 
     services.AddMvc();
-}</code></pre></div>
-
+}
+</code></pre></div>
 <h2 id="password-requirements">Password Requirements</h2>
-
 <p>While we&rsquo;re chilling out in <code>ConfigureServices()</code>, we might as well make some changes to the default password policy, which is strict and difficult.
 Instead of the defaults, we&rsquo;ll have it accept any 6 digit password.</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
 {
     services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;
@@ -187,24 +175,18 @@ Instead of the defaults, we&rsquo;ll have it accept any 6 digit password.</p>
 </span><span style="color:#75715e"></span>    services.AddTransient&lt;IEmailSender, EmailSender&gt;();
 
     services.AddMvc();
-}</code></pre></div>
-
+}
+</code></pre></div>
 <h2 id="apply-the-migration">Apply the Migration</h2>
-
 <p>Now we&rsquo;re ready to update the database for the first time and apply the migration.
 Open the <code>Package Manager Console</code> again and enter the following:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell">Update-Database</code></pre></div>
-<p>If you get errors related to the <code>Path</code> of the command, run the command again. The Package Manager Console can be finnicky at times.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell">Update-Database
+</code></pre></div><p>If you get errors related to the <code>Path</code> of the command, run the command again. The Package Manager Console can be finnicky at times.</p>
 <p>It&rsquo;s important to note that with the EF Core + SQLite combination is functional but incomplete.</p>
-
 <p>Specifically with respect to performing migrations that involve <code>Foreign Key</code> relationships. EF cannot migrate any tables that have Foreign Keys, and will crash if you ask it to. To get around this, every time you want to add a new migration, you&rsquo;ll need to delete the old one, delete the old database file, run another <code>Add-Migration</code>, and another <code>Update-Database</code>.</p>
-
 <h1 id="moving-on">Moving On</h1>
-
 <p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/03-InitialMigration">here on GitHub</a>.</p>
-
-<p>In the next section, we&rsquo;ll create our initial bare-bones public API.<br />
+<p>In the next section, we&rsquo;ll create our initial bare-bones public API.<br>
 <a href="/posts/oauthserver/04">Next</a></p>
 </div>
 
@@ -284,29 +266,29 @@ Open the <code>Package Manager Console</code> again and enter the following:</p>
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -404,7 +386,7 @@ Open the <code>Package Manager Console</code> again and enter the following:</p>
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Implement an OAuth 2.0 Server (Part 07) - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,12 +60,12 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
     },
-    "description": "We&#39;ll wrap up creating the OAuth Client views by adding the actual razor page templated .cshtml views to our project."
+    "description": "We\u0027ll wrap up creating the OAuth Client views by adding the actual razor page templated .cshtml views to our project."
   }
 </script>
 
@@ -128,31 +128,19 @@
 
   
 
-  <div class="article-body">
-
-<p>Welcome to the seventh part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
-
-<h1 id="oauth-client-crud-views">OAuth Client CRUD - Views</h1>
-
+  <div class="article-body"><p>Welcome to the seventh part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+<h1 id="oauth-client-crud---views">OAuth Client CRUD - Views</h1>
 <p>This is the second part of adding our OAuth Client management pages. In the previous section we generated a controller, which automatically generated some views for us. In this section, we&rsquo;ll make those views do what we need them to do.</p>
-
 <h2 id="details-and-delete-views">Details and Delete Views</h2>
-
 <p>Delete the following two cshtml files - we don&rsquo;t need them, because we&rsquo;ll be rolling their functions into the <code>Edit</code> view.</p>
-
 <ul>
 <li><code>Views/OAuthClients/Details.cshtml</code></li>
 <li><code>Views/OAuthClients/Delete.cshtml</code></li>
 </ul>
-
 <h2 id="index">Index</h2>
-
 <p><code>Views/OAuthClients/Index.cshtml</code></p>
-
 <p>First, since we deleted our <code>GET DELETE</code> and <code>GET DETAILS</code> methods, we&rsquo;re going to want to delete their references from Index. Delete the two <code>&lt;a&gt;</code> tags near the bottom of <code>index.cshtml</code> that reference the <code>details</code> and <code>delete</code> links.</p>
-
 <p>Second, it doesn&rsquo;t make sense to display the <code>client secret</code> so prominently, so let&rsquo;s change it to be the <code>client id</code> instead.</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@model IEnumerable&lt;<span style="color:#f92672">OAuthTutorial.Models.OAuth.OAuthClient</span>&gt;
 @{
     ViewData[&#34;Title&#34;] = &#34;Index&#34;;
@@ -195,15 +183,10 @@
 }
     &lt;/<span style="color:#f92672">tbody</span>&gt;
 &lt;/<span style="color:#f92672">table</span>&gt;</code></pre></div>
-
 <h2 id="create">Create</h2>
-
 <p><code>Views/OAuthClients/Create.cshtml</code></p>
-
 <p>Delete the <code>&lt;div class=&quot;form-group&quot;&gt;</code> containing the <code>ClientSecret</code> inputs.</p>
-
 <p>Also, in the <code>Model</code> up top, swap out the <code>OAuthClient</code> for our <code>OAuthClientsViewModes.CreateClientViewModel</code>.</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="display:block;width:100%;background-color:#3c3d38">@model OAuthTutorial.Models.OAuthClientViewModels.CreateClientViewModel
 </span>@{
     ViewData[&#34;Title&#34;] = &#34;Create&#34;;
@@ -237,66 +220,63 @@
 @section Scripts {
     @{await Html.RenderPartialAsync(&#34;_ValidationScriptsPartial&#34;);}
 }</code></pre></div>
-
 <h2 id="edit">Edit</h2>
-
 <p><code>Views/OAuthClients/Edit.cshtml</code></p>
-
 <p>Replace the HTML with this:
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">38
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">39
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">43
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">44
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">50
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@model OAuthTutorial.Models.OAuthClientViewModels.EditClientViewModel
 @{ ViewData[&#34;Title&#34;] = &#34;Edit&#34;;
 }
@@ -350,11 +330,8 @@
 </div>
 </div>
 Take note of lines 39 and 44 for the <code>Add Redirect URI</code> and <code>Remove</code> buttons. They have <code>type=button</code>, which prevents them from submitting the whole form as a <code>POST</code> request, and they have references to two JavaScript methods, which we will add shortly.</p>
-
 <p>Finally, it&rsquo;s important to note that the <code>Redirect URI</code> inputs have <code>name=&quot;RediectUris&quot;</code>. When multiple inputs have the same <code>name</code>, their values get packaged and sent as a <code>string[]</code> to the server. This is how we can group them all together as actually being Redirect URIs.</p>
-
 <h4 id="javascript">JavaScript</h4>
-
 <p>Add the following <code>&lt;Script&gt;</code> above the <code>@section Scripts</code> section:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">script</span>&gt;
 
@@ -370,37 +347,26 @@ Take note of lines 39 and 44 for the <code>Add Redirect URI</code> and <code>Rem
         <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#rdiDiv_&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">id</span>).<span style="color:#a6e22e">remove</span>();
     }
 
-&lt;/<span style="color:#f92672">script</span>&gt;</code></pre></div>
-<p>We initialize <code>count</code> to be however many <code>RedirectURIs</code> exist in this <code>OAuthClient</code>, which serves as a way to uniquely identify inputs for addition and removal.</p>
+&lt;/<span style="color:#f92672">script</span>&gt;
 
+</code></pre></div><p>We initialize <code>count</code> to be however many <code>RedirectURIs</code> exist in this <code>OAuthClient</code>, which serves as a way to uniquely identify inputs for addition and removal.</p>
 <p><code>AddRdiDiv()</code> adds another empty Redirect URI input to the page, and <code>RemoveRdiDiv()</code> takes one away.</p>
-
 <h1 id="testing">Testing</h1>
-
 <p>At this point it&rsquo;s likely a good time to take a small break and see if our server is behaving.</p>
-
 <p>Start your server, register a new user or login with one you&rsquo;ve already created.</p>
-
 <pre><code>Note: If you created a user before, deleted the database and regenerated it, you'll remain logged in but encounter errors because you are cookie identified as a now non-existant user. Log out and try again.
 </code></pre>
-
 <p>Things to try:</p>
-
 <ol>
 <li>Create a new <code>OAuth Client Application</code></li>
 <li>Reset its <code>Client Secret</code></li>
 <li>Add some <code>Redirect URIs</code></li>
 <li>Delete the application</li>
 </ol>
-
-<p>You can find these options at <a href="http://localhost:5000/OAuthClients">http://localhost:5000/OAuthClients</a></p>
-
+<p>You can find these options at http://localhost:5000/OAuthClients</p>
 <h1 id="moving-on">Moving On</h1>
-
 <p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/07-ClientCRUDhtml">here on GitHub</a>.</p>
-
 <p>In the next section, we&rsquo;ll add Scopes to our application.</p>
-
 <p><a href="/posts/oauthserver/08">Next</a></p>
 </div>
 
@@ -480,29 +446,29 @@ Take note of lines 39 and 44 for the <code>Add Redirect URI</code> and <code>Rem
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -600,7 +566,7 @@ Take note of lines 39 and 44 for the <code>Add Redirect URI</code> and <code>Rem
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

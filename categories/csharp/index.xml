@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Csharp on Nothing in Particular</title>
+    <title>csharp on Nothing in Particular</title>
     <link>https://0xnf.github.io/categories/csharp/</link>
-    <description>Recent content in Csharp on Nothing in Particular</description>
+    <description>Recent content in csharp on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Jun 2018 19:53:31 -0700</lastBuildDate>
-    
-	<atom:link href="https://0xnf.github.io/categories/csharp/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 18 Jun 2018 19:53:31 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/categories/csharp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>#region Is Fine</title>
       <link>https://0xnf.github.io/posts/misc/regionisfine/</link>

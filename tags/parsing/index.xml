@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Parsing on Nothing in Particular</title>
+    <title>parsing on Nothing in Particular</title>
     <link>https://0xnf.github.io/tags/parsing/</link>
-    <description>Recent content in Parsing on Nothing in Particular</description>
+    <description>Recent content in parsing on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Nov 2018 07:22:07 -0700</lastBuildDate>
-    
-	<atom:link href="https://0xnf.github.io/tags/parsing/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 03 Nov 2018 07:22:07 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/tags/parsing/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Machine Levine Mk. II</title>
       <link>https://0xnf.github.io/posts/ml/mk2/</link>

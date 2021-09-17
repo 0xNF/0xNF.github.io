@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Long Lived SSH Keys Considered Harmful - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,38 +128,24 @@
 
   
 
-  <div class="article-body">
-
-<p><em>Disclaimer: This advice goes for any credential, including and especially passwords</em></p>
-
+  <div class="article-body"><p><em>Disclaimer: This advice goes for any credential, including and especially passwords</em></p>
 <p>tl;dr:  You should, at regular intervals, change out and retire old SSH keys.</p>
-
 <h2 id="ssh-keys-are-dangerous">SSH keys are dangerous</h2>
-
 <p>An SSH key should be considered a short-lived resource and as such and should be refreshed periodically. Here are a few reasons why:</p>
-
 <ul>
 <li>They can be compromised</li>
 <li>They are highly privileged</li>
 <li>They can be automatically generated</li>
 <li>They can easily be replaced on many services</li>
 </ul>
-
 <p>Refreshing your SSH keys has the added benefit of following the Let&rsquo;s Encrypt School of Critical Process Management:</p>
-
 <pre><code>The important things should be performed at regular intervals to keep institutional memory of the process fresh and resilient against irregular but inevitable failures like employee turnover.
 </code></pre>
-
 <p>I am paraphrasing the above, but its definitely a philosophy they follow.</p>
-
 <p>This goes for any long-lived highly privileged credential. Passwords too. Even if you <a href="INSERT_LINK_HERE___">practice good password management</a> you should still cycle out your passwords. This is annoying to do when you try to commit your passwords to memory, but if you are practicing good management, it becomes no bigger an issue than just copy and pasting your password.</p>
-
 <h3 id="side-notes">Side Notes</h3>
-
 <p>You should use different SSH Keys for each service, much like how you should use different passwords for each service. <code>~/.ssh/config</code> supports this to make it easy.</p>
-
 <p>While we&rsquo;re talking about good SSH hygiene, when you create a key you should encrypt it with a passphrase. <em>But be sure to use <code>-o</code></em>. <a href="http://www.daemonology.net/papers/scrypt-slides.pdf">Don&rsquo;t</a> <a href="https://news.ycombinator.com/item?id=17682946">accept</a> <a href="https://latacora.singles/2018/08/03/the-default-openssh.html">the</a> <a href="https://blog.g3rt.nl/upgrade-your-ssh-keys.html">defaults</a>.</p>
-
 <p>Also you should use some kind of proper key storage, because any old userspace process on your system can read your <code>~/.ssh</code> directory. Do you trust your development machine? You probably shouldn&rsquo;t.</p>
 </div>
 
@@ -214,29 +200,29 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -334,7 +320,7 @@
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

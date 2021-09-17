@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Swipr - Overview - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,28 +128,16 @@
 
   
 
-  <div class="article-body">
-
-<h1 id="the-goal">The Goal</h1>
-
+  <div class="article-body"><h1 id="the-goal">The Goal</h1>
 <p>Continuing the quest to learn modern Machine Learning, I thought it would be fun to create a Tinder auto-swiper that could potentially reject matches I don&rsquo;t want and accept matches I do want.</p>
-
 <p>One of my friends had the brilliant idea of naming this tinderbot &ldquo;Swiper&rdquo;, like the fox from Dora the Explorer, famous for being repelled by the intrepid protagonists with the incantation of &ldquo;Swiper, no swiping!&rdquo;</p>
-
 <p>Following internet tradition (Tumblr, Flickr, Scribd, Grindr, etc), we also decided to drop the final &lsquo;e&rsquo;, giving us &ldquo;Swipr&rdquo;. And of course, our tagline is &ldquo;No Swiping.&rdquo;</p>
-
 <h1 id="the-end-result">The End Result</h1>
-
 <p>First, let me start up by saying that Swipr is technically available for you to use online. You can find it at <a href="https://swipr.winetech.com">https://swipr.winetech.com</a>.</p>
-
 <p>I do not recommend signing into it, and I do not recommend using it for your Tinder matches. The reasons are many, but fluctuate between security (I need to permanently store your Facebook password), practicality (both Tinder and Facebook will likely ding your account for signing in from my server&rsquo;s New Jersey location), and usefulness (there is one model and it is trained on my preferences, not yours.)</p>
-
 <p>But if none of those things bother you, then hey, go for it. The system is architected for multi-user support, so feel free to sign in and let Swipr do the swiping.</p>
-
 <h1 id="process-overview">Process Overview</h1>
-
 <p>The entire process took a few weeks start to finish, and involved a number of discrete steps:</p>
-
 <ol>
 <li>Scope determination</li>
 <li>Data determination, i.e., what should I be collecting?</li>
@@ -160,24 +148,18 @@
 <li>Web app creation</li>
 <li>Backend architecture</li>
 </ol>
-
 <p>And then there&rsquo;s also the regular DevOps and security stuff like encrypting our databases, automating as much of our deployment as possible, and getting Let&rsquo;s Encrypt certs.</p>
-
 <p>Each of these steps has a bunch of nuance and complexity, some much more than others.</p>
-
 <h1 id="model-statistics">Model Statistics</h1>
-
 <p>What good is an article about AI models without some model stats? For a quick overview, here&rsquo;s what we ended up getting out of the core of this whole process:</p>
-
-<p><em>Dataset Type:</em> a bunch of jpgs<br />
-<em>Dataset Size:</em> 279,262 pictures<br />
-<em>Model Type:</em> ResNext50<br />
-<em>Framework:</em> PyTorch 0.4 and fast.ai<br />
-<em>Epoch Count:</em> roughly 10<br />
-<em>Total Training Time:</em> roughly 24 hours on a Paperspace GPU instance<br />
-<em>Loss Function:</em> Cross Entropy<br />
+<p><em>Dataset Type:</em> a bunch of jpgs<br>
+<em>Dataset Size:</em> 279,262 pictures<br>
+<em>Model Type:</em> ResNext50<br>
+<em>Framework:</em> PyTorch 0.4 and fast.ai<br>
+<em>Epoch Count:</em> roughly 10<br>
+<em>Total Training Time:</em> roughly 24 hours on a Paperspace GPU instance<br>
+<em>Loss Function:</em> Cross Entropy<br>
 <em>Final Loss Values:</em></p>
-
 <table>
 <thead>
 <tr>
@@ -186,7 +168,6 @@
 <th>Accuracy</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>0.370794</td>
@@ -195,31 +176,18 @@
 </tr>
 </tbody>
 </table>
-
 <p>Say what you want about an ~83% accuracy, but given that sometimes I&rsquo;m not even sure what I want, this is a pretty solid result.</p>
-
 <h1 id="quick-notes">Quick Notes</h1>
-
 <p>Because most of you will never get past this first post, I&rsquo;d like to point out some third party things that we used on this project:</p>
-
 <p>For the data collection, we used a custom framework built on top of <a href="https://github.com/althonos/InstaLooter">InstaLooter</a> called <a href="https://github.com/0xNF/ilm">ILM</a> which handles batch downloads better.</p>
-
 <p>To do data cleanup, because Instagram data is inherently noisy and not necessarily all humans, we used a prebuilt facial recognition network called <a href="https://github.com/kuaikuaikim/DFace">DFace</a> to find pictures with faces in them. This network is build on PyTorch. After that, we used the models available by the devs over at the <a href="https://github.com/deepinsight/insightface">DeepInsight/Face</a> project to do gender and age analysis on the discovered faces. This model is pre-trained and built on top of MxNet.</p>
-
 <p>To do Tinder work, we use <a href="https://github.com/cansik/sharp-tinder">Sharp-Tinder</a>, to which we contributed a patch including .NET Core support.</p>
-
 <h1 id="overall-system-architecture">Overall System Architecture</h1>
-
-<p><img src="/ml/swipr/OverallArch.png" alt="System architcture" /></p>
-
+<p><img src="/ml/swipr/OverallArch.png" alt="System architcture"></p>
 <p>We&rsquo;ll get into the details in subsequent posts, but roughly, our server calls out to Tinder to receive matches, sends pictures over to the model service to get some predictions, sends an action to tinder based on those predictions, and then updates our datastore.</p>
-
 <h1 id="moving-on">Moving On</h1>
-
 <p>As a general rule, because each bullet from the process overview carries its own complexity, we will devote an entire post to each individual bullet.</p>
-
 <p>Our next section will explore the broad project requirements.</p>
-
 <p><a href="/posts/ml/swipr02">Next Section - Outlining the Scope</a></p>
 </div>
 
@@ -293,29 +261,29 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -413,7 +381,7 @@
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

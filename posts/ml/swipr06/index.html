@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Swipr - Fast.ai and CNNs - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,37 +128,24 @@
 
   
 
-  <div class="article-body">
-
-<p>Finally we can consider creating the image classification model. The jupyter notebook that was used for this process can be found <a href="https://github.com/0xNF/swipr_gh/blob/master/TrainML/swipr1.ipynb">here on GitHub</a>.</p>
-
+  <div class="article-body"><p>Finally we can consider creating the image classification model. The jupyter notebook that was used for this process can be found <a href="https://github.com/0xNF/swipr_gh/blob/master/TrainML/swipr1.ipynb">here on GitHub</a>.</p>
 <h1 id="dataloader">DataLoader</h1>
-
 <p>The first thing the creation of a PyTorch model requires is the creation of a DataLoader, which is a neat structure for handling the data we want to go over and what their labels should be. It loads x&rsquo;s (inputs) and maps them to y&rsquo;s (outputs).</p>
-
 <p>In previous DL experiments on this blog, we&rsquo;ve used text/nlp loaders, and more complicated custom loader for handling audio data, but this time since we have an image problem, we don&rsquo;t have to do anything complicated, and can use the best and easiest part fast.ai.</p>
-
 <h2 id="label-csv">Label CSV</h2>
-
 <p>The label CSV, in this particular use-case of an image classifier, is a file that contains the locations of our images that we want to analyze and their appropriate output classification.</p>
-
 <p>We have a very simple desired output - binary classification of either YES or NO, representing a potential LIKE or PASS on Tinder.</p>
-
 <p>At this point we actually have yet to properly curate these classifications for our images, having just grouped the downloaded files into a few different buckets like <code>GENERAL_NO, TOO_YOUNG</code>, etc.</p>
-
 <p>We&rsquo;ll do that now.</p>
-
 <p>One benefit of the SQLite file we created earlier that stored the picture locations with their respective pre-filtered status codes is that we can use that same file to construct our desired training set and their classifications on the fly.</p>
-
-<h3 id="runtime-generation-of-labels-csv">Runtime Generation of Labels.csv</h3>
-
+<h3 id="runtime-generation-of-labelscsv">Runtime Generation of Labels.csv</h3>
 <p>First we should define what we want from our model. We downloaded a bunch of pictures, ran face detection over it, asked it for how many people were in the picture, and what their ages and genders were. Let&rsquo;s codify some rules now:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">FAIL_ON_MALE <span style="color:#f92672">=</span> True <span style="color:#75715e"># We set this to true because we aren&#39;t interested in the nn learning to say yes to men.</span>
 MAX_PEOPLE <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># if set to zero, there is no upper limit on people in the picture. </span>
 MIN_PEOPLE <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># We set this to 1 because we want the NN to reject pictures of food, beaches, etc</span>
 MIN_AGE <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># if set to zero, there is no lower limit on the age of people in the picture. See above as to why.</span>
-MAX_AGE <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># if set to zero, there is no upper limit on the age of people in the picture. </span></code></pre></div>
-<p>The thing we do is construct what we want a <code>NO</code> or a <code>YES</code> to be with respect to our downloaded and pre-filtered images:</p>
+MAX_AGE <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># if set to zero, there is no upper limit on the age of people in the picture. </span>
+</code></pre></div><p>The thing we do is construct what we want a <code>NO</code> or a <code>YES</code> to be with respect to our downloaded and pre-filtered images:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">WITH_BABY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;with_baby&#34;</span>
 TOO_YOUNG <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;too_young&#34;</span>
 TOO_OLD <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;too_old&#34;</span>
@@ -180,8 +167,8 @@ MainDirs <span style="color:#f92672">=</span> {
 }
 
 YesLabels <span style="color:#f92672">=</span> [OK]
-NoLabels <span style="color:#f92672">=</span> [Tinder_DUDES, Tinder_GIRLS, WITH_BABY, TOO_YOUNG, TOO_OLD, PURIKURA, GENERAL_NO]</code></pre></div>
-<p>Next we ask our SQLite file for all images that weren&rsquo;t unloadable. That is, every image that wasn&rsquo;t corrupted or something:</p>
+NoLabels <span style="color:#f92672">=</span> [Tinder_DUDES, Tinder_GIRLS, WITH_BABY, TOO_YOUNG, TOO_OLD, PURIKURA, GENERAL_NO]
+</code></pre></div><p>Next we ask our SQLite file for all images that weren&rsquo;t unloadable. That is, every image that wasn&rsquo;t corrupted or something:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Filter</span>():
     conn, cursor <span style="color:#f92672">=</span> GetSql()
     q <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT path, label, ages, num_people, male_present FROM pics WHERE label NOT IN (?);&#34;</span>
@@ -193,8 +180,8 @@ NoLabels <span style="color:#f92672">=</span> [Tinder_DUDES, Tinder_GIRLS, WITH_
             yeses<span style="color:#f92672">.</span>append(p)
         <span style="color:#66d9ef">else</span>:
             nos<span style="color:#f92672">.</span>append(p)
-    <span style="color:#66d9ef">return</span> yeses, nos</code></pre></div>
-<p>Then we put our pre-filter to work assembling our <code>YesLabels</code>. Just because the picture was from the <code>OK</code> path of our Instagram directories doesn&rsquo;t mean we want to blindly accept it. Remember, no beaches and no food:</p>
+    <span style="color:#66d9ef">return</span> yeses, nos
+</code></pre></div><p>Then we put our pre-filter to work assembling our <code>YesLabels</code>. Just because the picture was from the <code>OK</code> path of our Instagram directories doesn&rsquo;t mean we want to blindly accept it. Remember, no beaches and no food:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_Filter</span>(row, verbose<span style="color:#f92672">=</span>False):
     <span style="color:#75715e"># Get the path of our consideration</span>
     p <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">0</span>]
@@ -237,19 +224,17 @@ NoLabels <span style="color:#f92672">=</span> [Tinder_DUDES, Tinder_GIRLS, WITH_
         <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> max_passed:
             <span style="color:#66d9ef">return</span> False
         
-    <span style="color:#66d9ef">return</span> True</code></pre></div>
-<p>The output of all this is a list of image paths separated into legitimate <code>YES</code> images, and the rest of them are <code>NO</code>:</p>
+    <span style="color:#66d9ef">return</span> True
+</code></pre></div><p>The output of all this is a list of image paths separated into legitimate <code>YES</code> images, and the rest of them are <code>NO</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y,n <span style="color:#f92672">=</span> Filter()
 len(n)
 <span style="color:#ae81ff">201573</span>
 
 len(yeses)
-<span style="color:#ae81ff">47777</span></code></pre></div>
-<p>It&rsquo;s a heavily skewed dataset, but such is life on Instagram:
+<span style="color:#ae81ff">47777</span>
+</code></pre></div><p>It&rsquo;s a heavily skewed dataset, but such is life on Instagram:
 Roughly 50,000 images from our 300,000 collection are ok to learn what a Tinder LIKE should be, and the rest are all what a Tinder PASS should be.</p>
-
 <p>Recall that passes will include the whole shebang: Pictures of dogs, beaches, food, men, and women who just aren&rsquo;t our type.</p>
-
 <p>We can now assemble our labels.csv on the fly using these modular creation methods:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">MakeCSV</span>(cname, yeses, nos):
     <span style="color:#66d9ef">with</span> open(PATH<span style="color:#f92672">/</span>cname, <span style="color:#e6db74">&#39;w&#39;</span>, newline<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf8&#34;</span>) <span style="color:#66d9ef">as</span> csvfile:
@@ -270,117 +255,79 @@ Roughly 50,000 images from our 300,000 collection are ok to learn what a Tinder 
         <span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> yeses:
             cwriter<span style="color:#f92672">.</span>writerow([os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(resolved, p), <span style="color:#e6db74">&#34;YES&#34;</span>])
             
-    <span style="color:#66d9ef">return</span> PATH<span style="color:#f92672">/</span>cname</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">label_csv <span style="color:#f92672">=</span> MakeCSV(<span style="color:#e6db74">&#34;labels.csv&#34;</span>, y, n)</code></pre></div>
-<h2 id="validation-set">Validation Set</h2>
-
+    <span style="color:#66d9ef">return</span> PATH<span style="color:#f92672">/</span>cname
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">label_csv <span style="color:#f92672">=</span> MakeCSV(<span style="color:#e6db74">&#34;labels.csv&#34;</span>, y, n)
+</code></pre></div><h2 id="validation-set">Validation Set</h2>
 <p>fast.ai offers an easy way to divide a set of labels into a training set and a validation set via the <code>get_cv_indexes</code> method, which we will use here:</p>
-
 <pre><code>n = len(list(open(label_csv)))-1
 val_idxs = get_cv_idxs(n)
-</code></pre>
-
-<p>The method randomly chooses some percentage of the total dataset to become the validation set. In our case, we got about 50,000 images for the validation set:</p>
+</code></pre><p>The method randomly chooses some percentage of the total dataset to become the validation set. In our case, we got about 50,000 images for the validation set:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">len(val_idxs)
-<span style="color:#ae81ff">50991</span></code></pre></div>
-<h2 id="architecture">Architecture</h2>
-
+<span style="color:#ae81ff">50991</span>
+</code></pre></div><h2 id="architecture">Architecture</h2>
 <p>It&rsquo;s now time to make perhaps the most major choice regarding our model yet. What will our architecture be? Should we build something from scratch or use a pre-existing arch? What should our initial weights be?</p>
-
 <p>Although these are heavy questions, we will make our decision with somewhat less gravitas. As the adage for deep learning projects goes, if you have an image classification problem, throw ResNet at it and see if it works.</p>
-
 <p>For no reason in particular, instead of ResNet, we&rsquo;ll use FAIR&rsquo;s <code>ResNext50</code>. Why? Because. It&rsquo;s like ResNet, but not. It comes pre-installed with the fast.ai libraries and is pre-trained on weights from ImageNet.</p>
-
 <p>This is particularly useful to us because ImageNet is really good for real-world photographs, and shouldn&rsquo;t require much additional training. That is, we don&rsquo;t have to spend time teaching it what a &ldquo;human&rdquo; is, and can instead essentially jump right into teaching it what is worth swiping left or right on.</p>
-
 <h2 id="size">Size</h2>
-
 <p>One of the image-specific settings we need to set is what the dimension of the images we&rsquo;re going to hand into the model should be. Although named needlessly similar to the BatchSize parameter, they aren&rsquo;t related concepts.</p>
-
 <p>Images need to be square for the current state-of-the-art convnet algos to do their magic, and they can&rsquo;t be especially large squares at that.</p>
-
 <p>We&rsquo;ll be taking a lot of cues from Jeremey&rsquo;s fast.ai introductory lesson about Dogs vs Cats since it matches our problem of binary image classification well.</p>
-
 <p>There he chose a dimension size of <code>224 x 224</code>. Images beyond that size will be resized and cropped if necessary, and images below that size will be padded out to make up for it.</p>
-
 <h2 id="batch-size">Batch Size</h2>
-
 <p>This is one of our most magical hyperparameters, second only in importance to the mythical learning rate.</p>
-
 <p>As a quick overview, the batch size is the number of observations (in our case, discrete images) that will be loaded onto the GPU at once. These images are all operated upon together and used to discern the gradient to descend. This is the data the <code>gradient</code> part of <code>gradient descent</code> is calculated from.</p>
-
 <p>In theory, the bigger a batch a size the more granular and accurate the resulting gradient is, but it is neither practical (due to GPU memory limitations) nor even necessarily useful to try to maximize this batch size parameter. In some cases it may even be harmful, contributing in part to why the batch size is considered magical.</p>
-
 <p>If you&rsquo;re following along with Jeremy&rsquo;s courses, you may hear him refer to a <code>minibatch</code> - that refers to a <code>BatchSize</code>-sized list of data being handed to the neural net for gradient calculations. In essence:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">Image[] minibatch <span style="color:#f92672">=</span> new Image[BatchSize];</code></pre></div>
-<p>Our batch size here, like in the Cats vs Dogs lesson, will be <code>24</code>, but you are encouraged to play around and measure your results.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">Image[] minibatch <span style="color:#f92672">=</span> new Image[BatchSize];
+</code></pre></div><p>Our batch size here, like in the Cats vs Dogs lesson, will be <code>24</code>, but you are encouraged to play around and measure your results.</p>
 <h2 id="transforms">Transforms</h2>
-
 <p>We keep saying fast.ai has splendid support for you if your use-case involves going over images and our next task is a small testament to that.</p>
-
 <p>fast.ai supports the notion of data augmentation during training, which is a way to avoid overfitting by slightly adjusting the data handed in while attempting to keep the meaning of the data unchanged. In our case, we want to run some transformations over our training images:</p>
-
 <pre><code>tfms = tfms_from_model(arch, sz, aug_tfms=transforms_side_on, max_zoom=1.1)
-</code></pre>
-
-<p>This function, supplied by the fast.ai library, produces a list of other functions which will transform each image in various ways.</p>
-
+</code></pre><p>This function, supplied by the fast.ai library, produces a list of other functions which will transform each image in various ways.</p>
 <p>Basically, we&rsquo;ll flip the images horizontally and zoom in up to an additional 10%.</p>
-
 <p>The idea behind this step is that a picture of, for example, a cat, is a cat even if it&rsquo;s zoomed in, or even if it&rsquo;s facing the other direction. Cat&rsquo;s are not unidirectional objects so we want our NN to avoid fitting to that particular aspect.</p>
-
 <p>The same idea applies for Tinder pictures.</p>
-
 <h2 id="back-to-the-dataloader">Back to the DataLoader</h2>
-
 <p>We&rsquo;re going to combine everything from above into a custom dataloader creation function:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_data</span>(size, batchSize):
     tfms <span style="color:#f92672">=</span> tfms_from_model(arch, size, aug_tfms<span style="color:#f92672">=</span>transforms_side_on, max_zoom<span style="color:#f92672">=</span><span style="color:#ae81ff">1.1</span>)
     data <span style="color:#f92672">=</span> ImageClassifierData<span style="color:#f92672">.</span>from_csv(PATH, PATH, label_csv, val_idxs<span style="color:#f92672">=</span>val_idxs, tfms<span style="color:#f92672">=</span>tfms, bs<span style="color:#f92672">=</span>bs)
-    <span style="color:#66d9ef">return</span> data <span style="color:#66d9ef">if</span> size <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">300</span> <span style="color:#66d9ef">else</span> data<span style="color:#f92672">.</span>resize(<span style="color:#ae81ff">340</span>, <span style="color:#e6db74">&#34;tmp&#34;</span>)</code></pre></div>
-<p>This is taken straight from the <code>Dogs vs Cats</code> lesson. It resizes each picture in the dataset and stores everything into <code>tmp</code>.</p>
-
+    <span style="color:#66d9ef">return</span> data <span style="color:#66d9ef">if</span> size <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">300</span> <span style="color:#66d9ef">else</span> data<span style="color:#f92672">.</span>resize(<span style="color:#ae81ff">340</span>, <span style="color:#e6db74">&#34;tmp&#34;</span>)
+</code></pre></div><p>This is taken straight from the <code>Dogs vs Cats</code> lesson. It resizes each picture in the dataset and stores everything into <code>tmp</code>.</p>
 <p>Our dataloader can be instantiated like so:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data <span style="color:#f92672">=</span> get_data(sz, bs)</code></pre></div>
-<p>The paths are for the train and validation sets, because images are expected to be relative to the current working directory. We pass in the same path for both fields, along with the <code>val_idxs</code>, <code>tfms</code>, and <code>bs</code> from earlier.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data <span style="color:#f92672">=</span> get_data(sz, bs)
+</code></pre></div><p>The paths are for the train and validation sets, because images are expected to be relative to the current working directory. We pass in the same path for both fields, along with the <code>val_idxs</code>, <code>tfms</code>, and <code>bs</code> from earlier.</p>
 <p>We can see the relative sizes of our datasets like so:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">len(data<span style="color:#f92672">.</span>trn_ds), len(data<span style="color:#f92672">.</span>val_ds)
-(<span style="color:#ae81ff">203966</span>, <span style="color:#ae81ff">50991</span>)</code></pre></div>
-<p>We can check our classes:</p>
+(<span style="color:#ae81ff">203966</span>, <span style="color:#ae81ff">50991</span>)
+</code></pre></div><p>We can check our classes:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">len(data<span style="color:#f92672">.</span>classes), data<span style="color:#f92672">.</span>classes
-(<span style="color:#ae81ff">2</span>, [<span style="color:#e6db74">&#39;NO&#39;</span>, <span style="color:#e6db74">&#39;YES&#39;</span>])</code></pre></div>
-<p>Notably this means that index <code>0</code> is <code>NO</code> and index <code>1</code> is <code>YES</code>. This is good information for later.</p>
-
+(<span style="color:#ae81ff">2</span>, [<span style="color:#e6db74">&#39;NO&#39;</span>, <span style="color:#e6db74">&#39;YES&#39;</span>])
+</code></pre></div><p>Notably this means that index <code>0</code> is <code>NO</code> and index <code>1</code> is <code>YES</code>. This is good information for later.</p>
 <h1 id="learner-object">Learner Object</h1>
-
 <p>The last step of our model creation odyssey is to instantiate a learner object and call <code>fit</code> on it:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">learn <span style="color:#f92672">=</span> ConvLearner<span style="color:#f92672">.</span>pretrained(arch, data, precompute<span style="color:#f92672">=</span>False)</code></pre></div>
-<p>We ask for a pretrained learner because we want to use the weights from ResNext50, and we want <code>precompute=False</code> because we&rsquo;re not trying to fine-tune the last layers, we want to spend some effort really substantially updating all the intermediate weights.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">learn <span style="color:#f92672">=</span> ConvLearner<span style="color:#f92672">.</span>pretrained(arch, data, precompute<span style="color:#f92672">=</span>False)
+</code></pre></div><p>We ask for a pretrained learner because we want to use the weights from ResNext50, and we want <code>precompute=False</code> because we&rsquo;re not trying to fine-tune the last layers, we want to spend some effort really substantially updating all the intermediate weights.</p>
 <p>Of course like every other time we start this process with the learning rate finder:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">learn<span style="color:#f92672">.</span>lr_find()
-learn<span style="color:#f92672">.</span>sched<span style="color:#f92672">.</span>plot_lr()</code></pre></div>
-<p>The usual graphs:</p>
-
-<p><img src="/ml/swipr/lr_iter.png" alt="iterations" /> <img src="/ml/swipr/lr_lr.png" alt="lr_rate" /></p>
-
+learn<span style="color:#f92672">.</span>sched<span style="color:#f92672">.</span>plot_lr()
+</code></pre></div><p>The usual graphs:</p>
+<p><img src="/ml/swipr/lr_iter.png" alt="iterations"> <img src="/ml/swipr/lr_lr.png" alt="lr_rate"></p>
 <p>We want to find the learning ate that seems most likely to give us the greatest ability to descend, while also leading us to the widest area of our data, spatially speaking. From the graph, although a learning rate of <code>1e^-0.5</code> leads to a good curve, <code>1e-4</code> leads us to a similar depth while giving us a wider valley.</p>
-
 <p>We&rsquo;ll choose <code>1e-4</code> first and see where we go from there:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">learn<span style="color:#f92672">.</span>fit(<span style="color:#ae81ff">1e-4</span>, <span style="color:#ae81ff">3</span>, cycle_len<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, cycle_mult<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)</code></pre></div>
-<p>After a very long time, we got the following results:</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">learn<span style="color:#f92672">.</span>fit(<span style="color:#ae81ff">1e-4</span>, <span style="color:#ae81ff">3</span>, cycle_len<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, cycle_mult<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</code></pre></div><p>After a very long time, we got the following results:</p>
 <table>
 <thead>
 <tr>
-<th>epoch&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-<th>trn_loss&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-<th>val_loss&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+<th>epoch         </th>
+<th>trn_loss         </th>
+<th>val_loss         </th>
 <th>accuracy</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>0</td>
@@ -388,28 +335,24 @@ learn<span style="color:#f92672">.</span>sched<span style="color:#f92672">.</spa
 <td>0.392782</td>
 <td>0.819912</td>
 </tr>
-
 <tr>
 <td>1</td>
 <td>0.403108</td>
 <td>0.390016</td>
 <td>0.822238</td>
 </tr>
-
 <tr>
 <td>2</td>
 <td>0.393089</td>
 <td>0.39024</td>
 <td>0.822318</td>
 </tr>
-
 <tr>
 <td>3</td>
 <td>0.388752</td>
 <td>0.38785</td>
 <td>0.824343</td>
 </tr>
-
 <tr>
 <td>4</td>
 <td>0.399516</td>
@@ -418,29 +361,22 @@ learn<span style="color:#f92672">.</span>sched<span style="color:#f92672">.</spa
 </tr>
 </tbody>
 </table>
-
 <p>ImageNet weights are already good, so we start right on off with a 0.38 validation loss.</p>
-
 <p>Next, we tried the following:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">learn<span style="color:#f92672">.</span>set_data(get_data(<span style="color:#ae81ff">229</span>,bs))
-learn<span style="color:#f92672">.</span>freeze()</code></pre></div>
-<p>Primarily we freeze everything but the last layer and see if we get better results. We also try with a slightly higher learning rate of <code>1e-3</code>.</p>
-
+learn<span style="color:#f92672">.</span>freeze()
+</code></pre></div><p>Primarily we freeze everything but the last layer and see if we get better results. We also try with a slightly higher learning rate of <code>1e-3</code>.</p>
 <p>We end up with the following:</p>
-
 <pre><code>learn.fit(1e-3, 3, cycle_len=1, cycle_mult=2)
-</code></pre>
-
-<table>
+</code></pre><table>
 <thead>
 <tr>
-<th>epoch&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-<th>trn_loss&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
-<th>val_loss&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+<th>epoch         </th>
+<th>trn_loss         </th>
+<th>val_loss         </th>
 <th>accuracy</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>0</td>
@@ -448,14 +384,12 @@ learn<span style="color:#f92672">.</span>freeze()</code></pre></div>
 <td>0.365708</td>
 <td>0.832845</td>
 </tr>
-
 <tr>
 <td>1</td>
 <td>0.359612</td>
 <td>0.364647</td>
 <td>0.832565</td>
 </tr>
-
 <tr>
 <td>2</td>
 <td>0.382324</td>
@@ -464,23 +398,14 @@ learn<span style="color:#f92672">.</span>freeze()</code></pre></div>
 </tr>
 </tbody>
 </table>
-
 <p>We tried a number of other possibilities, involving both starting at different learning rates, or using the same object and changing the learning rate, and also resizing</p>
-
 <p>It looks like we&rsquo;re topping out around a 0.36 validation loss meaning a roughly 83% accuracy.</p>
-
 <p>Training these variants totaled around 10 hours.</p>
-
 <h1 id="other-considerations">Other Considerations</h1>
-
 <p>Potential other model architectures included integrating the <code>InsightFace</code> and <code>DFace</code> steps, creating something from scratch, or otherwise better integrating the Tinder pictures, because we just labeled them all as <code>NO</code> by default.</p>
-
 <p>Needless to say, we went the lazy route, because an 83% accuracy is already pretty good.</p>
-
 <h1 id="moving-on">Moving on</h1>
-
 <p>In the next post we&rsquo;ll discuss moving the model to our CPU-only server and constructing a small framework to interact with it.</p>
-
 <p><a href="/posts/ml/swipr07">Next Section - Swipr Script Service</a></p>
 </div>
 
@@ -554,29 +479,29 @@ learn<span style="color:#f92672">.</span>freeze()</code></pre></div>
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -674,7 +599,7 @@ learn<span style="color:#f92672">.</span>freeze()</code></pre></div>
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

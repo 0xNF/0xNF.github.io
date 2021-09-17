@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 <link rel="alternate" type="application/rss+xml" title="RSS" href="https://0xnf.github.io/series/implement-an-oauth-2.0-server/index.xml">
 
@@ -14,7 +14,7 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>Implement an Oauth 2.0 Server - Nothing in Particular</title>
+    <title>Implement an OAuth 2.0 Server - Nothing in Particular</title>
     
     <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
     
@@ -53,7 +53,7 @@
 
     
     <header class="page-header">
-      <h1>Implement an Oauth 2.0 Server</h1>
+      <h1>Implement an OAuth 2.0 Server</h1>
     </header>
     
 
@@ -62,19 +62,21 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:42JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:28JST">Jun 18, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/11/">Implement an OAuth 2.0 Server (Part 11)</a></h2>
+    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/09/">Implement an OAuth 2.0 Server (Part 09)</a></h2>
   </header>
 
   
-  <div class="summary">In this part of our OAuth tutorial, we implement the missing services that help us validate our tokens and write to the database.</div>
+  <div class="summary">Welcome to the ninth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Authorization Provider - Authorize Methods It&rsquo;s worth taking a moment to have an overview of how the OpenIdConnectServer library actually works. You are encouraged to read Kevin Chalet&rsquo;s post here.
+An authorization provider is an implementation of the OpenIdConnectServerProvider type which overrides the virtual methods we want to implement. We&rsquo;re going to leave most of these un-overridden, but if you ever need additional functionality, you can always override it and inspect/implement that stage of the pipeline.</div>
 
   
   <footer>
-    <a href="https://0xnf.github.io/posts/oauthserver/11/" title="Implement an OAuth 2.0 Server (Part 11)">Read More…</a>
+    <a href="https://0xnf.github.io/posts/oauthserver/09/" title="Implement an OAuth 2.0 Server (Part 09)">Read More…</a>
   </footer>
   
 </article>
@@ -83,19 +85,20 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:43JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:26JST">Jun 18, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/12/">Implement an OAuth 2.0 Server (Part 12)</a></h2>
+    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/08/">Implement an OAuth 2.0 Server (Part 08)</a></h2>
   </header>
 
   
-  <div class="summary">We&#39;re ready to start working more seriously on issuing access tokens - the first step of which is to show the users a page that lets them review what permissions an application is requesting, and giving them the opportunity to accept or deny the request.</div>
+  <div class="summary">Welcome to the eighth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Adding Client Scopes Scopes are ways to limit a client&rsquo;s ability to act on behalf of the user. The scopes are defined by the Resource Server, like Spotify or Google. The client requests the scopes they want to work with, and those scopes are presented to the Resource Owner for authorization - they can then choose to accept or reject the authorization request, meaning that just because an application requests certain, potentially high-value access, doesn&rsquo;t mean it automatically gets it.</div>
 
   
   <footer>
-    <a href="https://0xnf.github.io/posts/oauthserver/12/" title="Implement an OAuth 2.0 Server (Part 12)">Read More…</a>
+    <a href="https://0xnf.github.io/posts/oauthserver/08/" title="Implement an OAuth 2.0 Server (Part 08)">Read More…</a>
   </footer>
   
 </article>
@@ -104,19 +107,21 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:45JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-07T19:12:13JST">Jun 7, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/13/">Implement an OAuth 2.0 Server (Part 13)</a></h2>
+    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/07/">Implement an OAuth 2.0 Server (Part 07)</a></h2>
   </header>
 
   
-  <div class="summary">Here we work with Identity, Claims, and Authorization tickets so that the OpenIdConnectServer library can generate a valid and useful access token for our users.</div>
+  <div class="summary">Welcome to the seventh part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+OAuth Client CRUD - Views This is the second part of adding our OAuth Client management pages. In the previous section we generated a controller, which automatically generated some views for us. In this section, we&rsquo;ll make those views do what we need them to do.
+Details and Delete Views Delete the following two cshtml files - we don&rsquo;t need them, because we&rsquo;ll be rolling their functions into the Edit view.</div>
 
   
   <footer>
-    <a href="https://0xnf.github.io/posts/oauthserver/13/" title="Implement an OAuth 2.0 Server (Part 13)">Read More…</a>
+    <a href="https://0xnf.github.io/posts/oauthserver/07/" title="Implement an OAuth 2.0 Server (Part 07)">Read More…</a>
   </footer>
   
 </article>
@@ -125,19 +130,21 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:47JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-06T16:16:01JST">Jun 6, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/14/">Implement an OAuth 2.0 Server (Part 14)</a></h2>
+    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/06/">Implement an OAuth 2.0 Server (Part 06)</a></h2>
   </header>
 
   
-  <div class="summary">In this section of our OAuth tutorial, we&#39;ll add OAuth Validation to our application and actually authenticate a user with their access tokens.</div>
+  <div class="summary">Welcome to the sixth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+OAuth Client CRUD - Controller and ViewModels This is the first part of adding our OAuth Client management pages. We&rsquo;ll set up the controller and the viewmodel here. In next part, we&rsquo;ll add the html views.
+View Models ViewModels are, at least in the context of ASP.NET (as opposed to UWP where the MVVM pattern changes what it means slightly), is a way of firewalling our models from our views.</div>
 
   
   <footer>
-    <a href="https://0xnf.github.io/posts/oauthserver/14/" title="Implement an OAuth 2.0 Server (Part 14)">Read More…</a>
+    <a href="https://0xnf.github.io/posts/oauthserver/06/" title="Implement an OAuth 2.0 Server (Part 06)">Read More…</a>
   </footer>
   
 </article>
@@ -146,19 +153,21 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:49JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-06T16:15:59JST">Jun 6, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/15/">Implement an OAuth 2.0 Server (Part 15)</a></h2>
+    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/05/">Implement an OAuth 2.0 Server (Part 05)</a></h2>
   </header>
 
   
-  <div class="summary">In this section of our OAuth tutorial we add the ability to authorize against the scopes we created back in part 8 using ASP.NET policies.</div>
+  <div class="summary">Welcome to the fifth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Adding Models We can&rsquo;t do very much without creating some models of our domain objects, both in memory and in the database.
+At this point in time we only have two main things to worry about, and that&rsquo;s what our OAuth Client Application looks like, and how are they owned by Users?</div>
 
   
   <footer>
-    <a href="https://0xnf.github.io/posts/oauthserver/15/" title="Implement an OAuth 2.0 Server (Part 15)">Read More…</a>
+    <a href="https://0xnf.github.io/posts/oauthserver/05/" title="Implement an OAuth 2.0 Server (Part 05)">Read More…</a>
   </footer>
   
 </article>
@@ -167,19 +176,20 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:50JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-06T16:15:58JST">Jun 6, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/16/">Implement an OAuth 2.0 Server (Part 16)</a></h2>
+    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/04/">Implement an OAuth 2.0 Server (Part 04)</a></h2>
   </header>
 
   
-  <div class="summary">Here we implement Token Revocation using some custom views and controllers. We also let the user view what applications they have outstanding authorizations with.</div>
+  <div class="summary">Welcome to the fourth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Public API Barebones Setup We&rsquo;re going to have a very small public API that will entertain a few GET and PUT methods. At first, these methods will be entirely unauthenticated, but as time goes on we&rsquo;ll eventually put some of them behind OAuth authentication, then add Scope checks, and finally Rate Limiting.</div>
 
   
   <footer>
-    <a href="https://0xnf.github.io/posts/oauthserver/16/" title="Implement an OAuth 2.0 Server (Part 16)">Read More…</a>
+    <a href="https://0xnf.github.io/posts/oauthserver/04/" title="Implement an OAuth 2.0 Server (Part 04)">Read More…</a>
   </footer>
   
 </article>
@@ -188,19 +198,21 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:52JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-06T16:15:56JST">Jun 6, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/17/">Implement an OAuth 2.0 Server (Part 17)</a></h2>
+    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/03/">Implement an OAuth 2.0 Server (Part 03)</a></h2>
   </header>
 
   
-  <div class="summary">We enter the home stretch of our OAuth server by adding Rate Limits to our application. We use a dual limit structure where we can discriminate against both clients and users individually.</div>
+  <div class="summary">Welcome to the third part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+SQLite and Initial Migration If you tried to start the website we just initialized, you&rsquo;d find that you won&rsquo;t be able to login or register, receiving error messages instead of a welcome screen.
+Although an initial migration has been provided for us, it hasn&rsquo;t been applied, and no database exists yet.</div>
 
   
   <footer>
-    <a href="https://0xnf.github.io/posts/oauthserver/17/" title="Implement an OAuth 2.0 Server (Part 17)">Read More…</a>
+    <a href="https://0xnf.github.io/posts/oauthserver/03/" title="Implement an OAuth 2.0 Server (Part 03)">Read More…</a>
   </footer>
   
 </article>
@@ -209,19 +221,22 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:54JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-06T16:15:55JST">Jun 6, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/18/">Implement an OAuth 2.0 Server (Part 18)</a></h2>
+    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/02/">Implement an OAuth 2.0 Server (Part 02)</a></h2>
   </header>
 
   
-  <div class="summary">We continue our work on the OAuth server by adding Rate Limits, using a custom controller [Attribute]. Also there are some structs.</div>
+  <div class="summary">Welcome to the second part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Project Setup and Dependency Downloads Create a new ASP.NET Core Web Application named OAuthTutorial. You can use your own name, but make sure to get your namespaces correct if you do.
+It&rsquo;s helpful if you have Create directory for solution and Create new Git repository checked.
+Select Web Application (Model-View-Controller)</div>
 
   
   <footer>
-    <a href="https://0xnf.github.io/posts/oauthserver/18/" title="Implement an OAuth 2.0 Server (Part 18)">Read More…</a>
+    <a href="https://0xnf.github.io/posts/oauthserver/02/" title="Implement an OAuth 2.0 Server (Part 02)">Read More…</a>
   </footer>
   
 </article>
@@ -230,19 +245,21 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-18T18:11:56JST">Jun 18, 2018</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-06-06T16:15:39JST">Jun 6, 2018</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://0xnf.github.io/posts/">posts</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/19/">Implement an OAuth 2.0 Server (Part 19)</a></h2>
+    <h2 class="title"><a href="https://0xnf.github.io/posts/oauthserver/01/">Implement an OAuth 2.0 Server (Part 01)</a></h2>
   </header>
 
   
-  <div class="summary">The final part of our OAuth tutorial where we deploy to Azure.</div>
+  <div class="summary">Welcome to the first part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+The creator of the library, Kevin Chalet, has an excellent series of blog posts, that you are encouraged to read for more information, with less of a hands-on approach.
+The final product is available here on GitHub, and at the end of each step the project as completed up to that point will be available on its respective branch.</div>
 
   
   <footer>
-    <a href="https://0xnf.github.io/posts/oauthserver/19/" title="Implement an OAuth 2.0 Server (Part 19)">Read More…</a>
+    <a href="https://0xnf.github.io/posts/oauthserver/01/" title="Implement an OAuth 2.0 Server (Part 01)">Read More…</a>
   </footer>
   
 </article>
@@ -274,29 +291,29 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -394,7 +411,7 @@
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

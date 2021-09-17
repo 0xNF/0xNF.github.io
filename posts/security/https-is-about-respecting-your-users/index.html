@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "HTTPS Is About Respecting Your Users - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,49 +128,27 @@
 
   
 
-  <div class="article-body">
-
-<h3 id="respect-your-users">Respect Your Users</h3>
-
+  <div class="article-body"><h3 id="respect-your-users">Respect Your Users</h3>
 <p>As of July 24th, 2018, Google Chrome is visibly marking all non-HTTPS sites as &ldquo;not secure&rdquo;. In light of this, it might be prudent to elaborate on what exactly HTTPS is meant to do.</p>
-
 <p>A site without HTTPS is vulnerable to Man-In-The-Middle (MITM) attacks, which Troy Hunt shows off convincingly over at <a href="https://www.troyhunt.com/heres-why-your-static-website-needs-https/">https://www.troyhunt.com/heres-why-your-static-website-needs-https/</a></p>
-
 <p>That site is all about demonstrating through words, video, and actions, what happens when you don&rsquo;t have HTTPS. What I want to touch on is why, morally speaking, HTTPS is a good thing.</p>
-
 <p>HTTPS is an encryption method that encrypts:</p>
-
 <ol>
 <li>Page URL (although not the domain name)</li>
 <li>Page Content</li>
 </ol>
-
 <p>The only two entities who can decrypt an HTTPS page are the server sending the page and the entity requesting the page. This entity is usually, but not always, a browser like Chrome or Firefox.</p>
-
-<p>The primary benefit of this is that the user can trust that the data is correct. It cannot be tampered with in-flight.<sup><a href="#1">1</a></sup> With HTTPS, the user has obtained <a href="https://en.wikipedia.org/wiki/Information_Assurance">Information Assurance</a>, and thus a level of confidence they did not possess prior. They can be sure that the data you intended to deliver is the data that they received, without anything modified, deleted, or added on by anyone else.<sup><a href="#2">2</a></sup></p>
-
+<p>The primary benefit of this is that the user can trust that the data is correct. It cannot be tampered with in-flight.<!-- raw HTML omitted --><a href="#1">1</a><!-- raw HTML omitted --> With HTTPS, the user has obtained <a href="https://en.wikipedia.org/wiki/Information_Assurance">Information Assurance</a>, and thus a level of confidence they did not possess prior. They can be sure that the data you intended to deliver is the data that they received, without anything modified, deleted, or added on by anyone else.<!-- raw HTML omitted --><a href="#2">2</a><!-- raw HTML omitted --></p>
 <p>What this means in practice is that ISP&rsquo;s can&rsquo;t <a href="https://zdnet2.cbsistatic.com/hub/i/r/2015/11/23/296d2de3-4bb9-466c-b5a4-0a302b833e68/resize/770xauto/7f2485f3149b0b1b8d0caf736a76f1ec/comcast-stack.jpg">shove unwanted messages</a> into your user&rsquo;s faces, their local coffee shop script kiddie can&rsquo;t use hidden fields to try to steal their credentials, Ukrainian hackers can&rsquo;t make their browser do cryptomining, and they can&rsquo;t be unintentionally redirected to some other site.</p>
-
-<p>None of this has any benefit to you, the site owner<sup><a href="#3">3</a></sup>. Not directly. Your site is exactly as secure (or insecure) as it would be without HTTPS. Your administrative credentials are exactly as secure, your server processes are exactly as memory-safe, the files being served remain as unmodified and readonly as they were before.</p>
-
+<p>None of this has any benefit to you, the site owner<!-- raw HTML omitted --><a href="#3">3</a><!-- raw HTML omitted -->. Not directly. Your site is exactly as secure (or insecure) as it would be without HTTPS. Your administrative credentials are exactly as secure, your server processes are exactly as memory-safe, the files being served remain as unmodified and readonly as they were before.</p>
 <p>The security is for the user. The user can trust your site more. What you intended to deliver is what was delivered. Https is about respecting your users. It&rsquo;s about respecting their time, their machine&rsquo;s resources, and their privacy.</p>
-
 <p>Be a good internet citizen, enable HTTPS today.</p>
-
-<p><small></p>
-
-<h6 id="small-1-small"><small>1</small></h6>
-
-<p>In theory, an attacker with immense resources like a nation-state could use, for example, statistical analyses techniques to alter the bits in-transit to something meaningful, but this is a theoretical, highly targeted, and necessarily resource intensive attack. If this is happening to you, you have much larger things to worry about.</p>
-
-<h6 id="small-2-small"><small>2</small></h6>
-
+<!-- raw HTML omitted -->
+<h6 id="small2small"><!-- raw HTML omitted -->2<!-- raw HTML omitted --></h6>
 <p>HTTPS guarantees that the data received is the data sent - if you choose to embed malicious iframes or load Googles&rsquo;s tracking script, the user is still being put at risk but it will be intentional on your part.</p>
-
-<h6 id="small-3-small"><small>3</small></h6>
-
+<h6 id="small3small"><!-- raw HTML omitted -->3<!-- raw HTML omitted --></h6>
 <p>In some cases you, the site owner, actually do directly benefit. Imagine that you have a client-server application, and your server is sending data to the client. An attacker could corrupt, or worse, modify, your data in-flight causing your application to perform erroneously or operate on incorrect data. This is not the majority use-case for HTTPS, but it is no less legitimate a reason for enabling
-</small></p>
+<!-- raw HTML omitted --></p>
 </div>
 
   <footer class="article-footer">
@@ -224,29 +202,29 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -344,7 +322,7 @@
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

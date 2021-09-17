@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nothing in Particular</title>
@@ -6,11 +6,7 @@
     <description>Recent content on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Mar 2019 13:44:13 -0700</lastBuildDate>
-    
-	<atom:link href="https://0xnf.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 27 Mar 2019 13:44:13 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Music Channel Part 3 - Branding</title>
       <link>https://0xnf.github.io/posts/music/channel2/</link>
@@ -40,9 +36,7 @@
       
       <guid>https://0xnf.github.io/posts/music/channel0/</guid>
       <description>This is the first in a series of posts about analyzing YouTube music channels.
- Part 1 - Music Channel Introduction and Data Collection Part 2 - Analysis of Channel Activity
- Part 3 - Branding
-  Background I often listen to new music on YouTube because their discovery systems unearth some occasionally great finds. After a while of listening there however you begin to realize that there are only a handful of channels that get recommended to you, and they all seem to just upload songs and let the views roll in, not unlike a radio DJ.</description>
+ Part 1 - Music Channel Introduction and Data Collection Part 2 - Analysis of Channel Activity Part 3 - Branding  Background I often listen to new music on YouTube because their discovery systems unearth some occasionally great finds. After a while of listening there however you begin to realize that there are only a handful of channels that get recommended to you, and they all seem to just upload songs and let the views roll in, not unlike a radio DJ.</description>
     </item>
     
     <item>
@@ -115,8 +109,8 @@ DataLoader The first thing the creation of a PyTorch model requires is the creat
       
       <guid>https://0xnf.github.io/posts/ml/swipr05/</guid>
       <description>Back in part 3, we said:
-Of course, pictures of beaches, food, and dogs are all common Instagram subjects, especially on profiles of selfie-obsessed early twenties girls. We will come back to this point in detail later on, but for now let&#39;s assume that each profile is pure and ideal for its category  Now it is time to come back to that.
-A bunch of Instagram photos, no matter from whose profile, are of course not pure and ideal for their category, and pictures of beaches, foods, and boyfriends abound.</description>
+Of course, pictures of beaches, food, and dogs are all common Instagram subjects, even on profiles of stereotypically self centered selfie-obsessed young twenties girls. We will come back to this point in detail later on, but for now, let&#39;s assume that each profile is pure and ideal for its category.  Now it is time to come back to that.
+A bunch of Instagram photos, no matter from whose profile, are of course notpure and ideal for their category, and pictures of beaches, foods, and boyfriends abound.</description>
     </item>
     
     <item>
@@ -157,7 +151,7 @@ Finally, it would be preferable to have this system be accessible from anywhere.
       
       <guid>https://0xnf.github.io/posts/ml/swipr01/</guid>
       <description>The Goal Continuing the quest to learn modern Machine Learning, I thought it would be fun to create a Tinder auto-swiper that could potentially reject matches I don&amp;rsquo;t want and accept matches I do want.
-One of my friends had the brilliant idea of naming this tinderbot &amp;ldquo;Swiper&amp;rdquo;, like the fox from Dora the Explorer, famous for being repelled by the intrepid protagonists with the incantation of &amp;ldquo;Swiper, no swiping!</description>
+One of my friends had the brilliant idea of naming this tinderbot &amp;ldquo;Swiper&amp;rdquo;, like the fox from Dora the Explorer, famous for being repelled by the intrepid protagonists with the incantation of &amp;ldquo;Swiper, no swiping!&amp;rdquo;</description>
     </item>
     
     <item>
@@ -206,7 +200,7 @@ Try to keep tracked changes below 1,000, and try to not track so many different 
       <pubDate>Wed, 17 Oct 2018 11:11:18 -0700</pubDate>
       
       <guid>https://0xnf.github.io/posts/security/securityquestions/</guid>
-      <description>Security questions are user hostile and advantage the attacker  Why security questions suck  They&amp;rsquo;re based on publicly available information. They&amp;rsquo;re based on capricious and changing feelings They&amp;rsquo;re based on murky and easily misremembered factoids They&amp;rsquo;re based on certain assumptions of the world that are not universally true  What to do? Social Engineering  A system for security questions  System Requirements System #1 - Design Considerations  The MUST-NOT Items The MAY Items  Some Example System 1   System #2 - Design Considerations  Conclusion  Security questions are user hostile and advantage the attacker Security questions are a terrible concept and should be abolished.</description>
+      <description>Security questions are user hostile and advantage the attacker  Why security questions suck  They&amp;rsquo;re based on publicly available information. They&amp;rsquo;re based on capricious and changing feelings They&amp;rsquo;re based on murky and easily misremembered factoids They&amp;rsquo;re based on certain assumptions of the world that are not universally true   What to do? Social Engineering   A system for security questions  System Requirements System #1 - Design Considerations  The MUST-NOT Items The MAY Items  Some Example System 1     System #2 - Design Considerations   Conclusion  Security questions are user hostile and advantage the attacker Security questions are a terrible concept and should be abolished.</description>
     </item>
     
     <item>
@@ -238,7 +232,7 @@ Some of these arguments apply systemically, i.e., because of choices made by the
       <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
       
       <guid>https://0xnf.github.io/posts/esk8bst/esk8bst/</guid>
-      <description>The Finished Product Raison D&amp;rsquo;etre Structure  Front End  React  Components Pages  Services  FindThread.ts GetNewestData.ts Determining BST Status Determining Price and Currency Determining Product and Company Other Data   Backend  .NET Core  Database  ScanData Subscribers Preconfirmed   Third-Party Services  Netlify Firebase AWS Serverless / Lambda  Serverless Project Functions Logging  MailGun  Types of Email Email Deliverability Email Services Mailgun&amp;rsquo;s Services  Double Opt-In + Unsubscribe Automated Security Scan    Privacy and Security  Firebase Rules / Service Accounts Reddit triggering Tracking Protection   The Finished Product Available at https://esk8bst.</description>
+      <description>The Finished Product Raison D&amp;rsquo;etre Structure  Front End  React  Components Pages   Services  FindThread.ts GetNewestData.ts Determining BST Status Determining Price and Currency Determining Product and Company Other Data     Backend  .NET Core   Database  ScanData Subscribers Preconfirmed     Third-Party Services  Netlify Firebase AWS Serverless / Lambda  Serverless Project Functions Logging   MailGun  Types of Email Email Deliverability Email Services Mailgun&amp;rsquo;s Services  Double Opt-In + Unsubscribe Automated Security Scan       Privacy and Security  Firebase Rules / Service Accounts Reddit triggering Tracking Protection    The Finished Product Available at https://esk8bst.</description>
     </item>
     
     <item>
@@ -271,8 +265,7 @@ That site is all about demonstrating through words, video, and actions, what hap
       <description>Notes [07/19/2018] Note: This post refers to the library Microsoft.NETCore.UniversalWindowsPlatform, version 6.2.0-Preview1-26502-02.
 Events Some problems are just made so much easier in XAML based apps if you use the Event pub/sub model.
 We&amp;rsquo;ll structure our events the way the excellent Template10 does:
- One event
- One EventRaised method  Untyped Events These events carry no information aside form the fact that it occurred.
+ One event One EventRaised method  Untyped Events These events carry no information aside form the fact that it occurred.
 In the class that the event originates from:</description>
     </item>
     
@@ -382,7 +375,7 @@ Policies are fragments you can add to an authorization attribute that confirm wh
       <guid>https://0xnf.github.io/posts/oauthserver/14/</guid>
       <description>Welcome to the fourteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
 Adding OAuth Validation Our server successfully issues the three token types, but we don&amp;rsquo;t have a way to actually force a token check on our endpoints yet. One of the packages we downloaded initially was AspNet.Security.OAuth.Validation. We&amp;rsquo;re going to use that to add OAuth Validation to our server.
-In Startup.</description>
+In Startup.cs&#39;s ConfigureServices, add .</description>
     </item>
     
     <item>
@@ -544,15 +537,9 @@ The final product is available here on GitHub, and at the end of each step the p
       <guid>https://0xnf.github.io/posts/lyricall/security/</guid>
       <description>This is the Security Model for lyricall.net as of May 22nd, 2018.
 Security Model tl;dr:
- The servers are secure
- The services are secure
- Connections are secure
- Data is validated
- Ownership is checked
-  todo:
- Encrypt db at Rest
- Automatically rotate dbhost/dbname/dbuer/dbpassword values Spin out authentication server from api server
- Spin out client server from api server  Server Provisioning All machines are provisioned in the standard manner:</description>
+ The servers are secure The services are secure Connections are secure Data is validated Ownership is checked  todo:
+ Encrypt db at Rest Automatically rotate dbhost/dbname/dbuer/dbpassword values Spin out authentication server from api server Spin out client server from api server  Server Provisioning All machines are provisioned in the standard manner:
+ SSH key only access, no password authentication allowed Standard SSH port is changed to be non-standard below 1024 to stop automated attacks on port 22  Ports below 1024 are privileged and can&amp;rsquo;t be re-bound by another service.</description>
     </item>
     
     <item>
@@ -562,7 +549,7 @@ Security Model tl;dr:
       
       <guid>https://0xnf.github.io/posts/lyricall/architecture/</guid>
       <description>This summary of the architecture was correct upon its initial posting (November 2017). Changes have since been made. There is no guarantee that this post remains accurate into the future.
-Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  TypeScript Why TypeScript Redux React Why React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .</description>
+Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  TypeScript Why TypeScript Redux React Why React   Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables   Server - .</description>
     </item>
     
     <item>
@@ -573,7 +560,7 @@ Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview 
       <guid>https://0xnf.github.io/posts/neu/04/</guid>
       <description>This is the third and final document in a multiple part document originally written in 2015. The first post can be found here, and the previous post can be found here. This report has been adapted from a word document.
 MOOC Platforms Shim Vijay and Evin Yesudas
-Table of Contents  MOOC Platforms: Analysis Report  Preface Introduction Objective of this Study  Overview  EdX Coursera Udacity NovoEd  Methodology MOOC Platform Comparison Chart Key Findings  How Are Qualitative Courses Managed Types of Certificates &amp;amp; Their Importance Free Certificate Verified Certificate Helping The Participants To Complete   MOOC Platforms: Analysis Report Preface This study focuses on the review of four leading MOOC platforms namely Coursera, EdX, NovoEd and Udacity.</description>
+Table of Contents  MOOC Platforms: Analysis Report  Preface Introduction Objective of this Study   Overview  EdX Coursera Udacity NovoEd   Methodology MOOC Platform Comparison Chart Key Findings  How Are Qualitative Courses Managed Types of Certificates &amp;amp; Their Importance Free Certificate Verified Certificate Helping The Participants To Complete    MOOC Platforms: Analysis Report Preface This study focuses on the review of four leading MOOC platforms namely Coursera, EdX, NovoEd and Udacity.</description>
     </item>
     
     <item>
@@ -583,7 +570,7 @@ Table of Contents  MOOC Platforms: Analysis Report  Preface Introduction Objecti
       
       <guid>https://0xnf.github.io/posts/neu/03/</guid>
       <description>This is the third in a multiple part document originally written in 2015. The first post can be found here, the previous post can be found here, and the next post can be found here. This report has been adapted from a word document.
-Bringing CCIS to the Top Table of Contents  Executive Summary The Introductory Course The Over Focus on Mathematics Math Overview and Applications Course Outline  Concepts, Identification, and Applications of Mathematics  The Bad Courses  Theory of Computation Programming Languages  The Hunt for Great Professors  The Qualities of a Good Professor Qualitizer Results The Hunt Continues People in Specific   Executive Summary The computer science school is facing a huge amount of competition from online courses, self-taught people, and coding bootcamps.</description>
+Bringing CCIS to the Top Table of Contents  Executive Summary The Introductory Course The Over Focus on Mathematics Math Overview and Applications Course Outline  Concepts, Identification, and Applications of Mathematics   The Bad Courses  Theory of Computation Programming Languages   The Hunt for Great Professors  The Qualities of a Good Professor Qualitizer Results The Hunt Continues People in Specific    Executive Summary The computer science school is facing a huge amount of competition from online courses, self-taught people, and coding bootcamps.</description>
     </item>
     
     <item>
@@ -593,7 +580,7 @@ Bringing CCIS to the Top Table of Contents  Executive Summary The Introductory C
       
       <guid>https://0xnf.github.io/posts/neu/02/</guid>
       <description>This is the second in a multiple part document originally written in 2015. The first post can be found here and the next post can be found here. This report has been adapted from a word document.
-The State of Northeastern University Table of Contents  Executive Summary In Detail  Northeastern’s Desire to Compete Outside It’s Expertise MIT Building 20 Like Activist Investors, Except for University Northeastern’s Neglect of Trends in Technology and Education Imagining What Could Be What MOOCs Are Doing Right What MOOCs Are Doing Wrong The Innovators A Few Radical Ideas Post Graduate Services Joint Professorship and Co-Op Appointments at the ISEB Alternative Curriculum  The Co-Op Curriculum The Project Research Curriculum  Closing Thoughts   Executive Summary Northeastern is making an admirable expansion into research, but in doing so, it is neglecting its history as a trade school.</description>
+The State of Northeastern University Table of Contents  Executive Summary In Detail  Northeastern’s Desire to Compete Outside It’s Expertise MIT Building 20 Like Activist Investors, Except for University Northeastern’s Neglect of Trends in Technology and Education Imagining What Could Be What MOOCs Are Doing Right What MOOCs Are Doing Wrong The Innovators A Few Radical Ideas Post Graduate Services Joint Professorship and Co-Op Appointments at the ISEB Alternative Curriculum  The Co-Op Curriculum The Project Research Curriculum   Closing Thoughts    Executive Summary Northeastern is making an admirable expansion into research, but in doing so, it is neglecting its history as a trade school.</description>
     </item>
     
     <item>

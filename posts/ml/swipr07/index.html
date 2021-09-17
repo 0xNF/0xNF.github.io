@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Swipr - Swipr Script Service - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,33 +128,21 @@
 
   
 
-  <div class="article-body">
-
-<p>Now that we have a trained model, we need to consider how to interact with it.</p>
-
+  <div class="article-body"><p>Now that we have a trained model, we need to consider how to interact with it.</p>
 <p>The full tech of the script can be found <a href="https://github.com/0xNF/swipr_gh/tree/master/SwiprScript">here on GitHub</a> but we&rsquo;ll walk through it here too.</p>
-
 <p>The overview of this step is that we have a python script acting as a local server where the client side of the script receives input and returns output to to external consumers, and the server side loads the PyTorch model and runs the computation.</p>
-
 <p>Due to the computationally intensive exercise of setting up all the necessary PyTorch structures, loading the model, computing the result, and unloading the model for each request would be inadvisable - the local server architecture of the script allows us to keep the model loaded in memory at all times.</p>
-
 <p>To accomplish this messaging service between client &amp; server, we use a library called <a href="http://zeromq.org/">ZeroMQ</a> to form a message queue between two forks of the process, and to keep the service alive at all times we add some extra infrastructure to make it an always-on systemd service.</p>
-
 <h1 id="architecture-overview">Architecture overview</h1>
-
 <p>the general architecture of this solution can be described by this chart:</p>
-
-<p><img src="/ml/swipr/SSM.png" alt="ssm architecture" /></p>
-
+<p><img src="/ml/swipr/SSM.png" alt="ssm architecture"></p>
 <p>The script invocation has two parts:</p>
-
 <p>The first launches the server and doesn&rsquo;t return anything by itself</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python swiprscriptservice.py</code></pre></div>
-<p>the second launches the client, taking in a path to a valid image file and returning as output to stdout a comma separated tuple of float predictions:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python swiprscriptservice.py
+</code></pre></div><p>the second launches the client, taking in a path to a valid image file and returning as output to stdout a comma separated tuple of float predictions:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python swiprscriptservice.py --compute /path/to/img.jpg
-<span style="color:#ae81ff">0</span>.66,0.33</code></pre></div>
-<h1 id="script-source">Script Source</h1>
-
+0.66,0.33
+</code></pre></div><h1 id="script-source">Script Source</h1>
 <p>We have to load the script like we created it on our training machine. We could avoid doing it this way if we had bothered to save it properly as as a pickled object instead of just exporting the weights, but we didn&rsquo;t think of it at the time, so we have to do it the silly way, which involves bringing over a bunch of extra files like the val_idxs:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">LoadLearner</span>():
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;loading learner&#34;</span>)
@@ -168,17 +156,16 @@
     data <span style="color:#f92672">=</span> ImageClassifierData<span style="color:#f92672">.</span>from_csv(<span style="color:#e6db74">&#39;./&#39;</span>, <span style="color:#e6db74">&#39;./&#39;</span>, label_csv, val_idxs<span style="color:#f92672">=</span>val_idxs, tfms<span style="color:#f92672">=</span>(tfms_tr, tfms_va), bs<span style="color:#f92672">=</span>bs)
     learn <span style="color:#f92672">=</span> ConvLearner<span style="color:#f92672">.</span>pretrained(arch, data, precompute<span style="color:#f92672">=</span>False)
     learn<span style="color:#f92672">.</span>load(Swipr_ModelToUse)
-    learn<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>cpu()</code></pre></div>
-<p>Next given a path to an image, we have to load it up in numpy and hand it to the model:</p>
+    learn<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>cpu()
+</code></pre></div><p>Next given a path to an image, we have to load it up in numpy and hand it to the model:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">PredictOnImage</span>(ipath):
     i <span style="color:#f92672">=</span> open_image(ipath)
     t <span style="color:#f92672">=</span> tfms_va(i)  
     preds <span style="color:#f92672">=</span> learn<span style="color:#f92672">.</span>predict_array(t[None])
     x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>exp(preds)
     tup <span style="color:#f92672">=</span> (x[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>], x[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>])
-    <span style="color:#66d9ef">return</span> tup</code></pre></div>
-<p>The rest of the script deals with using ZMQ and messaging between the client and server</p>
-
+    <span style="color:#66d9ef">return</span> tup
+</code></pre></div><p>The rest of the script deals with using ZMQ and messaging between the client and server</p>
 <p>One small aside if that we have a hardcoded killswitch built in if the server side of the process takes longer than 10 seconds to return:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">Kill</span>():
     os<span style="color:#f92672">.</span>_exit(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>)
@@ -187,25 +174,18 @@
     <span style="color:#f92672">...</span>
     t <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Timer(<span style="color:#ae81ff">10.0</span>, Kill)
     <span style="color:#f92672">....</span>
-    t<span style="color:#f92672">.</span>cancel()</code></pre></div>
-<p>This proved to be an occasional problem, so this is the workaround.</p>
-
+    t<span style="color:#f92672">.</span>cancel()
+</code></pre></div><p>This proved to be an occasional problem, so this is the workaround.</p>
 <h1 id="script-start-script">Script Start Script</h1>
-
 <p>Because we need to launch this service with a few conditions, we have a shell script that handles a number of external factors for us:</p>
-
 <pre><code>#!/usr/bin/env bash
 export PATH=/home/science/anaconda3/bin:$PATH
 . /home/science/anaconda3/etc/profile.d/conda.sh
 conda activate fastai-cpu
 source ~/swipr/swiprvars.sh
 python ./swiprsscriptserver.py &gt; ./sss_logs.txt
-</code></pre>
-
-<p>It makes sure the appropriate conda binaries are available to the script, that we&rsquo;re in the appropriate conda environment, that the necessary environment variables for Swipr are set, and to start the server.</p>
-
+</code></pre><p>It makes sure the appropriate conda binaries are available to the script, that we&rsquo;re in the appropriate conda environment, that the necessary environment variables for Swipr are set, and to start the server.</p>
 <h1 id="swipr-script-monitor">Swipr Script Monitor</h1>
-
 <p>To install as systemd, we create a fairly typical service file describing our service:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[Unit]</span>
 <span style="color:#a6e22e">Description</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Swipr Script Monitor&#34;</span>
@@ -222,13 +202,10 @@ python ./swiprsscriptserver.py &gt; ./sss_logs.txt
 <span style="color:#a6e22e">RestartSec</span><span style="color:#f92672">=</span><span style="color:#e6db74">10</span>
 
 <span style="color:#66d9ef">[Install]</span>
-<span style="color:#a6e22e">WantedBy</span><span style="color:#f92672">=</span><span style="color:#e6db74">multi-user.target</span></code></pre></div>
-<p>We have it try an automatic restart every 3 minutes, and set it to attempt to always be online and available.</p>
-
+<span style="color:#a6e22e">WantedBy</span><span style="color:#f92672">=</span><span style="color:#e6db74">multi-user.target</span>
+</code></pre></div><p>We have it try an automatic restart every 3 minutes, and set it to attempt to always be online and available.</p>
 <h1 id="moving-on">Moving On</h1>
-
 <p>In our next post, we&rsquo;ll discuss the SwiprServer and its components</p>
-
 <p><a href="/posts/ml/swipr08">Next Section - LibSwipr</a></p>
 </div>
 
@@ -302,29 +279,29 @@ python ./swiprsscriptserver.py &gt; ./sss_logs.txt
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -422,7 +399,7 @@ python ./swiprsscriptserver.py &gt; ./sss_logs.txt
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

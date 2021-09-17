@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Identity on Nothing in Particular</title>
@@ -6,11 +6,7 @@
     <description>Recent content in Identity on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Jun 2018 18:11:56 -0700</lastBuildDate>
-    
-	<atom:link href="https://0xnf.github.io/categories/identity/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 18 Jun 2018 18:11:56 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/categories/identity/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Implement an OAuth 2.0 Server (Part 19)</title>
       <link>https://0xnf.github.io/posts/oauthserver/19/</link>
@@ -72,7 +68,7 @@ Policies are fragments you can add to an authorization attribute that confirm wh
       <guid>https://0xnf.github.io/posts/oauthserver/14/</guid>
       <description>Welcome to the fourteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
 Adding OAuth Validation Our server successfully issues the three token types, but we don&amp;rsquo;t have a way to actually force a token check on our endpoints yet. One of the packages we downloaded initially was AspNet.Security.OAuth.Validation. We&amp;rsquo;re going to use that to add OAuth Validation to our server.
-In Startup.</description>
+In Startup.cs&#39;s ConfigureServices, add .</description>
     </item>
     
     <item>

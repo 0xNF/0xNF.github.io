@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Branding on Nothing in Particular</title>
@@ -6,11 +6,7 @@
     <description>Recent content in Branding on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Mar 2019 13:44:13 -0700</lastBuildDate>
-    
-	<atom:link href="https://0xnf.github.io/tags/branding/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 27 Mar 2019 13:44:13 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/tags/branding/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Music Channel Part 3 - Branding</title>
       <link>https://0xnf.github.io/posts/music/channel2/</link>
@@ -40,9 +36,7 @@
       
       <guid>https://0xnf.github.io/posts/music/channel0/</guid>
       <description>This is the first in a series of posts about analyzing YouTube music channels.
- Part 1 - Music Channel Introduction and Data Collection Part 2 - Analysis of Channel Activity
- Part 3 - Branding
-  Background I often listen to new music on YouTube because their discovery systems unearth some occasionally great finds. After a while of listening there however you begin to realize that there are only a handful of channels that get recommended to you, and they all seem to just upload songs and let the views roll in, not unlike a radio DJ.</description>
+ Part 1 - Music Channel Introduction and Data Collection Part 2 - Analysis of Channel Activity Part 3 - Branding  Background I often listen to new music on YouTube because their discovery systems unearth some occasionally great finds. After a while of listening there however you begin to realize that there are only a handful of channels that get recommended to you, and they all seem to just upload songs and let the views roll in, not unlike a radio DJ.</description>
     </item>
     
   </channel>

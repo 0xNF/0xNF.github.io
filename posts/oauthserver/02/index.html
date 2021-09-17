@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Implement an OAuth 2.0 Server (Part 02) - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,39 +128,26 @@
 
   
 
-  <div class="article-body">
-
-<p>Welcome to the second part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
-
+  <div class="article-body"><p>Welcome to the second part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
 <h1 id="project-setup-and-dependency-downloads">Project Setup and Dependency Downloads</h1>
-
 <p>Create a new <code>ASP.NET Core Web Application</code> named <code>OAuthTutorial</code>. You can use your own name, but make sure to get your namespaces correct if you do.</p>
-
 <p>It&rsquo;s helpful if you have <code>Create directory for solution</code> and <code>Create new Git repository</code> checked.</p>
-
-<p><img src="/oauthserver/part02/createnewproject.png" alt="new project" /></p>
-
+<p><img src="/oauthserver/part02/createnewproject.png" alt="new project"></p>
 <p>Select <code>Web Application (Model-View-Controller)</code></p>
-
-<p><img src="/oauthserver/part02/projecttype.png" alt="mvc" /></p>
-
+<p><img src="/oauthserver/part02/projecttype.png" alt="mvc"></p>
 <p>Click <code>Change Authentication</code> and choose <code>Individual User Accounts</code> with <code>Store user accounts in-app</code>.</p>
-
-<p><img src="/oauthserver/part02/useraccounts.png" alt="auth" /></p>
-
+<p><img src="/oauthserver/part02/useraccounts.png" alt="auth"></p>
 <h1 id="add-packages">Add Packages</h1>
-
 <p>Open the <code>Package Manager Console</code> and enter the following:</p>
-
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell">Install-Package AspNet.Security.OpenIdConnect.Server -Version 2.0.0-rc2-final
 Install-Package AspNet.Security.OpenIdConnect.Extensions -Version 2.0.0-rc2-final
 Install-Package AspNet.Security.OpenIdConnect.Primitives -Version 2.0.0-rc2-final
@@ -168,28 +155,17 @@ Install-Package AspNet.Security.OAuth.Introspection -Version 2.0.0-rc2-final
 Install-Package AspNet.Security.OAuth.Validation -Version 2.0.0-rc2-final</code></pre></td></tr></table>
 </div>
 </div>
-
-<h1 id="changing-ports-disabling-ssl">Changing Ports + Disabling SSL</h1>
-
+<h1 id="changing-ports--disabling-ssl">Changing Ports + Disabling SSL</h1>
 <p>Strictly for development purposes of this demo application, we&rsquo;re going to disable SSL because its more trouble than it&rsquo;s worth at this stage. We don&rsquo;t want to have to keep accepting a new root certificate each time we reboot our development machine, and if you&rsquo;re <a href="/posts/misc/wsl">using WSL</a>, then constantly forcing curl to ignore the invalid cert is also irritating.</p>
-
 <p>We&rsquo;re also going to choose a nicer port for our server. This tutorial will use <code>5000</code>.</p>
-
 <p>You can find these settings in the <code>Project -&gt; OAuthTutorial Properties</code> menu from the topbar, then selecting <code>Debug</code> from the side bar.</p>
-
-<p><img src="/oauthserver/part04/openprops.png" alt="open properties" /></p>
-
+<p><img src="/oauthserver/part04/openprops.png" alt="open properties"></p>
 <p>Uncheck <code>Enable SSL</code> and change the port in <code>App URL</code> to <code>5000</code> or something nicer.
 Finally, make sure you also change the <code>Launch Browser</code> setting to read <code>http://localhost:5000</code>. The important take away is to exchange <code>https</code> for regular <code>http</code> and to make the port the same as the one we selected.</p>
-
-<p><img src="/oauthserver/part04/changeusessl.png" alt="change the settings" /></p>
-
+<p><img src="/oauthserver/part04/changeusessl.png" alt="change the settings"></p>
 <h1 id="moving-on">Moving On</h1>
-
 <p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/02-ProjectSetup">here on GitHub</a>.</p>
-
 <p>In the next section we&rsquo;ll adjust the password requirements and create our initial migration.</p>
-
 <p><a href="/posts/oauthserver/03">Next</a></p>
 </div>
 
@@ -269,29 +245,29 @@ Finally, make sure you also change the <code>Launch Browser</code> setting to re
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -389,7 +365,7 @@ Finally, make sure you also change the <code>Launch Browser</code> setting to re
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

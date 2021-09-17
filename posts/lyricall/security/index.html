@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Lyricall Security - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,154 +128,109 @@
 
   
 
-  <div class="article-body">
-
-<p>This is the Security Model for lyricall.net as of May 22nd, 2018.</p>
-
-<p><img src="/lyricallarch/lyricall.svg" height="150"></p>
-
+  <div class="article-body"><p>This is the Security Model for lyricall.net as of May 22nd, 2018.</p>
+<!-- raw HTML omitted -->
 <h1 id="security-model">Security Model</h1>
-
 <p>tl;dr:</p>
-
 <ol>
-<li>The servers are secure<br /></li>
-<li>The services are secure<br /></li>
-<li>Connections are secure<br /></li>
-<li>Data is validated<br /></li>
-<li>Ownership is checked<br /></li>
+<li>The servers are secure</li>
+<li>The services are secure</li>
+<li>Connections are secure</li>
+<li>Data is validated</li>
+<li>Ownership is checked</li>
 </ol>
-
 <p>todo:</p>
-
 <ol>
-<li>Encrypt db at Rest<br /></li>
+<li>Encrypt db at Rest</li>
 <li>Automatically rotate   dbhost/dbname/dbuer/dbpassword values</li>
-<li>Spin out authentication server from api server<br /></li>
+<li>Spin out authentication server from api server</li>
 <li>Spin out client server from api server</li>
 </ol>
-
 <h2 id="server-provisioning">Server Provisioning</h2>
-
 <p>All machines are provisioned in the standard manner:</p>
-
 <ol>
 <li>SSH key only access, no password authentication allowed</li>
 <li>Standard SSH port is changed to be non-standard below 1024 to stop automated attacks on port 22
-
 <ul>
 <li>Ports below 1024 are privileged and can&rsquo;t be re-bound by another service.</li>
-</ul></li>
+</ul>
+</li>
 <li>No Root sign-on. Root only available via <code>sudo su</code> from an authenticated user</li>
 <li>Access is done under an unprivileged user with an entry in <code>sudoers</code></li>
 <li>UFW is running with only the necessary service ports open.
-
 <ul>
 <li>ssh</li>
-<li>whichever applications are running<br /></li>
-</ul></li>
+<li>whichever applications are running</li>
+</ul>
+</li>
 </ol>
-
 <h2 id="data-boundaries">Data Boundaries</h2>
-
 <p>Any time a data-boundary is crossed, that boundary is treated as adversarial, and all data traveling across is verified before committed or consumed.</p>
-
 <p>The data boundaries for Lyricall are diagrammed here:</p>
-
 <pre><code>                                        + &lt;--&gt; Spotify Server (4)
                                         |
   Web Client (1. &lt;-&gt; API Server (2. &lt;-&gt; +
                                         |
                                         + &lt;--&gt; Database Server (3)
 </code></pre>
-
 <p>Data is validated on both ends of each boundary before passing along or using, with the exception of the Spotify Server which we don&rsquo;t control, and therefore cannot validate on their end. We do however, validate data coming back from it and going into it, according to the specs published on the <a href="https://developer.spotify.com">https://developer.spotify.com</a> documentation site.</p>
-
 <h3 id="transport-security">Transport Security</h3>
-
 <p>All connections between data boundaries are secured behind TLS/SSL, courtesy of Let&rsquo;s Encrypt.</p>
-
 <p>Connections to the API Server and the Database Server are HTTPS only, and connections made via HTTP are rejected. This means that an attacker isn&rsquo;t afforded the opportunity to perform something like <code>sslstrip</code>.</p>
-
 <h2 id="basic-guarantees">Basic Guarantees</h2>
-
 <p>Because we use C# with strong models, we have a minimum guarantee of runtime safety and data validation. As long as the models are conceptually correct, a lot of errors are automatically eliminated. Barring any incorrect implementations in the underlying libraries, buffer overflows or invalid states are impossible.</p>
-
 <h2 id="database-side">Database Side</h2>
-
 <p>The Database server resides on its own separate machine.</p>
-
 <pre><code>Postgres is not encrypted at rest, and none of the columns, tables, or databases are encrypted by default. 
 </code></pre>
-
 <h3 id="config-settings">Config Settings</h3>
-
 <ol>
 <li>Postgres port is changed to reduce automated scan attack surface.</li>
 <li>Postgres, via <code>pg_hba.conf</code> is configured to allow access when accessing via <code>localhost</code>, but only allows known ip ranges with known users, to known databases when connecting remotely.</li>
 <li>All remote connections require SSL. Local connections are exempt from this requirement.</li>
 <li>Of course even when connecting locally, authentication is necessary.</li>
 </ol>
-
 <h3 id="user-settings">User Settings</h3>
-
 <ol>
-<li>Main database uses a strong, secure, randomly generated 64-character string</li>
-<li>Database is only accessible via a specific, lowest-privilege user, whose name is an equally random 64-character string.</li>
-<li>This user has an equally random 64-character string password</li>
-
-<li><p>This user only has access to the app-database, and can not modify other Databases. It is not even an Administrator on the database. It has read-write access to most tables, but a second, more privileged Administrator user exists to execute various administrative tasks, like manually adjusting a users subscription.</p>
-
-<pre><code>In the future, these values will be rotated out occasionally.
-</code></pre></li>
+<li>
+<p>Main database uses a strong, secure, randomly generated 64-character string</p>
+</li>
+<li>
+<p>Database is only accessible via a specific, lowest-privilege user, whose name is an equally random 64-character string.</p>
+</li>
+<li>
+<p>This user has an equally random 64-character string password</p>
+</li>
+<li>
+<p>This user only has access to the app-database, and can not modify other Databases. It is not even an Administrator on the database. It has read-write access to most tables, but a second, more privileged Administrator user exists to execute various administrative tasks, like manually adjusting a users subscription.</p>
+<pre><code> In the future, these values will be rotated out occasionally.
+</code></pre>
+</li>
 </ol>
-
 <h3 id="data-validation-incoming-to-database-boundary-2-3">Data Validation, Incoming to Database (Boundary 2-&gt;3)</h3>
-
 <p>We make extensive use of the Postgres <code>CHECK</code> clause when constructing tables and inserting data to ensure data integrity.</p>
-
 <p>For example, <code>CONSTRAINT &quot;Ensure Max Redemptions is uint&quot; CHECK ((&quot;MaxRedemptions&quot; &gt;= 0))</code> makes sure that we don&rsquo;t submit any negative numbers to a field where it wouldn&rsquo;t make any sense if we did.</p>
-
 <p>Foreign Key relationships also exist in most tables to help with cascading deletes as well as data integrity to protect against non-existent users or malicious/malformed data.</p>
-
 <h2 id="api-server">API Server</h2>
-
 <p>The API server resides on its own separate machine.
 The server runs Dot Net Core&rsquo;s Kestrel server, behind an nginx instance.</p>
-
 <h3 id="logging">Logging</h3>
-
 <p>Substantial logging occurs on the server allowing for appropriate security monitoring as well as developer debugging.</p>
-
 <h3 id="access-control">Access Control</h3>
-
 <pre><code>Authentication is presently mixed with this server, and will be spun out to its own instance at a later date. 
 </code></pre>
-
 <p>Users must sign in with their Spotify account via the OAuth2 protocol. ASPNET security / EF Core modules handle safe storage of tokens and hashed user credentials.</p>
-
 <p>All API calls require proper authentication, as well as proper authorization. API calls that are not authenticated simply return <code>403 forbidden</code> as the status message. This is provided by the ASPNET Identity middleware and the <code>[Authorize (Role='member')]</code> attribute on the controllers and methods.</p>
-
 <p>Authentication is provided by the ASPNET Identity middleware and supplies a client cookie.</p>
-
 <p>Authorization is specified by roles. At the moment, everyone who signs up receives a role of <code>member</code>, which allows them access to the basic API.</p>
-
 <p>A separate role of <code>administrator</code> exists and is only for support and statistics purposes.</p>
-
 <p>These roles are not transmitted by or to the users, and are only validated by the server against the database to check if a user has appropriate permissions for the given action. A user is not able to tell the server what role they possess.</p>
-
 <p>Users are only able to access a handful of public pages if they are not signed in. All browser requests to forbidden or authentication-required resources result in a redirect to a 403 Error page.</p>
-
 <h3 id="secrets">Secrets</h3>
-
 <p>Secrets such as the Spotify Client Secret or the Postgres Database Password are stored in environment variables only accessible to the webserver user. These secrets are not hardcoded in the source, nor are submitted by any user. They are transported only to the necessary endpoints via a secured channel.</p>
-
 <p>Secrets are not checked into the git repositories and will not be found in the source, either in code or in config files.</p>
-
 <h3 id="data-validation-incoming-from-client-api-boundary-1-2">Data Validation, Incoming from Client API (Boundary 1-&gt;2)</h3>
-
 <p>For data being supplied by a client accessing the Client API, we validate all data with a number of checks, since we cannot guarantee that someone hitting the client endpoints is from the official webclient, or that the data in transit hasn&rsquo;t been manufactured, tampered with, or otherwise corrupted.</p>
-
 <ol>
 <li>For pagination requests, we validate that the limits and offsets are within bounds.</li>
 <li>For updates, we check that any given Spotify Playlists are in the correct format according to the Spotify specifications</li>
@@ -285,28 +240,17 @@ The server runs Dot Net Core&rsquo;s Kestrel server, behind an nginx instance.</
 <li>We also check that Rule values are within acceptable ranges. A field that operates upon doubles between 0.0 and 1.0 should refuse values outside that range. Similarly, it should fail for non-double values like strings or bytes.</li>
 <li>Rules are also checked that the supplied field is valid. There is no rule by the property name of <code>nonexistantrulelol</code>, so the presence of a  supplied field not matching a known property results in rejection.</li>
 </ol>
-
 <h3 id="data-validation-outgoing-to-database-boundary-2-3">Data Validation, Outgoing to Database (Boundary 2-&gt;3)</h3>
-
 <p>Values are not inserted by appending to a query, all values are substituted with Prepared Statements.</p>
-
 <h3 id="data-validation-incoming-from-database-boundary-3-2">Data Validation, Incoming from Database (Boundary 3-&gt;2)</h3>
-
 <p>Data is validated against statically, strongly typed models. Due to the nature of the enum-like classes, Rules are automatically guaranteed to be correct.</p>
-
 <h2 id="web-client">Web Client</h2>
-
 <pre><code>Server hosting the Web Client is mixed with the Authentication and API Server. In the future, it should be moved to its own machine. At the moment this is difficult due to the .net antiforgery token system.
 </code></pre>
-
 <h3 id="data-validation-incoming-from-api-server-boundary-2-1">Data Validation, Incoming from API Server (Boundary 2-&gt;1)</h3>
-
 <p>The web client is written in TypeScript and validates all incoming data according to the models described in the source.</p>
-
 <h3 id="data-validation-outgoing-to-api-server-boundary-1-2">Data Validation, Outgoing to API Server (Boundary 1-&gt;2)</h3>
-
 <p>Prior to sending any data, the client checks and prevents invalid rule, rulegroup, or playlist states.</p>
-
 <p>This is mostly a quality of life improvement for the user, because any data can be modified and sent to the server. Validation is far stricter and more useful at other Boundaries.</p>
 </div>
 
@@ -358,29 +302,29 @@ The server runs Dot Net Core&rsquo;s Kestrel server, behind an nginx instance.</
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -478,7 +422,7 @@ The server runs Dot Net Core&rsquo;s Kestrel server, behind an nginx instance.</
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

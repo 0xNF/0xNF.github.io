@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Implement an OAuth 2.0 Server (Part 13) - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,26 +128,15 @@
 
   
 
-  <div class="article-body">
-
-<p>Welcome to the thirteenth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
-
+  <div class="article-body"><p>Welcome to the thirteenth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
 <h1 id="identity-claims-and-authorization-tickets">Identity, Claims, and Authorization Tickets</h1>
-
 <p>We&rsquo;ve been skirting talking about claims and authentication tickets by hiding all of it behind our <code>TicketCounter</code> class. You can get a in-depth overview of what those are over at the <a href="https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/managing-claims-and-authorization-with-the-identity-model#claims">Microsoft Docs</a>.</p>
-
 <p>Claims are how the ASP.NET team has approached identity and authorization details since about 2016. The short of it is that claims are a way of specifying permissions - certain things have claims, other things have claim requirements, and if your claim matches the claims requirement, then you can access the resource locked behind the claim. They&rsquo;re a bit like <code>roles</code>, but more low level: roles are just a special claim on an <code>IdentityUser</code>.</p>
-
-<p>A collection of claims represents an <code>Identity</code>, specifically in our circumstances, they&rsquo;re represented by the <code>ClaimsIdentity</code> class. Identity is itself a complicated topic, but it&rsquo;s the fundamental unit behind what we&rsquo;re doing setting up an OAuth server in the first place. Identities and Claims are the two pillars of the &lsquo;I&rsquo; and the &lsquo;A&rsquo; of Identity and Access Management. The &rsquo;M&rsquo; is the easily revocable and scope-separated OAuth layer we&rsquo;re adding.</p>
-
+<p>A collection of claims represents an <code>Identity</code>, specifically in our circumstances, they&rsquo;re represented by the <code>ClaimsIdentity</code> class. Identity is itself a complicated topic, but it&rsquo;s the fundamental unit behind what we&rsquo;re doing setting up an OAuth server in the first place. Identities and Claims are the two pillars of the &lsquo;I&rsquo; and the &lsquo;A&rsquo; of Identity and Access Management. The &lsquo;M&rsquo; is the easily revocable and scope-separated OAuth layer we&rsquo;re adding.</p>
 <p>Finally, an <code>AuthenticationTicket</code> is a container for one or more identities belonging to a single owning-entity. It&rsquo;s possible for me to have multiple accounts on one service for instance - this would help resolve that. Importantly, it also holds the authentication scheme in charge of handling the authentication process when the server receives the ticket. For our tutorial, we give it the ASOS default of <code>OpenIdConnectServerDefaults.AuthenticationScheme</code>.</p>
-
 <p>We didn&rsquo;t register that explicitly in startup, but because it is the default setting whenever an instance of <code>OpenIdConnectServer</code> is registered, it is implicitly specified to be associated with that same authentication scheme.</p>
-
 <p>When it comes to creating AuthenticationTickets though, we do have to explicitly specify what scheme want to handle it - so in all the tickets we generate, we&rsquo;ll be supplying that same scheme.</p>
-
 <h1 id="ticketcounter">TicketCounter</h1>
-
 <p>Under <code>Providers/</code>, stub out a static <code>TicketCounter</code> class:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TicketCounter</span> {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> AuthenticationTicket MakeClaimsForClientCredentials(<span style="color:#66d9ef">string</span> clientId) {
@@ -157,13 +146,10 @@
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> AuthenticationTicket MakeClaimsForInteractive(ApplicationUser user, AuthorizeViewModel authorizeViewModel) {
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
     }
-}</code></pre></div>
-<p>It&rsquo; static because we have no need to ever instantiate it.</p>
-
+}
+</code></pre></div><p>It' static because we have no need to ever instantiate it.</p>
 <h2 id="client-credentials">Client Credentials</h2>
-
 <p>Because Client Credentials do not involve any user, we have to fudge what it means to have an &ldquo;Identity&rdquo;.  What we&rsquo;re going to do is set the identity to be the client requesting access to the server, and then we&rsquo;ll just make a note of its grant type.</p>
-
 <p>When we deserialize these claims later, it&rsquo;ll be impossible to distinguish from the subject id what is meant to be a <code>user</code> versus what is a <code>client</code>, so the grant type claim will help us differentiate.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> AuthenticationTicket MakeClaimsForClientCredentials(<span style="color:#66d9ef">string</span> clientId) {
     ClaimsIdentity identity = <span style="color:#66d9ef">new</span> ClaimsIdentity(OpenIdConnectServerDefaults.AuthenticationScheme, OpenIdConnectConstants.Claims.Name, OpenIdConnectConstants.Claims.Role);
@@ -188,29 +174,18 @@
 
     <span style="color:#75715e">// In our implementation, an access token is valid for a single hour.
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> ticket;
-}</code></pre></div>
-<p>Take note of the fact that ASOS requires a <code>ClaimsIdentity</code> with a <code>Subject</code> claim in order to work properly. Typically this represents a more formal identity like a user, but here we&rsquo;ll make it work with the client.</p>
-
+}
+</code></pre></div><p>Take note of the fact that ASOS requires a <code>ClaimsIdentity</code> with a <code>Subject</code> claim in order to work properly. Typically this represents a more formal identity like a user, but here we&rsquo;ll make it work with the client.</p>
 <p>Also take note of the fact that we call <code>SetDestinations</code> on every claim that we create - this is an extension method from ASOS under <code>AspNet.Security.OpenIdConnect.Extensions</code>. Kevin Chalet explains it in his blog posts, but unless a destination is manually specified like it is here, ASOS will refuse to serialize anything into a token for fear of leaking data.</p>
-
 <p>All this to say that simply adding a claim and expecting it to work won&rsquo;t produce the results you want - you&rsquo;ll find that upon deserialization the fields you added are missing.</p>
-
 <h2 id="interactive-claims">Interactive Claims</h2>
-
 <p>The claims and ticket constructed from using the interactive authorization flows are more complicated than the client credentials claims.</p>
-
-<p>Because we&rsquo;re dealing with a user now, we have to find some way to put their information into the ticket. To do this, we add a <code>NameIdentifier</code> claim with the user&rsquo;s id, we add <code>Name</code> claim with the user&rsquo;s user name, and we manually include the Security Stamp as well.</p>
-
+<p>Because we&rsquo;re dealing with a user now, we have to find some way to put their information into the ticket. To do this, we add a <code>NameIdentifier</code> claim with the user&rsquo;s id, we add <code> Name</code> claim with the user&rsquo;s user name, and we manually include the Security Stamp as well.</p>
 <p>The SecurityStamp is an ASP.NET Identity feature that implements a cryptographic hash of all the attributes of a user that are important from an identity and access standpoint. If the user&rsquo;s email changes, the stamp changes. If the user&rsquo;s password changes, the stamp changes. If you have some kind of user biography or self-description and that changes, the stamp does not change.</p>
-
 <p>The stamp only changes whenever something affecting a users fundamental identity attributes change - this is a way for us to know if a given token is invalid because it was assigned to a user who had critical details changed.</p>
-
 <p>This ticket that we&rsquo;re creating with the user&rsquo;s identity will allow us down the line to actually sign in with the user without their involvement - which is a neat trick, especially for applications that will interact on their behalf.</p>
-
 <p>Additionally, we include details that aren&rsquo;t just related to identity, but are instead related to the users access to our servers through the requesting client. We include things like the grant type and the client id.</p>
-
 <p>This will help us later when we deserialize the token and implement our actual authorization. For example, knowing the grant type will let us discriminate what kind of rate limit we should give the token - the more heavy weight a token the better rate limits they&rsquo;ll be able to get.</p>
-
 <p>We also need to know the client id upon deserialization in order to check if a token still has access to the server - a deleted client is invalid, a client that has been rate-limited should be denied access, etc.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> AuthenticationTicket MakeClaimsForInteractive(ApplicationUser user, AuthorizeViewModel authorizeViewModel) {
     <span style="color:#75715e">/*
@@ -270,21 +245,14 @@
     ticket.SetScopes(scopesToAdd);
 
     <span style="color:#66d9ef">return</span> ticket;
-}</code></pre></div>
-<p>Pay attention to the comments regarding the OpenId token - we&rsquo;re not implementing that in this tutorial, but if you are, this is the spot to add it in.</p>
-
+}
+</code></pre></div><p>Pay attention to the comments regarding the OpenId token - we&rsquo;re not implementing that in this tutorial, but if you are, this is the spot to add it in.</p>
 <p>One quirk of the ASOS library to be aware of is that in order to get a refresh token, you have to add the <code>OfflineAccess</code> scope. That is not a self-explanatory description of a refresh token, but that&rsquo;s the only way to get one.</p>
-
 <p>And of course, you should only issue a refresh token if the grant type is for a <code>Code</code>, or depending on the requirements, for a grant type of <code>refresh_token</code>.</p>
-
 <p>Finally, we have to add the scopes the client requested to the ticket.</p>
-
 <h1 id="moving-on">Moving On</h1>
-
 <p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/13-Claims">here on GitHub</a>.</p>
-
 <p>In the next section we&rsquo;ll enable OAuth authentication for our endpoints, including handling scopes using ASP.NET <code>Polcies</code>.</p>
-
 <p><a href="/posts/oauthserver/14">Next</a></p>
 </div>
 
@@ -364,29 +332,29 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -484,7 +452,7 @@
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

@@ -1,23 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Security on Nothing in Particular</title>
+    <title>security on Nothing in Particular</title>
     <link>https://0xnf.github.io/categories/security/</link>
-    <description>Recent content in Security on Nothing in Particular</description>
+    <description>Recent content in security on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Oct 2018 11:11:18 -0700</lastBuildDate>
-    
-	<atom:link href="https://0xnf.github.io/categories/security/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 17 Oct 2018 11:11:18 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/categories/security/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A system for approaching security questions</title>
       <link>https://0xnf.github.io/posts/security/securityquestions/</link>
       <pubDate>Wed, 17 Oct 2018 11:11:18 -0700</pubDate>
       
       <guid>https://0xnf.github.io/posts/security/securityquestions/</guid>
-      <description>Security questions are user hostile and advantage the attacker  Why security questions suck  They&amp;rsquo;re based on publicly available information. They&amp;rsquo;re based on capricious and changing feelings They&amp;rsquo;re based on murky and easily misremembered factoids They&amp;rsquo;re based on certain assumptions of the world that are not universally true  What to do? Social Engineering  A system for security questions  System Requirements System #1 - Design Considerations  The MUST-NOT Items The MAY Items  Some Example System 1   System #2 - Design Considerations  Conclusion  Security questions are user hostile and advantage the attacker Security questions are a terrible concept and should be abolished.</description>
+      <description>Security questions are user hostile and advantage the attacker  Why security questions suck  They&amp;rsquo;re based on publicly available information. They&amp;rsquo;re based on capricious and changing feelings They&amp;rsquo;re based on murky and easily misremembered factoids They&amp;rsquo;re based on certain assumptions of the world that are not universally true   What to do? Social Engineering   A system for security questions  System Requirements System #1 - Design Considerations  The MUST-NOT Items The MAY Items  Some Example System 1     System #2 - Design Considerations   Conclusion  Security questions are user hostile and advantage the attacker Security questions are a terrible concept and should be abolished.</description>
     </item>
     
     <item>
@@ -135,7 +131,7 @@ Policies are fragments you can add to an authorization attribute that confirm wh
       <guid>https://0xnf.github.io/posts/oauthserver/14/</guid>
       <description>Welcome to the fourteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
 Adding OAuth Validation Our server successfully issues the three token types, but we don&amp;rsquo;t have a way to actually force a token check on our endpoints yet. One of the packages we downloaded initially was AspNet.Security.OAuth.Validation. We&amp;rsquo;re going to use that to add OAuth Validation to our server.
-In Startup.</description>
+In Startup.cs&#39;s ConfigureServices, add .</description>
     </item>
     
     <item>
@@ -287,15 +283,9 @@ The final product is available here on GitHub, and at the end of each step the p
       <guid>https://0xnf.github.io/posts/lyricall/security/</guid>
       <description>This is the Security Model for lyricall.net as of May 22nd, 2018.
 Security Model tl;dr:
- The servers are secure
- The services are secure
- Connections are secure
- Data is validated
- Ownership is checked
-  todo:
- Encrypt db at Rest
- Automatically rotate dbhost/dbname/dbuer/dbpassword values Spin out authentication server from api server
- Spin out client server from api server  Server Provisioning All machines are provisioned in the standard manner:</description>
+ The servers are secure The services are secure Connections are secure Data is validated Ownership is checked  todo:
+ Encrypt db at Rest Automatically rotate dbhost/dbname/dbuer/dbpassword values Spin out authentication server from api server Spin out client server from api server  Server Provisioning All machines are provisioned in the standard manner:
+ SSH key only access, no password authentication allowed Standard SSH port is changed to be non-standard below 1024 to stop automated attacks on port 22  Ports below 1024 are privileged and can&amp;rsquo;t be re-bound by another service.</description>
     </item>
     
     <item>
@@ -305,7 +295,7 @@ Security Model tl;dr:
       
       <guid>https://0xnf.github.io/posts/lyricall/architecture/</guid>
       <description>This summary of the architecture was correct upon its initial posting (November 2017). Changes have since been made. There is no guarantee that this post remains accurate into the future.
-Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  TypeScript Why TypeScript Redux React Why React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .</description>
+Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  TypeScript Why TypeScript Redux React Why React   Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables   Server - .</description>
     </item>
     
   </channel>

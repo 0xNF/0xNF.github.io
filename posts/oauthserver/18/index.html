@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Implement an OAuth 2.0 Server (Part 18) - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,16 +128,10 @@
 
   
 
-  <div class="article-body">
-
-<p>Welcome to the eighteenth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
-
-<h1 id="rate-limiting-attribute-creation">Rate Limiting - Attribute Creation</h1>
-
+  <div class="article-body"><p>Welcome to the eighteenth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+<h1 id="rate-limiting---attribute-creation">Rate Limiting - Attribute Creation</h1>
 <p>We left off last section with rate limits being granted to the to clients and tokens at creation time, but we don&rsquo;t yet have a way to check those limits when they call our API.</p>
-
 <p>To do so, we&rsquo;ll be making an <code>Attribute</code> that we can use to decorate the controllers or methods that we want to be rate limited.</p>
-
 <p>Create a new folder <code>Attributes/</code>, and add <code>RateLimitAttribute.cs</code> to it:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RateLimitAttribute</span> : ActionFilterAttribute {
@@ -146,31 +140,25 @@
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.OnActionExecutionAsync(context, next);
     }
 
-}</code></pre></div>
-<p>An attribute has a number of virtual methods available for us to override, but the only one we we are interested in is <code>OnActionExecutingAsync</code> - and we need the async version because we&rsquo;ll be calling out to the Database for some execution branches.</p>
-
+}
+</code></pre></div><p>An attribute has a number of virtual methods available for us to override, but the only one we we are interested in is <code>OnActionExecutingAsync</code> - and we need the async version because we&rsquo;ll be calling out to the Database for some execution branches.</p>
 <h2 id="caches">Caches</h2>
-
 <p>We&rsquo;ll be utilizing the .NET <code>MemoryCache</code> class for our rate limiting. These caches contain various algorithmic optimizations that we would surely be worse off implementing ourselves, and they have a neat feature of automatic removal-upon-expiration.</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1</span><span style="color:#a6e22e">[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RateLimitAttribute</span> : ActionFilterAttribute {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3</span>    <span style="color:#75715e">/* The cache for all items that will be placed into our rate limit cache */</span>
-<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4</span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> MemoryCache Cache { <span style="color:#66d9ef">get</span>; } = <span style="color:#66d9ef">new</span> MemoryCache(<span style="color:#66d9ef">new</span> MemoryCacheOptions());
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5</span>    <span style="color:#75715e">/* For items that are granted no-rate-limit, place their id in here so that we may avoid multiple database calls. */</span>
-<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6</span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> MemoryCache WhiteList { <span style="color:#66d9ef">get</span>; } = <span style="color:#66d9ef">new</span> MemoryCache(<span style="color:#66d9ef">new</span> MemoryCacheOptions());
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8</span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9</span>        <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.OnActionExecutionAsync(context, next);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10</span>    }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11</span>}</code></pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#a6e22e">[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RateLimitAttribute</span> : ActionFilterAttribute {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#75715e">/* The cache for all items that will be placed into our rate limit cache */</span>
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> MemoryCache Cache { <span style="color:#66d9ef">get</span>; } = <span style="color:#66d9ef">new</span> MemoryCache(<span style="color:#66d9ef">new</span> MemoryCacheOptions());
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>    <span style="color:#75715e">/* For items that are granted no-rate-limit, place their id in here so that we may avoid multiple database calls. */</span>
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> MemoryCache WhiteList { <span style="color:#66d9ef">get</span>; } = <span style="color:#66d9ef">new</span> MemoryCache(<span style="color:#66d9ef">new</span> MemoryCacheOptions());
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>        <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.OnActionExecutionAsync(context, next);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>}
+</code></pre></div>
 <h2 id="onactionexecutionasync">OnActionExecutionAsync</h2>
-
 <p>The heart of the attribute, and more importantly, all of its logic, lies in the OnActionExecution methods.</p>
-
 <h3 id="requisite-information-setup">Requisite Information Setup</h3>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) {
     ApplicationDbContext db = context.HttpContext.RequestServices.GetRequiredService&lt;ApplicationDbContext&gt;();
     Claim clientIdClaim = context.HttpContext.User.Claims.FirstOrDefault(x =&gt; x.Type == <span style="color:#e6db74">&#34;client_id&#34;</span>);
@@ -182,12 +170,10 @@
     }
 
     <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.OnActionExecutionAsync(context, next);
-<span style="display:block;width:100%;background-color:#3c3d38">}</span></code></pre></div>
-
+<span style="display:block;width:100%;background-color:#3c3d38">}
+</span></code></pre></div>
 <p>To properly do rate limiting, we&rsquo;ll need access to the the token doing the requesting and the client the APIs are acting through. Because the RateLimit attribute necessarily comes after the incoming request has been <code>Authorized</code>, the claims in the token have been deserialized by ASOS and are available for examining here. Unfortunately, the token is a bit harder to access from this context, so we have a helper method that will be explained later.</p>
-
 <h3 id="lazy-function-closures">Lazy Function Closures</h3>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate {
     
     ...
@@ -204,14 +190,11 @@
 </span><span style="display:block;width:100%;background-color:#3c3d38">    }
 </span>
     <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.OnActionExecutionAsync(context, next);
-}</code></pre></div>
-
+}
+</code></pre></div>
 <p>With an empty cache or with an item whose limit has already expired, we won&rsquo;t have the necessary rate limit information and won&rsquo;t be able to accurately increment or check the limit counts. We solve this by adding two internal functions that are ready-to-execute and return the necessary information. Like the comment says, they are lazy, and won&rsquo;t be executed every time. We just need to store the how, not the what.</p>
-
 <p>Additionally, the returns use the <code>safe navigation operator (?.)</code> so that any errors that occur in the fetching will also return null, instead of throwing an exception. This returned null value will be interpreted as a signal to short circuit the operation.</p>
-
 <h3 id="cache-apply">Cache Apply</h3>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate {
     
     ...
@@ -223,14 +206,11 @@
     }
 
     <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.OnActionExecutionAsync(context, next);
-<span style="display:block;width:100%;background-color:#3c3d38">}</span></code></pre></div>
-
+<span style="display:block;width:100%;background-color:#3c3d38">}
+</span></code></pre></div>
 <p>The last part of the main function is the application of all the set-up materials. We check the cache of the token first, and if its not rate limited, we check the cache of the limit of the client as a whole.</p>
-
 <h2 id="the-whole-function-rate-limit-function">The whole function Rate Limit function</h2>
-
 <p>The entire function, unbroken, is as follows:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) {
     ApplicationDbContext db = context.HttpContext.RequestServices.GetRequiredService&lt;ApplicationDbContext&gt;();
     Claim clientIdClaim = context.HttpContext.User.Claims.FirstOrDefault(x =&gt; x.Type == <span style="color:#e6db74">&#34;client_id&#34;</span>);
@@ -260,9 +240,9 @@
     }
 
     <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.OnActionExecutionAsync(context, next);
-}</code></pre></div>
-
-<h2 id="helper-1-check-or-apply-rate-limit">Helper 1 - Check or Apply Rate Limit</h2>
+}
+</code></pre></div>
+<h2 id="helper-1---check-or-apply-rate-limit">Helper 1 - Check or Apply Rate Limit</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckOrApplyRateLimit(<span style="color:#66d9ef">string</span> id, Func&lt;Task&lt;RateLimit&gt;&gt; f, <span style="color:#66d9ef">string</span> limitAppliedMessage, ActionExecutingContext context) {
     <span style="color:#75715e">/* If the item is whitelisted, bail early */</span>
     <span style="color:#66d9ef">if</span> (WhiteList.TryGetValue(id, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">bool</span> whitelisted)) {
@@ -279,16 +259,12 @@
     } <span style="color:#66d9ef">else</span> {
         <span style="color:#66d9ef">return</span> CacheUpdate(context, id, counter, limitAppliedMessage);
     }
-}</code></pre></div>
-<p>Given a id for the cache item, the lazy function that describes how to get a rate limit from the database, the message to respond with if limiting occurs, and the context for the application, we do the following:</p>
-
+}
+</code></pre></div><p>Given a id for the cache item, the lazy function that describes how to get a rate limit from the database, the message to respond with if limiting occurs, and the context for the application, we do the following:</p>
 <p>If the id is found in the white list, we quit early.</p>
-
 <p>If the item isn&rsquo;t found in the cache at all, we execute our lazy function to get the rate limits, and insert it into the cache. Side note, if an error occurs, we fail open.</p>
-
 <p>Finally, if the item is found in the cache, we increment the limit count with another helper function.</p>
-
-<h2 id="helper-2-insert-limit">Helper 2 - Insert Limit</h2>
+<h2 id="helper-2---insert-limit">Helper 2 - Insert Limit</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">/* Inserts the limit as a LimitCounter struct tied to the given id, and expiring when the Window lapses.
 </span><span style="color:#75715e">* The boolean returned indictes whether this item was whitelisted, and therefore if we should
 </span><span style="color:#75715e">* short-circuit our computation and return early. 
@@ -306,12 +282,10 @@
         Cache.Set(id, counter, <span style="color:#66d9ef">new</span> MemoryCacheEntryOptions().SetAbsoluteExpiration(limit.Window.Value)); <span style="color:#75715e">// Passed a null check above, value exists
 </span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
     }
-}</code></pre></div>
-<p>For a limit that isn&rsquo;t cached, we either add it to the cache with initial values set to 1 API call starting <code>UTCnow()</code>, or, if the item is unlimited, we add it to the Whitelist cache.</p>
-
+}
+</code></pre></div><p>For a limit that isn&rsquo;t cached, we either add it to the cache with initial values set to 1 API call starting <code>UTCnow()</code>, or, if the item is unlimited, we add it to the Whitelist cache.</p>
 <p>In either case, we give the cached item a time limit of <code>1 hour</code>, which helps us avoid server resets if an applications whitelist status changes.</p>
-
-<h2 id="helper-3-cache-update">Helper 3 - Cache Update</h2>
+<h2 id="helper-3---cache-update">Helper 3 - Cache Update</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">/* Updates the the cached item with an incremented call-count.
 </span><span style="color:#75715e">* Returns whether our incremented count puts us over the limit for the token
 </span><span style="color:#75715e">* If so, boolean indicates whether we should short-circuit our conputation and return early.
@@ -339,45 +313,37 @@
         Cache.Set(id, updatedCounter, <span style="color:#66d9ef">new</span> MemoryCacheEntryOptions().SetAbsoluteExpiration(updatedCounter.FirstCallTimestamp + updatedCounter.Window));
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
     }
-}</code></pre></div>
-<p>Because we can&rsquo;t actually update an item in the cache, we&rsquo;ll have to overwrite it with a new entry that is functionally identical except for its incremented call count.</p>
-
+}
+</code></pre></div><p>Because we can&rsquo;t actually update an item in the cache, we&rsquo;ll have to overwrite it with a new entry that is functionally identical except for its incremented call count.</p>
 <p>To make up for the fact that we&rsquo;re actually inserting a new item, we&rsquo;ll give it a time-to-expiration that is the remaining time of the old item.</p>
-
-<h2 id="helper-4-token-from-context">Helper 4 - Token From Context</h2>
+<h2 id="helper-4---token-from-context">Helper 4 - Token From Context</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">/* Because Tokens are not serialized into themselves, we cannot extract the relevant info 
 </span><span style="color:#75715e">* from the claims alone. We must therefore manually grab the Authorization header ourselves.
 </span><span style="color:#75715e">*/</span>
 <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">string</span> TokenFromContext(ActionExecutingContext context) {
     <span style="color:#66d9ef">string</span> AuthScheme = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme;
-    <span style="color:#66d9ef">string</span> BearerToken = context.HttpContext.Request.Headers<span style="color:#a6e22e">[&#34;Authorization&#34;]</span>.FirstOrDefault(x =&gt; x.StartsWith(AuthScheme));
+    <span style="color:#66d9ef">string</span> BearerToken = context.HttpContext.Request.Headers[<span style="color:#e6db74">&#34;Authorization&#34;</span>].FirstOrDefault(x =&gt; x.StartsWith(AuthScheme));
     <span style="color:#66d9ef">string</span> token = <span style="color:#e6db74">&#34;&#34;</span>;
     <span style="color:#66d9ef">if</span> (String.IsNullOrWhiteSpace(BearerToken)) {
         context.Result = <span style="color:#66d9ef">new</span> ContentResult { Content = <span style="color:#e6db74">&#34;Authorization header was missing&#34;</span> };
         context.HttpContext.Response.StatusCode = (<span style="color:#66d9ef">int</span>)System.Net.HttpStatusCode.BadRequest;
     }
     <span style="color:#66d9ef">else</span> {
-        <span style="color:#66d9ef">string</span><span style="color:#a6e22e">[]</span> bearerSplit = BearerToken.Split(AuthScheme+<span style="color:#e6db74">&#34; &#34;</span>);
-        <span style="color:#66d9ef">if</span> (bearerSplit.Length == <span style="color:#ae81ff">0</span> || String.IsNullOrWhiteSpace(bearerSplit<span style="color:#a6e22e">[1]</span>)) {
+        <span style="color:#66d9ef">string</span>[] bearerSplit = BearerToken.Split(AuthScheme+<span style="color:#e6db74">&#34; &#34;</span>);
+        <span style="color:#66d9ef">if</span> (bearerSplit.Length == <span style="color:#ae81ff">0</span> || String.IsNullOrWhiteSpace(bearerSplit[<span style="color:#ae81ff">1</span>])) {
             context.Result = <span style="color:#66d9ef">new</span> ContentResult { Content = <span style="color:#e6db74">&#34;Authorization was incorrectly formatted&#34;</span> };
             context.HttpContext.Response.StatusCode = (<span style="color:#66d9ef">int</span>)System.Net.HttpStatusCode.BadRequest;
         }
-        token = bearerSplit<span style="color:#a6e22e">[1]</span>;
+        token = bearerSplit[<span style="color:#ae81ff">1</span>];
     }
     <span style="color:#66d9ef">return</span> token;
-}</code></pre></div>
-<p>We only need this because we can&rsquo;t get the actual token being used from the helper methods on the context - so we have to get it ourselves. We can do this because the context that is passed to the original <code>OnExecutingAction</code> function is also passed the <code>HttpContext</code>, which contains the header information necessary.</p>
-
+}
+</code></pre></div><p>We only need this because we can&rsquo;t get the actual token being used from the helper methods on the context - so we have to get it ourselves. We can do this because the context that is passed to the original <code>OnExecutingAction</code> function is also passed the <code>HttpContext</code>, which contains the header information necessary.</p>
 <p>We use the default OAuth validation scheme name (&ldquo;Bearer&rdquo;), but we should stick to the defaults and avoid the hardcoded stuff were possible.</p>
-
 <p>One thing to pay attention to is that when we split the bearer token, we add a space - this is just how http headers are formed, so we accommodate for that.</p>
-
 <h1 id="ratelimitcounter">RateLimitCounter</h1>
-
 <p>We&rsquo;ve been referencing a <code>LimitCounter</code> object, which is a simple <code>struct</code> (not class) that stores the information necessary to write efficiently to the cache.</p>
-
 <p>Create a <code>LimitCounter.cs</code> class under <code>Models/OAuth/</code>:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">LimitCounter</span> {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> DateTimeOffset FirstCallTimestamp;
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> TimeSpan Window;
@@ -390,61 +356,54 @@
         Limit = limit;
         Window = window;
     } 
-}</code></pre></div>
-
+}
+</code></pre></div>
 <h1 id="add-the-attribute-to-the-each-method">Add the Attribute to the Each Method</h1>
-
 <p>The last step is to apply our rate limiting attribute. You can choose to apply it only to specific methods, or to an entire controller. Because we want to keep <code>/hello</code> as an unauthenticated endpoint, we&rsquo;ll apply it to each authorized method instead:</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[RateLimit]
-</span></span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme)]
-</span><span style="color:#a6e22e">[HttpGet(&#34;clientcount&#34;)]</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[RateLimit]</span>
+</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme)]</span>
+<span style="color:#a6e22e">[HttpGet(&#34;clientcount&#34;)]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; ClientCount() {
     <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Client Count Get Request was successful but this endpoint is not yet implemented&#34;</span>);
-}<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[RateLimit]
-</span></span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-read-birthdate&#34;)]
-</span><span style="color:#a6e22e">[HttpGet(&#34;birthdate&#34;)]</span>
+}
+<span style="color:#a6e22e">
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[RateLimit]</span>
+</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-read-birthdate&#34;)]</span>
+<span style="color:#a6e22e">[HttpGet(&#34;birthdate&#34;)]</span>
 <span style="color:#66d9ef">public</span> IActionResult GetBirthdate() {
     <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Birthdate Get Request was successful but this endpoint is not yet implemented&#34;</span>);
-}<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[RateLimit]
-</span></span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-read-email&#34;)]
-</span><span style="color:#a6e22e">[HttpGet(&#34;email&#34;)]</span>
+}
+<span style="color:#a6e22e">
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[RateLimit]</span>
+</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-read-email&#34;)]</span>
+<span style="color:#a6e22e">[HttpGet(&#34;email&#34;)]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; GetEmail() {
     <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Email Get Request was successful but this endpoint is not yet implemented&#34;</span>);
-}<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[RateLimit]
-</span></span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-modify-birthdate&#34;)]
-</span><span style="color:#a6e22e">[HttpPut(&#34;birthdate&#34;)]</span>
+}
+<span style="color:#a6e22e">
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[RateLimit]</span>
+</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-modify-birthdate&#34;)]</span>
+<span style="color:#a6e22e">[HttpPut(&#34;birthdate&#34;)]</span>
 <span style="color:#66d9ef">public</span> IActionResult ChangeBirthdate(<span style="color:#66d9ef">string</span> birthdate) {
     <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Birthdate Put successful but this endpoint is not yet implemented&#34;</span>);
-}<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[RateLimit]
-</span></span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-modify-email&#34;)]
-</span><span style="color:#a6e22e">[HttpPut(&#34;email&#34;)]</span>
+}
+<span style="color:#a6e22e">
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#a6e22e">[RateLimit]</span>
+</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-modify-email&#34;)]</span>
+<span style="color:#a6e22e">[HttpPut(&#34;email&#34;)]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; ChangeEmail(<span style="color:#66d9ef">string</span> email) {
     <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Email Put request received, but function is not yet implemented&#34;</span>);
-}</code></pre></div>
-
+}
+</code></pre></div>
 <h1 id="testing-the-rate-limits">Testing the Rate Limits</h1>
-
 <p>Launch your server.</p>
-
 <p>Because we created a new migration last time, we&rsquo;ll need to create another new user, client with redirect uris, and issue a new token. Once you&rsquo;ve done that, try calling the <code>/clientcount</code> endpoint twice in a row:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">djori@jormungandr:~/projects/OAuthTutorial<span style="color:#960050;background-color:#1e0010">$</span> curl -H <span style="color:#e6db74">&#34;Authorization: Bearer CfDJ8IGBmusd_JZPhIsNcrUVwgdUlbovc7WYVUPbiagJast6__y3Ez-AhgxgP3QucEwH4H3GZZpLdboWaZ0XgC5yRIbMNGGICIHK_rCwvVKzAo29odjcbMiMDMXx8tAYzS4oXfMpN6mTuP_ci14dbXJ8T_1CiSkyF3DG0bVKaAdJz97BrYojYTdEl1ttJFGxIr9Mrood3E79iY4GBQjIlJ6worfBntJiH7iva4DUBU1QbLgIxTtX004OCRpU_p8BDyYMcuJtc5DLmFHzYxSLErX4PhwKS00BT1mhCXMrL1z3sb0DLDpJcz-k3UeoebF0NTNDpnlQph0FB9geynS91VuoV3VDcJvRiobERG6AYyjRSnp3XbBnaq9e0ZA6kWx0SQJbwmVXBHVwSHB27hty3r9yXjHio4vbeYJLc75pxd5FgAOQwPkVDDEVqb79bDTMdRIAgrohhZRJ8IHw2V61FwLOlAOjXrKJCFgRzDhralpN92KTFY8sqNMzhwPAhuriHBj7VssO1mq8gbkFYNQYZ7jn_N3Yale6E9gXCcdYrSvqGyU-2iG7ssiSXa5l8fFcy6tB1f0rAhNfW-dmOY-zT2OvR0OiFWNWgKxfYOhiBafsgQ-IB72Y_ABeCnEy4eoanC2wP3Sl6gdbnkRzoXcMyJFdeSR_xenB2Td897rLkK8MdWltPPXH2U8DrbgiOJAZI1BywFgchF0cEO46mn5JmVPAi7FGej4nPezHVYiufmvGyCbKi54jv2DNVsjxU-20_5QQOMh1TWSrf3Tphquo03wTKEa7dNqyOwTTtudtDKV_BTehB-_kj_gQYvT8o5qmo93A86qNzEwZWgNW4UQM8SbCg4O_PWd3UBZ6-2OIC8QeQbYklC3LO8-3NWYPnux8clA1QLnHGzNS_ZLHCobLq8wnuNQAgs7qmqtLkpfRRbH7F-SdtHVEv9Jbo2srLuIpaD1cPA&#34;</span> http:<span style="color:#75715e">//localhost:5000/api/v1/clientcount
 </span><span style="color:#75715e"></span>
-<span style="display:block;width:100%;background-color:#3c3d38">Client Count Get Request was successful but <span style="color:#66d9ef">this</span> endpoint <span style="color:#66d9ef">is</span> not yet implemented</span></code></pre></div>
-
+<span style="display:block;width:100%;background-color:#3c3d38">Client Count Get Request was successful but <span style="color:#66d9ef">this</span> endpoint <span style="color:#66d9ef">is</span> not yet implemented
+</span></code></pre></div>
 <p>The first time returns correctly.</p>
-
 <p>Trying it again however, yields a different result.</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[...]</span>
 &gt; GET /api/v1/clientcount HTTP/<span style="color:#ae81ff">1.1</span>
 <span style="display:block;width:100%;background-color:#3c3d38">&gt; Host: localhost:<span style="color:#ae81ff">5000</span>
@@ -461,14 +420,11 @@
 &lt; X-Powered-By: ASP.NET
 &lt; Date: Mon, <span style="color:#ae81ff">18</span> Jun <span style="color:#ae81ff">2018</span> <span style="color:#ae81ff">21</span>:<span style="color:#ae81ff">08</span>:<span style="color:#ae81ff">36</span> GMT
 
-You have issued too many requests. Please check the retry-after headers and <span style="color:#66d9ef">try</span> again.</code></pre></div>
-
+You have issued too many requests. Please check the retry-after headers and <span style="color:#66d9ef">try</span> again.
+</code></pre></div>
 <h1 id="moving-on">Moving On</h1>
-
 <p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/18-RateLimitAttribute">here on GitHub</a>.</p>
-
 <p>In the next and final section, we&rsquo;ll push our application to Azure.</p>
-
 <p><a href="/posts/oauthserver/19">Next</a></p>
 </div>
 
@@ -548,29 +504,29 @@ You have issued too many requests. Please check the retry-after headers and <spa
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -668,7 +624,7 @@ You have issued too many requests. Please check the retry-after headers and <spa
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

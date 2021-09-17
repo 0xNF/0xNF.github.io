@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Music Channel Part 1 - Data - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,45 +128,29 @@
 
   
 
-  <div class="article-body">
-
-<p>This is the first in a series of posts about analyzing YouTube music channels.</p>
-
+  <div class="article-body"><p>This is the first in a series of posts about analyzing YouTube music channels.</p>
 <ul>
 <li>Part 1 - Music Channel Introduction and Data Collection</li>
-<li><a href="/posts/music/channel1">Part 2 - Analysis of Channel Activity</a><br /></li>
-<li><a href="/posts/music/channel2">Part 3 - Branding</a><br /></li>
+<li><a href="/posts/music/channel1">Part 2 - Analysis of Channel Activity</a></li>
+<li><a href="/posts/music/channel2">Part 3 - Branding</a></li>
 </ul>
-
 <h1 id="background">Background</h1>
-
 <p>I often listen to new music on YouTube because their discovery systems unearth some occasionally great finds. After a while of listening there however you begin to realize that there are only a handful of channels that get recommended to you, and they all seem to just upload songs and let the views roll in, not unlike a radio DJ. Sometimes these channels become so successful that artists will begin to sign with the channels for exclusive releases, in effect turning the channels into a de-facto label. Some of these channels have even turned into de-jure labels, such as Proximity.</p>
-
 <p>I thought it would be a fun experiment to see if I could create a YouTube channel of my own doing the same thing these channels were doing. It seemed easy enough, just upload a few songs here and there. But before I began, I wanted to get a sense of what, exactly, these channels were doing, what their upload schedule was actually like, what were they like when they started out, how did they evolve, etc.</p>
-
 <p>This series of posts describes just such an analysis of a selection of music channels on YouTube.</p>
-
 <h1 id="data-collection">Data Collection</h1>
-
 <p>First, I wanted to get a sense of how these channels upload songs, which would help inform me on how run my own channel. The questions that I wanted answers to before starting were:</p>
-
 <ol>
 <li>How many videos should we seed our channel with?</li>
 <li>How often should we upload?</li>
 <li>Should we upload more than video at once?</li>
 <li>How long can we wait between uploads if something goes wrong?</li>
 </ol>
-
 <h2 id="yt-tracker">YT Tracker</h2>
-
 <p>To answer these questions, I had to get some data first. I wasn&rsquo;t about to scrape YouTube myself, so after some googling for some tools that could help me gather some channel stats, I came across the excellent <a href="https://chrome.google.com/webstore/detail/yt-tracker/nhebilhcolhlinfcpgbpbecjajeiiajc">YT Tracker</a>, an addon for Google Sheets that pulls all kinds of channel information for you.</p>
-
 <p>You can find its full functionality detailed <a href="https://www.syncwithtech.org/track-youtube-videos-channels/">here</a>.</p>
-
 <h3 id="channel-list">Channel List</h3>
-
 <p>First I seeded YT Tracker with a list of 7 of the channels I either use or happen to come across often:</p>
-
 <ol>
 <li><a href="https://www.youtube.com/channel/UCudKvbd6gvbm5UCYRk5tZKA">TheSoundYouNeed</a></li>
 <li><a href="https://www.youtube.com/channel/UCXIyz409s7bNWVcM-vjfdVA">MajesticCasual</a></li>
@@ -176,118 +160,64 @@
 <li><a href="https://www.youtube.com/channel/UCJ6td3C9QlPO9O_J5dF4ZzA">MonsterCat</a></li>
 <li><a href="https://www.youtube.com/channel/UCjw0SX_9OGFI7buLG4-M0Fw">MikuMusicNetwork</a></li>
 </ol>
-
 <p>As the developer of YT Tracker writes on his page, it can sometimes be tricky to extract the channel name from some pages. If you&rsquo;re on a page for a given video, the main uploader link in the video description will contain the channel name - this goes for accounts that are flagged as &ldquo;user&rdquo;, as well for for &ldquo;channel&rdquo; accounts. This is important because YT Tracker only operates on channel ids.</p>
-
 <h3 id="adding-to-a-yt-tracker-sheet">Adding to a YT Tracker Sheet</h3>
-
 <p>We add the channel ids to the first column:</p>
-
-<p><img src="/misc/musicchannel/YtTracker_ChannelIds.png" alt="Channel Ids" /></p>
-
+<p><img src="/misc/musicchannel/YtTracker_ChannelIds.png" alt="Channel Ids"></p>
 <p>YT Tracker takes care of filling in the rest of the data automatically. It&rsquo;s really quite magical.</p>
-
 <h3 id="grabbing-video-data">Grabbing Video Data</h3>
-
 <p>Next we want to grab video data from each channel. With the channel id cell of the channel we want to grab highlighted, we use the Add-Ons drop down menu to select YT Tracker and select <code>Fetch Channel Videos</code>, which will create a new sheet for us, populated with video upload data:</p>
-
-<p><img src="/misc/musicchannel/YtTracker_VideoData.png" alt="Video Data" /></p>
-
+<p><img src="/misc/musicchannel/YtTracker_VideoData.png" alt="Video Data"></p>
 <p>You have to do this highlight-menu-fetch process for each item in our list.</p>
-
 <h3 id="exporting">Exporting</h3>
-
 <p>Next we&rsquo;ll take each sheet and Save-As <code>.csv</code> to some folder on our computer.</p>
-
 <p>This is the first step to getting the data into a SQL-queryable format.</p>
-
 <h1 id="data-cleanup-part-1">Data Cleanup Part 1</h1>
-
 <p>Every project that involves data will require some form of cleanup process, this is no different.</p>
-
 <h2 id="csv-cleanup">CSV Cleanup</h2>
-
 <h3 id="adding-channel-id">Adding Channel Id</h3>
-
 <p>Because we&rsquo;re going to end up putting all this data into SQLite, we need to do some work on the CSV files first. To make our data amenable, one of the things we&rsquo;ll do is add the channel name to each row of each CSV.</p>
-
 <p>For example, we&rsquo;re going to turn:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csv" data-lang="csv">Video Id,Title,Thumbnail,Publish On,Duration,# of Views,# of Likes,# of Dislikes,# of Comments
-x8Y2iCSGSXI,Nora Van Elken - Best I Ever Had,,2018-10-11,3 : 02,&#34;58,593&#34;,&#34;3,082&#34;,78,141</code></pre></div>
-<p>into</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csv" data-lang="csv">Video Id,Title,Thumbnail,Publish On,Duration,# of Views,# of Likes,# of Dislikes,# of Comments
-ChillNation,x8Y2iCSGSXI,Nora Van Elken - Best I Ever Had,,2018-10-11,3:02,&#34;58,593&#34;,&#34;3,082&#34;,78,141</code></pre></div>
-<p>I did this with the following two regexs:</p>
-
+<pre><code class="language-csv" data-lang="csv">Video Id,Title,Thumbnail,Publish On,Duration,# of Views,# of Likes,# of Dislikes,# of Comments
+x8Y2iCSGSXI,Nora Van Elken - Best I Ever Had,,2018-10-11,3 : 02,&quot;58,593&quot;,&quot;3,082&quot;,78,141
+</code></pre><p>into</p>
+<pre><code class="language-csv" data-lang="csv">Video Id,Title,Thumbnail,Publish On,Duration,# of Views,# of Likes,# of Dislikes,# of Comments
+ChillNation,x8Y2iCSGSXI,Nora Van Elken - Best I Ever Had,,2018-10-11,3:02,&quot;58,593&quot;,&quot;3,082&quot;,78,141
+</code></pre><p>I did this with the following two regexs:</p>
 <pre><code>find: ^([0-9A-Za-z_-]*)?,
 replace: ChillNation,$1,
-</code></pre>
-
-<p>where ChillNation is whatever channel you&rsquo;re actually working with.</p>
-
+</code></pre><p>where ChillNation is whatever channel you&rsquo;re actually working with.</p>
 <p>Be sure to add the Column name of ChannelName before Video Id.</p>
-
 <h3 id="patching-up-time">Patching up Time</h3>
-
 <p>The timestamps are bit messy - consistent, but full of weird spaces that make parsing a bit of a pain.</p>
-
 <p>We want to turn</p>
-
 <pre><code>3 : 02
 1 : 26 : 27
-</code></pre>
-
-<p>into</p>
-
+</code></pre><p>into</p>
 <pre><code>3:02
 1:26:27
-</code></pre>
-
-<p>We fix this with the following regex find/replaces:</p>
-
+</code></pre><p>We fix this with the following regex find/replaces:</p>
 <pre><code>find: ([0-9]{0,2})\s+:\s+([0-9]{0,2})
 replace: $1:$2
-</code></pre>
-
-<p>Which we run twice to catch any hour+ long tracks with hh:mm:ss formatting.</p>
-
+</code></pre><p>Which we run twice to catch any hour+ long tracks with hh:mm:ss formatting.</p>
 <h3 id="changing-column-names">Changing Column Names</h3>
-
 <p>The exported named columns would make for some difficult SQL querying. To make our life easier, we&rsquo;ll change the names:</p>
-
 <pre><code>Channel,VID,Title,Thumbnail,Published,Duration,Views,Likes,Dislikes,Comments
-</code></pre>
-
-<h2 id="sql-part-1">SQL Part 1</h2>
-
+</code></pre><h2 id="sql-part-1">SQL Part 1</h2>
 <p>I like to do as much data processing and analysis in python and sqlite as possible. We&rsquo;ll do that here too, by importing all our exported files into a new Sqlite database.</p>
-
 <p>I prefer to use <a href="http://sqlitebrowser.org/">DB Browser for SQLite</a>, which is a Windows GUI tool.</p>
-
 <p>Using the <code>Import -&gt; Table From CSV File</code> menu option, we add in all our exported csv files, saying okay to the <code>append to table?</code> warning. You can call the new table whatever you like, I&rsquo;ve chosen <code>VideoStats</code>.</p>
-
-<p><img src="/misc/musicchannel/newsqlite.png" alt="Import From CSV" /></p>
-
+<p><img src="/misc/musicchannel/newsqlite.png" alt="Import From CSV"></p>
 <h3 id="table">Table</h3>
-
 <p>After this important, we end up with a table that looks something like this:</p>
-
-<p><img src="/misc/musicchannel/sql0.png" alt="Table Data" /></p>
-
+<p><img src="/misc/musicchannel/sql0.png" alt="Table Data"></p>
 <p>While a good first step, I realized here that the data wasn&rsquo;t actually in the most useful form. Views, Likes, Dislikes, and Comments all have commas in their data, which makes them strings, not integers.</p>
-
 <p>Additionally, Duration has colons in it, which makes it a string too.</p>
-
 <p>The exception is the Published field, which SQLite handles correctly as a date.</p>
-
-<h3 id="adding-a-duration-ms-column">Adding a Duration_Ms Column</h3>
-
+<h3 id="adding-a-duration_ms-column">Adding a Duration_Ms Column</h3>
 <p>Although I want to fix the duration field, I think it might be useful to keep its original form around because its very human-readable. So we&rsquo;ll add another column to our table, <code>Duration_Ms</code>, which will represent the duration of the song in milliseconds:</p>
-
-<p><img src="/misc/musicchannel/sql1.png" alt="Duration MS" /></p>
-
+<p><img src="/misc/musicchannel/sql1.png" alt="Duration MS"></p>
 <h2 id="python-cleanup-part-1">Python Cleanup Part 1</h2>
-
 <p>We&rsquo;ll use Python here to remedy these errors. This is python at its best - small scripts for data processing.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os<span style="color:#f92672">,</span>sys<span style="color:#f92672">,</span>sqlite3<span style="color:#f92672">,</span>pathlib
 <span style="color:#f92672">from</span> dateutil.parser <span style="color:#f92672">import</span> parse <span style="color:#66d9ef">as</span> PDT
@@ -370,39 +300,29 @@ sqlfile <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./
    FixVids(vids)
 
 <span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-    main()</code></pre></div>
-<p>The summary of this script is that we remove commas from any numbers, and convert durations to their ms representation, which we update into the <code>Duration_Ms</code> field.</p>
-
+    main()
+</code></pre></div><p>The summary of this script is that we remove commas from any numbers, and convert durations to their ms representation, which we update into the <code>Duration_Ms</code> field.</p>
 <h2 id="sql-part-2">SQL Part 2</h2>
-
 <p>Now that most of the data was in SQL, and in a good format, I started running some queries. For instance:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">SELECT</span> Channel, Published, <span style="color:#66d9ef">COUNT</span>(Published) <span style="color:#66d9ef">AS</span> Uploaded <span style="color:#66d9ef">FROM</span> VideoStats <span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> Channel,Published <span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> Channel, <span style="color:#66d9ef">Count</span>(Published) <span style="color:#66d9ef">DESC</span></code></pre></div>
-<p>Which returns the number of tracks uploaded per channel per day. This is a useful query - Do people typically upload more than one track per day? Who knows? Well now, you do! With the power of Group By.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">SELECT</span> Channel, Published, <span style="color:#66d9ef">COUNT</span>(Published) <span style="color:#66d9ef">AS</span> Uploaded <span style="color:#66d9ef">FROM</span> VideoStats <span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> Channel,Published <span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> Channel, <span style="color:#66d9ef">Count</span>(Published) <span style="color:#66d9ef">DESC</span>
+</code></pre></div><p>Which returns the number of tracks uploaded per channel per day. This is a useful query - Do people typically upload more than one track per day? Who knows? Well now, you do! With the power of Group By.</p>
 <h3 id="another-table">Another Table</h3>
-
 <p>The problem is that some of these queries started to get a bit cumbersome and unwieldly. Running multiple versions got tiring pretty quick. The soluton was another table. I called this one <code>ChannelPublish</code>.</p>
-
 <p>I also wanted another piece of data, which would have otherwise been really difficult to extract using just plain SQL: Days since last publish.</p>
-
 <p>It seemed important to know how many days had passed between consecutive uploads. This is information that can be derived from the data as it exists, but it&rsquo;d be a lot nicer if we had a dedicated field for it. This process is known as Feature Engineering, and is common when working with tabular data.</p>
-
-<p><img src="/misc/musicchannel/sql2.png" alt="Channel Publish Table" /></p>
-
+<p><img src="/misc/musicchannel/sql2.png" alt="Channel Publish Table"></p>
 <h3 id="select-insert">Select Insert</h3>
-
 <p>To get data into our new table, we run the following query:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> ChannelPublish2 (Channel, Published, <span style="color:#66d9ef">Count</span>) 
     <span style="color:#66d9ef">SELECT</span> Channel, Published, <span style="color:#66d9ef">COUNT</span>(Published) <span style="color:#66d9ef">AS</span> Uploaded
     <span style="color:#66d9ef">FROM</span> VideoStats 
     <span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> Channel,Published 
-    <span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> Channel, <span style="color:#66d9ef">Count</span>(Published) <span style="color:#66d9ef">DESC</span></code></pre></div>
-<p>Which gets us a table composed entirely of the previous group-by query results.</p>
-
+    <span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> Channel, <span style="color:#66d9ef">Count</span>(Published) <span style="color:#66d9ef">DESC</span>
+</code></pre></div><p>Which gets us a table composed entirely of the previous group-by query results.</p>
 <h2 id="python-cleanup-part-2">Python Cleanup Part 2</h2>
-
 <p>Moving back to python, we&rsquo;ll update our script to calculate the number of days since the last upload:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /usr/bin/python</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#75715e">#! /usr/bin/python</span>
 
 <span style="color:#f92672">import</span> os<span style="color:#f92672">,</span>sys<span style="color:#f92672">,</span>sqlite3<span style="color:#f92672">,</span>pathlib
 <span style="color:#f92672">from</span> dateutil.parser <span style="color:#f92672">import</span> parse <span style="color:#66d9ef">as</span> PDT
@@ -474,13 +394,11 @@ sqlfile <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./
    UpdateDaysSinceLastPublish(dates)
 
 <span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-    main()</code></pre></div>
-<h2 id="sql-again">SQL Again</h2>
+    main()
 
+</code></pre></div><h2 id="sql-again">SQL Again</h2>
 <p>Now we have a table of very useful information:</p>
-
-<p><img src="/misc/musicchannel/sql3.png" alt="Useful Information" /></p>
-
+<p><img src="/misc/musicchannel/sql3.png" alt="Useful Information"></p>
 <p>Which lets us easily query for stuff like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">SELECT</span> 
 	<span style="color:#66d9ef">Max</span>(cp.DaysSinceLastPublish) <span style="color:#66d9ef">AS</span> MaxDaysBetweenPosts,
@@ -488,24 +406,18 @@ sqlfile <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./
 	cp.Channel <span style="color:#66d9ef">FROM</span> ChannelPublish <span style="color:#66d9ef">AS</span> cp
 	<span style="color:#66d9ef">WHERE</span> DaysSinceLastPublish <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> 
 	<span style="color:#75715e">--AND Published &gt; date(&#34;2018-01-01&#34;) 
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> cp.Channel</code></pre></div>
-<h1 id="summary">Summary</h1>
-
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> cp.Channel
+</code></pre></div><h1 id="summary">Summary</h1>
 <p>This first post covers the initial setup for being able to graph, chart and otherwise ask statistical questions about some YouTube channels that we&rsquo;re going to use as a basis for our own music channel.</p>
-
 <p>We gathered our initial dataset, cleaned that data, and put it all into a SQLite file for use later.</p>
-
 <p>Next time, we&rsquo;ll cover the channel setup, and answer the questions like:</p>
-
 <ol>
 <li>How many videos should we seed our channel with?</li>
 <li>How often should we upload?</li>
 <li>Should we upload more than video at once?</li>
 <li>How long can we wait between uploads if something goes wrong?</li>
 </ol>
-
 <p>Once that information is covered, we&rsquo;ll create a list of songs to upload and check to see if our favorite channels have covered them already. The less channels a song appears on of course, the better for our channel. We&rsquo;re not just trying to be a mirror of the others, after all.</p>
-
 <p>We&rsquo;ll also see what we can do about creating a Channel Icon, selecting some backgrounds, adding that must-have waveform pulse animation, and some initial channel curation.</p>
 </div>
 
@@ -577,29 +489,29 @@ sqlfile <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -697,7 +609,7 @@ sqlfile <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

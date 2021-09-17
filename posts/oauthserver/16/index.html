@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Implement an OAuth 2.0 Server (Part 16) - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,39 +128,24 @@
 
   
 
-  <div class="article-body">
-
-<p>Welcome to the sixteenth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
-
+  <div class="article-body"><p>Welcome to the sixteenth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
 <h1 id="token-revocation">Token Revocation</h1>
-
 <p>Token revocation is the process of invalidating already issued tokens. Because tokens are serialized with server data taken at a snapshot in time, there is no way for a token to know whether it&rsquo;s been invalidated, except for when it comes to its expiration date. Further, there&rsquo;s no given way for the server to know a token has been revoked either - at least, not without a backing datastore.</p>
-
 <p>Thankfully, we&rsquo;ve been using SQLite to store generated tokens, and our <code>ValidationService</code> already checks to see if a token is valid beyond just its expiration date.</p>
-
 <p>Because token revocation is an action that the user should perform, rather than one Client Application should perform, we will implement it as a method on the user&rsquo;s account management page.</p>
-
 <p>That means we&rsquo;ll be leaving the <code>options.RevocationEndpointPath</code> in startup untouched.</p>
-
 <pre><code>Note: We only revoke refresh tokens. It's too expensive to check whether an access token, which already has an inherently short lifetime, is valid or not on every request. Because refresh tokens are long lived, or in our case, infinitely so, we check them and not the others. 
 </code></pre>
-
 <h1 id="list-authorized-apps-under-manage">List Authorized Apps under /Manage</h1>
-
 <p>The first step is to show the user a list of the applications they&rsquo;ve authorized on their behalf.</p>
-
 <h2 id="viewmodel">ViewModel</h2>
-
 <p>Under <code>Models/ManageViewModels/</code>, create a new one: <code>AuthorizedAppsViewModel.cs</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AuthorizedAppsViewModel</span> {
     <span style="color:#66d9ef">public</span> IList&lt;OAuthClient&gt; AuthorizedApps { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-}</code></pre></div>
-<p>It does nothing except except display a list of clients.</p>
-
-<h2 id="manage-navigation-1-2">Manage Navigation (<sup>1</sup>&frasl;<sub>2</sub>)</h2>
-
+}
+</code></pre></div><p>It does nothing except except display a list of clients.</p>
+<h2 id="manage-navigation-12">Manage Navigation (1/2)</h2>
 <p>Under <code>Views/Manage/ManageNavPages.cs</code>, add a few lines:</p>
-
 <p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ManageNavPages</span> {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> ActivePageKey =&gt; <span style="color:#e6db74">&#34;ActivePage&#34;</span>;
 
@@ -186,18 +171,16 @@
 </span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> PageNavClass(ViewContext viewContext, <span style="color:#66d9ef">string</span> page)
     {
-        <span style="color:#66d9ef">var</span> activePage = viewContext.ViewData<span style="color:#a6e22e">[&#34;ActivePage&#34;]</span> <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">string</span>;
+        <span style="color:#66d9ef">var</span> activePage = viewContext.ViewData[<span style="color:#e6db74">&#34;ActivePage&#34;</span>] <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">string</span>;
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">string</span>.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? <span style="color:#e6db74">&#34;active&#34;</span> : <span style="color:#66d9ef">null</span>;
     }
 
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> AddActivePage(<span style="color:#66d9ef">this</span> ViewDataDictionary viewData, <span style="color:#66d9ef">string</span> activePage) =&gt; viewData<span style="color:#a6e22e">[ActivePageKey]</span> = activePage;
-}</code></pre></div>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> AddActivePage(<span style="color:#66d9ef">this</span> ViewDataDictionary viewData, <span style="color:#66d9ef">string</span> activePage) =&gt; viewData[ActivePageKey] = activePage;
+}
+</code></pre></div>
 This is step 1 of being able to navigate to the page we&rsquo;re about to create from the side nav-bar.</p>
-
-<h2 id="manage-navigation-2-2">Manage Navigation (<sup>2</sup>&frasl;<sub>2</sub>)</h2>
-
+<h2 id="manage-navigation-22">Manage Navigation (2/2)</h2>
 <p>Under <code>Views/Manage/_ManageNav.cshtml</code>, add a reference to the strings we added above:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">...
 
 &lt;<span style="color:#f92672">ul</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;nav nav-pills nav-stacked&#34;</span>&gt;
@@ -210,12 +193,9 @@ This is step 1 of being able to navigate to the page we&rsquo;re about to create
     &lt;<span style="color:#f92672">li</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)&#34;</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">asp-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;TwoFactorAuthentication&#34;</span>&gt;Two-factor authentication&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
 <span style="display:block;width:100%;background-color:#3c3d38">    &lt;<span style="color:#f92672">li</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@ManageNavPages.AuthorizedAppsNavClass(ViewContext)&#34;</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">asp-action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;AuthorizedApps&#34;</span>&gt;Apps&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
 </span>&lt;/<span style="color:#f92672">ul</span>&gt;</code></pre></div>
-
 <h2 id="authorized-applications-view">Authorized Applications View</h2>
-
 <p>Under <code>Views/Manage/</code> create a new <code>view</code> named <code>AuthorizedApps</code> - Check the box for <code>Create as a Partial View</code>. Do not include a model or a context, and kepe the <code>template</code> and <code>Empty (without model)</code>.</p>
-
-<p><img src="/oauthserver/part16/partialview.png" alt="create as partial view" /></p>
+<p><img src="/oauthserver/part16/partialview.png" alt="create as partial view"></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">@using OAuthTutorial.Models.OAuth
 @model AuthorizedAppsViewModel
 @{
@@ -251,19 +231,14 @@ This is step 1 of being able to navigate to the page we&rsquo;re about to create
         You have no authorized applications! Go out and find some apps to play with.
     &lt;/<span style="color:#f92672">div</span>&gt;
 
-}</code></pre></div>
-<p>Nothing special - just a regular list. The only interesting thing is that we&rsquo;ve included the <code>client.ClientId</code> as a route parameter of our button, which is going to <code>POST</code> to a method named <code>Revoke</code>.</p>
-
+}
+</code></pre></div><p>Nothing special - just a regular list. The only interesting thing is that we&rsquo;ve included the <code>client.ClientId</code> as a route parameter of our button, which is going to <code>POST</code> to a method named <code>Revoke</code>.</p>
 <p>Don&rsquo;t worry about not having the validation scripts that are normally present in every other view: they&rsquo;re taken care for us in the index page that will load this snippet.</p>
-
-<h2 id="controller-1-3-applicationdbcontext">Controller (<sup>1</sup>&frasl;<sub>3</sub>) - ApplicationDbContext</h2>
-
+<h2 id="controller-13---applicationdbcontext">Controller (1/3) - ApplicationDbContext</h2>
 <p>Open <code>Controllers/ManageController.cs</code>.</p>
-
 <p>Because of the way the <code>UserManager</code> works, and because we&rsquo;ll need to examine and manipulate the actual <code>OAuthClients</code> and <code>Tokens</code>, we need a handler to our <code>ApplicationDbContext</code>. Dependency-inject it into our constructor like normal:</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[Authorize]
-</span><span style="color:#a6e22e">[Route(&#34;[controller]</span>/<span style="color:#a6e22e">[action]</span><span style="color:#e6db74">&#34;)]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[Authorize]</span>
+<span style="color:#a6e22e">[Route(&#34;[controller]</span>/[action]<span style="color:#e6db74">&#34;)]
 </span><span style="color:#e6db74"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ManageController</span> : Controller
 {
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UserManager&lt;ApplicationUser&gt; _userManager;
@@ -293,10 +268,9 @@ This is step 1 of being able to navigate to the page we&rsquo;re about to create
 </span>    }
     
     ...
-}</code></pre></div>
-
-<h2 id="controller-2-3-get">Controller (<sup>2</sup>&frasl;<sub>3</sub>) - GET</h2>
-
+}
+</code></pre></div>
+<h2 id="controller-23---get">Controller (2/3) - GET</h2>
 <p>Near the bottom, add GET support for our new page:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[HttpGet]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; AuthorizedApps() {
@@ -315,14 +289,12 @@ This is step 1 of being able to navigate to the page we&rsquo;re about to create
         AuthorizedApps = items,
     };
     <span style="color:#66d9ef">return</span> View(aavm);
-}</code></pre></div>
-<p>For each token that the user has associated to them, we get the <code>OAuthClient</code> that issued it, then return that list to the user.</p>
-
-<h2 id="controller-3-3-post">Controller (<sup>3</sup>&frasl;<sub>3</sub>) - POST</h2>
-
+}
+</code></pre></div><p>For each token that the user has associated to them, we get the <code>OAuthClient</code> that issued it, then return that list to the user.</p>
+<h2 id="controller-33---post">Controller (3/3) - POST</h2>
 <p>Beneath the GET, add one final method, the post for our View:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[HttpPost, ActionName(&#34;revoke/{id}&#34;)]
-</span><span style="color:#a6e22e">[ValidateAntiForgeryToken]</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[HttpPost, ActionName(&#34;revoke/{id}&#34;)]</span>
+<span style="color:#a6e22e">[ValidateAntiForgeryToken]</span>
 <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; Revoke(<span style="color:#66d9ef">string</span> id) {
     <span style="color:#66d9ef">string</span> uid = _userManager.GetUserId(User);
     ApplicationUser user = <span style="color:#66d9ef">await</span> _context.Users.Include(x =&gt; x.UserClientTokens).FirstOrDefaultAsync(x =&gt; x.Id == uid);
@@ -346,35 +318,21 @@ This is step 1 of being able to navigate to the page we&rsquo;re about to create
     
 
     <span style="color:#66d9ef">return</span> RedirectToAction(nameof(AuthorizedApps));
-}</code></pre></div>
-<p>We compare tokens from our user based on the client id they submitted to us with the <code>POST /revoke/{id}</code> request, and for each matching token returned from the database, we remove it from the <code>Tokens</code> table, we remove its reference from the <code>OAuthClient</code> entry, and we remove it from our <code>User</code>. Since everything is <code>ON DELETE CASCADE</code> just removing it from the <code>Tokens</code> table should be enough, but we can afford to be thorough so we will.</p>
-
+}
+</code></pre></div><p>We compare tokens from our user based on the client id they submitted to us with the <code>POST /revoke/{id}</code> request, and for each matching token returned from the database, we remove it from the <code>Tokens</code> table, we remove its reference from the <code>OAuthClient</code> entry, and we remove it from our <code>User</code>. Since everything is <code>ON DELETE CASCADE</code> just removing it from the <code>Tokens</code> table should be enough, but we can afford to be thorough so we will.</p>
 <p>Finally we update our tracked items, save our changes, and then reload the page.</p>
-
 <h1 id="testing-revocation">Testing Revocation</h1>
-
 <p>Start the server and if you haven&rsquo;t already, create a user, create a client, and issue a token from that client. If you haven&rsquo;t deleted your database from the previous section, this is already done for you.</p>
-
-<p>Navigate to <a href="http://localhost:5000/manage">http://localhost:5000/manage</a> and check out the apps you&rsquo;ve authorized:</p>
-
-<p><img src="/oauthserver/part16/apps.png" alt="create as partial view" /></p>
-
+<p>Navigate to http://localhost:5000/manage and check out the apps you&rsquo;ve authorized:</p>
+<p><img src="/oauthserver/part16/apps.png" alt="create as partial view"></p>
 <p>Click the Remove button, and you the page should refresh, but be empty this time:</p>
-
-<p><img src="/oauthserver/part16/noapps.png" alt="create as partial view" /></p>
-
+<p><img src="/oauthserver/part16/noapps.png" alt="create as partial view"></p>
 <h1 id="revoking-access-tokens">Revoking Access Tokens</h1>
-
 <p>We don&rsquo;t revoke access tokens because it would be expensive to check the validity against the database for each request, but if you want to do so, it wouldn&rsquo;t be difficult to adjust our design to account for that.</p>
-
 <p>We already store all currently issued access tokens and our Revoke method already deletes all issued tokens to a user/client combo, so the only things to do would be to add a <code>CheckAccessTokenStillValid</code> to the <code>ValidationService</code> class and call it in the <code>[RateLimit]</code> attribute.</p>
-
 <h1 id="moving-on">Moving On</h1>
-
 <p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/16-TokenRevoke">here on GitHub</a>.</p>
-
 <p>In the next section, we&rsquo;ll add Rate Limiting to our application.</p>
-
 <p><a href="/posts/oauthserver/17">Next</a></p>
 </div>
 
@@ -454,29 +412,29 @@ This is step 1 of being able to navigate to the page we&rsquo;re about to create
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -574,7 +532,7 @@ This is step 1 of being able to navigate to the page we&rsquo;re about to create
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

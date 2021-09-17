@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Swipr - Scope - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,12 +60,12 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
     },
-    "description": "Part 2 of a series exploring machine learning &#43; tinder. In this post we talk requirements project scope."
+    "description": "Part 2 of a series exploring machine learning \u002b tinder. In this post we talk requirements project scope."
   }
 </script>
 
@@ -128,45 +128,33 @@
 
   
 
-  <div class="article-body">
-
-<p>From the outset we wanted to have, at the most basic level, the ability to use a CPU-only machine to judge whether or not we should swipe right on a given photograph.</p>
-
+  <div class="article-body"><p>From the outset we wanted to have, at the most basic level, the ability to use a CPU-only machine to judge whether or not we should swipe right on a given photograph.</p>
 <p>Additionally, it does us no good to just have a model that does this, it needs to be useful in some form beyond merely existing, meaning it has to exist as some kind of accessible application.</p>
-
 <p>Finally, it would be preferable to have this system be accessible from anywhere. Binding it to our local machine is useful insofar as this being an academic exercise is concerned, but it&rsquo;d be a lot nicer to turn it on and off as we see fit, when we see fit.</p>
-
 <p>From this, we can piece together our main requirements:</p>
-
 <ol>
 <li>We need to train a model on our preferences</li>
 <li>We need a remote server capable of running that model.
-
 <ul>
 <li>Because we are focused on fast.ai, we will concentrate on PyTorch here.</li>
 <li>Because we are not made of money, we need these models to run on the CPU</li>
-</ul></li>
+</ul>
+</li>
 <li>We need a way to send and receive data to and from the pytorch model</li>
 <li>We need an interface to turn this program on and off</li>
 <li>To know what state our program is in, we need a datastore</li>
 <li>We need to send and receive data from Tinder</li>
 </ol>
-
 <p>Additionally, some nice-to-haves will be the following abilities:</p>
-
 <ol>
 <li>Handle multiple users and not just us developers</li>
 <li>Fine-tune our tinder selection process before asking the model for a judgement</li>
 <li>See the results of each match</li>
 <li>Tell the server whether a given AI like/pass was appropriate (i.e., retrain the model)</li>
 </ol>
-
 <h1 id="implementation">Implementation</h1>
-
 <p>To implement this, we&rsquo;ll be using the following technologies:</p>
-
 <h2 id="main-server">Main Server</h2>
-
 <ol>
 <li>The server will run ASP.NET Core 2.1</li>
 <li>The datastore will be SQLite</li>
@@ -174,15 +162,10 @@
 <li>We will install the <code>fast.ai cpu-only</code> Conda environment from their GitHub</li>
 <li>We will use a fork of <a href="https://github.com/0xNF/sharp-tinder">Sharp-Tinder</a> usable on .NET Core to interact with Tinder</li>
 </ol>
-
 <h2 id="ml-server">ML Server</h2>
-
 <p>Our model training server will use the standard model training server from our other ML experiments: Fast.ai&rsquo;s prebuilt paperspace GPU instance.</p>
-
 <h1 id="moving-on">Moving On</h1>
-
 <p>In the next post, we&rsquo;ll talk about how we approached the data collection aspect of training the model. Turns out, like most things, it&rsquo;s more complicated than one might think at the start.</p>
-
 <p><a href="/posts/ml/swipr03">Next Section - Data Collection (1 / 2)</a></p>
 </div>
 
@@ -256,29 +239,29 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -376,7 +359,7 @@
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

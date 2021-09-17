@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "UWP: ListView Row Height - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,45 +128,32 @@
 
   
 
-  <div class="article-body">
-
-<h4 id="notes">Notes</h4>
-
+  <div class="article-body"><h4 id="notes">Notes</h4>
 <p>[07/19/2018] Note: This post refers to the library <code>Microsoft.NETCore.UniversalWindowsPlatform</code>, version <code>6.2.0-Preview1-26502-02</code>.</p>
-
 <h1 id="listview-row-height">ListView Row Height</h1>
-
 <p>When dealing with ListViews in UWP, sometimes more information density is desired, and the quickest way to get that density is to adjust the row height of each item in the ListView.</p>
-
 <p>By default in a new ListView, information density is low and look like this:</p>
-
-<p><img src="/uwp/listview-row-height/defaultheights.png" alt="Default List View Heights" /></p>
-
+<p><img src="/uwp/listview-row-height/defaultheights.png" alt="Default List View Heights"></p>
 <p>Any control that inherits from <code>ItemsPanel</code> in UWP Xaml must have their row heights adjusted by overriding the style parameter in the parent object:</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xaml" data-lang="xaml"> &lt;ListView&gt;
-<span style="display:block;width:100%;background-color:#3c3d38">    &lt;ListView.ItemContainerStyle&gt;
-</span><span style="display:block;width:100%;background-color:#3c3d38">        &lt;Style TargetType=&#34;ListViewItem&#34;&gt;
-</span><span style="display:block;width:100%;background-color:#3c3d38">            &lt;Setter Property=&#34;MinHeight&#34; Value=&#34;1&#34;/&gt;
-</span><span style="display:block;width:100%;background-color:#3c3d38">            &lt;Setter Property=&#34;Height&#34; Value=&#34;15&#34;/&gt;
-</span><span style="display:block;width:100%;background-color:#3c3d38">        &lt;/Style&gt;
-</span><span style="display:block;width:100%;background-color:#3c3d38">    &lt;/ListView.ItemContainerStyle&gt;
-</span>    &lt;ListView.ItemTemplate&gt;
+<pre><code class="language-xaml" data-lang="xaml"> &lt;ListView&gt;
+    &lt;ListView.ItemContainerStyle&gt;
+        &lt;Style TargetType=&#34;ListViewItem&#34;&gt;
+            &lt;Setter Property=&#34;MinHeight&#34; Value=&#34;1&#34;/&gt;
+            &lt;Setter Property=&#34;Height&#34; Value=&#34;15&#34;/&gt;
+        &lt;/Style&gt;
+    &lt;/ListView.ItemContainerStyle&gt;
+    &lt;ListView.ItemTemplate&gt;
         &lt;DataTemplate&gt;
             &lt;Grid&gt;
                 &lt;TextBlock Text=&#34;Hello&#34; FontSize=&#34;10&#34;/&gt;
             &lt;/Grid&gt;
         &lt;/DataTemplate&gt;
     &lt;/ListView.ItemTemplate&gt;
-&lt;/ListView&gt;</code></pre></div>
-
+&lt;/ListView&gt;</code></pre>
 <p>We effectively eliminate the minimum height, and then we give it the height we want. in our case <code>15</code>.</p>
-
 <p>Trying to set the row heights any other way won&rsquo;t work.</p>
-
 <p>After we&rsquo;ve done, we have a nice, dense list display:</p>
-
-<p><img src="/uwp/listview-row-height/adjustedheights.png" alt="Adjusted List View Heights" /></p>
+<p><img src="/uwp/listview-row-height/adjustedheights.png" alt="Adjusted List View Heights"></p>
 </div>
 
   <footer class="article-footer">
@@ -218,29 +205,29 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -338,7 +325,7 @@
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

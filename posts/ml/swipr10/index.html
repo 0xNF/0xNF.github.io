@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Swipr - Server - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,20 +128,12 @@
 
   
 
-  <div class="article-body">
-
-<p>Recall our arch diagram from the two chapters ago:</p>
-
-<p><img src="/ml/swipr/SwiprServerArch.png" alt="Swipr Server Arch" /></p>
-
+  <div class="article-body"><p>Recall our arch diagram from the two chapters ago:</p>
+<p><img src="/ml/swipr/SwiprServerArch.png" alt="Swipr Server Arch"></p>
 <p>The Database Service is a collection of methods opening and closing SQLite connections and, while important, is really exceedingly boring and furthermore, unsurprising. As such, we&rsquo;ll leave it out of the discussion.</p>
-
 <p>We&rsquo;ll also leave out building the Razor Pages and the views, dealing with identity, migrating our initial user tables with EF Core and other such minutiae of running an ASP.NET Core server.</p>
-
 <p>We&rsquo;re going to keep our discussion to the Swipr Service and the two Queuing Services.</p>
-
 <h1 id="server-configurations">Server Configurations</h1>
-
 <p>To make sure our server is configurable without recompiling, we have the notion of a <code>ServerConfig</code>, which is a class that stores some relevant values for the server, read in at start-up from various environment variables:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ServerConfigs</span> {
     <span style="color:#75715e">// Location of the Swipr DB
@@ -154,22 +146,18 @@
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> TinderPicturesDirectory { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">set</span>; }
     <span style="color:#75715e">// Location of SwiprML python script
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SwiprScript { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">set</span>; }
-}</code></pre></div>
-<h1 id="services">Services</h1>
-
+}
+</code></pre></div><h1 id="services">Services</h1>
 <h2 id="threadsafe-queue">Threadsafe Queue</h2>
-
 <p>This was intended to be a more complicated class, but it turns out all we needed was a concurrent queue.</p>
-
 <p>We use this ConcurrentQueue make sure that the Queue and Dequeue services are pushing and pulling from the same list and have the same view of that list.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ThreadSafe</span> {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ConcurrentQueue&lt;SwiprConfig&gt; EnabledUserConfigs = <span style="color:#66d9ef">new</span> ConcurrentQueue&lt;SwiprConfig&gt;();
-}</code></pre></div>
-<h2 id="config-queue-service">Config Queue Service</h2>
-
+}
+</code></pre></div><h2 id="config-queue-service">Config Queue Service</h2>
 <p>Our first relevant service is the Queue service - this is a hosted service that will, on a timer defined by the ServerConfigs, query the database to get any eligible Swipr Configs - an eligible Swipr Config is defined as being a configuration that the user hasn&rsquo;t manually disabled, one that isn&rsquo;t presently timed out due to Tinder Likes running out, and one that currently has no Facebook or Tinder token errors associated with it.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigQueueService</span> : IHostedService, IDisposable {<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigQueueService</span> : IHostedService, IDisposable {
+<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">        [...]</span>
 
         <span style="color:#66d9ef">public</span> Task StartAsync(CancellationToken cancellationToken) {
@@ -190,24 +178,22 @@
                     ThreadSafe.EnabledUserConfigs.Enqueue(sc);
                 }
             }
-        }<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">
+        }
+<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">        [...]</span>
-    }</code></pre></div>
-<h2 id="config-dequeue-service">Config Dequeue Service</h2>
-
+    }
+</code></pre></div><h2 id="config-dequeue-service">Config Dequeue Service</h2>
 <p>One of our more important classes is the Dequeue service, which pulls from the Concurrent Queue on the same timer as the QueueService.</p>
-
 <p>We add a few extra fields and methods to this class in order to keep it from pulling from the queue while LibSwipr and SwiprML are going through a user&rsquo;s account, essentially adding a lock to it while it&rsquo;s in progress.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">bool</span> StillGoing = <span style="color:#66d9ef">false</span>;
 ...
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> CheckWorking(<span style="color:#66d9ef">object</span> state);</code></pre></div>
-<p>Instead of the timer tick calling the DoWork method directly, we have it call a method that checks to make sure a Dequeue isn&rsquo;t already in progress.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigDequeueService</span> : IHostedService, IDisposable {<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> CheckWorking(<span style="color:#66d9ef">object</span> state);
+</code></pre></div><p>Instead of the timer tick calling the DoWork method directly, we have it call a method that checks to make sure a Dequeue isn&rsquo;t already in progress.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigDequeueService</span> : IHostedService, IDisposable {
+<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [...]</span>
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">bool</span> StillGoing = <span style="color:#66d9ef">false</span>;<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">bool</span> StillGoing = <span style="color:#66d9ef">false</span>;
+<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [...]</span>
 
     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> CheckWorking(<span style="color:#66d9ef">object</span> state) {
@@ -263,35 +249,28 @@
         }
         _logger.LogInformation(<span style="color:#e6db74">&#34;Finished dequeuing this batch of Swipr configs&#34;</span>);
         StillGoing = <span style="color:#66d9ef">false</span>;
-    }<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">
+    }
+<span style="color:#a6e22e">
 </span><span style="color:#a6e22e">    [...]</span>
-}</code></pre></div>
-<p>To keep us from getting stuck on one user too much, we keep track of the various errors that my occur and abandon this SwiprUser if they fail, for whatever reason, more than 10 times.</p>
-
+}
+</code></pre></div><p>To keep us from getting stuck on one user too much, we keep track of the various errors that my occur and abandon this SwiprUser if they fail, for whatever reason, more than 10 times.</p>
 <p>We do this because Swipr is essentially single-threaded and can only handle one Swipr user at a time, so we want to give the current Swipr user enough of a fair chance at getting their chance as possible, but we also don&rsquo;t want to hold up the whole queue by waiting forever on this one user. These problems would be diminished if Swipr could query for multiple Tinder users at once, and if SwiprML was a bit quicker.</p>
-
 <p>One we have our eligible Swipr configuration, we make the critical call out to <code>SwiprService.DoSwipr()</code>, which will do the hard work of combining everything we&rsquo;ve done so far.</p>
-
 <h1 id="swipr-service">Swipr Service</h1>
-
 <h2 id="doswipr">DoSwipr()</h2>
-
 <p>We start the method by requesting the tokens of the current Swipr User - remember that a Tinder token has a limited duration, so we&rsquo;ll need everything stored by the user to sign in again and get another token.</p>
-
 <p>We also set up variables for break conditions and statistics. When the total number of <code>ThisSessionLikes</code> and <code>ThisSessionPasses</code> reaches our <code>SessionLimit</code>, we stop working on this user and move on to a new one.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Break condition variables
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> success = <span style="color:#66d9ef">false</span>;
 <span style="color:#66d9ef">int</span> ThisSessionLikes = <span style="color:#ae81ff">0</span>;
 <span style="color:#66d9ef">int</span> ThisSessionPasses = <span style="color:#ae81ff">0</span>;
-<span style="color:#66d9ef">int</span> ThisSessionErrors = <span style="color:#ae81ff">0</span>;</code></pre></div>
-<p>The first thing we do is check if the token we pulled from the Database is valid, and if not, run the sign-in process again to get a new one. The <code>Refresh</code> methods handles saving this new information back to the Database.</p>
+<span style="color:#66d9ef">int</span> ThisSessionErrors = <span style="color:#ae81ff">0</span>;
+</code></pre></div><p>The first thing we do is check if the token we pulled from the Database is valid, and if not, run the sign-in process again to get a new one. The <code>Refresh</code> methods handles saving this new information back to the Database.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Checking status of tokens
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span>(!<span style="color:#66d9ef">await</span> Refresh(sc.UserId, at)) {
     <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> SwiprFacebookTokenException();
-}</code></pre></div>
-<p>If we fail to sign in, we write the error to the <code>SwiprErrors</code> table and try with a different user. An error here requires that the user re-do the entire sign in process. They are disabled on Swipr until they fix this. Usually this is because we triggered Facebook&rsquo;s security and got their account locked out.</p>
-
+}
+</code></pre></div><p>If we fail to sign in, we write the error to the <code>SwiprErrors</code> table and try with a different user. An error here requires that the user re-do the entire sign in process. They are disabled on Swipr until they fix this. Usually this is because we triggered Facebook&rsquo;s security and got their account locked out.</p>
 <p>If we have a working token, we get whatever potential matches that Tinder has queued up for us via a call to LibSwipr.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Getting users
 </span><span style="color:#75715e"></span>IList&lt;User&gt; matches = <span style="color:#66d9ef">new</span> List&lt;User&gt;();
@@ -299,14 +278,13 @@ matches = <span style="color:#66d9ef">await</span> TinderAPI.GetMatches(at.Tinde
 <span style="color:#66d9ef">if</span> (!matches.Any()) {
     cont = <span style="color:#66d9ef">false</span>;
     success = <span style="color:#66d9ef">true</span>;
-}</code></pre></div>
-<p>Once we have matches, we do a bunch of work for each Tinder User we got, including making sure it has entries in both our Database, and our filesystem so we can store pictures. Once we&rsquo;ve ensured a user has been accounted for, we call out our profile evaluator, which in addition to containing the swipe logic and the call to SwiprML, also contains the callback to Tinder.</p>
-
+}
+</code></pre></div><p>Once we have matches, we do a bunch of work for each Tinder User we got, including making sure it has entries in both our Database, and our filesystem so we can store pictures. Once we&rsquo;ve ensured a user has been accounted for, we call out our profile evaluator, which in addition to containing the swipe logic and the call to SwiprML, also contains the callback to Tinder.</p>
 <p>We switch on the result of our evaluator and record that result.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">// Evaluating users
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">[...]</span>
-<span style="color:#66d9ef">foreach</span>(User u <span style="color:#66d9ef">in</span> matches){<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [...]</span>
+<span style="color:#66d9ef">foreach</span>(User u <span style="color:#66d9ef">in</span> matches){
+<span style="color:#a6e22e">    [...]</span>
     EvaluationResult er = <span style="color:#66d9ef">await</span> EvaluateProfile(sc, u);
     <span style="color:#66d9ef">switch</span> (er.ActionTaken) {
         <span style="color:#66d9ef">case</span> SwipeAction.NA:
@@ -330,69 +308,63 @@ matches = <span style="color:#66d9ef">await</span> TinderAPI.GetMatches(at.Tinde
             ThisSessionErrors += <span style="color:#ae81ff">1</span>;
             <span style="color:#75715e">// TODO this is an error condition that should never happen.
 </span><span style="color:#75715e"></span>            <span style="color:#66d9ef">break</span>;
-    }<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    [...]</span>
-}</code></pre></div>
-<h2 id="evaluateprofile">EvaluateProfile()</h2>
-
+    }
+<span style="color:#a6e22e">    [...]</span>
+}
+</code></pre></div><h2 id="evaluateprofile">EvaluateProfile()</h2>
 <p>There is some nuance that is worth spending some time on in this method. Unlike Lyricall, we&rsquo;re not allowing infinite nesting and arbitrary ordering of the conditions to be met for a profile to be passed or failed upon, so the order as listed herein is important.</p>
-
 <p>The order goes like this:</p>
-
 <ol>
 <li>Does this User have any pictures?
-
 <ul>
 <li>if not, fail</li>
-</ul></li>
+</ul>
+</li>
 <li>Does our Swipr User have any Likes left to use?
-
 <ul>
 <li>Has user enabled the Out-Of-Likes SuperLike strategy?
-
 <ul>
 <li>if so, SuperLike if we have any left</li>
-</ul></li>
+</ul>
+</li>
 <li>fail otherwise</li>
-</ul></li>
+</ul>
+</li>
 <li>Are we blindly accepting all matches?
-
 <ul>
 <li>if so, like and move on</li>
-</ul></li>
+</ul>
+</li>
 <li>Are Ages enabled, and does the Tinder User fall within the range specified?
-
 <ul>
 <li>if not, fail</li>
-</ul></li>
+</ul>
+</li>
 <li>Is Distance enabled and does the Tinder User fall within the range specified?
-
 <ul>
 <li>if not fail</li>
-</ul></li>
+</ul>
+</li>
 <li>Is bio enabled, and if so does the user have an empty bio?
-
 <ul>
 <li>if so, fail</li>
 <li>otherwise, check for Banned bio keywords</li>
 <li>then, if SuperLike strategies has the WordMatch strat, check if bio has any SuperLike word.
-
 <ul>
 <li>if so, superlike and move on</li>
-</ul></li>
+</ul>
+</li>
 <li>finally, check if Bio contains an auto-like keyword
-
 <ul>
 <li>if so, like and move on</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>Finally, call out to SwiprML</li>
 </ol>
-
 <p>The last step has some nuance as well.</p>
-
 <p>To make this easy on us, we have decided that as long as at least one picture from the given user&rsquo;s profile can pass a minimum confidence check from SwiprML, we consider the entire profile a pass. We considered having some percentage of available pictures be the deciding criterion, but in the end, a single passable picture is good enough for now.</p>
-
 <p>There&rsquo;s some additional complicating logic within this particular step but it amount to the following code:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">SwiprMLResult smlr = <span style="color:#66d9ef">await</span> SendToSwiprML(tinderUserId, swiprUserId, pictureLocation);
 <span style="color:#66d9ef">if</span> (smlr.Crashed) {
@@ -405,19 +377,13 @@ matches = <span style="color:#66d9ef">await</span> TinderAPI.GetMatches(at.Tinde
     <span style="color:#75715e">// We immediately return the pass result
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">await</span> TinderAPI.LikeUser(u.Id);
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> EvaluationResult(SwipeAction.LIKED, <span style="color:#e6db74">&#34;AI Says OK&#34;</span>, WasAMatch, picfname);
-}</code></pre></div>
-<p>Where <code>SendToSwiprML()</code> downloads the picture and makes a call to the our SwiprServiceScript from a few parts ago to get a prediction. We also make sure to note if SwiprML crashed, which, while uncommon, is not unheard of. We take notes when it does.</p>
-
+}
+</code></pre></div><p>Where <code>SendToSwiprML()</code> downloads the picture and makes a call to the our SwiprServiceScript from a few parts ago to get a prediction. We also make sure to note if SwiprML crashed, which, while uncommon, is not unheard of. We take notes when it does.</p>
 <p>Like said earlier, the moment any part of this big function comes to a conclusion on what action to take with respect to the supplied tinder user, we make the call to Tinder ourselves immediately and return back to looping through other users.</p>
-
 <h1 id="summary">Summary</h1>
-
 <p>There&rsquo;s a bit more to the SwiprServer than just what&rsquo;s shown. We support displaying results of the server to see who was passed over and why, we support changing your SwiprConfig from a web based UI, seeing errors in your profile on your settings page, etc.</p>
-
 <p>You can see the full extent the implementation over at <a href="https://0xnf.github.com/swiprserver">https://0xnf.github.com/swiprserver</a>.</p>
-
 <h1 id="moving-on">Moving On</h1>
-
 <p>That concludes our tour of Swipr, where we wrap up another attempt to learn and utilize machine learning.</p>
 </div>
 
@@ -491,29 +457,29 @@ matches = <span style="color:#66d9ef">await</span> TinderAPI.GetMatches(at.Tinde
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -611,7 +577,7 @@ matches = <span style="color:#66d9ef">await</span> TinderAPI.GetMatches(at.Tinde
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

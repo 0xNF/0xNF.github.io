@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Swipr - Data Collection (Part 1 of 2) - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,50 +128,27 @@
 
   
 
-  <div class="article-body">
-
-<h1 id="data-collection">Data Collection</h1>
-
+  <div class="article-body"><h1 id="data-collection">Data Collection</h1>
 <p>In previous posts we laid out what we expect our end result to look like, but underlying all of that is of course the ML model making our auto-tinder more than just a simple always-swipe-right bot.</p>
-
 <p>Like all deep learning projects, before we can consider training our model or even what our model architecture will be, we need to consider the problem of data. What, exactly do we need to collect?</p>
-
-<p>Our domain is Tinder, and Tinder is a picture-first service. We will ignore the fact for now that a tinder profile is so much more than just a series of pictures, and that bios exist. We surely wouldn&rsquo;t be so savage to only care about the pictures, would we?</p>
-
+<p>Our domain is Tinder, and Tinder is a picture-first service. We will ignore the fact for now that a tinder profile is so much more than just a series of pictures, and that bios exist. We surely wouldn&rsquo;t be so crass and savage to only care about the pictures, would we?</p>
 <p>Regardless, our domain is pictures, so we need pictures. The outstanding question is what kind of pictures do we need, and roughly how many?</p>
-
 <h2 id="images-from-tinder">Images from Tinder</h2>
-
 <p>We have a few avenues available to us: We can download our Tinder history and use those pictures, and we can supplement them with the <a href="https://www.kaggle.com/chrisroths/peoples-republic-of-tinder-1">People&rsquo;s Republic of Tinder</a> dataset, which separates images into <code>Dudes</code> and <code>Girls</code>. Although using our own tinder dataset would be perfect for informing the model of what our own specific tastes are, the PRoT dataset is less useful because we don&rsquo;t want to just blindly accept all eligible profiles, so we have to get more clever.</p>
-
 <p>Even going by just our own dataset, it&rsquo;s too small to train on, consisting in our own specific case of about 2,000 images. We need more than that.</p>
-
 <h2 id="images-from-instagram">Images from Instagram</h2>
-
 <p>One source of basically high quality/high signal images is Instagram. Our strategy for training the main model will be to mark all Tinder images as &ldquo;No&rdquo;, and all images from Instagram as &ldquo;Yes&rdquo;.</p>
-
 <p>The idea is that Tinder images are low quality and low signal, and that we want to train the model on idealized conditions. We will compensate for this at the end by allowing for a relatively low threshold for what constitutes a &ldquo;yes&rdquo; when it comes to running the model in production.</p>
-
 <p>Conversely, we will assume that images from Instagram are all idealized. This gives us the basis to start with.</p>
-
 <h1 id="instagram-profile-collection">Instagram Profile Collection</h1>
-
 <h2 id="which-profiles">Which profiles?</h2>
-
 <p>Before we can think about downloading Instagram profiles, we should consider first what profiles to even download.</p>
-
 <p>Our first naïve approach was to assemble a list of regular names and collect all profiles with those names. This approach yielded an interesting phenomenon - given that we were going over an unbiased set of names, we ended up with a skew of people that roughly reflected the general population of Instagram.</p>
-
 <p>That is, we had in our dataset people who were too old, people who were too young, and people with babies. Although this is not what we wanted, we kept all these profiles and categorized them appropriately as &ldquo;too young&rdquo;, &ldquo;too old&rdquo;, and &ldquo;with baby&rdquo;.</p>
-
-<p>To fix this, we decided to consult the U.S. Census for popular baby names in given years. we specified a general range of people born between 1998 and 1990. This 8 year range of people between the ages of 20 and 28 was a good general collection of people who were essentially in the right target age range.</p>
-
+<p>To fix this, we decided to consult the U.S. Census for popular baby names in given years. we specified a general range of people born between 1998 and 1990. This 8 year range of people between the ages of 20 and 28 was a good general collection of people who were essentially the correct age and likely to still be unmarried or childless.</p>
 <p>This was done to try and keep the training dataset as pure as possible - the last thing in the world we wanted the model to learn was the face of a baby.</p>
-
 <p>Once we had the years set, we collected the top names of each year into a giant list, deduplicated it, and began searching Instagram, vetting each profile by hand.</p>
-
 <p>For Americans, the list of names was the following:</p>
-
 <pre><code>Jessica
 Ashley
 Emily
@@ -183,12 +160,9 @@ Elizabeth
 Megan
 Hannah
 </code></pre>
-
-<p><small><a href="https://www.ssa.gov/oact/babynames/decades/names1990s.html">https://www.ssa.gov/oact/babynames/decades/names1990s.html</a></small></p>
-
+<p><!-- raw HTML omitted --><a href="https://www.ssa.gov/oact/babynames/decades/names1990s.html">https://www.ssa.gov/oact/babynames/decades/names1990s.html</a><!-- raw HTML omitted --></p>
 <p>We also did this for Japanese names:</p>
-
-<pre><code>明日香  (asuka)
+<pre><code>明日香  (asuna)
 美咲    (misaki)
 愛      (ai)
 萌      (moe)
@@ -197,15 +171,10 @@ Hannah
 美穂    (miho)
 愛彩    (aika)
 </code></pre>
-
-<p><small><a href="http://www.tonsuke.com/nebe1.html">http://www.tonsuke.com/nebe1.html</a></small></p>
-
+<p><!-- raw HTML omitted --><a href="http://www.tonsuke.com/nebe1.html">http://www.tonsuke.com/nebe1.html</a><!-- raw HTML omitted --></p>
 <h2 id="manual-vetting">Manual Vetting</h2>
-
 <p>Armed with a first round of names, we started typing each into Instagram&rsquo;s search and opening up every single result returned.</p>
-
 <p>For each page, we quickly skimmed each profile and bucketed it into one of a few categories:</p>
-
 <ul>
 <li>Too old</li>
 <li>With baby</li>
@@ -213,33 +182,19 @@ Hannah
 <li>General No</li>
 <li>Ok</li>
 </ul>
-
-<p>This may seem crass, but really, it&rsquo;s not any worse than using Tinder itself.</p>
-
-<p>There is far too much data to vet each and every picture, but we consider each category to be essentially full of idealized images. Of course, pictures of beaches, food, and dogs are all common Instagram subjects, especially on profiles of selfie-obsessed early twenties girls. We will come back to this point in detail later on, but for now let&rsquo;s assume that each profile is pure and ideal for its category.</p>
-
-<p>With the Japanese girls we also realized we had a problem of purikura, which is a popular camera filter common to all phones in Japan that squishes the face and doubles the eye size of the photo subjects. The resulting photograph, while appealing to the Japanese aesthetic, is rather less than appealing to me.</p>
-
+<p>This may seem crass, but really, it&rsquo;s not any crasser than Tinder itself.</p>
+<p>There is far too much data to vet each and every picture, but we consider each category to be essentially full of idealized images. Of course, pictures of beaches, food, and dogs are all common Instagram subjects, even on profiles of stereotypically self centered selfie-obsessed young twenties girls. We will come back to this point in detail later on, but for now let&rsquo;s assume that each profile is pure and ideal for its category.</p>
+<p>With the Japanese girls we also realized we had a problem of purikura, which is a popular camera filter common to all phones in Japan that squishes the face and doubles the eye size of the photo subjects. The resulting photograph, while appealing to the Japanese aesthetic, falls somewhere between unattractive and grotesque to westerners such as ourselves.</p>
 <p>We decided to make a special category for purikura in case we wanted to do something with them in the future. Crawling Instagram is surprisingly hard work, so better to categorize them now and than to be faced with the task again in the future.</p>
-
 <p>Needless to say purikura will get lumped into the &lsquo;no&rsquo; category later on, but you never know.</p>
-
 <h2 id="final-profile-count">Final Profile Count</h2>
-
 <p>After collecting the URLs of all the profiles and sorting them all into their appropriate buckets, we had a list of approximately 514 profiles.</p>
-
 <h3 id="why-so-few-dudes">Why so few dudes?</h3>
-
 <p>You may wonder why we seem to be taking the risk of not gathering any dude profiles beyond those in the small PRoT set. We surely wouldn&rsquo;t want the bot to make an incorrect judgement on a guys profile.</p>
-
 <p>Although true, we can trust that Tinder will, for the most part, only show us people of the gender we&rsquo;re interested in. Sometimes Tinder messes up and throws a same-sex person in there, but the overwhelming majority of the time it gets it right.</p>
-
 <p>What this amounts to is that, statistically, the number of erroneous males in our queue will be irrelevant. But more importantly, our bot doesn&rsquo;t even need to learn what a guy is. Due to the sheer amount of pictures we&rsquo;re going to feed it, we can trust that it will be able to discern that the features of a male do not constitute a &lsquo;YES&rsquo;.</p>
-
 <h1 id="moving-on">Moving On</h1>
-
 <p>In the next post, we&rsquo;ll discuss the logistics of collecting and transporting this massive sum of data from Instagram.</p>
-
 <p><a href="/posts/ml/swipr04">Next Section - Data Collection (2 / 2)</a></p>
 </div>
 
@@ -313,29 +268,29 @@ Hannah
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -433,7 +388,7 @@ Hannah
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

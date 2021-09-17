@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Cnn on Nothing in Particular</title>
+    <title>CNN on Nothing in Particular</title>
     <link>https://0xnf.github.io/tags/cnn/</link>
-    <description>Recent content in Cnn on Nothing in Particular</description>
+    <description>Recent content in CNN on Nothing in Particular</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Dec 2018 17:01:51 -0800</lastBuildDate>
-    
-	<atom:link href="https://0xnf.github.io/tags/cnn/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 13 Dec 2018 17:01:51 -0800</lastBuildDate><atom:link href="https://0xnf.github.io/tags/cnn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Swipr - Server</title>
       <link>https://0xnf.github.io/posts/ml/swipr10/</link>
@@ -71,8 +67,8 @@ DataLoader The first thing the creation of a PyTorch model requires is the creat
       
       <guid>https://0xnf.github.io/posts/ml/swipr05/</guid>
       <description>Back in part 3, we said:
-Of course, pictures of beaches, food, and dogs are all common Instagram subjects, especially on profiles of selfie-obsessed early twenties girls. We will come back to this point in detail later on, but for now let&#39;s assume that each profile is pure and ideal for its category  Now it is time to come back to that.
-A bunch of Instagram photos, no matter from whose profile, are of course not pure and ideal for their category, and pictures of beaches, foods, and boyfriends abound.</description>
+Of course, pictures of beaches, food, and dogs are all common Instagram subjects, even on profiles of stereotypically self centered selfie-obsessed young twenties girls. We will come back to this point in detail later on, but for now, let&#39;s assume that each profile is pure and ideal for its category.  Now it is time to come back to that.
+A bunch of Instagram photos, no matter from whose profile, are of course notpure and ideal for their category, and pictures of beaches, foods, and boyfriends abound.</description>
     </item>
     
     <item>
@@ -113,7 +109,7 @@ Finally, it would be preferable to have this system be accessible from anywhere.
       
       <guid>https://0xnf.github.io/posts/ml/swipr01/</guid>
       <description>The Goal Continuing the quest to learn modern Machine Learning, I thought it would be fun to create a Tinder auto-swiper that could potentially reject matches I don&amp;rsquo;t want and accept matches I do want.
-One of my friends had the brilliant idea of naming this tinderbot &amp;ldquo;Swiper&amp;rdquo;, like the fox from Dora the Explorer, famous for being repelled by the intrepid protagonists with the incantation of &amp;ldquo;Swiper, no swiping!</description>
+One of my friends had the brilliant idea of naming this tinderbot &amp;ldquo;Swiper&amp;rdquo;, like the fox from Dora the Explorer, famous for being repelled by the intrepid protagonists with the incantation of &amp;ldquo;Swiper, no swiping!&amp;rdquo;</description>
     </item>
     
   </channel>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 <link rel="alternate" type="application/rss+xml" title="RSS" href="https://0xnf.github.io/categories/security/index.xml">
 
@@ -14,7 +14,7 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>Security - Nothing in Particular</title>
+    <title>security - Nothing in Particular</title>
     
     <link href="https://0xnf.github.io/css/styles.css" rel="stylesheet">
     
@@ -53,7 +53,7 @@
 
     
     <header class="page-header">
-      <h1>Security</h1>
+      <h1>security</h1>
     </header>
     
 
@@ -70,7 +70,9 @@
   </header>
 
   
-  <div class="summary">In this section of our OAuth tutorial we add the ability to authorize against the scopes we created back in part 8 using ASP.NET policies.</div>
+  <div class="summary">Welcome to the fifteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Scope Authorization with Policies, Requirements and Handlers Just adding Authorization attributes is insufficient for our purposes - our tokens have scopes associated with them, and our endpoint authorization checks should reflect that. To do so, we will use policies, which you can read about on the Microsoft Docs.
+Policies are fragments you can add to an authorization attribute that confirm whether a given HttpContext meets the requirements of the attribute, beyond simply being authenticated or not.</div>
 
   
   <footer>
@@ -91,7 +93,9 @@
   </header>
 
   
-  <div class="summary">In this section of our OAuth tutorial, we&#39;ll add OAuth Validation to our application and actually authenticate a user with their access tokens.</div>
+  <div class="summary">Welcome to the fourteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Adding OAuth Validation Our server successfully issues the three token types, but we don&rsquo;t have a way to actually force a token check on our endpoints yet. One of the packages we downloaded initially was AspNet.Security.OAuth.Validation. We&rsquo;re going to use that to add OAuth Validation to our server.
+In Startup.cs's ConfigureServices, add .</div>
 
   
   <footer>
@@ -112,7 +116,9 @@
   </header>
 
   
-  <div class="summary">Here we work with Identity, Claims, and Authorization tickets so that the OpenIdConnectServer library can generate a valid and useful access token for our users.</div>
+  <div class="summary">Welcome to the thirteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Identity, Claims, and Authorization Tickets We&rsquo;ve been skirting talking about claims and authentication tickets by hiding all of it behind our TicketCounter class. You can get a in-depth overview of what those are over at the Microsoft Docs.
+Claims are how the ASP.NET team has approached identity and authorization details since about 2016.</div>
 
   
   <footer>
@@ -133,7 +139,9 @@
   </header>
 
   
-  <div class="summary">We&#39;re ready to start working more seriously on issuing access tokens - the first step of which is to show the users a page that lets them review what permissions an application is requesting, and giving them the opportunity to accept or deny the request.</div>
+  <div class="summary">Welcome to the twelfth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Authorization Request Accept/Deny View Two of the the three flows we support, Implicit Grant and Authorization Code, are interactive flows - they require that the user be presented with a screen where they can accept or deny the authorization request.
+As a preview, this is what our auth page will look like: Add the ViewModel Under Models/, add a new folder AuthorizeViewModels/ and add a new AuthorizeViewModel class:</div>
 
   
   <footer>
@@ -154,7 +162,8 @@
   </header>
 
   
-  <div class="summary">In this part of our OAuth tutorial, we implement the missing services that help us validate our tokens and write to the database.</div>
+  <div class="summary">Welcome to the eleventh part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Services Our methods thus far have been peppered with a reference to a service named ValidationService. This lightweight class is a service that queries our database. Nothing is preventing us from doing these checks inside the OAuthProvider class itself, but the abstraction lends itself to a cleaner batch of methods.</div>
 
   
   <footer>
@@ -175,7 +184,9 @@
   </header>
 
   
-  <div class="summary">This is part 2 of 2 for setting up our OpenIdConnectServerProvider, where we&#39;ll wrap it up by implementing the Token series of methods</div>
+  <div class="summary">Welcome to the tenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Authorization Provider - Token Methods We&rsquo;re still implementing the Providers/OAuthProvider.cs class we made in the previous section. Here we&rsquo;re going to deal with the three Token methods we left un-overridden from last time: ValidateTokenRequest, HandleTokenRequest, ApplyTokenResponse.
+Validate Token Request As a small warning, the validate token request endpoint is one of the longest methods we&rsquo;ll be implementing.</div>
 
   
   <footer>
@@ -196,7 +207,9 @@
   </header>
 
   
-  <div class="summary">This is our first real exposure to the OpenIdConnectServer library - this is part 1 of 2 for setting this class up. We&#39;ll handle the Authorization series of methods in this section.</div>
+  <div class="summary">Welcome to the ninth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Authorization Provider - Authorize Methods It&rsquo;s worth taking a moment to have an overview of how the OpenIdConnectServer library actually works. You are encouraged to read Kevin Chalet&rsquo;s post here.
+An authorization provider is an implementation of the OpenIdConnectServerProvider type which overrides the virtual methods we want to implement. We&rsquo;re going to leave most of these un-overridden, but if you ever need additional functionality, you can always override it and inspect/implement that stage of the pipeline.</div>
 
   
   <footer>
@@ -217,7 +230,8 @@
   </header>
 
   
-  <div class="summary">We&#39;ll add client scopes in this section - such as defining what it takes to read user information like email or birthdate.</div>
+  <div class="summary">Welcome to the eighth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Adding Client Scopes Scopes are ways to limit a client&rsquo;s ability to act on behalf of the user. The scopes are defined by the Resource Server, like Spotify or Google. The client requests the scopes they want to work with, and those scopes are presented to the Resource Owner for authorization - they can then choose to accept or reject the authorization request, meaning that just because an application requests certain, potentially high-value access, doesn&rsquo;t mean it automatically gets it.</div>
 
   
   <footer>
@@ -238,7 +252,9 @@
   </header>
 
   
-  <div class="summary">We&#39;ll wrap up creating the OAuth Client views by adding the actual razor page templated .cshtml views to our project.</div>
+  <div class="summary">Welcome to the seventh part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+OAuth Client CRUD - Views This is the second part of adding our OAuth Client management pages. In the previous section we generated a controller, which automatically generated some views for us. In this section, we&rsquo;ll make those views do what we need them to do.
+Details and Delete Views Delete the following two cshtml files - we don&rsquo;t need them, because we&rsquo;ll be rolling their functions into the Edit view.</div>
 
   
   <footer>
@@ -259,7 +275,9 @@
   </header>
 
   
-  <div class="summary">We&#39;ll spend some time creating setting up the OAuth Client views, which let a user register and edit an OAuth Client. This section deals with the ViewModels and Controllers.</div>
+  <div class="summary">Welcome to the sixth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+OAuth Client CRUD - Controller and ViewModels This is the first part of adding our OAuth Client management pages. We&rsquo;ll set up the controller and the viewmodel here. In next part, we&rsquo;ll add the html views.
+View Models ViewModels are, at least in the context of ASP.NET (as opposed to UWP where the MVVM pattern changes what it means slightly), is a way of firewalling our models from our views.</div>
 
   
   <footer>
@@ -295,29 +313,29 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -415,7 +433,7 @@
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

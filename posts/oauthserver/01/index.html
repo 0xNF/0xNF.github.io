@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Implement an OAuth 2.0 Server (Part 01) - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,12 +60,12 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
     },
-    "description": "This is the first part of a 19-part tutorial on how to implement an OAuth 2.0 / OpenIdConnect server. This tutorial will take us from start to finish using ASP.NET Core 2 from project creation to azure deployment."
+    "description": "This is the first part of a 19-part tutorial on how to implement an OAuth 2.0 \/ OpenIdConnect server. This tutorial will take us from start to finish using ASP.NET Core 2 from project creation to azure deployment."
   }
 </script>
 
@@ -128,18 +128,11 @@
 
   
 
-  <div class="article-body">
-
-<p>Welcome to the first part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
-
+  <div class="article-body"><p>Welcome to the first part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
 <p>The creator of the library, Kevin Chalet, has an excellent series of <a href="https://kevinchalet.com/2016/07/13/creating-your-own-openid-connect-server-with-asos-introduction/">blog posts</a>, that you are encouraged to read for more information, with less of a hands-on approach.</p>
-
 <p>The final product is available <a href="https://github.com/0xNF/OAuthTutorial">here on GitHub</a>, and at the end of each step the project as completed up to that point will be available on its respective branch.</p>
-
 <p>For a live demonstration of this application - <a href="http://oauthtutorial.azurewebsites.net/">visit the hosted version on Azure</a>, where you can do everything we&rsquo;ll describe.</p>
-
 <h2 id="tutorial-table-of-contents">Tutorial Table of Contents</h2>
-
 <ol>
 <li><a href="/posts/oauthserver/01">Introduction</a></li>
 <li><a href="/posts/oauthserver/02">Project Setup and Dependency Downloads</a></li>
@@ -161,41 +154,35 @@
 <li><a href="/posts/oauthserver/18">Rate Limiting - Attribute Creation</a></li>
 <li><a href="/posts/oauthserver/19">Pushing to Azure</a></li>
 </ol>
-
 <h2 id="concepts">Concepts</h2>
-
 <p>Along the way you&rsquo;ll be exposed to these concepts:</p>
-
 <ol>
 <li>Beginner Concepts:
-
 <ol>
 <li>curl</li>
 <li>CRUD</li>
 <li>REST APIs</li>
-</ol></li>
+</ol>
+</li>
 <li>Intermediate Concepts
-
 <ol>
 <li>Razor Pages 2.0</li>
 <li>Authentication</li>
 <li>OAuth 2</li>
 <li>Entity Framework Core</li>
 <li>Rate Limiting</li>
-</ol></li>
+</ol>
+</li>
 <li>Advanced Concepts
-
 <ol>
 <li>Identity</li>
 <li>Claims</li>
 <li>Authentication Schemes</li>
-</ol></li>
 </ol>
-
+</li>
+</ol>
 <h2 id="libraries">Libraries</h2>
-
 <p>We&rsquo;ll be using the following libraries in our application:</p>
-
 <ol>
 <li><a href="https://www.nuget.org/packages/AspNet.Security.OpenIdConnect.Extensions/">AspNet.Security.OpenIdConnect.Extensions</a></li>
 <li><a href="https://www.nuget.org/packages/AspNet.Security.OpenIdConnect.Primitives/">AspNet.Security.OpenIdConnect.Primitives</a></li>
@@ -203,88 +190,79 @@
 <li><a href="https://www.nuget.org/packages/AspNet.Security.OAuth.Introspection/">AspNet.Security.OAuth.Introspection</a></li>
 <li><a href="https://www.nuget.org/packages/AspNet.Security.OAuth.Validation/">AspNet.Security.OAuth.Validation</a></li>
 </ol>
-
 <h2 id="what-the-application-will-be-able-to-do">What the application will be able to do</h2>
-
 <p>At a high level, our final application will be able to do these things:</p>
-
 <ul>
 <li>Users will be able to register and login on the website, with persisted login sessions via cookie authentication.</li>
 <li>Users will be able to create/delete OAuth Client Applications, give them a name, a description, and a list of redirect URIs.</li>
 <li>Users will also be able to edit the description and regenerate the <code>client secret</code>.</li>
 <li>Our server will support issuing OAuth 2.0 access tokens to those applications with the three major flows:
-
 <ul>
 <li>Client Credentials</li>
 <li>Implicit</li>
 <li>Authorization Code</li>
-</ul></li>
+</ul>
+</li>
 <li>Our server will have a small authenticated-access API that utilizes OAuth Scopes</li>
 <li>Finally, we&rsquo;ll support rate limiting of our endpoints</li>
 </ul>
-
 <h1 id="public-api">Public API</h1>
-
 <p>We&rsquo;ll have a small public API that supports the following unauthenticated, authenticated, unscoped, and scoped endpoints:</p>
-
 <ul>
 <li>Unauthenticated Methods
-
 <ul>
 <li>GET <code>api/v1/hello</code>
-
 <ul>
 <li>Returns <code>&quot;Hello&quot;</code> in the body.</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>Authenticated Methods
-
 <ul>
 <li>Unscoped Methods
-
 <ol>
 <li>GET <code>api/v1/clientcount</code>
-
 <ul>
 <li>Returns <code>number of clients you've registered</code> in the body</li>
-</ul></li>
-</ol></li>
+</ul>
+</li>
+</ol>
+</li>
 <li>Scoped Methods
-
 <ol>
 <li>GET <code>api/v1/birthdate</code>
-
 <ul>
 <li>Returns the <code>user's birthdate</code> in the body</li>
-</ul></li>
+</ul>
+</li>
 <li>GET <code>api/v1/email</code>
-
 <ul>
 <li>Returns the <code>user's email</code></li>
-</ul></li>
+</ul>
+</li>
 <li>PUT <code>api/v1/email</code>
-
 <ul>
 <li>Changes the <code>user's email</code></li>
-</ul></li>
+</ul>
+</li>
 <li>PUT <code>api/v1/birthdate</code>
-
 <ul>
 <li>Changes the <code>user's birthdate</code></li>
-</ul></li>
+</ul>
+</li>
 <li>GET <code>api/v1/me</code>
-
 <ul>
 <li>gets the user object, requires no scopes but additional information is returned if more scopes are present.</li>
-</ul></li>
-</ol></li>
-</ul></li>
 </ul>
-
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
 <h1 id="moving-on">Moving On</h1>
-
 <p>In the next section we&rsquo;ll set up the basic project structure and download our libraries.</p>
-
 <p><a href="/posts/oauthserver/02">Next</a></p>
 </div>
 
@@ -364,29 +342,29 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -484,7 +462,7 @@
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Swipr - Data Cleaning - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -128,32 +128,19 @@
 
   
 
-  <div class="article-body">
-
-<p>Back in <a href="/posts/ml/swipr03">part 3</a>, we said:</p>
-
-<pre><code>Of course, pictures of beaches, food, and dogs are all common Instagram subjects, especially on profiles of selfie-obsessed early twenties girls. We will come back to this point in detail later on, but for now let's assume that each profile is pure and ideal for its category
+  <div class="article-body"><p>Back in <a href="/posts/ml/swipr03">part 3</a>, we said:</p>
+<pre><code>Of course, pictures of beaches, food, and dogs are all common Instagram subjects, even on profiles of stereotypically self centered selfie-obsessed young twenties girls. We will come back to this point in detail later on, but for now, let's assume that each profile is pure and ideal for its category.
 </code></pre>
-
 <p>Now it is time to come back to that.</p>
-
-<p>A bunch of Instagram photos, no matter from whose profile, are of course <i>not</i> pure and ideal for their category, and pictures of beaches, foods, and boyfriends abound.</p>
-
+<p>A bunch of Instagram photos, no matter from whose profile, are of course <!-- raw HTML omitted -->not<!-- raw HTML omitted --> pure and ideal for their category, and pictures of beaches, foods, and boyfriends abound.</p>
 <p>This is actually a similar problem to what we might find on Tinder - people will post far more than just their picture there, often the same sets of non-face images will crop up, so this is a problem that is double worth solving.</p>
-
 <p>This is just a data massaging step before we train our model, but it&rsquo;s an important one.</p>
-
 <p>We&rsquo;re going to take all our images and run them through a face/gender/age summarizing model, and use that information to determine what categories (Like, Dislike) to load each image in as during model-training time.</p>
-
 <pre><code>An important note about this pre-filter is that we are only looking to disqualify images. The goal of this step is explicitly to not decide what is an 'OK' image. We are only concerned with what qualifies as a 'NO' image.  
 </code></pre>
-
 <h2 id="a-new-database">A New Database</h2>
-
 <p>Before we talk about the actual implementation of this pre-filter, we need to talk about some infrastructure.</p>
-
 <p>One of the themes of this project thus far has been those of being &ldquo;robust-to-failure&rdquo; and &ldquo;easy-to-recover from&rdquo;. We take the same approach here for the pre-filter, simply because we have to go over really a lot of data. As an added bonus, the resulting database we make will be useful in constructing the dataloader for our final model training as well.</p>
-
 <p>We&rsquo;ll be creating a database with one table constructed like so:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>pics<span style="color:#f92672">`</span> (
 	<span style="color:#f92672">`</span>path<span style="color:#f92672">`</span>          TEXT <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
@@ -164,17 +151,12 @@
 	<span style="color:#f92672">`</span>male_present<span style="color:#f92672">`</span>  INTEGER,
 	<span style="color:#f92672">`</span>baby_present<span style="color:#f92672">`</span>  INTEGER,
 	<span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>(<span style="color:#f92672">`</span>path<span style="color:#f92672">`</span>)
-);</code></pre></div>
-<p>You can see the details of how we create this database over at the <a href="https://github.com/0xNF/swipr_gh/blob/master/InitialSorter/sort.py">sort.py</a></p>
-
+);
+</code></pre></div><p>You can see the details of how we create this database over at the <a href="https://github.com/0xNF/swipr_gh/blob/master/InitialSorter/sort.py">sort.py</a></p>
 <p>The purpose of this database is to keep track of various bits of information that we will make use of during model training.</p>
-
 <p>The most salient bits are the <code>label</code>, <code>num_people</code> and <code>male_present</code> fields. The others are relics of experimentations that didn&rsquo;t work for one reason or another.</p>
-
 <h3 id="label-primer">Label Primer</h3>
-
 <p>The most important of the database fields is the label. A quick glossary of the label meanings is as follows:</p>
-
 <table>
 <thead>
 <tr>
@@ -183,108 +165,80 @@
 <th>Description</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>NOJUDGEMENT_INT</td>
 <td>-1</td>
 <td>This image has been seen, but no judgement has been made</td>
 </tr>
-
 <tr>
 <td>UNJUDGED_INT</td>
 <td>-2</td>
 <td>This image has not been seen</td>
 </tr>
-
 <tr>
 <td>FAIL_AGE_INT</td>
 <td>-3</td>
 <td>Someone in this image is too old or too young</td>
 </tr>
-
 <tr>
 <td>FAIL_MALE_INT</td>
 <td>-4</td>
 <td>There is a male in this image</td>
 </tr>
-
 <tr>
 <td>FAIL_NOFACE_INT</td>
 <td>-5</td>
 <td>This image does not contain any faces (pass 1)</td>
 </tr>
-
 <tr>
 <td>FAIL_INVALID_INT</td>
 <td>-6</td>
 <td>This image failed to load properly</td>
 </tr>
-
 <tr>
 <td>FAIL_GROUP</td>
 <td>-7</td>
 <td>There are too many people in this image</td>
 </tr>
-
 <tr>
-<td>FAIL_UNCHANGED_INT&nbsp;&nbsp;</td>
-<td>-8 &nbsp;&nbsp;</td>
+<td>FAIL_UNCHANGED_INT  </td>
+<td>-8   </td>
 <td>This image does not contain any faces (pass 2)</td>
 </tr>
-
 <tr>
 <td>FAIL_BASE_INT</td>
-<td>&nbsp;0</td>
+<td> 0</td>
 <td>Unusued</td>
 </tr>
 </tbody>
 </table>
-
 <p>All images found by <code>sort.py</code> start out at <code>-2</code>, image not seen.</p>
-
 <p>We will use these status codes to crawl through the list of images as we classify and reclassify then during our pre-filter.</p>
-
-<h1 id="face-checking-round-1-dface-and-insightface">Face Checking Round 1 - DFace and InsightFace</h1>
-
+<h1 id="face-checking-round-1---dface-and-insightface">Face Checking Round 1 - DFace and InsightFace</h1>
 <p>For the complete implementation check out the <a href="https://github.com/0xNF/swipr_gh/blob/master/ScanForFaces/ScanForFaces.ipynb">jupyter notebook</a> where the raw work was done.</p>
-
 <p>We&rsquo;re going to use a pre-trained pytorch model called <a href="https://github.com/kuaikuaikim/DFace">DFace</a> to scan each picture in our dataset for faces. For each face detected by DFace, we use numpy to extract the pixels within the bounding box for that face, and then we&rsquo;ll hand that extracted face to a second model called <a href="https://github.com/deepinsight/insightface">InsightFace</a>, which performs gender and age analysis.</p>
-
 <p>We load the image with cv2 and send it to DFace, which returns a list of bounding boxes, one for each face found</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(imgpath)
-bboxs, landmarks <span style="color:#f92672">=</span> facedetector<span style="color:#f92672">.</span>detect_face(img)</code></pre></div>
-<p>then for each face found, we extract the pixels from the image given the bounding box:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">faces <span style="color:#f92672">=</span> [extract_bbox(img, x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> bboxs]</code></pre></div>
-<p>And finally we run each extracted face through <code>InsightFace's</code> <code>get_ga()</code> method:</p>
+bboxs, landmarks <span style="color:#f92672">=</span> facedetector<span style="color:#f92672">.</span>detect_face(img)
+</code></pre></div><p>then for each face found, we extract the pixels from the image given the bounding box:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">faces <span style="color:#f92672">=</span> [extract_bbox(img, x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> bboxs]
+</code></pre></div><p>And finally we run each extracted face through <code>InsightFace's</code> <code>get_ga()</code> method:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> face <span style="color:#f92672">in</span> faces:
-    gd <span style="color:#f92672">=</span> genderdetector<span style="color:#f92672">.</span>get_ga(face)</code></pre></div>
-<p>After going through a few other custom methods we end up with an output that looks kind of like this:</p>
-
-<p><img src="/ml/swipr/ga.PNG" alt="pre-filtered output" /></p>
-
+    gd <span style="color:#f92672">=</span> genderdetector<span style="color:#f92672">.</span>get_ga(face)
+</code></pre></div><p>After going through a few other custom methods we end up with an output that looks kind of like this:</p>
+<p><img src="/ml/swipr/ga.PNG" alt="pre-filtered output"></p>
 <p>This image should also explain why we abandoned using age as a useful field to filter on earlier. The idea was to filter out toddlers and babies, but depending on the photograph, it can be horribly incorrect. Unfortunately for our dataset, it fails most egregiously on Japanese faces in particular.</p>
-
 <p>The most important thing about this image is that it receives an output label of <code>-1</code>, meaning that it passed the pre-filter without problems.</p>
-
 <p>Recall that the goal of this step is to filter out pictures for being bad, not determine the pictures that are good. <code>-1</code> means that it isn&rsquo;t obviously a bad picture.</p>
-
-<p>(although in this particular case, it would have been nice to have this classified as <code>purikura</code> and therefore disqualified. A project for another time, which we may be able to tackle at a later date because <i>we did</i> classify a bunch of Instagram profiles as being primarily purikura&hellip;)</p>
-
-<h1 id="face-checking-round-2-rotations">Face Checking Round 2 - Rotations</h1>
-
+<p>(although in this particular case, it would have been nice to have this classified as <code>purikura</code> and therefore disqualified. A project for another time, which we may be able to tackle at a later date because <!-- raw HTML omitted -->we did<!-- raw HTML omitted --> classify a bunch of Instagram profiles as being primarily purikura&hellip;)</p>
+<h1 id="face-checking-round-2---rotations">Face Checking Round 2 - Rotations</h1>
 <p>After spending many hours watching the GPU churn checking for faces in all these images, it became obvious that there were thousands upon thousands of easily missed images where a face is clearly present but no face was detected. The sheer number of false negatives rendered a solid half of the dataset invalid.</p>
-
 <p>For example:</p>
-
-<p><img src="/ml/swipr/tilted.jpg" alt="Tilted head" /></p>
-
+<p><img src="/ml/swipr/tilted.jpg" alt="Tilted head"></p>
 <p>This isn&rsquo;t even the worst example. Girls with heads tilted at even a 10 degree angle would fail to be detected.</p>
-
 <p>After a bunch of experiments, we settled on a method that took each picture without a detected face (<code>label == -5</code>), ran it through the whole process again but rotated by 10 degrees, and checked it for faces again. We repeated this process until either a face was found, or we completed a full 360 degree rotation.</p>
-
 <p>As one might suspect, this drastically increased the computation time for each image, up to a worst case scenario of  3600% per image if there really was no face in it. And obviously there are a lot of images with no faces in them. No matter how one rotates a picture of a sunset, it will (hopefully) never contain a human face.</p>
-
 <p>The source of the rotation finder can be found in the notebook linked above, but for convenience we post it here as well:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">findrot</span>(img, already_rotated, d, verbose<span style="color:#f92672">=</span>False):
         bboxs, _ <span style="color:#f92672">=</span> facedetector<span style="color:#f92672">.</span>detect_face(img)
@@ -302,19 +256,13 @@ bboxs, landmarks <span style="color:#f92672">=</span> facedetector<span style="c
                 <span style="color:#66d9ef">except</span>:
                     <span style="color:#66d9ef">if</span> verbose: <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;lol sup&#34;</span>)
                     <span style="color:#66d9ef">continue</span>
-        <span style="color:#66d9ef">return</span> [], already_rotated</code></pre></div>
-<p>For any image that was completed the rotation and still came up faceless, we return a label of <code>-8</code>, indicating that it has undergone rotation and still failed.</p>
-
+        <span style="color:#66d9ef">return</span> [], already_rotated
+</code></pre></div><p>For any image that was completed the rotation and still came up faceless, we return a label of <code>-8</code>, indicating that it has undergone rotation and still failed.</p>
 <p>Our face scanning architecture can be summarized with the following chart:</p>
-
-<p><img src="/ml/swipr/FindRot.png" alt="Find Rot" /></p>
-
+<p><img src="/ml/swipr/FindRot.png" alt="Find Rot"></p>
 <p>This process took another ~18 hours on the standard issue Paperspace machine to complete. It is a very slow process, but this technique reduced the number of so called &ldquo;faceless&rdquo; images in our dataset by an impressive near 50%.</p>
-
 <h1 id="moving-on">Moving On</h1>
-
 <p>In the next post, we&rsquo;ll discuss using fast.ai and ResNext50 to start the training of our actual final model.</p>
-
 <p><a href="/posts/ml/swipr06">Next Section - Model Architecture</a></p>
 </div>
 
@@ -388,29 +336,29 @@ bboxs, landmarks <span style="color:#f92672">=</span> facedetector<span style="c
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -508,7 +456,7 @@ bboxs, landmarks <span style="color:#f92672">=</span> facedetector<span style="c
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>

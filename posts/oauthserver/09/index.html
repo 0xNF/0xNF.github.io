@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.40.3" />
+<meta name="generator" content="Hugo 0.79.0" />
 
 
 
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://0xnf.github.io/"
+      "@id":"https:\/\/0xnf.github.io\/"
     },
     "headline": "Implement an OAuth 2.0 Server (Part 09) - Nothing in Particular",
     "image": {
       "@type": "ImageObject",
-      "url": "https://0xnf.github.io/images/default.png",
+      "url": "https:\/\/0xnf.github.io\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,12 +60,12 @@
       "name": "Nothing in Particular",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://0xnf.github.io/images/logo.png",
+        "url": "https:\/\/0xnf.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
     },
-    "description": "This is our first real exposure to the OpenIdConnectServer library - this is part 1 of 2 for setting this class up. We&#39;ll handle the Authorization series of methods in this section."
+    "description": "This is our first real exposure to the OpenIdConnectServer library - this is part 1 of 2 for setting this class up. We\u0027ll handle the Authorization series of methods in this section."
   }
 </script>
 
@@ -128,91 +128,68 @@
 
   
 
-  <div class="article-body">
-
-<p>Welcome to the ninth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
-
-<h1 id="authorization-provider-authorize-methods">Authorization Provider - Authorize Methods</h1>
-
+  <div class="article-body"><p>Welcome to the ninth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+<h1 id="authorization-provider---authorize-methods">Authorization Provider - Authorize Methods</h1>
 <p>It&rsquo;s worth taking a moment to have an overview of how the <code>OpenIdConnectServer</code> library actually works. You are encouraged to read Kevin Chalet&rsquo;s post <a href="https://kevinchalet.com/2016/07/13/creating-your-own-openid-connect-server-with-asos-creating-your-own-authorization-provider/">here</a>.</p>
-
 <p>An authorization provider is an implementation of the <code>OpenIdConnectServerProvider</code> type which overrides the virtual methods we want to implement. We&rsquo;re going to leave most of these un-overridden, but if you ever need additional functionality, you can always override it and inspect/implement that stage of the pipeline.</p>
-
 <h2 id="provider-stub">Provider Stub</h2>
-
 <p>Create a new folder named <code>Providers/</code>, and to it a class named <code>OAuthProvider</code>. Make sure it inherits from <code>OpenIdConnectServerProvider</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuthProvider</span> : OpenIdConnectServerProvider {
     <span style="color:#75715e">// TODO it&#39;s empty now, but we&#39;ll fill it in in a bit.
-</span><span style="color:#75715e"></span>}</code></pre></div>
-<h2 id="startup-registration">Startup Registration</h2>
-
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h2 id="startup-registration">Startup Registration</h2>
 <p><code>Startup.cs</code></p>
-
 <p>We need to add our OAuth server to the middleware pipeline, which we do by calling it on the <code>ConfigureServices()</code> method chain.</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2</span>    services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3</span>        options.UseSqlite(Configuration.GetConnectionString(<span style="color:#e6db74">&#34;DefaultConnection&#34;</span>)));
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5</span>    services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;((x) =&gt; {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6</span>        x.Password.RequiredLength = <span style="color:#ae81ff">6</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7</span>        x.Password.RequiredUniqueChars = <span style="color:#ae81ff">0</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8</span>        x.Password.RequireNonAlphanumeric = <span style="color:#66d9ef">false</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9</span>        x.Password.RequireDigit = <span style="color:#66d9ef">false</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10</span>        x.Password.RequireLowercase = <span style="color:#66d9ef">false</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11</span>        x.Password.RequireUppercase = <span style="color:#66d9ef">false</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12</span>    })
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13</span>        .AddEntityFrameworkStores&lt;ApplicationDbContext&gt;()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14</span>        .AddDefaultTokenProviders();
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15</span>
-<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16</span>    services.AddAuthentication()
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17</span>        .AddOpenIdConnectServer(options =&gt; {
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18</span>            options.UserinfoEndpointPath = <span style="color:#e6db74">&#34;/api/v1/me&#34;</span>;
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19</span>            options.TokenEndpointPath = <span style="color:#e6db74">&#34;/api/v1/token&#34;</span>;
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20</span>            options.AuthorizationEndpointPath = <span style="color:#e6db74">&#34;/authorize/&#34;</span>;
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21</span>            options.UseSlidingExpiration = <span style="color:#66d9ef">false</span>; <span style="color:#75715e">// False means that new Refresh tokens aren&#39;t issued. Our implementation will be doing a no-expiry refresh, and this is one part of it.
-</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22</span><span style="color:#75715e"></span>            options.AllowInsecureHttp = <span style="color:#66d9ef">true</span>; <span style="color:#75715e">// ONLY FOR TESTING
-</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23</span><span style="color:#75715e"></span>            options.AccessTokenLifetime = TimeSpan.FromHours(<span style="color:#ae81ff">1</span>); <span style="color:#75715e">// An access token is valid for an hour - after that, a new one must be requested.
-</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24</span><span style="color:#75715e"></span>            options.RefreshTokenLifetime = TimeSpan.FromDays(<span style="color:#ae81ff">365</span> * <span style="color:#ae81ff">1000</span>); <span style="color:#75715e">//NOTE - Later versions of the ASOS library support `TimeSpan?` for these lifetime fields, meaning no expiration. 
-</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">25</span><span style="color:#75715e"></span>                                                                            <span style="color:#75715e">// The version we are using does not, so a long running expiration of one thousand years will suffice.
-</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">26</span><span style="color:#75715e"></span>            options.AuthorizationCodeLifetime = TimeSpan.FromSeconds(<span style="color:#ae81ff">60</span>);
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">27</span>            options.IdentityTokenLifetime = options.AccessTokenLifetime;
-</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">28</span>            options.ProviderType = <span style="color:#66d9ef">typeof</span>(OAuthProvider);
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">29</span>        });
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">30</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">31</span>    <span style="color:#75715e">// Add application services.
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">32</span><span style="color:#75715e"></span>    services.AddTransient&lt;IEmailSender, EmailSender&gt;();
-<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">33</span>    services.AddScoped&lt;OAuthProvider&gt;();
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">34</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">35</span>    services.AddMvc();
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">36</span>}</code></pre></div>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>        options.UseSqlite(Configuration.GetConnectionString(<span style="color:#e6db74">&#34;DefaultConnection&#34;</span>)));
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>    services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;((x) =&gt; {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>        x.Password.RequiredLength = <span style="color:#ae81ff">6</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>        x.Password.RequiredUniqueChars = <span style="color:#ae81ff">0</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>        x.Password.RequireNonAlphanumeric = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>        x.Password.RequireDigit = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>        x.Password.RequireLowercase = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>        x.Password.RequireUppercase = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    })
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>        .AddEntityFrameworkStores&lt;ApplicationDbContext&gt;()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>        .AddDefaultTokenProviders();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    services.AddAuthentication()
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>        .AddOpenIdConnectServer(options =&gt; {
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>            options.UserinfoEndpointPath = <span style="color:#e6db74">&#34;/api/v1/me&#34;</span>;
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>            options.TokenEndpointPath = <span style="color:#e6db74">&#34;/api/v1/token&#34;</span>;
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>            options.AuthorizationEndpointPath = <span style="color:#e6db74">&#34;/authorize/&#34;</span>;
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>            options.UseSlidingExpiration = <span style="color:#66d9ef">false</span>; <span style="color:#75715e">// False means that new Refresh tokens aren&#39;t issued. Our implementation will be doing a no-expiry refresh, and this is one part of it.
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span style="color:#75715e"></span>            options.AllowInsecureHttp = <span style="color:#66d9ef">true</span>; <span style="color:#75715e">// ONLY FOR TESTING
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span style="color:#75715e"></span>            options.AccessTokenLifetime = TimeSpan.FromHours(<span style="color:#ae81ff">1</span>); <span style="color:#75715e">// An access token is valid for an hour - after that, a new one must be requested.
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span style="color:#75715e"></span>            options.RefreshTokenLifetime = TimeSpan.FromDays(<span style="color:#ae81ff">365</span> * <span style="color:#ae81ff">1000</span>); <span style="color:#75715e">//NOTE - Later versions of the ASOS library support `TimeSpan?` for these lifetime fields, meaning no expiration. 
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span style="color:#75715e"></span>                                                                            <span style="color:#75715e">// The version we are using does not, so a long running expiration of one thousand years will suffice.
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span style="color:#75715e"></span>            options.AuthorizationCodeLifetime = TimeSpan.FromSeconds(<span style="color:#ae81ff">60</span>);
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>            options.IdentityTokenLifetime = options.AccessTokenLifetime;
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>            options.ProviderType = <span style="color:#66d9ef">typeof</span>(OAuthProvider);
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>        });
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>    <span style="color:#75715e">// Add application services.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span style="color:#75715e"></span>    services.AddTransient&lt;IEmailSender, EmailSender&gt;();
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>    services.AddScoped&lt;OAuthProvider&gt;();
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>    services.AddMvc();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>}
+</code></pre></div>
 <p>Let&rsquo;s investigate each assignment:</p>
-
 <p><code>UserinfoEndpointPage</code> is where any authorized applications know to go for user information. This is more of an OpenIdConnect feature than OAuth feature, but we&rsquo;re implementing a user endpoint anyway, so we&rsquo;ll notify our server of it here.</p>
-
 <p><code>TokenEndpointPath</code> is where the server knows to send incoming requests that want a Token. This is for <code>Client Credentials</code>, and <code>Refresh Token</code> grants.</p>
-
 <p><code>AuthorizationEndpointPath</code> is for interactive flows like <code>Implicit (token)</code> and the beginning of their <code>Authorization Code</code> flows.</p>
-
 <p><code>UseSlidingExpiration</code> is so that ASOS knows not to try to regenerate a refresh token. You may have different requirements, but in our implementation, a user is given only one refresh token, unless other things like their security stamp changes.</p>
-
 <p><code>AllowInsecureHttp</code> is strongly recommended to be set top <code>false</code> in production - we have it set to <code>true</code> here because SSL certs on our dev machine are a bit of a pain. If any incoming request that is handled by this middleware is not <code>http</code> if this is set to true, it will automatically fail.</p>
-
 <p><code>AccesTokenLifeTime</code> is how long an access token is valid for - if a user supplied an access token past its expiration, the request is rejected.</p>
-
 <p><code>RefreshTokenLifetime</code> is the same for a refresh token. Like the comment says, later versions of ASOS allow for nullable <code>TimeSpan?</code> for infinite lifetimes - but we&rsquo;ll make do with 1,000 years here.</p>
-
 <p><code>IdentityTokenLifeTime</code> is a feature of the <code>OpenIdConnect</code> spec, which is tangential to what we&rsquo;re implementing - but if you do decide to implement it, it&rsquo;s fine to have it set to the same as the access token.</p>
-
 <p><code>ProviderType</code> is how the service knows what provider to use - you could potentially have multiple different providers, and in theory, multiple different instances of an OpenIdConnectServer running. We&rsquo;re making sure that this instance knows to use our custom one. There are a few other ways to specify the provider, including in-line object creation, or setting the concrete instance of the provider with <code>Options.Provider</code>, but we&rsquo;re sticking with type resolution.</p>
-
 <p>That means we also have to register our provider as a <code>ScopedService</code>, which lets the server dynamically resolve the provider as needed.</p>
-
 <h2 id="filling-in-the-provider">Filling in the Provider</h2>
-
 <p><code>Providers/OAuthProvider.cs</code>:</p>
-
 <p>We&rsquo;re going to stub out all the methods we&rsquo;re interested in implementing:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuthProvider</span> : OpenIdConnectServerProvider {
 
@@ -250,43 +227,25 @@
     }
     <span style="color:#75715e">#endregion
 </span><span style="color:#75715e"></span>
-}</code></pre></div>
-<p>The control flow of the ASOS library is for a given endpoint registered to it is to flow through <code>Validate</code>, then to <code>Handle</code>, then to <code>Apply</code>.</p>
-
+}
+</code></pre></div><p>The control flow of the ASOS library is for a given endpoint registered to it is to flow through <code>Validate</code>, then to <code>Handle</code>, then to <code>Apply</code>.</p>
 <p>For example, because we&rsquo;ve told ASOS that our Token endpoint is <code>/api/v1/token</code>, any incoming http request to our server at that path will be sent to the <code>TokenRequest</code> line of methods. First it will be passed to <code>ValidateTokenRequest</code>, then to <code>HandleTokenRequest</code>, then to <code>ApplyTokenResponse</code>. At any stage, a request may be rejected and returned to the user immediately. If that happens, the remaining methods will not be executed.</p>
-
 <p>In the most minimal possible of all ASOS set ups, it&rsquo;s not necessary to override all of the available virtual methods - in fact, we don&rsquo;t even have to override the ones we&rsquo;re going to. In order for ASOS to minimally function, you only need to implement <code>ValidateAuthorizationRequest</code> and <code>ValidateTokenRequest</code> - You&rsquo;ll be left with a barely functional server, but it will work.</p>
-
 <p>One thing to note is that although the flow is from validate, to handle, to apply, we don&rsquo;t need to implement each step unless we really want to - for instance, we are not implementing <code>HandleAuthorizationRequest</code>. We are essentially going to outsource the events that would normally be under its purview to a different part of our application later.</p>
-
 <p>Side note 1: if you want to complain about <code>#region</code>, don&rsquo;t. <a href="/posts/misc/regionisfine">They are completely fine</a>.</p>
-
 <p>Side note 2: Before the Validate method in a given control flow is executed, an Extract method runs before it. We can override this if we have a custom/non-standard way of performing an authorization or token request. This is a good solution for handling legacy systems. If you&rsquo;re starting from scratch, or the old implementations were standards compliant, then there is no need to override these methods.</p>
-
 <h2 id="difference-between-authorization-and-token-requests">Difference between Authorization and Token requests</h2>
-
 <h3 id="authorization">Authorization</h3>
-
 <p>Two of the three main OAuth 2.0 flows, the <code>Implicit Grant</code> and <code>Authorization Code</code>, require user authorization. These flows are interactive and require presenting the user with information about the application, the scopes it permissions its requesting, and the opportunity for the user to accept or reject the request.</p>
-
 <p>That is what is handled by the <code>Authorization</code> series of methods.</p>
-
 <h3 id="token">Token</h3>
-
 <p>Once an application has already received authorization, or if it is an authorization-free flow like <code>Client Credentials</code>, it can request a token. For example, in the <code>Authorization Code</code> flow, an application will first ask hit up the <code>Authorization</code> endpoint, and then send the received <code>code</code> to the <code>Token</code> endpoint to receive its tokens.</p>
-
 <p>Once that same application needs another token, it will send its <code>refresh token</code> back to the <code>Token</code> endpoint to receive a new <code>access token</code>. The application has already been authorized - it just needs another token.</p>
-
 <p>The tl;dr is that <code>Token</code> is how you get a token, but <code>Authorization</code> is how you get permission to get a token.</p>
-
 <h2 id="match-endpoint">Match Endpoint</h2>
-
 <p>Before we can work on the Validation methods, we need to do something with <code>MatchEndpoint</code>.</p>
-
 <p><code>ASOS</code> is by default very conservative, and doesn&rsquo;t accept anything outside a strictly defined set of endpoints. If we want to implement the interactive flows, it&rsquo;d be nice if we had just one page the user could be redirected to, where they could <code>accept</code> or <code>deny</code> a request.</p>
-
 <p>If we want the library to accept this user-friendly sequence of events, we&rsquo;ll have to define how the library should respond to requests that come its way.</p>
-
 <p>We&rsquo;ve already defined our <code>authorization</code> endpoint as being at <code>/authorize/</code>, as seen when we registered the server with <code>startup</code>, so we&rsquo;ll just use that endpoint as the check for redirection.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> Task MatchEndpoint(MatchEndpointContext context) {
     <span style="color:#66d9ef">if</span> (context.Options.AuthorizationEndpointPath.HasValue &amp;&amp;
@@ -294,21 +253,17 @@
         context.MatchAuthorizationEndpoint();
     }
     <span style="color:#66d9ef">return</span> Task.CompletedTask;
-}</code></pre></div>
-<pre><code>It's also common in setups like this to include the Revocation endpoint here as well - our revocation implementation will be different, so we won't include it here, but feel free to add it to the match endpoint list.
+}
+</code></pre></div><pre><code>It's also common in setups like this to include the Revocation endpoint here as well - our revocation implementation will be different, so we won't include it here, but feel free to add it to the match endpoint list.
 </code></pre>
-
 <h2 id="validate-authorization-request">Validate Authorization Request</h2>
-
 <p>This is the first function in the Authorization flow that is called. Here we extract the necessary information from the incoming request and check that it&rsquo;s all valid:</p>
-
 <ul>
 <li>The supplied client id needs to exist</li>
 <li>The redirect uri cannot be empty and must be properly registered to the client</li>
 <li>If scopes are requested, they must not be bogus</li>
 </ul>
-
-<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task ValidateAuthorizationRequest(ValidateAuthorizationRequestContext context) {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task ValidateAuthorizationRequest(ValidateAuthorizationRequestContext context) {
     VService = context.HttpContext.RequestServices.GetRequiredService&lt;ValidationService&gt;();
 
     <span style="color:#66d9ef">if</span>(!context.Request.IsAuthorizationCodeFlow() &amp;&amp; !context.Request.IsImplicitFlow()) {
@@ -361,17 +316,13 @@
 
     context.Validate();
 
-}</code></pre></div></p>
-
+}
+</code></pre></div>
 <p>If any one of these conditions fail, we reject the request, which returns to the user with the error message indicated. Otherwise, we assert that the incoming request is valid, and move on.</p>
-
 <p>Notably at the top, we reject a request that isn&rsquo;t either for an <code>authorization_code</code> or for <code>implicit grant</code>. When it comes to the authorization endpoints, these are the only two we are concerned with. Other token requests are handled elsewhere.</p>
-
 <pre><code>If you're playing around yourself, be aware that some information can only be found on the context.Request or context.HttpContext items.
 </code></pre>
-
 <h2 id="apply-authorization-request">Apply Authorization Request</h2>
-
 <p>We don&rsquo;t need to implement <code>HandleAuthorizationRequest</code> because its functions will be implemented in a different section, but we do need to implement <code>ApplyAuthorizationResponse</code>. The only type of OAuth flow that makes it this far is the <code>Implicit Grant</code>, so we can safely treat this function as issuing only implicit grant tokens. This can be a bit confusing - we are issuing an access token from an authorization endpoint, but that&rsquo;s an artifact of the way Implicit Grants work.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task ApplyAuthorizationResponse(ApplyAuthorizationResponseContext context) {
     <span style="color:#66d9ef">if</span> (!String.IsNullOrWhiteSpace(context.Error)) {
@@ -393,18 +344,13 @@
     }
 
     <span style="color:#66d9ef">await</span> TService.WriteNewTokenToDatabase(context.Request.ClientId, access, claimsUser);
-}</code></pre></div>
-<p>The first step is to check if there was an error - rejected contexts, or contexts that have otherwise suffered some kind of error have a non-null <code>Error</code> field, a string for the error message. If we somehow get this far with an invalid context, we&rsquo;d like to leave before we do more work.</p>
-
+}
+</code></pre></div><p>The first step is to check if there was an error - rejected contexts, or contexts that have otherwise suffered some kind of error have a non-null <code>Error</code> field, a string for the error message. If we somehow get this far with an invalid context, we&rsquo;d like to leave before we do more work.</p>
 <p>We ask for the ApplicationDbService in the event that the authoring OAuth client has been deleted between when the token has been requested and when it is granted. If it&rsquo;s MIA, we leave before persisting the token.</p>
-
 <p>Again, we&rsquo;ll cover the implementations of TokenService and ValidationService later.</p>
-
 <h1 id="moving-on">Moving On</h1>
-
 <p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/09-OAuthProviderA">here on GitHub</a>.</p>
-
-<p>In the next section we&rsquo;ll implement the three token methods.<br />
+<p>In the next section we&rsquo;ll implement the three token methods.<br>
 <a href="/posts/oauthserver/10">Next</a></p>
 </div>
 
@@ -484,29 +430,29 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">LATEST</div>
+      <div class="panel-title">LATESTS</div>
     </div>
     <div class="list-group">
       
+      <a href="https://0xnf.github.io/tags/branding/" class="list-group-item">Branding</a>
+      
+      <a href="https://0xnf.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://0xnf.github.io/tags/marketing/" class="list-group-item">Marketing</a>
+      
+      <a href="https://0xnf.github.io/tags/music/" class="list-group-item">Music</a>
+      
+      <a href="https://0xnf.github.io/series/music-channel/" class="list-group-item">Music Channel</a>
+      
+      <a href="https://0xnf.github.io/categories/music-channel/" class="list-group-item">music channel</a>
+      
       <a href="https://0xnf.github.io/posts/music/channel2/" class="list-group-item">Music Channel Part 3 - Branding</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel1/" class="list-group-item">Music Channel Part 2 - Stats</a>
+      <a href="https://0xnf.github.io/" class="list-group-item">Nothing in Particular</a>
       
-      <a href="https://0xnf.github.io/posts/music/channel0/" class="list-group-item">Music Channel Part 1 - Data</a>
+      <a href="https://0xnf.github.io/posts/" class="list-group-item">Posts</a>
       
-      <a href="https://0xnf.github.io/posts/misc/alwaysdns/" class="list-group-item">It&#39;s always DNS</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr10/" class="list-group-item">Swipr - Server</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr09/" class="list-group-item">Swipr - Datastore</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr08/" class="list-group-item">Swipr - LibSwipr</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr07/" class="list-group-item">Swipr - Swipr Script Service</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr06/" class="list-group-item">Swipr - Fast.ai and CNNs</a>
-      
-      <a href="https://0xnf.github.io/posts/ml/swipr05/" class="list-group-item">Swipr - Data Cleaning</a>
+      <a href="https://0xnf.github.io/series/" class="list-group-item">Series</a>
       
     </div>
   </section>
@@ -604,7 +550,7 @@
         <p><span class="h-logo">&copy; Nothing in Particular</span></p>
         <aside>
           <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p>Contact: blog&lt;at>winetech.com </p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>
