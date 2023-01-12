@@ -1,0 +1,181 @@
+<!doctype html><html dir=ltr lang=en data-theme class="html theme--light"><head><title>|
+Implement an OAuth 2.0 Server (Part 12)</title><meta charset=utf-8><meta name=generator content="Hugo 0.109.0"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=author content><meta name=description content="We're ready to start working more seriously on issuing access tokens - the first step of which is to show the users a page that lets them review what permissions an application is requesting, and giving them the opportunity to accept or deny the request."><link rel=stylesheet href=/scss/main.min.5794be192d21535bdd301561e043a96b6adbad2b5c08279deff459e4661c613f.css integrity="sha256-V5S+GS0hU1vdMBVh4EOpa2rbrStcCCed7/RZ5GYcYT8=" crossorigin=anonymous type=text/css><link rel=stylesheet href=/css/markupHighlight.min.31b0a1f317f55c529a460897848c97436bb138b19c399b37de70d463a8bf6ed5.css integrity="sha256-MbCh8xf1XFKaRgiXhIyXQ2uxOLGcOZs33nDUY6i/btU=" crossorigin=anonymous type=text/css><link rel=stylesheet href=/fontawesome/css/fontawesome.min.7d272de35b410fb165377550cdf9c4d3a80fbbcc961e111914e4d5c0eaf5729f.css integrity="sha256-fSct41tBD7FlN3VQzfnE06gPu8yWHhEZFOTVwOr1cp8=" crossorigin=anonymous type=text/css><link rel=stylesheet href=/fontawesome/css/solid.min.55d8333481b07a08e07cf6f37319753a2b47e99f4c395394c5747b48b495aa9b.css integrity="sha256-VdgzNIGwegjgfPbzcxl1OitH6Z9MOVOUxXR7SLSVqps=" crossorigin=anonymous type=text/css><link rel=stylesheet href=/fontawesome/css/regular.min.a7448d02590b43449364b6b5922ed9af5410abb4de4238412a830316dedb850b.css integrity="sha256-p0SNAlkLQ0STZLa1ki7Zr1QQq7TeQjhBKoMDFt7bhQs=" crossorigin=anonymous type=text/css><link rel=stylesheet href=/fontawesome/css/brands.min.9ed75a5d670c953fe4df935937674b4646f92674367e9e66eb995bb04e821647.css integrity="sha256-ntdaXWcMlT/k35NZN2dLRkb5JnQ2fp5m65lbsE6CFkc=" crossorigin=anonymous type=text/css><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=canonical href=https://0xnf.github.io/posts/oauthserver/12/><script type=text/javascript src=/js/anatole-header.min.f9132794301a01ff16550ed66763482bd848f62243d278f5e550229a158bfd32.js integrity="sha256-+RMnlDAaAf8WVQ7WZ2NIK9hI9iJD0nj15VAimhWL/TI=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/anatole-theme-switcher.min.d6d329d93844b162e8bed1e915619625ca91687952177552b9b3e211014a2957.js integrity="sha256-1tMp2ThEsWLovtHpFWGWJcqRaHlSF3VSubPiEQFKKVc=" crossorigin=anonymous></script><meta name=twitter:card content="summary"><meta name=twitter:title content="Implement an OAuth 2.0 Server (Part 12)"><meta name=twitter:description content="We're ready to start working more seriously on issuing access tokens - the first step of which is to show the users a page that lets them review what permissions an application is requesting, and giving them the opportunity to accept or deny the request."><meta property="og:title" content="Implement an OAuth 2.0 Server (Part 12)"><meta property="og:description" content="We're ready to start working more seriously on issuing access tokens - the first step of which is to show the users a page that lets them review what permissions an application is requesting, and giving them the opportunity to accept or deny the request."><meta property="og:type" content="article"><meta property="og:url" content="https://0xnf.github.io/posts/oauthserver/12/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2018-06-18T18:11:43-07:00"><meta property="article:modified_time" content="2018-06-18T18:11:43-07:00"><meta property="og:see_also" content="https://0xnf.github.io/posts/oauthserver/01/"><meta property="og:see_also" content="https://0xnf.github.io/posts/oauthserver/02/"><meta property="og:see_also" content="https://0xnf.github.io/posts/oauthserver/03/"><meta property="og:see_also" content="https://0xnf.github.io/posts/oauthserver/04/"><meta property="og:see_also" content="https://0xnf.github.io/posts/oauthserver/05/"><meta property="og:see_also" content="https://0xnf.github.io/posts/oauthserver/06/"><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"posts","name":"Implement an OAuth 2.0 Server (Part 12)","headline":"Implement an OAuth 2.0 Server (Part 12)","alternativeHeadline":"","description":"
+      We\u0027re ready to start working more seriously on issuing access tokens - the first step of which is to show the users a page that lets them review what permissions an application is requesting, and giving them the opportunity to accept or deny the request.
+
+
+    ","inLanguage":"en-us","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/0xnf.github.io\/posts\/oauthserver\/12\/"},"author":{"@type":"Person","name":""},"creator":{"@type":"Person","name":""},"accountablePerson":{"@type":"Person","name":""},"copyrightHolder":{"@type":"Person","name":""},"copyrightYear":"2018","dateCreated":"2018-06-18T18:11:43.00Z","datePublished":"2018-06-18T18:11:43.00Z","dateModified":"2018-06-18T18:11:43.00Z","publisher":{"@type":"Organization","name":null,"url":"https://0xnf.github.io/","logo":{"@type":"ImageObject","url":"https:\/\/0xnf.github.io\/favicon-32x32.png","width":"32","height":"32"}},"image":[],"url":"https:\/\/0xnf.github.io\/posts\/oauthserver\/12\/","wordCount":"873","genre":["Security","Identity","Authentication","Authorization"],"keywords":["OAuth2.0","OpenIdConnect","Tutorial","CSharp",".NET Core"]}</script></head><body class=body><div class=wrapper><aside class=wrapper__sidebar><div class="sidebar
+animated fadeInDown"><div class=sidebar__content><div class=sidebar__introduction><img class=sidebar__introduction-profileimage src=/ alt="profile picture"><div class=sidebar__introduction-title><a href=/></a></div><div class=sidebar__introduction-description><p></p></div></div><ul class=sidebar__list></ul></div><footer class="footer footer__sidebar"><ul class=footer__list><li class=footer__item>&copy;
+2023</li></ul></footer><script type=text/javascript src=/js/medium-zoom.min.1248fa75275e5ef0cbef27e8c1e27dc507c445ae3a2c7d2ed0be0809555dac64.js integrity="sha256-Ekj6dSdeXvDL7yfoweJ9xQfERa46LH0u0L4ICVVdrGQ=" crossorigin=anonymous></script></div></aside><main class=wrapper__main><header class=header><div class="animated fadeInDown"><a role=button class=navbar-burger data-target=navMenu aria-label=menu aria-expanded=false><span aria-hidden=true class=navbar-burger__line></span>
+<span aria-hidden=true class=navbar-burger__line></span>
+<span aria-hidden=true class=navbar-burger__line></span></a><nav class=nav><ul class=nav__list id=navMenu></ul><ul class="nav__list nav__list--end"><li class=nav__list-item><div class=themeswitch><a title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></li></ul></nav></div></header><div class="post
+animated fadeInDown"><div class=post__content><h1>Implement an OAuth 2.0 Server (Part 12)</h1><p>Welcome to the twelfth part of a series of posts where we will implement an OAuth 2 Server using <a href=https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server>AspNet.Security.OpenIdConnectServer</a>.</p><h1 id=authorization-request-acceptdeny-view>Authorization Request Accept/Deny View</h1><p>Two of the the three flows we support, <code>Implicit Grant</code> and <code>Authorization Code</code>, are <code>interactive</code> flows - they require that the user be presented with a screen where they can <code>accept</code> or <code>deny</code> the authorization request.</p><p>As a preview, this is what our auth page will look like:
+<img src=/oauthserver/part09/authpagepreview.png alt="Our auth confirmation page"></p><h1 id=add-the-viewmodel>Add the ViewModel</h1><p>Under <code>Models/</code>, add a new folder <code>AuthorizeViewModels/</code> and add a new <code>AuthorizeViewModel</code> class:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AuthorizeViewModel</span> {
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> ClientName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>internal</span> <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> ClientId { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>internal</span> <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> ClientDescription { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>internal</span> <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> ResponseType { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>internal</span> <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> RedirectUri { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>internal</span> <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span>[] Scopes { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>internal</span> <span style=color:#66d9ef>set</span>; } = <span style=color:#66d9ef>new</span> <span style=color:#66d9ef>string</span>[<span style=color:#ae81ff>0</span>];
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> State { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>internal</span> <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Like before these fields are <code>internal set</code> to denote that we don&rsquo;t want any pages to attempt to treat them as inputs - they are purely for information conveyance.</p><h1 id=add-the-controller>Add the Controller</h1><p>Under <code>Controllers/</code> add a new controller named <code>AuthorizeController</code>.
+Unlike before, we aren&rsquo;t generating this one automatically, and will instead set it up by hand:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AuthorizeController</span> : Controller {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>readonly</span> ApplicationDbContext _context;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>readonly</span> UserManager&lt;ApplicationUser&gt; _userManager;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> AuthorizeController(ApplicationDbContext context, UserManager&lt;ApplicationUser&gt; userManager) {
+</span></span><span style=display:flex><span>        _context = context;
+</span></span><span style=display:flex><span>        _userManager = userManager;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task&lt;IActionResult&gt; Index() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> Ok();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>    [HttpPost(&#34;deny&#34;)]</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task&lt;IActionResult&gt; Deny() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> LocalRedirect(<span style=color:#e6db74>&#34;/&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>    
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>    [HttpPost(&#34;accept&#34;)]</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task&lt;IActionResult&gt; Accept() {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// TODO this will be a big method, we&#39;ll address it further down below.</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> Ok();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=index-method>Index method</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task&lt;IActionResult&gt; Index() {
+</span></span><span style=display:flex><span>    OpenIdConnectRequest request = HttpContext.GetOpenIdConnectRequest();
+</span></span><span style=display:flex><span>    OAuthClient client = _context.ClientApplications.Where(x =&gt; x.ClientId == request.ClientId).FirstOrDefault();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span>(client == <span style=color:#66d9ef>null</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> NotFound();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    AuthorizeViewModel vm = <span style=color:#66d9ef>new</span> AuthorizeViewModel() {
+</span></span><span style=display:flex><span>        ClientId = client.ClientId,
+</span></span><span style=display:flex><span>        ClientDescription = client.ClientDescription,
+</span></span><span style=display:flex><span>        ClientName = client.ClientName,
+</span></span><span style=display:flex><span>        RedirectUri = request.RedirectUri,
+</span></span><span style=display:flex><span>        ResponseType = request.ResponseType,
+</span></span><span style=display:flex><span>        Scopes = String.IsNullOrWhiteSpace(request.Scope) ? <span style=color:#66d9ef>new</span> <span style=color:#66d9ef>string</span>[<span style=color:#ae81ff>0</span>] : request.Scope.Split(<span style=color:#e6db74>&#39; &#39;</span>),
+</span></span><span style=display:flex><span>        State = request.State
+</span></span><span style=display:flex><span>    };
+</span></span><span style=display:flex><span>}            
+</span></span></code></pre></div><p>The only way to hit this page is to be directed to it via the OpenIdConnectServer - because if you recall, we registered <code>/authorization/</code> with it in Startup. That means that we will either have an invalid request, in which case the missing features will be presented to the user by ASOS, or we will have a valid request, and therefore our requests will have a filled-out <code>OpenIdConnectRequest</code> field on them. If you&rsquo;re having trouble finding that method, it&rsquo;s located under the <code>Microsoft.Extensions.DependencyInjection</code> namespace.</p><h2 id=deny>Deny</h2><p>If you copy&pasted from above, then the <code>deny</code> method is already fully implemented. We don&rsquo;t care what happens to a denied request except that the authorization fails to go through.</p><p>Your implementation requirements may vary, however.</p><h2 id=accept>Accept</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#a6e22e>[HttpPost(&#34;accept&#34;)]</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task&lt;IActionResult&gt; Accept() {
+</span></span><span style=display:flex><span>    ApplicationUser au = <span style=color:#66d9ef>await</span> _userManager.GetUserAsync(HttpContext.User);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (au == <span style=color:#66d9ef>null</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> LocalRedirect(<span style=color:#e6db74>&#34;/error&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    OpenIdConnectRequest request = HttpContext.GetOpenIdConnectRequest();
+</span></span><span style=display:flex><span>    AuthorizeViewModel avm = <span style=color:#66d9ef>await</span> FillFromRequest(request);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (avm == <span style=color:#66d9ef>null</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> LocalRedirect(<span style=color:#e6db74>&#34;/error&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    AuthenticationTicket ticket = TicketCounter.MakeClaimsForInteractive(au, avm);
+</span></span><span style=display:flex><span>    Microsoft.AspNetCore.Mvc.SignInResult sr = SignIn(ticket.Principal, ticket.Properties, ticket.AuthenticationScheme);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> sr;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>We need one helper method that we&rsquo;ll implement next, and we&rsquo;ll also include a call to <code>TicketCounter</code> - which, like before, remains unimplemented for the time being.</p><h3 id=fill-from-request>Fill from Request</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>async</span> Task&lt;AuthorizeViewModel&gt; FillFromRequest(OpenIdConnectRequest OIDCRequest) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>string</span> clientId = OIDCRequest.ClientId;
+</span></span><span style=display:flex><span>    OAuthClient client = <span style=color:#66d9ef>await</span> _context.ClientApplications.FindAsync(clientId);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (client == <span style=color:#66d9ef>null</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>null</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Get the Scopes for this application from the query - disallow duplicates</span>
+</span></span><span style=display:flex><span>        ICollection&lt;OAuthScope&gt; scopes = <span style=color:#66d9ef>new</span> HashSet&lt;OAuthScope&gt;();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (!String.IsNullOrWhiteSpace(OIDCRequest.Scope)) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>string</span> s <span style=color:#66d9ef>in</span> OIDCRequest.Scope.Split(<span style=color:#e6db74>&#39; &#39;</span>)) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> (OAuthScope.NameInScopes(s)) {
+</span></span><span style=display:flex><span>                    OAuthScope scope = OAuthScope.GetScope(s);
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> (!scopes.Contains(scope)) {
+</span></span><span style=display:flex><span>                        scopes.Add(scope);
+</span></span><span style=display:flex><span>                    }
+</span></span><span style=display:flex><span>                }
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>null</span>;
+</span></span><span style=display:flex><span>                }
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        AuthorizeViewModel avm = <span style=color:#66d9ef>new</span> AuthorizeViewModel() {
+</span></span><span style=display:flex><span>            ClientId = OIDCRequest.ClientId,
+</span></span><span style=display:flex><span>            ResponseType = OIDCRequest.ResponseType,
+</span></span><span style=display:flex><span>            State = OIDCRequest.State,
+</span></span><span style=display:flex><span>            Scopes = String.IsNullOrWhiteSpace(OIDCRequest.Scope) ? <span style=color:#66d9ef>new</span> <span style=color:#66d9ef>string</span>[<span style=color:#ae81ff>0</span>] : OIDCRequest.Scope.Split(<span style=color:#e6db74>&#39; &#39;</span>),
+</span></span><span style=display:flex><span>            RedirectUri = OIDCRequest.RedirectUri
+</span></span><span style=display:flex><span>        };
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> avm;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>We use this method to assemble an <code>AuthorizeViewModel</code> from an incoming <code>OpenIdConnect</code> request, which is any incoming request to the <code>/authorize/</code> endpoint. It also helps ensure that incoming data is correct - an incoming post request may be coming from someone who tried to skip going through our view first.</p><h1 id=add-the-view>Add The View</h1><p>Under <code>Views/</code> add a new Folder named <code>Authorize/</code> and then a new view called <code>Index</code>. Do not provide any model; we&rsquo;ll add one ourselves:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>@using OAuthTutorial.Models.AuthorizeViewModels
+</span></span><span style=display:flex><span>@model OAuthTutorial.Models.AuthorizeViewModels.AuthorizeViewModel
+</span></span><span style=display:flex><span>@{
+</span></span><span style=display:flex><span>    ViewData[&#34;Title&#34;] = &#34;Authorize an Application&#34;;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>h2</span>&gt;&lt;<span style=color:#f92672>strong</span>&gt;@Model.ClientName&lt;/<span style=color:#f92672>strong</span>&gt; wants your permission.&lt;/<span style=color:#f92672>h2</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    Description:
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>strong</span>&gt;@Model.ClientDescription&lt;/<span style=color:#f92672>strong</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>hr</span> /&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    This application is requesting the following permissions:
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>ul</span>&gt;
+</span></span><span style=display:flex><span>        @if (Model.Scopes.Any()) {
+</span></span><span style=display:flex><span>            foreach (string s in Model.Scopes) {
+</span></span><span style=display:flex><span>                &lt;<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>                    @s
+</span></span><span style=display:flex><span>                &lt;/<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        else {
+</span></span><span style=display:flex><span>            &lt;<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>                None. This application doesn&#39;t need any special persmissions.
+</span></span><span style=display:flex><span>            &lt;/<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>ul</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;container&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;row&#34;</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;col-sm-3&#34;</span>&gt;
+</span></span><span style=display:flex><span>            &lt;<span style=color:#f92672>form</span> <span style=color:#a6e22e>method</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;POST&#34;</span> <span style=color:#a6e22e>asp-action</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;accept&#34;</span>&gt;
+</span></span><span style=display:flex><span>                &lt;<span style=color:#f92672>input</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;hidden&#34;</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;client_id&#34;</span> <span style=color:#a6e22e>value</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;@Model.ClientId&#34;</span> /&gt;
+</span></span><span style=display:flex><span>                &lt;<span style=color:#f92672>input</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;hidden&#34;</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;response_type&#34;</span> <span style=color:#a6e22e>value</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;@Model.ResponseType&#34;</span> /&gt;
+</span></span><span style=display:flex><span>                &lt;<span style=color:#f92672>input</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;hidden&#34;</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;scope&#34;</span> <span style=color:#a6e22e>value</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;@string.Join(&#39; &#39;, Model.Scopes)&#34;</span> /&gt;
+</span></span><span style=display:flex><span>                &lt;<span style=color:#f92672>input</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;hidden&#34;</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;redirect_uri&#34;</span> <span style=color:#a6e22e>value</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;@Model.RedirectUri&#34;</span> /&gt;
+</span></span><span style=display:flex><span>                &lt;<span style=color:#f92672>input</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;hidden&#34;</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;state&#34;</span> <span style=color:#a6e22e>value</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;@Model.State&#34;</span> /&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                &lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;btn btn-xs btn-danger&#34;</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;submit&#34;</span>&gt;
+</span></span><span style=display:flex><span>                    accept
+</span></span><span style=display:flex><span>                &lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>            &lt;/<span style=color:#f92672>form</span>&gt;
+</span></span><span style=display:flex><span>        &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;col-sm-3&#34;</span>&gt;
+</span></span><span style=display:flex><span>            &lt;<span style=color:#f92672>form</span> <span style=color:#a6e22e>method</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;post&#34;</span> <span style=color:#a6e22e>asp-action</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;deny&#34;</span>&gt;
+</span></span><span style=display:flex><span>                &lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;btn btn-xs btn-primary&#34;</span>
+</span></span><span style=display:flex><span>                        <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;submit&#34;</span>&gt;
+</span></span><span style=display:flex><span>                    deny
+</span></span><span style=display:flex><span>                &lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>            &lt;/<span style=color:#f92672>form</span>&gt;
+</span></span><span style=display:flex><span>        &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><h1 id=moving-on>Moving On</h1><p>The demo of this project to this point can be found <a href=https://github.com/0xNF/OAuthTutorial/tree/12-AuthorizationView>here on GitHub</a>.</p><p>In the next section we&rsquo;ll implement the <code>TicketCounter</code> and talk about <code>Claims</code>, <code>AuthenticationTickets</code> and more.</p><p><a href=/posts/oauthserver/13>Next</a></p><h3>Posts in this series</h3><ul><li><a href=/posts/oauthserver/19/>Implement an OAuth 2.0 Server (Part 19)</a></li><li><a href=/posts/oauthserver/18/>Implement an OAuth 2.0 Server (Part 18)</a></li><li><a href=/posts/oauthserver/17/>Implement an OAuth 2.0 Server (Part 17)</a></li><li><a href=/posts/oauthserver/16/>Implement an OAuth 2.0 Server (Part 16)</a></li><li><a href=/posts/oauthserver/15/>Implement an OAuth 2.0 Server (Part 15)</a></li><li><a href=/posts/oauthserver/14/>Implement an OAuth 2.0 Server (Part 14)</a></li><li><a href=/posts/oauthserver/13/>Implement an OAuth 2.0 Server (Part 13)</a></li><li><a href=/posts/oauthserver/12/>Implement an OAuth 2.0 Server (Part 12)</a></li><li><a href=/posts/oauthserver/11/>Implement an OAuth 2.0 Server (Part 11)</a></li><li><a href=/posts/oauthserver/10/>Implement an OAuth 2.0 Server (Part 10)</a></li><li><a href=/posts/oauthserver/09/>Implement an OAuth 2.0 Server (Part 09)</a></li><li><a href=/posts/oauthserver/08/>Implement an OAuth 2.0 Server (Part 08)</a></li><li><a href=/posts/oauthserver/07/>Implement an OAuth 2.0 Server (Part 07)</a></li><li><a href=/posts/oauthserver/06/>Implement an OAuth 2.0 Server (Part 06)</a></li><li><a href=/posts/oauthserver/05/>Implement an OAuth 2.0 Server (Part 05)</a></li><li><a href=/posts/oauthserver/04/>Implement an OAuth 2.0 Server (Part 04)</a></li><li><a href=/posts/oauthserver/03/>Implement an OAuth 2.0 Server (Part 03)</a></li><li><a href=/posts/oauthserver/02/>Implement an OAuth 2.0 Server (Part 02)</a></li><li><a href=/posts/oauthserver/01/>Implement an OAuth 2.0 Server (Part 01)</a></li></ul></div><div class=post__footer><span><a class=category href=/categories/security/>Security</a><a class=category href=/categories/identity/>Identity</a><a class=category href=/categories/authentication/>Authentication</a><a class=category href=/categories/authorization/>Authorization</a></span>
+<span><a class=tag href=/tags/oauth2%2e0/>OAuth2.0</a><a class=tag href=/tags/openidconnect/>OpenIdConnect</a><a class=tag href=/tags/tutorial/>Tutorial</a><a class=tag href=/tags/csharp/>CSharp</a><a class=tag href=/tags/%2enet-core/>.NET Core</a></span></div></div></main></div><footer class="footer footer__base"><ul class=footer__list><li class=footer__item>&copy;
+2023</li></ul></footer><script type=text/javascript src=/js/medium-zoom.min.1248fa75275e5ef0cbef27e8c1e27dc507c445ae3a2c7d2ed0be0809555dac64.js integrity="sha256-Ekj6dSdeXvDL7yfoweJ9xQfERa46LH0u0L4ICVVdrGQ=" crossorigin=anonymous></script></body></html>
