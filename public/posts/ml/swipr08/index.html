@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <title>
+    
+        |
+        Swipr - LibSwipr
+      
+
+    
+
+  </title>
+
+  
+  <meta charset="utf-8" /><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="" />
+  <meta
+    name="description"
+    content="Part 8 of the Swipr series. Here we drop back to regular backend server stuff and build a server to engage with our model. In this post we discuss the creation of the backing library called LibSwipr"
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.ba004976221e613a16542d07a2deca5d0377ff5e6a22dec5fcec01480ba967cf.css"
+      integrity="sha256-ugBJdiIeYToWVC0Hot7KXQN3/15qIt7F/OwBSAupZ88="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.793b323d7f2d9fbfd0b93f4d593fb5ad77b918716ed33eddea403fa87f770403.css"
+    integrity="sha256-eTsyPX8tn7/QuT9NWT&#43;1rXe5GHFu0z7d6kA/qH93BAM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.7f3c2281c7f965ce3c64888aa452793252a0416909c181097f81d0a0f7d1624e.css"
+    integrity="sha256-fzwigcf5Zc48ZIiKpFJ5MlKgQWkJwYEJf4HQoPfRYk4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.35fc032da8ede6681675d20a2f862fb9e1045c1d512d495fcf862c054daffef2.css"
+    integrity="sha256-NfwDLajt5mgWddIKL4YvueEEXB1RLUlfz4YsBU2v/vI="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.3b92357925ea7284f0c6b0378396f39f470f7842ed9702f337e667c4026bf837.css"
+    integrity="sha256-O5I1eSXqcoTwxrA3g5bzn0cPeELtlwLzN&#43;ZnxAJr&#43;Dc="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.ebb1096e1976e8cc4e2532cfa050b8f30eb13b8eb06be5cee3e38eb426b838ea.css"
+    integrity="sha256-67EJbhl26MxOJTLPoFC48w6xO46wa&#43;XO4&#43;OOtCa4OOo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="https://0xnf.github.io/posts/ml/swipr08/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.5c846cefa5ed21cceee981c70901aaf21b17b4e0b05bd777af840780918abea9.js"
+    integrity="sha256-XIRs76XtIczu6YHHCQGq8hsXtOCwW9d3r4QHgJGKvqk="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.46e991c2fcb035fc0060a792f1eb0c93ecacc9e76cd7445d6531a5cf2928686d.js"
+      integrity="sha256-RumRwvywNfwAYKeS8esMk&#43;ysyeds10RdZTGlzykoaG0="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Swipr - LibSwipr"/>
+<meta name="twitter:description" content="Part 8 of the Swipr series. Here we drop back to regular backend server stuff and build a server to engage with our model. In this post we discuss the creation of the backing library called LibSwipr"/>
+
+
+
+  
+  <meta property="og:title" content="Swipr - LibSwipr" />
+<meta property="og:description" content="Part 8 of the Swipr series. Here we drop back to regular backend server stuff and build a server to engage with our model. In this post we discuss the creation of the backing library called LibSwipr" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xnf.github.io/posts/ml/swipr08/" />
+<meta property="article:published_time" content="2018-12-13T06:36:13-08:00" />
+<meta property="article:modified_time" content="2018-12-13T06:36:13-08:00" />
+
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Swipr - LibSwipr",
+        "headline": "Swipr - LibSwipr",
+        "alternativeHeadline": "",
+        "description": "
+      Part 8 of the Swipr series. Here we drop back to regular backend server stuff and build a server to engage with our model. In this post we discuss the creation of the backing library called LibSwipr
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/0xnf.github.io\/posts\/ml\/swipr08\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightYear" : "2018",
+        "dateCreated": "2018-12-13T06:36:13.00Z",
+        "datePublished": "2018-12-13T06:36:13.00Z",
+        "dateModified": "2018-12-13T06:36:13.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name":  null ,
+            "url": "https://0xnf.github.io/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/0xnf.github.io\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/0xnf.github.io\/posts\/ml\/swipr08\/",
+        "wordCount" : "2475",
+        "genre" : [ 
+      
+      "machine learning"
+
+    
+      
+        ,
+
+      
+      "fast.ai"
+
+    ],
+        "keywords" : [ 
+      
+      "CNN"
+
+    
+      
+        ,
+
+      
+      "web scraping"
+
+    
+      
+        ,
+
+      
+      "data collection"
+
+    
+      
+        ,
+
+      
+      "architecture"
+
+    ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/"></a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p></p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      <h1>Swipr - LibSwipr</h1>
+      <p>As a harness for our model, we&rsquo;ll create a server that serves as a centralized access point. This server provides the necessary facilities to register an account with it, interact with Tinder, and receive responses from the model.</p>
+<p>The general architecture for the server will go something like this:</p>
+<p><img src="/ml/swipr/SwiprServerArch.png" alt="Swipr Server Arch"></p>
+<p>SwiprServer is the server, in our case, an ASP.NET Core 2 project, and LibSwipr is our custom tooling around all the other interactions.</p>
+<h1 id="libswipr">LibSwipr</h1>
+<h2 id="models">Models</h2>
+<p>First we need a way of interacting with Tinder - we&rsquo;ll use the <a href="https://github.com/cansik/sharp-tinder">Sharp Tinder</a> library to do the heavy lifting there.</p>
+<p>After that, we need to consider some data models:</p>
+<p>First we consider the fundamental property of Tinder - to like, pass, and superlike. We represent these actions as an enum:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[Flags]</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">enum</span> SwipeAction {
+    PASSED = <span style="color:#ae81ff">0</span>,
+    NA = <span style="color:#ae81ff">1</span>,
+    LIKED = <span style="color:#ae81ff">2</span>,
+    SUPERLIKED = <span style="color:#ae81ff">3</span>,
+    All = PASSED | NA | LIKED | SUPERLIKED, <span style="color:#75715e">// used for retrieving actioned users from db
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>We also consider when to use a SuperLike. We have a number of choices, such as &ldquo;Don&rsquo;t&rdquo;, &ldquo;Only when out of all regular likes&rdquo;, &ldquo;when certain words in their bio match&rdquo;, and &ldquo;when the model has very high confidence&rdquo;.
+We encode these strategies into a series of singleton classes as such:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SuperLikeStrategy</span> {
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Id;
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> DisplayName;
+
+    <span style="color:#66d9ef">internal</span> SuperLikeStrategy(<span style="color:#66d9ef">int</span> id, <span style="color:#66d9ef">string</span> displayname) {
+        <span style="color:#66d9ef">this</span>.Id = id;
+        <span style="color:#66d9ef">this</span>.DisplayName = displayname;
+    }
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HighConfidenceStrat</span> : SuperLikeStrategy {
+
+    <span style="color:#66d9ef">internal</span> HighConfidenceStrat() : <span style="color:#66d9ef">base</span>(<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;High Confidence&#34;</span>) {
+
+    }
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SuperLikeWordMatchStrat</span> : SuperLikeStrategy {
+    <span style="color:#66d9ef">internal</span> SuperLikeWordMatchStrat() : <span style="color:#66d9ef">base</span>(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Bio Words Match&#34;</span>) {
+
+    }
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutOfLikes</span> : SuperLikeStrategy {
+    <span style="color:#66d9ef">internal</span> OutOfLikes() : <span style="color:#66d9ef">base</span>(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Out of Likes&#34;</span>) {
+
+    }
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Dont</span> : SuperLikeStrategy {
+    <span style="color:#66d9ef">internal</span> Dont() : <span style="color:#66d9ef">base</span>(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Don&#39;t&#34;</span>) {
+
+    }
+}
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SuperLikeStrategies</span> {
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> SuperLikeStrategy Dont = <span style="color:#66d9ef">new</span> Dont();
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> SuperLikeStrategy OutOfLikes = <span style="color:#66d9ef">new</span> OutOfLikes();
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> SuperLikeStrategy WordMatch = <span style="color:#66d9ef">new</span> SuperLikeWordMatchStrat();
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> SuperLikeStrategy HighConfidence = <span style="color:#66d9ef">new</span> HighConfidenceStrat();
+
+}
+
+</code></pre></div><p>For storage and retrieval purposes, we have the concept of an <code>ActionedUser</code>, which is a Tinder User that has been seen by a Swipr User, and actioned upon one way or another:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ActionedUser</span> {
+        <span style="color:#75715e">// Amount of times this user has been seen by a given Swipr user
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> TimesSeen { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">// A reference to the underlying Sharp Tinder user
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> TinderUser User { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">// last seen at
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> DateTimeOffset DateSeen { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">// Did we swipe right or left?
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> SwipeAction Action { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">// What was the justification for the action we took?
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Reason { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">// Did the swipr user disagree with the action?
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> AdjustedReason { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">// What is the location of their main picture
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Imgurl { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    }
+</code></pre></div><p>We keep an <code>AdjustedReason</code> field to allow the Swipr user an opportunity to disagree with an AI classification, allowing us to potentially retrain and fine-tune a user&rsquo;s Swipr model.</p>
+<h2 id="configurations">Configurations</h2>
+<p>Because we are reliant upon actually signing into and authorizing with remote services, we need to store some tokens for those services:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AuthTokens</span> {
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> FacebookId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> FacebookEmail { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> FacebookAuthenticationToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> TinderAuthenticationToken { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> FacebookPassword { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+}
+</code></pre></div><p>While interacting with Tinder, it is useful for us to know where we stand with respect to how many likes and superlikes we have. These are essentially only knowable at runtime after we query Tinder, but in the meantime, we have a structure to support it:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TinderConfigs</span> {
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> MaxLikeCount { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">int</span>.MaxValue;
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> MaxSuperLikeCount { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">int</span>.MaxValue;
+    <span style="color:#66d9ef">public</span> TimeSpan LikeRefreshDuration { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = TimeSpan.FromHours(<span style="color:#ae81ff">12</span>);
+    <span style="color:#66d9ef">public</span> TimeSpan SuperlikeRefreshDuration { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = TimeSpan.FromHours(<span style="color:#ae81ff">24</span>);
+}
+</code></pre></div><p>The last of our Config models will be the Swipr config, which controls how a user has elected to have Swipr interact to Tinder on their behalf. Swipr is more than just a way to auto-swipe on attractive profiles, it also offers some additional filtering services, all of which are modeled here:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SwiprConfig</span> {
+
+    <span style="color:#75715e">// SwiprUser this config belongs to
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UserId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#e6db74">&#34;&#34;</span>;
+
+    <span style="color:#75715e">// Whether their profile is active on Swipr or not
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> SwiprEnabled { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">false</span>;
+
+    <span style="color:#75715e">// Whether any given Tinder User must have a non-empty bio to be considered
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> MustHaveBio { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">false</span>;
+
+    <span style="color:#75715e">// If MustHaveBio is true, are there any words that should short-circuit the AI and be auto-liked?
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> List&lt;<span style="color:#66d9ef">string</span>&gt; BioLikeKeywords { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt;();
+    <span style="color:#75715e">// If MustHaveBio is true, are there any words that should short-circuit the AI and be super-liked?
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> List&lt;<span style="color:#66d9ef">string</span>&gt; BioSuperlikeKeywords { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt;();
+    <span style="color:#75715e">// If MustHaveBio is true, are there any words that should short circuit the AI and be auto-passed?
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> List&lt;<span style="color:#66d9ef">string</span>&gt; BioBannedKeywords { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt;();
+
+    <span style="color:#75715e">// Whether a given Tinder user needs to have a minimum or maximum age to be considered?
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// values of -1 mean &#34;does not apply&#34;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> AgesEnabled { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">false</span>;
+    <span style="color:#75715e">// if so, what should the minimum age be?
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> MinimumAge { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#ae81ff">18</span>;
+    <span style="color:#75715e">// if so, what should the maximum age be?
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> MaximumAge { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = -<span style="color:#ae81ff">1</span>;
+
+    <span style="color:#75715e">// Whether a given Tinder user needs to be within a certain distance to be consiered
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> DistanceEnabled { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">false</span>;
+    <span style="color:#75715e">// If so, what should the max distance be?
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> MinimumDistance { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = -<span style="color:#ae81ff">1</span>;
+    <span style="color:#75715e">// If so, what should the min distanc ebe?
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> MaximumDistance { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = -<span style="color:#ae81ff">1</span>;
+
+    <span style="color:#75715e">// Does a user need pictures to be considered?
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// Seems silly, but some profiles are just a default Facebook image
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> PicturesEnabled { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">true</span>;
+    <span style="color:#75715e">// If so, what is the minimum number of pictures a profile must possess to be considered?
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> MinimumPictures { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#ae81ff">1</span>;
+
+    <span style="color:#75715e">// This is an important field
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// What is the minimum confidence that SwiprML should return on a &#34;Yes&#34; category to be 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// actioned on as a real &#34;Yes&#34;?
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> MinimumConfidence { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#ae81ff">40</span>;
+
+    <span style="color:#75715e">// If enabled, Swipr enters auto-swipe mode and just says yes to everything
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> AcceptAllMatches { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">false</span>;
+
+    <span style="color:#75715e">// Another important field
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// Due to the way we queue/dequeue Swipr users,
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// this sets a per-dequeue limit on the number of profiles they get to see
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// before Swipr moves onto the next User in the queue
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// This helps us get around Plus and Gold users with infinite likes
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// This is primarily because Swipr is single-threaded and can only handle
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// One Swipr user at once.
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> SessionLimit { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#ae81ff">1000</span>;
+
+    <span style="color:#75715e">// An ordered list of SuperLike strategies - for each Tinder user,
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// we check if we should super like them according to the hierarchy in this list
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> List&lt;SuperLikeStrategy&gt; SLStrats { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> List&lt;SuperLikeStrategy&gt;() { SuperLikeStrategies.OutOfLikes };
+
+}
+</code></pre></div><p>Some of these seem like strange things to filter on, given that Tinder does this for us. But with Distance, for example, it is possible to get matches from people many thousands of miles away. This can happen even if you have strict distance settings inside Tinder itself. We provide additional filtering to make sure you don&rsquo;t waste your likes on people who are too far away.</p>
+<h2 id="services">Services</h2>
+<p>Here we keep the methods that wrap and help us interact with Facebook and Tinder.</p>
+<p>Why Facebook? Because the only way we can consistently keep an active Tinder token is by refreshing it with our Facebook token.</p>
+<p>Sharp Tinder expects that you already know your Facebook ID and that you know how to get a Facebook token. As developers we can do this on an on-demand basis ourselves without too much trouble, but we&rsquo;re creating a solution that can be used by, in theory, anybody, and that&rsquo;s not a scalable way to approach the problem.</p>
+<h3 id="facebook-service">Facebook Service</h3>
+<p>To resolve this, we&rsquo;ll take a page out of a different Tinder API&rsquo;s book and copy their methods. For this we&rsquo;ll be basing our work on that of <a href="https://github.com/fbessez/Tinder">this Python Tinder API library</a>.</p>
+<p>The core idea is that they fake an OAuth login and capture the forms. It&rsquo;s a far cry from &ldquo;officially supported&rdquo;, but it works.</p>
+<p>We also do this by pretending to be Tinder&rsquo;s iOS app:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> MOBILE_USER_AGENT = <span style="color:#e6db74">&#34;Tinder/7.5.3 (iPhone; iOS 10.3.2; Scale/2.00)&#34;</span>;
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> FB_AUTH = <span style="color:#e6db74">&#34;https://www.Facebook.com/v2.8/dialog/oauth?redirect_uri=fb464891386855067%3A%2F%2Fauthorize%2F&amp;display=touch&amp;state=%7B%22challenge%22%3A%22IUUkEUqIGud332lfu%252BMJhxL4Wlc%253D%22%2C%220_auth_logger_id%22%3A%2230F06532-A1B9-4B10-BB28-B29956C71AB1%22%2C%22com.Facebook.sdk_client_state%22%3Atrue%2C%223_method%22%3A%22sfvc_auth%22%7D&amp;scope=user_birthday%2Cuser_photos%2Cuser_education_history%2Cemail%2Cuser_relationship_details%2Cuser_friends%2Cuser_work_history%2Cuser_likes&amp;response_type=token%2Csigned_request&amp;default_audience=friends&amp;return_scopes=true&amp;auth_type=rerequest&amp;client_id=464891386855067&amp;ret=login&amp;sdk=ios&amp;logger_id=30F06532-A1B9-4B10-BB28-B29956C71AB1&amp;ext=1470840777&amp;hash=AeZqkIcf-NEW6vBd&#34;</span>;
+
+</code></pre></div><p>And then we login.</p>
+<p>We use the venerable <a href="https://www.nuget.org/packages/HtmlAgilityPack.NetCore/">HTML Agility Pack</a> to help us parse the DOM tree for this step.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">string</span>&gt; GetFbAccessToken(<span style="color:#66d9ef">string</span> email, <span style="color:#66d9ef">string</span> password) {
+
+
+    <span style="color:#75715e">// local function because we need to call this code in two places
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// sometimes our first request brings us to stage 2, and this helps
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// us get out of that bind.
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">string</span>&gt; ConfirmOAuth(HtmlNode hform, <span style="color:#66d9ef">string</span> action) {
+
+        <span style="color:#66d9ef">string</span> baseurl = <span style="color:#e6db74">$&#34;https://www.Facebook.com{action}&#34;</span>;
+
+        Uri hUri = <span style="color:#66d9ef">new</span> Uri(baseurl);
+
+        List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>,<span style="color:#66d9ef">string</span>&gt;&gt; hformVariables = <span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;&gt;();
+
+        HtmlNodeCollection hnodes = hform.SelectNodes(<span style="color:#e6db74">&#34;//input&#34;</span>);
+        <span style="color:#66d9ef">foreach</span> (HtmlNode n <span style="color:#66d9ef">in</span> hnodes) {
+            <span style="color:#66d9ef">string</span> name = n.GetAttributeValue(<span style="color:#e6db74">&#34;name&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>);
+            <span style="color:#66d9ef">string</span> val = n.GetAttributeValue(<span style="color:#e6db74">&#34;value&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>);
+            <span style="color:#66d9ef">if</span> (name == <span style="color:#e6db74">&#34;__CANCEL__&#34;</span>) {
+                <span style="color:#66d9ef">continue</span>;
+            }
+            hformVariables.Add(<span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;(name, val));
+        }
+        <span style="color:#66d9ef">var</span> hformContent = <span style="color:#66d9ef">new</span> FormUrlEncodedContent(hformVariables);
+        HttpResponseMessage hres = <span style="color:#66d9ef">await</span> hc.PostAsync(hUri, hformContent);
+
+
+        <span style="color:#66d9ef">string</span> hresStr = Encoding.UTF8.GetString(<span style="color:#66d9ef">await</span> hres.Content.ReadAsByteArrayAsync());
+
+        <span style="color:#75715e">//WebBrowser
+</span><span style="color:#75715e"></span>
+        Regex r = <span style="color:#66d9ef">new</span> Regex(<span style="color:#e6db74">&#34;access_token=([\\w\\d]+)&#34;</span>);
+        Match match = r.Match(hresStr);
+        <span style="color:#66d9ef">if</span> (String.IsNullOrWhiteSpace(match.Value) || match.Groups.Count &lt; <span style="color:#ae81ff">2</span>) {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+        }
+        <span style="color:#66d9ef">else</span> {
+            <span style="color:#66d9ef">return</span> match.Groups[<span style="color:#ae81ff">1</span>].Value;
+        }
+    }
+
+    <span style="color:#75715e">// Real function
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">// Step 1: Get the Login form from the FB_AUTH url
+</span><span style="color:#75715e"></span>    hc.DefaultRequestHeaders.Add(<span style="color:#e6db74">&#34;User-Agent&#34;</span>, MOBILE_USER_AGENT);
+    HttpResponseMessage m =  <span style="color:#66d9ef">await</span> hc.GetAsync(FB_AUTH);
+    <span style="color:#66d9ef">string</span> ResponseContent = <span style="color:#66d9ef">await</span> m.Content.ReadAsStringAsync();
+
+
+    <span style="color:#75715e">// Step 2: Parse the HTML
+</span><span style="color:#75715e"></span>    HtmlDocument d = <span style="color:#66d9ef">new</span> HtmlDocument();
+    d.LoadHtml(ResponseContent);
+    HtmlNode form = d.DocumentNode.SelectSingleNode(<span style="color:#e6db74">&#34;//form&#34;</span>);
+    <span style="color:#66d9ef">string</span> actionValue = form.Attributes[<span style="color:#e6db74">&#34;action&#34;</span>]?.Value;
+
+    <span style="color:#66d9ef">if</span>(actionValue == <span style="color:#e6db74">&#34;/v2.8/dialog/oauth/confirm&#34;</span>) {
+        <span style="color:#75715e">// Skip to Accept
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> ConfirmOAuth(form, actionValue);
+    }
+
+    Uri uri = <span style="color:#66d9ef">new</span> Uri(HttpUtility.HtmlDecode(actionValue));
+
+    <span style="color:#66d9ef">var</span> formVariables = <span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;&gt;();
+
+    HtmlNodeCollection nodes = form.SelectNodes(<span style="color:#e6db74">&#34;//input&#34;</span>);
+    <span style="color:#66d9ef">foreach</span>(HtmlNode n <span style="color:#66d9ef">in</span> nodes) {
+        <span style="color:#66d9ef">string</span> name = n.GetAttributeValue(<span style="color:#e6db74">&#34;name&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>);
+        <span style="color:#66d9ef">string</span> val = n.GetAttributeValue(<span style="color:#e6db74">&#34;value&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>);
+        <span style="color:#66d9ef">if</span>(name == <span style="color:#e6db74">&#34;email&#34;</span> || name == <span style="color:#e6db74">&#34;pass&#34;</span>) {
+            <span style="color:#66d9ef">continue</span>;
+        }
+        formVariables.Add(<span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;(name, val));
+    }
+
+
+    <span style="color:#75715e">// Step 3: Add the email and pass fields
+</span><span style="color:#75715e"></span>    formVariables.Add(<span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;(<span style="color:#e6db74">&#34;email&#34;</span>, email));
+    formVariables.Add(<span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;(<span style="color:#e6db74">&#34;pass&#34;</span>, password));
+    <span style="color:#66d9ef">var</span> formContent = <span style="color:#66d9ef">new</span> FormUrlEncodedContent(formVariables);
+
+
+    <span style="color:#75715e">// Step 4: Send the login request
+</span><span style="color:#75715e"></span>    HttpResponseMessage res = <span style="color:#66d9ef">await</span> hc.PostAsync(uri, formContent);
+    <span style="color:#66d9ef">string</span> formHtml2 = <span style="color:#66d9ef">await</span> res.Content.ReadAsStringAsync();
+
+    <span style="color:#75715e">// Step 5: Retrieve the second returned form
+</span><span style="color:#75715e"></span>    d.LoadHtml(formHtml2);
+    form = d.DocumentNode.SelectSingleNode(<span style="color:#e6db74">&#34;//form&#34;</span>);
+    actionValue = form.Attributes[<span style="color:#e6db74">&#34;action&#34;</span>]?.Value;
+
+    <span style="color:#66d9ef">if</span> (actionValue == <span style="color:#e6db74">&#34;/v2.8/dialog/oauth/confirm&#34;</span>) {
+        <span style="color:#75715e">// final accept
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> ConfirmOAuth(form, actionValue);
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+}
+</code></pre></div><p>Once we have successfully faked an OAuth login while pretending to be Tinder on iOS, we can request the other half of what is required for a Tinder token and get our Facebook ID by querying Facebook&rsquo;s GraphQL API.</p>
+<p>Shoutout to Facebook for making this part easy and requiring that the token be sent as a URL parameter instead of some weird header nonsense:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">string</span>&gt; GetFbIdForUser(<span style="color:#66d9ef">string</span> fbAccessToken) {
+    <span style="color:#66d9ef">string</span> fbid = <span style="color:#66d9ef">null</span>;
+    <span style="color:#66d9ef">string</span> url = <span style="color:#e6db74">&#34;https://graph.Facebook.com/me?access_token=&#34;</span> + fbAccessToken;
+    HttpResponseMessage m = <span style="color:#66d9ef">await</span> hc.GetAsync(url);
+    <span style="color:#66d9ef">if</span> (m.IsSuccessStatusCode) {
+        <span style="color:#66d9ef">string</span> jparse = <span style="color:#66d9ef">await</span> m.Content.ReadAsStringAsync();
+        JObject jobj = JObject.Parse(jparse);
+        fbid = jobj[<span style="color:#e6db74">&#34;id&#34;</span>].Value&lt;<span style="color:#66d9ef">string</span>&gt;();
+    }
+    <span style="color:#66d9ef">return</span> fbid;
+}
+</code></pre></div><h3 id="tinder-service">Tinder Service</h3>
+<p>We also have to mock how we want to interact with Tinder, including logging in. Most of this is handled by the underlying Sharp Tinder library, but we want to impose Swipr&rsquo;s particular view of the Tinder world on top of it. Like most things, it&rsquo;s useful to wrap our libraries our own way.</p>
+<p>The first thing we do is make some singletons:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> TinderConfigs Config { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> TinderConfigs();
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> SwiprStats SwiprStats { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> SwiprStats();
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> TinderClient TC = <span style="color:#66d9ef">new</span> TinderClient(); <span style="color:#75715e">// from SharpTinderr
+</span></code></pre></div><p>Next we work to obtain a Tinder token. These are valid for an indeterminate amount of time before they must be refreshed. Obtaining these uses everything from our Facebook service above:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">string</span>&gt; GetTinderAuthToken(<span style="color:#66d9ef">string</span> fbUserId, <span style="color:#66d9ef">string</span> fbAccessToken) {
+    <span style="color:#66d9ef">try</span> {
+        <span style="color:#66d9ef">bool</span> success = <span style="color:#66d9ef">await</span> TC.Login(fbUserId, fbAccessToken);
+        <span style="color:#66d9ef">return</span> TC.AuthToken;
+    } <span style="color:#66d9ef">catch</span> (Exception e) {
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> SwiprTinderTokenException(e);
+    }
+}
+</code></pre></div><p>It will be useful to have some kind of way of knowing whether or not our Tinder token has expired, so we request a <code>meta</code> object that just returns some Tinder stats for our user. If the request fails, we&rsquo;ve been expired:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckTokenStillValid(<span style="color:#66d9ef">string</span> tinderAuthToken = <span style="color:#66d9ef">null</span>) {
+    <span style="color:#66d9ef">if</span> (!String.IsNullOrWhiteSpace(tinderAuthToken)) {
+        TC.AuthToken = tinderAuthToken;
+    }
+    <span style="color:#66d9ef">try</span> {
+        TinderMeta success = <span style="color:#66d9ef">await</span> TC.GetMeta();
+        <span style="color:#66d9ef">return</span> success != <span style="color:#66d9ef">null</span>;
+    }
+    <span style="color:#66d9ef">catch</span> (System.Net.WebException we) {
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> SwiprTinderTokenException(we);
+    }
+}
+</code></pre></div><p>Now for our core methods of fetching, liking, passing and superliking users:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;IList&lt;SharpTinder.Core.User&gt;&gt; GetMatches(<span style="color:#66d9ef">string</span> tinderAuthToken = <span style="color:#66d9ef">null</span>) {
+    <span style="color:#66d9ef">if</span> (!String.IsNullOrWhiteSpace(tinderAuthToken)) {
+        TC.AuthToken = tinderAuthToken;
+    }
+    <span style="color:#66d9ef">try</span> {
+        SharpTinder.Core.TinderRecommendation recs = <span style="color:#66d9ef">await</span> TC.GetCoreRecommendations();
+        <span style="color:#66d9ef">if</span> (recs == <span style="color:#66d9ef">null</span>) {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> SwiprTinderTokenException();
+        }
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (recs.Data == <span style="color:#66d9ef">null</span>) {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> SwiprException(<span style="color:#e6db74">&#34;Retrieved recommendations had no valid data&#34;</span>, -<span style="color:#ae81ff">5</span>);
+        }
+        IList&lt;SharpTinder.Core.User&gt; UserList = recs.Data.Results.Select(x =&gt; x.User).ToList();
+        <span style="color:#66d9ef">return</span> UserList;
+    } <span style="color:#66d9ef">catch</span> (System.Net.WebException we) {
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> SwiprTinderTokenException(we);
+    }
+}
+</code></pre></div><p>Liking a user:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; LikeUser(<span style="color:#66d9ef">string</span> userid, <span style="color:#66d9ef">string</span> tinderAuthToken = <span style="color:#66d9ef">null</span>) {
+    <span style="color:#66d9ef">if</span> (!String.IsNullOrWhiteSpace(tinderAuthToken)) {
+        TC.AuthToken = tinderAuthToken;
+    }
+    <span style="color:#66d9ef">try</span> {
+        TinderMatchResult tmr = <span style="color:#66d9ef">await</span> TC.Like(userid);
+        SwiprStats.LikesRemaining = tmr.LikesRemaining;
+        <span style="color:#66d9ef">if</span> (tmr.Match) {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+        }
+        <span style="color:#66d9ef">else</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+        }
+    }
+    <span style="color:#66d9ef">catch</span> (System.Net.WebException we) {
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> SwiprTinderTokenException(we);
+    }
+}
+</code></pre></div><p>Superliking a user:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; SuperLikeUser(<span style="color:#66d9ef">string</span> userid, <span style="color:#66d9ef">string</span> tinderAuthToken = <span style="color:#66d9ef">null</span>) {
+    <span style="color:#66d9ef">if</span> (!String.IsNullOrWhiteSpace(tinderAuthToken)) {
+        TC.AuthToken = tinderAuthToken;
+    }
+    <span style="color:#66d9ef">try</span> {
+        TinderMatchResult tmr = <span style="color:#66d9ef">await</span> TC.SuperLike(userid);
+        SwiprStats.SuperLikesRemaining = tmr.LikesRemaining; <span style="color:#75715e">// TODO does this return superlike count if we give it a superlike&gt;?
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (tmr.Match) {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+        }
+        <span style="color:#66d9ef">else</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+        }
+    }
+    <span style="color:#66d9ef">catch</span> (System.Net.WebException we) {
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> SwiprTinderTokenException(we);
+    }
+}
+</code></pre></div><p>Passing a user:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task PassUser(<span style="color:#66d9ef">string</span> userid, <span style="color:#66d9ef">string</span> tinderAuthToken = <span style="color:#66d9ef">null</span>) {
+    <span style="color:#66d9ef">if</span> (!String.IsNullOrWhiteSpace(tinderAuthToken)) {
+        TC.AuthToken = tinderAuthToken;
+    }
+    <span style="color:#66d9ef">try</span> {
+        TinderMatchResult tmr = <span style="color:#66d9ef">await</span> TC.Pass(userid);
+        SwiprStats.LikesRemaining = tmr.LikesRemaining;
+    }
+    <span style="color:#66d9ef">catch</span> (System.Net.WebException we) {
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> SwiprTinderTokenException(we);
+    }
+}
+</code></pre></div><p>Important to note is that every call to Tinder here updates our <code>TinderConfig</code> with the relevant information. We said that the values contained in that class would be determined at runtime, and this is where that logic happens.</p>
+<p>Also note that the Like and Superlike calls return a boolean value indicating whether or not the user in question matched with us. These return values are currently not relayed to the Swipr user, but the architecture supports it for the future.</p>
+<h1 id="moving-on">Moving On</h1>
+<p>In our next post, we&rsquo;ll discuss the what our datastore looks like.</p>
+<p><a href="/posts/ml/swipr09">Next Section - Datastore</a></p>
+
+
+
+<h3>Posts in this series</h3>
+<ul>
+  
+    <li><a href="/posts/ml/swipr10/">Swipr - Server</a></li>
+  
+    <li><a href="/posts/ml/swipr09/">Swipr - Datastore</a></li>
+  
+    <li><a href="/posts/ml/swipr08/">Swipr - LibSwipr</a></li>
+  
+    <li><a href="/posts/ml/swipr07/">Swipr - Swipr Script Service</a></li>
+  
+    <li><a href="/posts/ml/swipr06/">Swipr - Fast.ai and CNNs</a></li>
+  
+    <li><a href="/posts/ml/swipr05/">Swipr - Data Cleaning</a></li>
+  
+    <li><a href="/posts/ml/swipr04/">Swipr - Data Collection (Part 2 of 2)</a></li>
+  
+    <li><a href="/posts/ml/swipr03/">Swipr - Data Collection (Part 1 of 2)</a></li>
+  
+    <li><a href="/posts/ml/swipr02/">Swipr - Scope</a></li>
+  
+    <li><a href="/posts/ml/swipr01/">Swipr - Overview</a></li>
+  
+</ul>
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/machine-learning/">machine learning</a><a class="category" href="/categories/fast%2eai/">fast.ai</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/cnn/">CNN</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-collection/">data collection</a><a class="tag" href="/tags/architecture/">architecture</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

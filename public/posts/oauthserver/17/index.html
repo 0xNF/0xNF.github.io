@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <title>
+    
+        |
+        Implement an OAuth 2.0 Server (Part 17)
+      
+
+    
+
+  </title>
+
+  
+  <meta charset="utf-8" /><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="" />
+  <meta
+    name="description"
+    content="We enter the home stretch of our OAuth server by adding Rate Limits to our application. We use a dual limit structure where we can discriminate against both clients and users individually."
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.ba004976221e613a16542d07a2deca5d0377ff5e6a22dec5fcec01480ba967cf.css"
+      integrity="sha256-ugBJdiIeYToWVC0Hot7KXQN3/15qIt7F/OwBSAupZ88="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.793b323d7f2d9fbfd0b93f4d593fb5ad77b918716ed33eddea403fa87f770403.css"
+    integrity="sha256-eTsyPX8tn7/QuT9NWT&#43;1rXe5GHFu0z7d6kA/qH93BAM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.7f3c2281c7f965ce3c64888aa452793252a0416909c181097f81d0a0f7d1624e.css"
+    integrity="sha256-fzwigcf5Zc48ZIiKpFJ5MlKgQWkJwYEJf4HQoPfRYk4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.35fc032da8ede6681675d20a2f862fb9e1045c1d512d495fcf862c054daffef2.css"
+    integrity="sha256-NfwDLajt5mgWddIKL4YvueEEXB1RLUlfz4YsBU2v/vI="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.3b92357925ea7284f0c6b0378396f39f470f7842ed9702f337e667c4026bf837.css"
+    integrity="sha256-O5I1eSXqcoTwxrA3g5bzn0cPeELtlwLzN&#43;ZnxAJr&#43;Dc="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.ebb1096e1976e8cc4e2532cfa050b8f30eb13b8eb06be5cee3e38eb426b838ea.css"
+    integrity="sha256-67EJbhl26MxOJTLPoFC48w6xO46wa&#43;XO4&#43;OOtCa4OOo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="https://0xnf.github.io/posts/oauthserver/17/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.5c846cefa5ed21cceee981c70901aaf21b17b4e0b05bd777af840780918abea9.js"
+    integrity="sha256-XIRs76XtIczu6YHHCQGq8hsXtOCwW9d3r4QHgJGKvqk="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.46e991c2fcb035fc0060a792f1eb0c93ecacc9e76cd7445d6531a5cf2928686d.js"
+      integrity="sha256-RumRwvywNfwAYKeS8esMk&#43;ysyeds10RdZTGlzykoaG0="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Implement an OAuth 2.0 Server (Part 17)"/>
+<meta name="twitter:description" content="We enter the home stretch of our OAuth server by adding Rate Limits to our application. We use a dual limit structure where we can discriminate against both clients and users individually."/>
+
+
+
+  
+  <meta property="og:title" content="Implement an OAuth 2.0 Server (Part 17)" />
+<meta property="og:description" content="We enter the home stretch of our OAuth server by adding Rate Limits to our application. We use a dual limit structure where we can discriminate against both clients and users individually." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xnf.github.io/posts/oauthserver/17/" />
+<meta property="article:published_time" content="2018-06-18T18:11:52-07:00" />
+<meta property="article:modified_time" content="2018-06-18T18:11:52-07:00" />
+
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Implement an OAuth 2.0 Server (Part 17)",
+        "headline": "Implement an OAuth 2.0 Server (Part 17)",
+        "alternativeHeadline": "",
+        "description": "
+      We enter the home stretch of our OAuth server by adding Rate Limits to our application. We use a dual limit structure where we can discriminate against both clients and users individually.
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/0xnf.github.io\/posts\/oauthserver\/17\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightYear" : "2018",
+        "dateCreated": "2018-06-18T18:11:52.00Z",
+        "datePublished": "2018-06-18T18:11:52.00Z",
+        "dateModified": "2018-06-18T18:11:52.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name":  null ,
+            "url": "https://0xnf.github.io/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/0xnf.github.io\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/0xnf.github.io\/posts\/oauthserver\/17\/",
+        "wordCount" : "2539",
+        "genre" : [ 
+      
+      "Security"
+
+    
+      
+        ,
+
+      
+      "Identity"
+
+    
+      
+        ,
+
+      
+      "Authentication"
+
+    
+      
+        ,
+
+      
+      "Authorization"
+
+    ],
+        "keywords" : [ 
+      
+      "OAuth2.0"
+
+    
+      
+        ,
+
+      
+      "OpenIdConnect"
+
+    
+      
+        ,
+
+      
+      "Tutorial"
+
+    
+      
+        ,
+
+      
+      "CSharp"
+
+    
+      
+        ,
+
+      
+      ".NET Core"
+
+    ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/"></a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p></p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      <h1>Implement an OAuth 2.0 Server (Part 17)</h1>
+      <h1 id="rate-limiting---models-and-provider-changes">Rate Limiting - Models and Provider Changes</h1>
+<p>There are any number of different ways to implement rate limits - the approach we will follow is outlined like so:</p>
+<ol>
+<li>All endpoints under <code>/v1/api</code> are limited, no endpoint is free.</li>
+<li>All endpoints share a limit. Calling <code>/me</code> 1,999 times, then <code>/albums</code> once will rate limit you on the next call. (Assuming a limit of 2,000 for some timeframe.)</li>
+<li>Renewing a token counts towards the limit - after all, the <code>token</code> endpoint is underneath <code>/api/v1/</code>.</li>
+<li>Different levels of authorization are granted different rate limits. In descending order of highest rate limits:
+<ul>
+<li>Authorization Grants</li>
+<li>Implicit Grants</li>
+<li>Client Credentials</li>
+</ul>
+</li>
+<li>Rate limits are incremented against both a <code>client + user</code> combo, and then again against just the <code>client</code>.
+<ul>
+<li>This has implications we&rsquo;ll explore below</li>
+</ul>
+</li>
+<li>A given client can be granted a rate limit override.
+<ul>
+<li>The overall limit of a client can be overridden, and</li>
+<li>The limits granted to subordinate tokens can be overridden</li>
+</ul>
+</li>
+<li>Rate Limits are on a rolling timespan of <code>1 hour</code>
+<ul>
+<li>Calls collect for an hour after the initial call, and are purged at the expiration of that hour.</li>
+</ul>
+</li>
+</ol>
+<h2 id="implications-of-user--client-separate-from--client-limits">Implications of <code>User + Client</code> separate from  <code>Client</code> limits</h2>
+<p>In our implementation, a given <code>client</code> will have two rate limits: One for each user that requests a token, with a varying default based on the <code>grant_type</code>, and one for the client itself. The client one will be exponentially higher than the one applied to the users.</p>
+<p>By having two rate limits associated with a given <code>Client</code>, we can support limiting particularly expensive users while ensuring that a client&rsquo;s other users are unaffected, while also being able to limit an expensive application if necessary. If an applications users are individually medium-weight API consumers, but the application itself grows so big that its strain on the system becomes too great, the ability to restrict the application itself as opposed to an individual user becomes necessary.</p>
+<p>In our implementation, we don&rsquo;t care how about a user&rsquo;s pattern of rate limitation across all authorized applications, so we won&rsquo;t be tracking on a per-user basis, just on a token basis, and a client-id basis.</p>
+<h2 id="note-on-sources">Note on Sources</h2>
+<p>The rate limits that we&rsquo;ll produce at the end of this section are adapted from two other places:</p>
+<ul>
+<li><a href="https://www.johanbostrom.se/blog/request-throttling-in-net-core-mvc-and-api">https://www.johanbostrom.se/blog/request-throttling-in-net-core-mvc-and-api</a></li>
+<li><a href="https://github.com/stefanprodan/AspNetCoreRateLimit">https://github.com/stefanprodan/AspNetCoreRateLimit</a></li>
+</ul>
+<p>Without these resources, our rate limiting implementation would be a whole lot messier. If either of these solutions fit your use-case better, please refer to them instead. However, they do not readily support ASOS, or a two-tiered rate limit structure like we will implement, so we&rsquo;re going to create our own.</p>
+<h1 id="rate-limit-model">Rate Limit Model</h1>
+<p>Rate Limiting will focus around a three-part architecture. We&rsquo;re going to need:</p>
+<ol>
+<li>The actual rate limit that gets read and written from the database</li>
+<li>The service that reads and writes limits to an efficient cache</li>
+<li>And the efficient object representing our rate limit inside that cache.</li>
+</ol>
+<p>First, let&rsquo;s make our main model. Under <code>Models/OAuth/</code>, create a <code>RateLimit.cs</code> file with a <code>RateLimit</code> class:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RateLimit</span> {
+<span style="color:#a6e22e">    [Key]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> RateLimitId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// Primary key for Entity Framework, because this will also be a database object
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int?</span> Limit { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// Nullable, so that a limit of &#39;null&#39; may represent no limit at all.
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">public</span> TimeSpan? Window { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// The timespan of the rolling window. 
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [ForeignKey(&#34;TokenId&#34;)]</span>
+    <span style="color:#66d9ef">public</span> Token Token { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> OAuthClient Client { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SubordinatedClientId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> OAuthClient SubordinatedClient { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+}
+</code></pre></div>
+<p>It&rsquo;s pretty simple - a Key to denote to Entity Framework what item gets what Rate Limit, and two nullable fields.
+<code>Limit</code> stores the raw number requests that this Rate Limit will be governed by before considering any additional request to be locked out, and <code>Window</code> is the timeframe for when a limit is considered lifted.</p>
+<p>We make these fields nullable to indicate that a Rate Limit does not actually apply. Our service class later on will interpret these nullable values.</p>
+<p>The other fields exist to placate the Entity Framework for the relationships we&rsquo;ll set up in a bit.</p>
+<h1 id="token-adjustments">Token Adjustments</h1>
+<p>Recall that our rate limit implementation will restrict on clients and also on tokens - which means our tokens will need to account for their assigned rate limit, independent of whatever the clients rate limit is.</p>
+<p>Open up the <code>Models/OAuth/Token.cs</code> class and add a field for its limit:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Token</span> {
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [Key]</span>
+<span style="color:#a6e22e">    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> TokenId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// This is set by the database and isbn&#39;t useful to us as consumers.
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GrantType { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// How this token was created: &#39;token&#39;, &#39;authorization_code&#39;, &#39;client_credentials&#39;, &#39;refresh&#39;
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> TokenType { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">//Access, Refresh
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Value { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// The raw value of a token.
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">/* Rate limit for this token, which is independant, but lower than, the rate limit of the client that its authenticated to. */</span>
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> RateLimit RateLimit { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } 
+</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> OAuthClientId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> OAuthClient Client { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> UserId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> ApplicationUser User { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+}
+</code></pre></div>
+<h1 id="oauth-client-adjustment">OAuth Client Adjustment</h1>
+<p>Our implementation allows for double overrides of limits - a client&rsquo;s overall client limit can be changed, and the limits that each token generated for the client can be changed. This means we need to two additional fields in our <code>OAuthClient</code> class:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuthClient</span> {
+
+    <span style="color:#75715e">/* EntityFramework classes that have an Id field that deviates from the auto-detectable formats need to have that field annotated with [Key] */</span>
+<span style="color:#a6e22e">    [Key]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+    <span style="color:#75715e">/* Each App needs a Client Secret, but it is assigned at creation */</span>
+<span style="color:#a6e22e">    [Required]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientSecret { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+    <span style="color:#75715e">/* Each App Needs an Owner, which will be assigned at creation. This is also a Foreign Key to the Users table. */</span>
+<span style="color:#a6e22e">    [Required]</span>
+<span style="color:#a6e22e">    [ForeignKey(&#34;Id&#34;)]</span>
+    <span style="color:#66d9ef">public</span> ApplicationUser Owner { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+    <span style="color:#75715e">/* This field, combined with the RedirectURI.OAuthClient field, lets EntityFramework know that this is a (1 : Many} mapping */</span>
+    <span style="color:#66d9ef">public</span> List&lt;RedirectURI&gt; RedirectURIs { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> List&lt;RedirectURI&gt;();
+
+    <span style="color:#75715e">/*  Like above, this notifies EntityFramework of another (1 : Many) mapping */</span>
+    <span style="color:#66d9ef">public</span> List&lt;Token&gt; UserApplicationTokens { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">new</span> List&lt;Token&gt;();
+
+    <span style="color:#75715e">/* A Rate limit object for our client - separate from any rate limits applied to the users of this application. */</span>
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> RateLimit RateLimit { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span>
+    <span style="color:#75715e">/* A rate limit objects for tokens issued to this client - usually null
+</span><span style="color:#75715e">    * but if a client has been granted special overrides, the limits specified here will be issued to the tokens, 
+</span><span style="color:#75715e">    * as opposed to the default grant_type token limits.
+</span><span style="color:#75715e">    * This allows us to offer specific applications increased overall limits, and increased per-user limits, if so desired. */</span>
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> RateLimit SubordinateTokenLimits { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [Required]</span>
+<span style="color:#a6e22e">    [MinLength(2)]</span>
+<span style="color:#a6e22e">    [MaxLength(100)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// Each App needs a Name, which is submutted by the user at Creation
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [Required]</span>
+<span style="color:#a6e22e">    [MinLength(1)]</span>
+<span style="color:#a6e22e">    [MaxLength(300)]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientDescription { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// Each App needs a Description, which is submitted by the Creation
+</span><span style="color:#75715e"></span>}
+</code></pre></div>
+<p>The comments explain it, but to recap, SubordinateTokens, if not null, is our override for the limits that a given token issued against this client will receive. If null, then they receive the standard defaults. Meanwhile, the regular <code>RateLimit</code> field is the record for what this client&rsquo;s overall limit across all users will be.</p>
+<h1 id="third-migration">Third Migration</h1>
+<p>We need to make some changes to our <code>ApplicationDbContext.OnModelCreating()</code> method. Namely, we need to alert Entity Framework that we have rate limits, and that tokens and clients have a relationship to them:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> OnModelCreating(ModelBuilder builder) {
+    <span style="color:#66d9ef">base</span>.OnModelCreating(builder);
+
+    <span style="color:#75715e">/* An OAuthClients name is unique among all other OAuthClients */</span>
+    builder.Entity&lt;OAuthClient&gt;()
+        .HasAlternateKey(x =&gt; x.ClientName);
+
+    <span style="color:#75715e">/* When an AspNet User is deleted, delete their created OAuthClients */</span>
+    builder.Entity&lt;OAuthClient&gt;()
+        .HasOne(x =&gt; x.Owner)
+        .WithMany(x =&gt; x.UsersOAuthClients)
+        .OnDelete(DeleteBehavior.Cascade);
+
+    <span style="color:#75715e">/* When an OAuthClient is deleted, delete its Rate Limits */</span>
+<span style="display:block;width:100%;background-color:#3c3d38">    builder.Entity&lt;OAuthClient&gt;()
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .HasOne(x =&gt; x.RateLimit)
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .WithOne(x =&gt; x.Client)
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .HasForeignKey&lt;RateLimit&gt;(x =&gt; x.ClientId)
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .OnDelete(DeleteBehavior.Cascade);
+</span>
+    <span style="color:#75715e">/* When an OAuthClient is deleted, delete its Subordinate Rate Limit */</span>
+<span style="display:block;width:100%;background-color:#3c3d38">    builder.Entity&lt;OAuthClient&gt;()
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .HasOne(x =&gt; x.SubordinateTokenLimits)
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .WithOne(x =&gt; x.SubordinatedClient)
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .HasForeignKey&lt;RateLimit&gt;(x =&gt; x.SubordinatedClientId)
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .OnDelete(DeleteBehavior.Cascade);
+</span>
+    <span style="color:#75715e">/* RWhen a Rate Limit is deleted, delete any Tokens that use this rate limit */</span>
+<span style="display:block;width:100%;background-color:#3c3d38">    builder.Entity&lt;RateLimit&gt;()
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .HasOne(x =&gt; x.Token)
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .WithOne(x =&gt; x.RateLimit)
+</span><span style="display:block;width:100%;background-color:#3c3d38">        .OnDelete(DeleteBehavior.Cascade);
+</span>
+    <span style="color:#75715e">/* When an AspNetUser is deleted, delete their tokens */</span>
+    builder.Entity&lt;ApplicationUser&gt;()
+        .HasMany(x =&gt; x.UserClientTokens)
+        .WithOne(y =&gt; y.User)
+        .HasForeignKey(x =&gt; x.UserId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+    <span style="color:#75715e">/* When an OAuth Client is deleted, delete any Redirect URIs it used. */</span>
+    builder.Entity&lt;RedirectURI&gt;()
+        .HasOne(x =&gt; x.OAuthClient)
+        .WithMany(x =&gt; x.RedirectURIs)
+        .HasForeignKey(x =&gt; x.OAuthClientId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+
+    <span style="color:#75715e">/* When an OAuth Client is deleted, delete any tokens it issued */</span>
+    builder.Entity&lt;OAuthClient&gt;()
+        .HasMany(x =&gt; x.UserApplicationTokens)
+        .WithOne(x =&gt; x.Client)
+        .HasForeignKey(x =&gt; x.OAuthClientId)
+        .OnDelete(DeleteBehavior.Cascade);
+}
+</code></pre></div>
+<h2 id="deletions">Deletions</h2>
+<p>At this point we should add our third migration. Of course, with SQLite, that means deleting everything and re-creating our existing migrations.</p>
+<p>Remember to delete everything under the <code>Migrations/</code> folder, including <code>xxxx_WithModels.cs</code> or any other migrations you may have created, any <code>.Designer</code> files includes in those migrations, as well as the <code>ApplicationDbContextModelSnapshot.cs</code>.</p>
+<p>Be sure to delete the <code>OAuthTutorial.sqlite</code> file as well.</p>
+<h2 id="package-manager">Package-Manager</h2>
+<p>Open the Package Manager Console and do the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell">Add-Migration WithRateLimit
+</code></pre></div><p>Remember that if you get errors about the path, its the package manager with a temporary error - just try the command again.</p>
+<p>Finally, apply the migration to generate our new database:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell">Database-Update
+</code></pre></div><p>As always with these sorts of nuclear-redo migrations, you&rsquo;ll have to create a new user, new client application, new redirect uris, and generate yourself some new tokens.</p>
+<h1 id="token-defaults">Token Defaults</h1>
+<p>It&rsquo;s convenient to have some defaults in place when it comes to the rate limits associated with tokens. Like alluded to at the top, different tokens can be assigned different rates. Typically, an authorization token, being the heaviest duty code flow, and the most secure, is afforded the highest limit for a token, while client credentials are often strictly limited.</p>
+<p>In the <code>Models/OAuth/RateLimits.cs</code> class, let&rsquo;s add some static default limits:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RateLimit</span> {
+<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    [Key]</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> RateLimitId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// Primary key for Entity Framework, because this will also be a database object
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int?</span> Limit { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// Nullable, so that a limit of &#39;null&#39; may represent no limit at all.
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> TimeSpan? Window { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } <span style="color:#75715e">// The timespan of the rolling window. 
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">
+</span><span style="color:#a6e22e">    
+</span><span style="color:#a6e22e">    [ForeignKey(&#34;TokenId&#34;)]</span>
+    <span style="color:#66d9ef">public</span> Token Token { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> ClientId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> OAuthClient Client { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> SubordinatedClientId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> OAuthClient SubordinatedClient { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> RateLimit DefaultClientLimit =&gt;
+</span><span style="display:block;width:100%;background-color:#3c3d38">        <span style="color:#66d9ef">new</span> RateLimit() {
+</span><span style="display:block;width:100%;background-color:#3c3d38">            Limit = <span style="color:#ae81ff">5</span>, <span style="color:#75715e">// 10_000
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#75715e"></span>            Window = TimeSpan.FromHours(<span style="color:#ae81ff">1</span>),
+</span><span style="display:block;width:100%;background-color:#3c3d38">        };
+</span>
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> RateLimit DefaultImplicitLimit =&gt; 
+</span><span style="display:block;width:100%;background-color:#3c3d38">        <span style="color:#66d9ef">new</span> RateLimit() {
+</span><span style="display:block;width:100%;background-color:#3c3d38">            Limit = <span style="color:#ae81ff">1</span>, <span style="color:#75715e">// 150
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#75715e"></span>            Window = TimeSpan.FromHours(<span style="color:#ae81ff">1</span>)
+</span><span style="display:block;width:100%;background-color:#3c3d38">        };
+</span>
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> RateLimit DefaultAuthorizationCodeLimit =&gt;
+</span><span style="display:block;width:100%;background-color:#3c3d38">        <span style="color:#66d9ef">new</span> RateLimit() {
+</span><span style="display:block;width:100%;background-color:#3c3d38">            Limit = <span style="color:#ae81ff">500</span>,
+</span><span style="display:block;width:100%;background-color:#3c3d38">            Window = TimeSpan.FromHours(<span style="color:#ae81ff">1</span>)
+</span><span style="display:block;width:100%;background-color:#3c3d38">        };
+</span>}
+</code></pre></div>
+<p>We&rsquo;ve set the limits to be low for testing purposes, but some effective defaults have been commented out right next to our low limits.</p>
+<p>In our implementation, any given <code>OAuthClient</code> will be able to field <code>10,000</code> requests per hour across all of its constituent users. The client will enter rate limit mode if, for example, one user issues one call, and another user issues 9,999 calls. It will also limit in the case of 10,000 users making one call each.</p>
+<p>In the specific case of an application using the <code>ClientCredentials</code> flow, then its own rate limit is equivalent to the <code>DefaultClientLimit</code>.</p>
+<p>We&rsquo;ve also granted tiers of limits to other two tokens - an implicit grant has as lower limit than an authorization code grant.</p>
+<p>You are encouraged to adjust these numbers in your own implementations - this is just one way to do it.</p>
+<h1 id="add-rate-limit-values-upon-client-creation">Add Rate Limit Values upon Client Creation</h1>
+<p>Open <code>OAuthClientsController</code> under <code>Controllers/</code> and take a look at the <code>Create</code> method. Add the default rate limit to it:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#a6e22e">[HttpPost]</span>
+<span style="color:#a6e22e">[ValidateAntiForgeryToken]</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; Create([Bind(<span style="color:#e6db74">&#34;ClientName,ClientDescription&#34;</span>)] CreateClientViewModel vm) {
+    <span style="color:#66d9ef">if</span> (ModelState.IsValid) {
+        ApplicationUser owner = <span style="color:#66d9ef">await</span> _userManager.GetUserAsync(<span style="color:#66d9ef">this</span>.User);
+        OAuthClient client = <span style="color:#66d9ef">new</span> OAuthClient() {
+            ClientDescription = vm.ClientDescription,
+            ClientName = vm.ClientName,
+            ClientId = Guid.NewGuid().ToString(),
+            ClientSecret = Guid.NewGuid().ToString(),
+            Owner = owner,
+<span style="display:block;width:100%;background-color:#3c3d38">            RateLimit = RateLimit.DefaultClientLimit
+</span>        };
+
+        _context.Add(client);
+        <span style="color:#66d9ef">await</span> _context.SaveChangesAsync();
+        <span style="color:#66d9ef">return</span> RedirectToAction(nameof(Index));
+    }
+    <span style="color:#66d9ef">return</span> View(vm);
+}
+</code></pre></div>
+<h1 id="add-rate-limit-values-upon-token-creation">Add Rate Limit Values upon Token Creation</h1>
+<p>In <code>Providers/OAuthProvider.cs</code>:</p>
+<h2 id="applyauthorizationrequest">ApplyAuthorizationRequest</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task ApplyAuthorizationResponse(ApplyAuthorizationResponseContext context) {
+    <span style="color:#66d9ef">if</span> (!String.IsNullOrWhiteSpace(context.Error)) {
+        <span style="color:#66d9ef">return</span>;
+    }
+    TService = context.HttpContext.RequestServices.GetRequiredService&lt;TokenService&gt;();
+    ApplicationDbContext db = context.HttpContext.RequestServices.GetRequiredService&lt;ApplicationDbContext&gt;();
+    ClaimsPrincipal claimsUser = context.HttpContext.User;
+    <span style="color:#75715e">// Implicit grant is the only flow that gets their token issued here.
+</span><span style="color:#75715e"></span>    Token access = <span style="color:#66d9ef">new</span> Token() {
+        GrantType = OpenIdConnectConstants.GrantTypes.Implicit,
+        TokenType = OpenIdConnectConstants.TokenUsages.AccessToken,
+        Value = context.AccessToken,
+    };
+
+    OAuthClient client = db.ClientApplications.First(x =&gt; x.ClientId == context.Request.ClientId);
+    <span style="color:#66d9ef">if</span> (client == <span style="color:#66d9ef">null</span>) {
+        <span style="color:#66d9ef">return</span>;
+    }
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">if</span> (client.SubordinateTokenLimits == <span style="color:#66d9ef">null</span>) {
+</span><span style="display:block;width:100%;background-color:#3c3d38">        access.RateLimit = RateLimit.DefaultImplicitLimit;
+</span><span style="display:block;width:100%;background-color:#3c3d38">    }
+</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">else</span> {
+</span><span style="display:block;width:100%;background-color:#3c3d38">        access.RateLimit = client.SubordinateTokenLimits;
+</span><span style="display:block;width:100%;background-color:#3c3d38">    }
+</span>
+    <span style="color:#66d9ef">await</span> TService.WriteNewTokenToDatabase(context.Request.ClientId, access, claimsUser);
+}
+</code></pre></div>
+<p>Because the only token request to be issued out of the <code>ApplyAuthorizationRequest</code> endpoint will be an Implicit Grant, we can just assign it the implicit grant items and be on our way.</p>
+<p>The only catch is to check whether the client we&rsquo;re issuing against has an overridden rate limit applied - that is, is its <code>SubordinateTokenLimits</code> field null? If a limit exists there, apply it to the token. If not, get the default limit for an implicit grant and move on.</p>
+<h2 id="apply-token-response">Apply Token Response</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task ApplyTokenResponse(ApplyTokenResponseContext context) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    <span style="color:#66d9ef">if</span> (context.Error != <span style="color:#66d9ef">null</span>) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>    TService = context.HttpContext.RequestServices.GetRequiredService&lt;TokenService&gt;();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>    ApplicationDbContext db = context.HttpContext.RequestServices.GetRequiredService&lt;ApplicationDbContext&gt;();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>    OAuthClient client = <span style="color:#66d9ef">await</span> db.ClientApplications.FirstOrDefaultAsync(x =&gt; x.ClientId == context.Request.ClientId);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>    <span style="color:#66d9ef">if</span> (client == <span style="color:#66d9ef">null</span>) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>        <span style="color:#66d9ef">return</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    RateLimit rl = client.SubordinateTokenLimits;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>    <span style="color:#75715e">// Implicit Flow Tokens are not returned from the `Token` group of methods - you can find them in the `Authorize` group.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (context.Request.IsClientCredentialsGrantType()) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>        <span style="color:#75715e">// The only thing returned from a successful client grant is a single `Token`
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span style="color:#75715e"></span>        Token t = <span style="color:#66d9ef">new</span> Token() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>            TokenType = OpenIdConnectConstants.TokenUsages.AccessToken,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>            GrantType = OpenIdConnectConstants.GrantTypes.ClientCredentials,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>            Value = context.Response.AccessToken,
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>            RateLimit = rl ?? RateLimit.DefaultClientLimit,
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>        };
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>        <span style="color:#66d9ef">await</span> TService.WriteNewTokenToDatabase(context.Request.ClientId, t);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (context.Request.IsAuthorizationCodeGrantType()) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>        Token access = <span style="color:#66d9ef">new</span> Token() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>            TokenType = OpenIdConnectConstants.TokenUsages.AccessToken,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>            GrantType = OpenIdConnectConstants.GrantTypes.AuthorizationCode,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>            Value = context.Response.AccessToken,
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>            RateLimit = rl ?? RateLimit.DefaultAuthorizationCodeLimit,
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>        };
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>        Token refresh = <span style="color:#66d9ef">new</span> Token() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>            TokenType = OpenIdConnectConstants.TokenUsages.RefreshToken,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>            GrantType = OpenIdConnectConstants.GrantTypes.AuthorizationCode,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>        };
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>        <span style="color:#66d9ef">await</span> TService.WriteNewTokenToDatabase(context.Request.ClientId, access, context.Ticket.Principal);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>        <span style="color:#66d9ef">await</span> TService.WriteNewTokenToDatabase(context.Request.ClientId, refresh, context.Ticket.Principal);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (context.Request.IsRefreshTokenGrantType()) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>        Token access = <span style="color:#66d9ef">new</span> Token() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span>            TokenType = OpenIdConnectConstants.TokenUsages.AccessToken,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>            GrantType = OpenIdConnectConstants.GrantTypes.AuthorizationCode,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>            Value = context.Response.AccessToken,
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>            RateLimit = rl ?? RateLimit.DefaultAuthorizationCodeLimit,
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>        };
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>        <span style="color:#66d9ef">await</span> TService.WriteNewTokenToDatabase(context.Request.ClientId, access, context.Ticket.Principal);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>}
+</code></pre></div>
+<p>Like before, we grab the client we&rsquo;re dealing with and apply its overridden rate limit to each issued token - or, if an override does not exist, we apply the default for its grant type.</p>
+<p>We do not assign limits to a refresh token, because refresh tokens are not used for endpoint access.</p>
+<h1 id="moving-on">Moving On</h1>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/17-RateLimitAssignment">here on GitHub</a>.</p>
+<p>In the next section, we&rsquo;ll add a <code>[RateLimit]</code> attribute that we can decorate our controllers with.</p>
+<p><a href="/posts/oauthserver/18">Next</a></p>
+
+
+
+<h3>Posts in this series</h3>
+<ul>
+  
+    <li><a href="/posts/oauthserver/19/">Implement an OAuth 2.0 Server (Part 19)</a></li>
+  
+    <li><a href="/posts/oauthserver/18/">Implement an OAuth 2.0 Server (Part 18)</a></li>
+  
+    <li><a href="/posts/oauthserver/17/">Implement an OAuth 2.0 Server (Part 17)</a></li>
+  
+    <li><a href="/posts/oauthserver/16/">Implement an OAuth 2.0 Server (Part 16)</a></li>
+  
+    <li><a href="/posts/oauthserver/15/">Implement an OAuth 2.0 Server (Part 15)</a></li>
+  
+    <li><a href="/posts/oauthserver/14/">Implement an OAuth 2.0 Server (Part 14)</a></li>
+  
+    <li><a href="/posts/oauthserver/13/">Implement an OAuth 2.0 Server (Part 13)</a></li>
+  
+    <li><a href="/posts/oauthserver/12/">Implement an OAuth 2.0 Server (Part 12)</a></li>
+  
+    <li><a href="/posts/oauthserver/11/">Implement an OAuth 2.0 Server (Part 11)</a></li>
+  
+    <li><a href="/posts/oauthserver/10/">Implement an OAuth 2.0 Server (Part 10)</a></li>
+  
+    <li><a href="/posts/oauthserver/09/">Implement an OAuth 2.0 Server (Part 09)</a></li>
+  
+    <li><a href="/posts/oauthserver/08/">Implement an OAuth 2.0 Server (Part 08)</a></li>
+  
+    <li><a href="/posts/oauthserver/07/">Implement an OAuth 2.0 Server (Part 07)</a></li>
+  
+    <li><a href="/posts/oauthserver/06/">Implement an OAuth 2.0 Server (Part 06)</a></li>
+  
+    <li><a href="/posts/oauthserver/05/">Implement an OAuth 2.0 Server (Part 05)</a></li>
+  
+    <li><a href="/posts/oauthserver/04/">Implement an OAuth 2.0 Server (Part 04)</a></li>
+  
+    <li><a href="/posts/oauthserver/03/">Implement an OAuth 2.0 Server (Part 03)</a></li>
+  
+    <li><a href="/posts/oauthserver/02/">Implement an OAuth 2.0 Server (Part 02)</a></li>
+  
+    <li><a href="/posts/oauthserver/01/">Implement an OAuth 2.0 Server (Part 01)</a></li>
+  
+</ul>
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/security/">Security</a><a class="category" href="/categories/identity/">Identity</a><a class="category" href="/categories/authentication/">Authentication</a><a class="category" href="/categories/authorization/">Authorization</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/oauth2%2e0/">OAuth2.0</a><a class="tag" href="/tags/openidconnect/">OpenIdConnect</a><a class="tag" href="/tags/tutorial/">Tutorial</a><a class="tag" href="/tags/csharp/">CSharp</a><a class="tag" href="/tags/%2enet-core/">.NET Core</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

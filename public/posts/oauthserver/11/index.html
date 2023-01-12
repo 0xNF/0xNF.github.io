@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <title>
+    
+        |
+        Implement an OAuth 2.0 Server (Part 11)
+      
+
+    
+
+  </title>
+
+  
+  <meta charset="utf-8" /><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="" />
+  <meta
+    name="description"
+    content="In this part of our OAuth tutorial, we implement the missing services that help us validate our tokens and write to the database."
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.ba004976221e613a16542d07a2deca5d0377ff5e6a22dec5fcec01480ba967cf.css"
+      integrity="sha256-ugBJdiIeYToWVC0Hot7KXQN3/15qIt7F/OwBSAupZ88="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.793b323d7f2d9fbfd0b93f4d593fb5ad77b918716ed33eddea403fa87f770403.css"
+    integrity="sha256-eTsyPX8tn7/QuT9NWT&#43;1rXe5GHFu0z7d6kA/qH93BAM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.7f3c2281c7f965ce3c64888aa452793252a0416909c181097f81d0a0f7d1624e.css"
+    integrity="sha256-fzwigcf5Zc48ZIiKpFJ5MlKgQWkJwYEJf4HQoPfRYk4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.35fc032da8ede6681675d20a2f862fb9e1045c1d512d495fcf862c054daffef2.css"
+    integrity="sha256-NfwDLajt5mgWddIKL4YvueEEXB1RLUlfz4YsBU2v/vI="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.3b92357925ea7284f0c6b0378396f39f470f7842ed9702f337e667c4026bf837.css"
+    integrity="sha256-O5I1eSXqcoTwxrA3g5bzn0cPeELtlwLzN&#43;ZnxAJr&#43;Dc="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.ebb1096e1976e8cc4e2532cfa050b8f30eb13b8eb06be5cee3e38eb426b838ea.css"
+    integrity="sha256-67EJbhl26MxOJTLPoFC48w6xO46wa&#43;XO4&#43;OOtCa4OOo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="https://0xnf.github.io/posts/oauthserver/11/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.5c846cefa5ed21cceee981c70901aaf21b17b4e0b05bd777af840780918abea9.js"
+    integrity="sha256-XIRs76XtIczu6YHHCQGq8hsXtOCwW9d3r4QHgJGKvqk="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.46e991c2fcb035fc0060a792f1eb0c93ecacc9e76cd7445d6531a5cf2928686d.js"
+      integrity="sha256-RumRwvywNfwAYKeS8esMk&#43;ysyeds10RdZTGlzykoaG0="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Implement an OAuth 2.0 Server (Part 11)"/>
+<meta name="twitter:description" content="In this part of our OAuth tutorial, we implement the missing services that help us validate our tokens and write to the database."/>
+
+
+
+  
+  <meta property="og:title" content="Implement an OAuth 2.0 Server (Part 11)" />
+<meta property="og:description" content="In this part of our OAuth tutorial, we implement the missing services that help us validate our tokens and write to the database." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xnf.github.io/posts/oauthserver/11/" />
+<meta property="article:published_time" content="2018-06-18T18:11:42-07:00" />
+<meta property="article:modified_time" content="2018-06-18T18:11:42-07:00" />
+
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Implement an OAuth 2.0 Server (Part 11)",
+        "headline": "Implement an OAuth 2.0 Server (Part 11)",
+        "alternativeHeadline": "",
+        "description": "
+      In this part of our OAuth tutorial, we implement the missing services that help us validate our tokens and write to the database.
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/0xnf.github.io\/posts\/oauthserver\/11\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightYear" : "2018",
+        "dateCreated": "2018-06-18T18:11:42.00Z",
+        "datePublished": "2018-06-18T18:11:42.00Z",
+        "dateModified": "2018-06-18T18:11:42.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name":  null ,
+            "url": "https://0xnf.github.io/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/0xnf.github.io\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/0xnf.github.io\/posts\/oauthserver\/11\/",
+        "wordCount" : "1245",
+        "genre" : [ 
+      
+      "Security"
+
+    
+      
+        ,
+
+      
+      "Identity"
+
+    
+      
+        ,
+
+      
+      "Authentication"
+
+    
+      
+        ,
+
+      
+      "Authorization"
+
+    ],
+        "keywords" : [ 
+      
+      "OAuth2.0"
+
+    
+      
+        ,
+
+      
+      "OpenIdConnect"
+
+    
+      
+        ,
+
+      
+      "Tutorial"
+
+    
+      
+        ,
+
+      
+      "CSharp"
+
+    
+      
+        ,
+
+      
+      ".NET Core"
+
+    ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/"></a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p></p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      <h1>Implement an OAuth 2.0 Server (Part 11)</h1>
+      <p>Welcome to the eleventh part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+<h1 id="services">Services</h1>
+<p>Our methods thus far have been peppered with a reference to a service named <code>ValidationService</code>. This lightweight class is a service that queries our database. Nothing is preventing us from doing these checks inside the <code>OAuthProvider</code> class itself, but the abstraction lends itself to a cleaner batch of methods.</p>
+<p>This is going to be a dependency-injected class that gets resolved by the server in <code>ConfigureServices</code>, so we can inject our database context into it.</p>
+<p>Under <code>Services/</code>, create a new <code>ValidationService.cs</code> file with a new <code>ValidationService</code> class:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ValidationService</span> {
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ApplicationDbContext _context;
+
+    <span style="color:#66d9ef">public</span> ValidationService(ApplicationDbContext context) {
+        _context = context;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckClientIdIsValid(<span style="color:#66d9ef">string</span> client_id) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckClientIdAndSecretIsValid(<span style="color:#66d9ef">string</span> client_id, <span style="color:#66d9ef">string</span> client_secret) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckRedirectURIMatchesClientId(<span style="color:#66d9ef">string</span> client_id, <span style="color:#66d9ef">string</span> redirect_uri) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckRefreshTokenIsValid(<span style="color:#66d9ef">string</span> refresh) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckScopesAreValid(<span style="color:#66d9ef">string</span> scope) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+    }
+}
+</code></pre></div><h3 id="check-client-id-is-valid">Check Client Id is Valid</h3>
+<p>We&rsquo;ll just query the Database to see if any entries with our id exist.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckClientIdIsValid(<span style="color:#66d9ef">string</span> client_id) {
+    <span style="color:#66d9ef">if</span> (String.IsNullOrWhiteSpace(client_id)) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+    }
+    <span style="color:#66d9ef">else</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> _context.ClientApplications.AnyAsync(x =&gt; x.ClientId == client_id);
+    }
+}
+</code></pre></div><h3 id="check-client-id-and-client-secret-is-valid">Check Client Id and Client Secret is Valid</h3>
+<p>Like it says in the comment, you are strongly encouraged to use some form of <code>constant time equals</code> method when validating the client secret, in order to prevent timing attacks. We&rsquo;re lazy, so we won&rsquo;t. We&rsquo;re also on <code>.NET Core 2.0</code> and not <code>.NET Core 2.1</code>, which contains an easy library for this type of thing over at <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.cryptographicoperations.fixedtimeequals?view=netcore-2.1">https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.cryptographicoperations.fixedtimeequals?view=netcore-2.1</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckClientIdAndSecretIsValid(<span style="color:#66d9ef">string</span> client_id, <span style="color:#66d9ef">string</span> client_secret) {
+    <span style="color:#66d9ef">if</span> (String.IsNullOrWhiteSpace(client_id) || String.IsNullOrWhiteSpace(client_secret)) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+    }
+    <span style="color:#66d9ef">else</span> {
+        <span style="color:#75715e">// This could be an easy check, but the ASOS maintainer strongly recommends you to use a fixed-time string compare for client secrets.
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// This is trivially available in any .NET Core 2.1 or higher framework, but this is a 2.0 project, so we will leave that part out.
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// If you are on 2.1+, checkout the System.Security.Cryptography.CryptographicOperations.FixedTimeEquals() mehod,
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// available at https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.cryptographicoperations.fixedtimeequals?view=netcore-2.1
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> _context.ClientApplications.AnyAsync(x =&gt; x.ClientId == client_id &amp;&amp; x.ClientSecret == client_secret);
+    }
+}
+</code></pre></div><h3 id="check-redirect-uri-is-valid">Check Redirect URI is valid</h3>
+<p>The OAuth 2.0 specification requires that a supplied redirect uri be a byte-for-byte match with one of the redirect uris that have been registered to an application. <code>http</code> versions of a registered <code>https</code> endpoint are no good, for example.</p>
+<p>We use a double LINQ query to ask these questions of the database.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckRedirectURIMatchesClientId(<span style="color:#66d9ef">string</span> client_id, <span style="color:#66d9ef">string</span> redirect_uri) {
+    <span style="color:#66d9ef">if</span> (String.IsNullOrWhiteSpace(client_id) || String.IsNullOrWhiteSpace(redirect_uri)) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> _context.ClientApplications.Include(x =&gt; x.RedirectURIs).
+        AnyAsync(x =&gt; x.ClientId == client_id &amp;&amp;
+            x.RedirectURIs.Any(y =&gt; y.URI == redirect_uri));
+}
+</code></pre></div><h3 id="check-refresh-token-is-valid">Check Refresh Token is Valid</h3>
+<p>More double linq queries.</p>
+<p>We just want to ask the whether database any such token exists that:</p>
+<ol>
+<li>Has the type <code>refresh_token</code>, and</li>
+<li>Has the value we&rsquo;re looking for.</li>
+</ol>
+<p>Tokens that are revoked or otherwise invalidated are deleted from the database, so any true response is enough of a confirmation that the token is valid.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckRefreshTokenIsValid(<span style="color:#66d9ef">string</span> refresh) {
+    <span style="color:#66d9ef">if</span> (String.IsNullOrWhiteSpace(refresh)) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+    }
+    <span style="color:#66d9ef">else</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> _context.ClientApplications.Include(x =&gt; x.UserApplicationTokens).AnyAsync(x =&gt; x.UserApplicationTokens.Any(y =&gt; y.TokenType == OpenIdConnectConstants.TokenUsages.RefreshToken &amp;&amp; y.Value == refresh));
+    }
+}
+</code></pre></div><h3 id="check-scopes-are-valid">Check Scopes are Valid</h3>
+<p>There&rsquo;s a small curveball here - null or empty scopes are valid, unlike all our other checks.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">bool</span>&gt; CheckScopesAreValid(<span style="color:#66d9ef">string</span> scope) {
+    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">string</span>.IsNullOrWhiteSpace(scope)) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>; <span style="color:#75715e">// Unlike the other checks, an empty scope is a valid scope. It just means the application has default permissions.
+</span><span style="color:#75715e"></span>    }
+
+    <span style="color:#66d9ef">string</span>[] scopes = scope.Split(<span style="color:#e6db74">&#39; &#39;</span>);
+    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">string</span> s <span style="color:#66d9ef">in</span> scopes) {
+        <span style="color:#66d9ef">if</span> (!OAuthScope.NameInScopes(s)) {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+        }
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+}
+</code></pre></div><h2 id="tokenservice">TokenService</h2>
+<p>Like <code>ValidationService</code>, this small class is a registered dependency-injected service, which we have to handle writing tokens to the database.</p>
+<p>Under <code>Services/</code>, create a new <code>TokenService.cs</code> file with a new <code>TokenService</code> class:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TokenService</span> {
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> ApplicationDbContext _context;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> UserManager&lt;ApplicationUser&gt; _userManager;
+
+    <span style="color:#66d9ef">public</span> TokenService(ApplicationDbContext context, UserManager&lt;ApplicationUser&gt; userManager) {
+        _context = context;
+        _userManager = userManager;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task WriteNewTokenToDatabase(<span style="color:#66d9ef">string</span> client_id, Token token) {
+    }
+}
+</code></pre></div><h3 id="write-new-token-to-database">Write New Token To Database</h3>
+<p>This method is going to handle writing tokens to our database, along with what to do with old tokens.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task WriteNewTokenToDatabase(<span style="color:#66d9ef">string</span> client_id, Token token, ClaimsPrincipal user = <span style="color:#66d9ef">null</span>) {
+    <span style="color:#66d9ef">if</span> (String.IsNullOrWhiteSpace(client_id) || token == <span style="color:#66d9ef">null</span> || String.IsNullOrWhiteSpace(token.GrantType) || String.IsNullOrWhiteSpace(token.Value)) {
+        <span style="color:#66d9ef">return</span>;
+    }
+
+    OAuthClient client = <span style="color:#66d9ef">await</span> _context.ClientApplications.Include(x=&gt;x.Owner).Include(x =&gt; x.UserApplicationTokens).Where(x =&gt; x.ClientId == client_id).FirstOrDefaultAsync();
+    <span style="color:#66d9ef">if</span> (client == <span style="color:#66d9ef">null</span>) {
+        <span style="color:#66d9ef">return</span>;
+    }
+
+    <span style="color:#75715e">// Handling Client Creds
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (token.GrantType == OpenIdConnectConstants.GrantTypes.ClientCredentials) { 
+        List&lt;Token&gt; OldClientCredentialTokens = client.UserApplicationTokens.Where(x =&gt; x.GrantType == OpenIdConnectConstants.GrantTypes.ClientCredentials).ToList();
+        <span style="color:#66d9ef">foreach</span> (Token old <span style="color:#66d9ef">in</span> OldClientCredentialTokens) {
+            _context.Entry(old).State = EntityState.Deleted;
+            client.UserApplicationTokens.Remove(old);
+        }
+        client.UserApplicationTokens.Add(token);
+        _context.Update(client);
+        <span style="color:#66d9ef">await</span> _context.SaveChangesAsync();
+    }
+    <span style="color:#75715e">// Handling the other flows
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (token.GrantType == OpenIdConnectConstants.GrantTypes.Implicit || token.GrantType == OpenIdConnectConstants.GrantTypes.AuthorizationCode || token.GrantType == OpenIdConnectConstants.GrantTypes.RefreshToken) {
+        <span style="color:#66d9ef">if</span>(user == <span style="color:#66d9ef">null</span>) {
+            <span style="color:#66d9ef">return</span>;
+        }
+        ApplicationUser au = <span style="color:#66d9ef">await</span> _userManager.GetUserAsync(user);
+        <span style="color:#66d9ef">if</span> (au == <span style="color:#66d9ef">null</span>) {
+            <span style="color:#66d9ef">return</span>;
+        }
+
+        <span style="color:#75715e">// These tokens also require association to a specific user
+</span><span style="color:#75715e"></span>        IEnumerable&lt;Token&gt; OldTokensForGrantType = client.UserApplicationTokens.Where(x =&gt; x.GrantType == token.GrantType &amp;&amp; x.TokenType == token.TokenType).Intersect(au.UserClientTokens).ToList();
+        <span style="color:#66d9ef">foreach</span> (Token old <span style="color:#66d9ef">in</span> OldTokensForGrantType) {
+            _context.Entry(old).State = EntityState.Deleted;
+            client.UserApplicationTokens.Remove(old);
+            au.UserClientTokens.Remove(old);
+        }
+        client.UserApplicationTokens.Add(token);
+        au.UserClientTokens.Add(token);
+        _context.ClientApplications.Update(client);
+        _context.Users.Update(au);
+        <span style="color:#66d9ef">await</span> _context.SaveChangesAsync();
+    }
+}
+</code></pre></div><p>The operative idea here is that multiple tokens for the same client, user, and grant type shouldn&rsquo;t exist. There should really only ever be one set of tokens matching those characteristics at any given time. When another set is issued, any old ones should be deleted and the new one should take its place. We structure it this way in case any errant duplicates managed to find their way in.</p>
+<p><code>Client Credentials</code> are pretty straightforward because there&rsquo;s no user the tokens are registered to, but the other flows are a little more in-depth.</p>
+<h1 id="register-our-new-services-with-configureservices">Register our new Services with ConfigureServices</h1>
+<p>Like always, we need to register our services so that classes that depend on them can resolve them properly.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#75715e">// This method gets called by the runtime. Use this method to add services to the container.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>        options.UseSqlite(Configuration.GetConnectionString(<span style="color:#e6db74">&#34;DefaultConnection&#34;</span>)));
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>    services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;((x) =&gt; {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>        x.Password.RequiredLength = <span style="color:#ae81ff">6</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>        x.Password.RequiredUniqueChars = <span style="color:#ae81ff">0</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>        x.Password.RequireNonAlphanumeric = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>        x.Password.RequireDigit = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>        x.Password.RequireLowercase = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>        x.Password.RequireUppercase = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>    })
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>        .AddEntityFrameworkStores&lt;ApplicationDbContext&gt;()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>        .AddDefaultTokenProviders();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>    services.AddAuthentication()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>    .AddOpenIdConnectServer(options =&gt; {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>        options.UserinfoEndpointPath = <span style="color:#e6db74">&#34;/api/v1/me&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>        options.TokenEndpointPath = <span style="color:#e6db74">&#34;/api/v1/token&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>        options.AuthorizationEndpointPath = <span style="color:#e6db74">&#34;/authorize/&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>        options.UseSlidingExpiration = <span style="color:#66d9ef">false</span>; <span style="color:#75715e">// False means that new Refresh tokens aren&#39;t issued. Our implementation will be doing a no-expiry refresh, and this is one part of it.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span style="color:#75715e"></span>        options.AllowInsecureHttp = <span style="color:#66d9ef">true</span>; <span style="color:#75715e">// ONLY FOR TESTING
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span style="color:#75715e"></span>        options.AccessTokenLifetime = TimeSpan.FromHours(<span style="color:#ae81ff">1</span>); <span style="color:#75715e">// An access token is valid for an hour - after that, a new one must be requested.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span style="color:#75715e"></span>        options.RefreshTokenLifetime = TimeSpan.FromDays(<span style="color:#ae81ff">365</span> * <span style="color:#ae81ff">1000</span>); <span style="color:#75715e">//NOTE - Later versions of the ASOS library support `TimeSpan?` for these lifetime fields, meaning no expiration. 
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span style="color:#75715e"></span>                                                                        <span style="color:#75715e">// The version we are using does not, so a long running expiration of one thousand years will suffice.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span style="color:#75715e"></span>        options.AuthorizationCodeLifetime = TimeSpan.FromSeconds(<span style="color:#ae81ff">60</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>        options.IdentityTokenLifetime = options.AccessTokenLifetime;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>        options.ProviderType = <span style="color:#66d9ef">typeof</span>(OAuthProvider);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>    });
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>    <span style="color:#75715e">// Add application services.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span style="color:#75715e"></span>    services.AddTransient&lt;IEmailSender, EmailSender&gt;();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>    services.AddScoped&lt;OAuthProvider&gt;();
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>    services.AddTransient&lt;ValidationService&gt;();
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>    services.AddTransient&lt;TokenService&gt;();
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>    services.AddMvc();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>}
+</code></pre></div>
+<h1 id="moving-on">Moving On</h1>
+<p>We&rsquo;re going to take a break here to implement the Authorization Accept/Deny page for our interactive flows.</p>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/11-TokenAndValidationService">here on GitHub</a>.</p>
+<p><a href="/posts/oauthserver/12">Next</a></p>
+
+
+
+<h3>Posts in this series</h3>
+<ul>
+  
+    <li><a href="/posts/oauthserver/19/">Implement an OAuth 2.0 Server (Part 19)</a></li>
+  
+    <li><a href="/posts/oauthserver/18/">Implement an OAuth 2.0 Server (Part 18)</a></li>
+  
+    <li><a href="/posts/oauthserver/17/">Implement an OAuth 2.0 Server (Part 17)</a></li>
+  
+    <li><a href="/posts/oauthserver/16/">Implement an OAuth 2.0 Server (Part 16)</a></li>
+  
+    <li><a href="/posts/oauthserver/15/">Implement an OAuth 2.0 Server (Part 15)</a></li>
+  
+    <li><a href="/posts/oauthserver/14/">Implement an OAuth 2.0 Server (Part 14)</a></li>
+  
+    <li><a href="/posts/oauthserver/13/">Implement an OAuth 2.0 Server (Part 13)</a></li>
+  
+    <li><a href="/posts/oauthserver/12/">Implement an OAuth 2.0 Server (Part 12)</a></li>
+  
+    <li><a href="/posts/oauthserver/11/">Implement an OAuth 2.0 Server (Part 11)</a></li>
+  
+    <li><a href="/posts/oauthserver/10/">Implement an OAuth 2.0 Server (Part 10)</a></li>
+  
+    <li><a href="/posts/oauthserver/09/">Implement an OAuth 2.0 Server (Part 09)</a></li>
+  
+    <li><a href="/posts/oauthserver/08/">Implement an OAuth 2.0 Server (Part 08)</a></li>
+  
+    <li><a href="/posts/oauthserver/07/">Implement an OAuth 2.0 Server (Part 07)</a></li>
+  
+    <li><a href="/posts/oauthserver/06/">Implement an OAuth 2.0 Server (Part 06)</a></li>
+  
+    <li><a href="/posts/oauthserver/05/">Implement an OAuth 2.0 Server (Part 05)</a></li>
+  
+    <li><a href="/posts/oauthserver/04/">Implement an OAuth 2.0 Server (Part 04)</a></li>
+  
+    <li><a href="/posts/oauthserver/03/">Implement an OAuth 2.0 Server (Part 03)</a></li>
+  
+    <li><a href="/posts/oauthserver/02/">Implement an OAuth 2.0 Server (Part 02)</a></li>
+  
+    <li><a href="/posts/oauthserver/01/">Implement an OAuth 2.0 Server (Part 01)</a></li>
+  
+</ul>
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/security/">Security</a><a class="category" href="/categories/identity/">Identity</a><a class="category" href="/categories/authentication/">Authentication</a><a class="category" href="/categories/authorization/">Authorization</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/oauth2%2e0/">OAuth2.0</a><a class="tag" href="/tags/openidconnect/">OpenIdConnect</a><a class="tag" href="/tags/tutorial/">Tutorial</a><a class="tag" href="/tags/csharp/">CSharp</a><a class="tag" href="/tags/%2enet-core/">.NET Core</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

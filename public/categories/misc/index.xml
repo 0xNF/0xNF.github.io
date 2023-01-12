@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>misc on Nothing in Particular</title>
+    <link>https://0xnf.github.io/categories/misc/</link>
+    <description>Recent content in misc on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 10 Jan 2023 12:19:34 +0900</lastBuildDate><atom:link href="https://0xnf.github.io/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Programming Language Features I&#39;d Like Most Languages To Have</title>
+      <link>https://0xnf.github.io/posts/misc/plfeatures/</link>
+      <pubDate>Tue, 10 Jan 2023 12:19:34 +0900</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/misc/plfeatures/</guid>
+      
+        <description>Things I&#39;d like to see more of</description>
+      
+    </item>
+    
+  </channel>
+</rss>

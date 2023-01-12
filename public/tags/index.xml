@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Nothing in Particular</title>
+    <link>https://0xnf.github.io/tags/</link>
+    <description>Recent content in Tags on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 10 Jan 2023 12:19:34 +0900</lastBuildDate><atom:link href="https://0xnf.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>misc</title>
+      <link>https://0xnf.github.io/tags/misc/</link>
+      <pubDate>Tue, 10 Jan 2023 12:19:34 +0900</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/misc/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Branding</title>
+      <link>https://0xnf.github.io/tags/branding/</link>
+      <pubDate>Wed, 27 Mar 2019 13:44:13 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/branding/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Marketing</title>
+      <link>https://0xnf.github.io/tags/marketing/</link>
+      <pubDate>Wed, 27 Mar 2019 13:44:13 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/marketing/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Music</title>
+      <link>https://0xnf.github.io/tags/music/</link>
+      <pubDate>Wed, 27 Mar 2019 13:44:13 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/music/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>YouTube</title>
+      <link>https://0xnf.github.io/tags/youtube/</link>
+      <pubDate>Wed, 27 Mar 2019 13:44:13 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/youtube/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>dotnet</title>
+      <link>https://0xnf.github.io/tags/dotnet/</link>
+      <pubDate>Mon, 25 Feb 2019 05:10:26 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/dotnet/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>networking</title>
+      <link>https://0xnf.github.io/tags/networking/</link>
+      <pubDate>Mon, 25 Feb 2019 05:10:26 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/networking/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>postgres</title>
+      <link>https://0xnf.github.io/tags/postgres/</link>
+      <pubDate>Mon, 25 Feb 2019 05:10:26 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/postgres/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>architecture</title>
+      <link>https://0xnf.github.io/tags/architecture/</link>
+      <pubDate>Thu, 13 Dec 2018 17:01:51 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/architecture/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>CNN</title>
+      <link>https://0xnf.github.io/tags/cnn/</link>
+      <pubDate>Thu, 13 Dec 2018 17:01:51 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/cnn/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>data collection</title>
+      <link>https://0xnf.github.io/tags/data-collection/</link>
+      <pubDate>Thu, 13 Dec 2018 17:01:51 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/data-collection/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>web scraping</title>
+      <link>https://0xnf.github.io/tags/web-scraping/</link>
+      <pubDate>Thu, 13 Dec 2018 17:01:51 -0800</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/web-scraping/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>data cleanup</title>
+      <link>https://0xnf.github.io/tags/data-cleanup/</link>
+      <pubDate>Sat, 03 Nov 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/data-cleanup/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>parsing</title>
+      <link>https://0xnf.github.io/tags/parsing/</link>
+      <pubDate>Sat, 03 Nov 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/parsing/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>rnn</title>
+      <link>https://0xnf.github.io/tags/rnn/</link>
+      <pubDate>Sat, 03 Nov 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/rnn/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>security question</title>
+      <link>https://0xnf.github.io/tags/security-question/</link>
+      <pubDate>Wed, 17 Oct 2018 11:11:18 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/security-question/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>SSH</title>
+      <link>https://0xnf.github.io/tags/ssh/</link>
+      <pubDate>Mon, 03 Sep 2018 15:01:45 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/ssh/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>centralization</title>
+      <link>https://0xnf.github.io/tags/centralization/</link>
+      <pubDate>Mon, 03 Sep 2018 14:50:34 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/centralization/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>HTTPS</title>
+      <link>https://0xnf.github.io/tags/https/</link>
+      <pubDate>Mon, 03 Sep 2018 14:50:34 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/https/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>tls</title>
+      <link>https://0xnf.github.io/tags/tls/</link>
+      <pubDate>Mon, 03 Sep 2018 14:50:34 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/tls/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Email</title>
+      <link>https://0xnf.github.io/tags/email/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/email/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>FAAS</title>
+      <link>https://0xnf.github.io/tags/faas/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/faas/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Firebase</title>
+      <link>https://0xnf.github.io/tags/firebase/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/firebase/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Lambda</title>
+      <link>https://0xnf.github.io/tags/lambda/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/lambda/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Mailgun</title>
+      <link>https://0xnf.github.io/tags/mailgun/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/mailgun/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>react</title>
+      <link>https://0xnf.github.io/tags/react/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/react/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Serverless</title>
+      <link>https://0xnf.github.io/tags/serverless/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/serverless/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>SMTP</title>
+      <link>https://0xnf.github.io/tags/smtp/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/smtp/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>typescript</title>
+      <link>https://0xnf.github.io/tags/typescript/</link>
+      <pubDate>Mon, 03 Sep 2018 07:22:07 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/typescript/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>vpn</title>
+      <link>https://0xnf.github.io/tags/vpn/</link>
+      <pubDate>Tue, 24 Jul 2018 18:00:02 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/vpn/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>event routing</title>
+      <link>https://0xnf.github.io/tags/event-routing/</link>
+      <pubDate>Thu, 19 Jul 2018 15:31:28 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/event-routing/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>xaml</title>
+      <link>https://0xnf.github.io/tags/xaml/</link>
+      <pubDate>Thu, 19 Jul 2018 09:06:33 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/xaml/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>firefox</title>
+      <link>https://0xnf.github.io/tags/firefox/</link>
+      <pubDate>Thu, 05 Jul 2018 07:20:43 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/firefox/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>overview</title>
+      <link>https://0xnf.github.io/tags/overview/</link>
+      <pubDate>Thu, 05 Jul 2018 07:20:43 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/overview/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>CSharp</title>
+      <link>https://0xnf.github.io/tags/csharp/</link>
+      <pubDate>Tue, 19 Jun 2018 09:06:33 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/csharp/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>debugging</title>
+      <link>https://0xnf.github.io/tags/debugging/</link>
+      <pubDate>Tue, 19 Jun 2018 09:06:33 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/debugging/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>.NET Core</title>
+      <link>https://0xnf.github.io/tags/.net-core/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/.net-core/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>OAuth2.0</title>
+      <link>https://0xnf.github.io/tags/oauth2.0/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/oauth2.0/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>OpenIdConnect</title>
+      <link>https://0xnf.github.io/tags/openidconnect/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/openidconnect/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Tutorial</title>
+      <link>https://0xnf.github.io/tags/tutorial/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/tutorial/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>command line</title>
+      <link>https://0xnf.github.io/tags/command-line/</link>
+      <pubDate>Wed, 06 Jun 2018 21:38:01 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/command-line/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://0xnf.github.io/tags/linux/</link>
+      <pubDate>Wed, 06 Jun 2018 21:38:01 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/linux/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>windows</title>
+      <link>https://0xnf.github.io/tags/windows/</link>
+      <pubDate>Wed, 06 Jun 2018 21:38:01 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/windows/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>wsl</title>
+      <link>https://0xnf.github.io/tags/wsl/</link>
+      <pubDate>Wed, 06 Jun 2018 21:38:01 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/wsl/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Articulate Insights</title>
+      <link>https://0xnf.github.io/tags/articulate-insights/</link>
+      <pubDate>Tue, 22 May 2018 15:34:47 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/articulate-insights/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Northeastern University</title>
+      <link>https://0xnf.github.io/tags/northeastern-university/</link>
+      <pubDate>Tue, 22 May 2018 15:34:47 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/tags/northeastern-university/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cache Invalidation on Nothing in Particular</title>
+    <link>https://0xnf.github.io/categories/cache-invalidation/</link>
+    <description>Recent content in Cache Invalidation on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 19 Jun 2018 09:06:33 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/categories/cache-invalidation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bin and Obj Are the Devil</title>
+      <link>https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/</link>
+      <pubDate>Tue, 19 Jun 2018 09:06:33 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/</guid>
+      
+        <description>the first in what is likely a series on cache invalidation being hard, where we explore what to do with UWP projects that try to use intermediate compilation and caching, but end up asking us to resolve &#39;system.string&#39;.</description>
+      
+    </item>
+    
+  </channel>
+</rss>

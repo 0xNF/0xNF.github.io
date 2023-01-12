@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>UWP on Nothing in Particular</title>
+    <link>https://0xnf.github.io/categories/uwp/</link>
+    <description>Recent content in UWP on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Jul 2018 15:31:28 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/categories/uwp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>UWP: Simple Events</title>
+      <link>https://0xnf.github.io/posts/uwp/simple-events/</link>
+      <pubDate>Thu, 19 Jul 2018 15:31:28 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/uwp/simple-events/</guid>
+      
+        <description>Some problems are just made so much easier in XAML based apps if you use the Event pub/sub model. In this post we explore an easy way to create and subscribe to both typed and untyped events in UWP.</description>
+      
+    </item>
+    
+    <item>
+      <title>UWP: ListView Row Height</title>
+      <link>https://0xnf.github.io/posts/uwp/listview-row-height/</link>
+      <pubDate>Thu, 19 Jul 2018 09:06:33 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/uwp/listview-row-height/</guid>
+      
+        <description>When dealing with ListViews in UWP, sometimes more information density is desired, and the quickest way to get that density is to adjust the row height of each item in the ListView.</description>
+      
+    </item>
+    
+    <item>
+      <title>Bin and Obj Are the Devil</title>
+      <link>https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/</link>
+      <pubDate>Tue, 19 Jun 2018 09:06:33 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/uwp/bin-and-obj-are-the-devil/</guid>
+      
+        <description>the first in what is likely a series on cache invalidation being hard, where we explore what to do with UWP projects that try to use intermediate compilation and caching, but end up asking us to resolve &#39;system.string&#39;.</description>
+      
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>csharp on Nothing in Particular</title>
+    <link>https://0xnf.github.io/categories/csharp/</link>
+    <description>Recent content in csharp on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Jun 2018 19:53:31 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/categories/csharp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>#region Is Fine</title>
+      <link>https://0xnf.github.io/posts/misc/regionisfine/</link>
+      <pubDate>Mon, 18 Jun 2018 19:53:31 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/misc/regionisfine/</guid>
+      
+        <description>In which we discuss why using C#&#39;s region/endregion feature in a big class is not a necessarily bad thing to do and why the haters are full of anti-hype.</description>
+      
+    </item>
+    
+  </channel>
+</rss>

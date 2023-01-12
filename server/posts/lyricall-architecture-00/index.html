@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Nothing in Particular  | Lyricall Architecture</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.40.3" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.ab4b67a3ea25990fa8279f3b7ef08b61.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Lyricall Architecture" />
+<meta property="og:description" content="This summary of the architecture was correct upon its initial posting (November 2017). Changes have since been made. There is no guarantee that this post remains accurate into the future.
+Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  TypeScript Why TypeScript Redux React Why React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://0xnf.github.io/posts/lyricall-architecture-00/" />
+
+
+
+<meta property="article:published_time" content="2018-05-22T15:35:08-07:00"/>
+
+<meta property="article:modified_time" content="2018-05-22T15:35:08-07:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Lyricall Architecture">
+<meta itemprop="description" content="This summary of the architecture was correct upon its initial posting (November 2017). Changes have since been made. There is no guarantee that this post remains accurate into the future.
+Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  TypeScript Why TypeScript Redux React Why React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - .">
+
+
+<meta itemprop="datePublished" content="2018-05-22T15:35:08-07:00" />
+<meta itemprop="dateModified" content="2018-05-22T15:35:08-07:00" />
+<meta itemprop="wordCount" content="8357">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Lyricall Architecture"/>
+<meta name="twitter:description" content="This summary of the architecture was correct upon its initial posting (November 2017). Changes have since been made. There is no guarantee that this post remains accurate into the future.
+Table of Contents  Architecture of lyricall.net  Technology tl;dr: App Overview Front End  TypeScript Why TypeScript Redux React Why React  Back End Database - PostgreSQL  Why Postgres Database Schema Lyricall Tables Straggler Tables ASP.NET / Entity Framework Tables  Server - ."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://0xnf.github.io" class="f3 fw2 hover-white no-underline white-90 dib">
+      Nothing in Particular
+    </a>
+    <div class="flex-l items-center">
+      
+      
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  <article class="flex-l flex-wrap justify-between mw8 center">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Lyricall Architecture</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2018-05-22T15:35:08-07:00">May 22, 2018</time>
+    </header>
+
+    <main class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>This summary of the architecture was correct upon its initial posting (November 2017). Changes have since been made. There is no guarantee that this post remains accurate into the future.</p>
+
+<p><img src="/lyricallarch/lyricall.svg" height="150"></p>
+
+<h1 id="table-of-contents">Table of Contents</h1>
+
+<ul>
+<li>Architecture of lyricall.net
+
+<ul>
+<li>Technology tl;dr:</li>
+<li>App Overview</li>
+<li>Front End
+
+<ul>
+<li>TypeScript</li>
+<li>Why TypeScript</li>
+<li>Redux</li>
+<li>React</li>
+<li>Why React</li>
+</ul></li>
+<li>Back End</li>
+<li>Database - PostgreSQL
+
+<ul>
+<li>Why Postgres</li>
+<li>Database Schema</li>
+<li>Lyricall Tables</li>
+<li>Straggler Tables</li>
+<li>ASP.NET / Entity Framework Tables</li>
+</ul></li>
+<li>Server - .NET Core 2.0 / ASP.NET Core 2.0
+
+<ul>
+<li>Why .NET Core</li>
+<li>Intermission - the DotNetStandardSpotifyWebApi library</li>
+<li>Intermission - the ASP.NET Security Project</li>
+<li>API</li>
+<li>Server Architecture</li>
+<li>Entity Framework vs Hand Crafted SQL</li>
+<li>Automatic Timed Services</li>
+<li>Services</li>
+<li>Models</li>
+<li>Validation</li>
+<li>Scanning</li>
+</ul></li>
+<li>Hosting</li>
+<li>Digital Ocean
+
+<ul>
+<li>Security</li>
+<li>Backups</li>
+<li>CI/CD</li>
+</ul></li>
+<li>Microsoft Azure
+
+<ul>
+<li>Backups</li>
+<li>CI/CD</li>
+</ul></li>
+<li>Let’s Encrypt</li>
+</ul></li>
+</ul>
+
+<p>Architecture of lyricall.net<br />
+<img src="/lyricallarch/NetworkDiagram.png" height="500"></p>
+
+<h1 id="technology-tl-dr">Technology tl;dr:</h1>
+
+<h2 id="front-end">Front End</h2>
+
+<ul>
+<li>React</li>
+<li>Redux</li>
+<li>TypeScript</li>
+</ul>
+
+<h2 id="back-end">Back End</h2>
+
+<ul>
+<li>ASP.NET Core 2.0</li>
+</ul>
+
+<h2 id="database">Database</h2>
+
+<ul>
+<li>PostgreSQL</li>
+</ul>
+
+<h2 id="hosting">Hosting</h2>
+
+<ul>
+<li>Database: Digital Ocean</li>
+<li>Server: Microsoft Azure<br /></li>
+</ul>
+
+<p>Developer Note:
+It’s worth mentioning that prior to this endeavor, my experience in software development had been on desktop clients, command line utilities, and high performance computation. My experience with most of these technologies, ecosystems, and practices, including HTML/CSS was either virtually or truly zero, and as such almost every single aspect of this project involved learning substantial amounts of new technologies and concepts.</p>
+
+<h1 id="app-overview">App Overview</h1>
+
+<p>Lyricall is classic client-server application. The front end client is an ASP.NET Core 2.0 program running on a Microsoft Azure instance, and the back end is a Digital Ocean-hosted Ubuntu VM running a Postgres 9.5 instance.</p>
+
+<p>Except for the initial OAuth authorization flow between the user and Spotify, all communication with Spotify’s servers happen from the .NET back end server.</p>
+
+<h1 id="front-end-1">Front End</h1>
+
+<p>he front end is split into three distinctive parts:</p>
+
+<ol>
+<li>Static HTML</li>
+<li>Server Rendered Razor Page</li>
+<li>Client Rendered React-Redux app</li>
+</ol>
+
+<p>In the future reducing the number of different technologies involved in rendering various pages of the front end would be nice to do, but this is the present state of affairs.</p>
+
+<p>The pages found under lyricall.net/faq and lyricall.net/privacy are static HTML files that are served by the back end directly with a text/html encoding.</p>
+
+<p>The landing page at lyricall.net/ is a server rendered Razor Page. Originally this page was also a plain HTML file, but because authenticating with Spotify and logging into the application is supported from the front page, and because ASP.NET encourages, by default, to use Anti-XRSF tokens, it was easier to render the page dynamically because as a Razor Page View, it can insert the necessary Anti-XRSF token onto the page itself.</p>
+
+<p>And thirdly, the actual webapp located under lyricall.net/app is a client rendered Reect-Redux application.</p>
+
+<p><img src="/lyricallarch/ts.svg" height="75"></p>
+
+<p>The front end is delivered as a React-Redux application, but is built as a TypeScript project, which, knowing nothing about Front End development, was made doable with Microsoft’s react-typescript starter project.</p>
+
+<h2 id="why-typescript">Why TypeScript</h2>
+
+<p>There is a standard choice for web development, there are the add-on choices, and there are the esoteric choices. If were aiming for maximum esotericism, we’d have gone with Elm - Haskell in the browser. If we were masochistic, we’d go for plain JavaScript. But we are rational folk, so the JavaScript-Plus route seemed the way to go. That particular route has two main flavors - Flow, and TypeScript. Both are systems that add typing to JavaScript, and they have their perks and minuses. Flow boasts a sound type system, which means they guarantee that a value possesses the type that is specified, while TypeScript has some scenarios that do not produce such soundness, i.e., a value says it’s an Foo but it may be a Bar. This can cause some occasional complications.</p>
+
+<p>TypeScript meanwhile has A-Class tooling, broad community support, geniuses behind the project in the form of Anders Heijsberg of Delphi, Turbo Pascal, and C# fame, and a truly extensive collection of available typings via the Definitely Typed project. In addition, many major libraries include their own typings file.</p>
+
+<p>There are two main questions people ask when it comes to choosing the front-end language - the boring one is whether to use Flow or TypeScript. Both are great! I have chosen TypeScript because I wanted to, and because I think its the winning competitor in the front-end-language wars as of this writing (December, 2017).</p>
+
+<p>The other question, usually by people who haven’t used a non dynamically typed language before, is why not just JavaScript?</p>
+
+<p>That’s a more interesting question, because it touches upon the arguments of compilation vs interpretation, strong types vs weak types, dynamic typing vs static typing, and language design more generally. One of the common arguments against typings, which is also the most common argument in favor of NoSQL solutions, is that strong types slow down the developer and prevent rapid prototyping. I think this is patently false. In addition to not being encumbered by types, I find that having a static type system does wonders for my ability to hold a codebase in my head.</p>
+
+<p>I have to worry less about exactly what collection of properties an object has or what is needed by a method, and can instead collapse that collection into an object with a name. Mentally, this saves incredible amounts of processing. Additionally, for those of us who use an IDE or an otherwise fleshed out editor, static typings means the IDE can start to help us out a lot - painless refactoring, code completion, instant access to signatures and docstrings. This is an amazing boost to productivity.</p>
+
+<p>Being able to catch type mismatch errors at compile-time, or even at design-time if your editor or IDE has the ability means we increase our ability to produce better code, and our ability to produce code faster. The sooner we can catch an error, the better. This doesn’t eliminate runtime errors of course - but we reduce their number by magnitudes.</p>
+
+<p>Once upon a time an argument could have been made that adding in a build-step was too much to ask for a front end project, but ever since Bower hit the scene, the idea that a compilation step (whether by gulp, webpack, or anything else) is a burden is no longer credible.</p>
+
+<h2 id="client-structure">Client Structure</h2>
+
+<p>The client has the following structure:</p>
+
+<ul>
+<li>src/
+
+<ul>
+<li>actions/</li>
+<li>actionCreators/</li>
+<li>actionInterfaces/</li>
+<li>actionTypes/</li>
+<li>components/</li>
+<li>containers/</li>
+<li>models/</li>
+<li>reducers/</li>
+<li>services/</li>
+<li>stores/</li>
+</ul></li>
+</ul>
+
+<p>Meanwhile this what the Redux State Store looks like.:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">LyricallStoreShape</span> {
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">User</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">User</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">LoadingSection</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">LoadingSectionShape</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">Selection</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">SelectionShape</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">CurrentPages</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CurrentPagesShape</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">PageCache</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">PageCacheShape</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">FullSmartPlaylistsCache</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">FullSmartPlaylistsCacheShape</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">AvailableProperties</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Property</span>[];
+}
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">LoadingSectionShape</span> {
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">IsLoading</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">boolean</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">IsModalOpen</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">boolean</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">ErrorMessage</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span>;
+}
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">SelectionShape</span> {
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">SmartPlaylist</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">SmartPlaylist</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">DidModify</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">boolean</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">SelectedPlaylistSourcesPage</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Paging</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">SpotifyPlaylist</span> <span style="color:#f92672">|</span> <span style="color:#a6e22e">UserLibrary</span><span style="color:#f92672">&gt;</span>;        
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">SelectedAddedTracksPage</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">Paging</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Track</span><span style="color:#f92672">&gt;</span>;  
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">IsLoading</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">boolean</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">ErrorMessage</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">null</span>;
+}
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">CurrentPagesShape</span> {
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">SpotifySourcesPage</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Paging</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">UserLibrary</span> <span style="color:#f92672">|</span> <span style="color:#a6e22e">SpotifyPlaylist</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">null</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">SuggestedListenersPage</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Paging</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">RuleGroup</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">null</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">SimpleSmartPlaylistsPage</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Paging</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">SimpleSmartPlaylist</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">null</span>;
+}
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">PageCacheShape</span> {    
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">SimpleSmartPlaylistCache</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">PageCache</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">SimpleSmartPlaylist</span><span style="color:#f92672">&gt;</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">SpotifySourcesCache</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">PageCache</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">UserLibrary</span> <span style="color:#f92672">|</span> <span style="color:#a6e22e">SpotifyPlaylist</span><span style="color:#f92672">&gt;</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">AvailableListenersCache</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">PageCache</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">RuleGroup</span><span style="color:#f92672">&gt;</span>;
+}
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">FullSmartPlaylistsCacheShape</span> {
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">IsInavlid</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">boolean</span>;
+    <span style="color:#a6e22e">readonly</span> <span style="color:#a6e22e">SmartPlaylists</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Map</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">string</span>, <span style="color:#a6e22e">SmartPlaylist</span><span style="color:#f92672">&gt;</span>;
+}
+</code></pre></div>
+<pre><code>It is my understanding that null is poor form and non-idiomatic TypeScript, but like many first iteration products, especially in a technology that the developer is completely new to, non-idiomatic patterns find their way into the codebase. Coming from a C# background with almost no substantial experience in JavaScript, nulls are a well-understood pattern. Making proper usage of TypeScript’s undefined and optional arguments is slated for the next iteration.
+</code></pre>
+
+<p>When a sign in is successful or when the session cookie is authenticated, the app performs a number of immediate actions:</p>
+
+<ul>
+<li>Setting the current User</li>
+<li>Zeroing out all the caches</li>
+<li>Fetching the user’s pre-existing Smart Playlists</li>
+<li>Fetching the user’s Spotify Playlists</li>
+<li>Fetching the pre-made Listeners</li>
+</ul>
+
+<h2 id="redux">Redux</h2>
+
+<p><img src="/lyricallarch/redux.svg" height="150"></p>
+
+<p>All of these actions are initiated by various Service functions located under src/services/, such as GetUsersSmartPlaylists() from the SmartPlaylistService.ts file.</p>
+
+<p>Each service method sends a notification to the Redux Action Creators under src/actions/actionCreators/, which, using the Redux-Thunk package, then asynchronously initiates a number of related Redux Actions:</p>
+
+<ul>
+<li>a Requested action</li>
+<li>a Failed action</li>
+<li>a Succeeded action</li>
+</ul>
+
+<p>When Redux is altered of a Requested action, depending on the operation, such as if it is a network transaction, the relevant sections of the Store have their IsLoading flag flipped, or set IsModalOpen, enabling the Loading Screen for the application.</p>
+
+<p>If a request fails for any reason, the appropriate Failed Action is initiated, the loading flags are disabled, and an error message is displayed to the user.</p>
+
+<p>If a request succeeds, then the data is cached in the appropriate place and the pages controls are updated to reflect the change in state.</p>
+
+<h2 id="react">React</h2>
+
+<p><img src="/lyricallarch/react.svg" height="150"></p>
+
+<h3 id="why-react">Why React</h3>
+
+<p>What a mess front end development is. After nearly 70 years of doing desktop computing in various forms, and nearly 50 years of graphical computing, we as an industry have a set of front end toolkits that build in solid patterns, have been battle tested and are more or less easy to use. Qt, Windows Forms, Cocoa. And then web developers saw all that and said, ‘nah’, leaving us with a long trail of bodies as they struggled to find something even remotely resembling the desktop frameworks: Ember, Knockout, Polymer, Backbone, Meteor and countless others.</p>
+
+<p>For a period of time, it looked as though Angular would win the Front End Framework War, and gained a huge amount of traction as a well supported Google project. During the same period of time, an upstart React project was emerging out of Facebook. In time, we would see that although Angular was definitely a contender, it would begin to lose out to React in terms of popularity.</p>
+
+<p>It is of course important to draw attention to the fact that these two frameworks are not 1:1 compatible - Angular comes with an opinionated structure, with canonical ways to call out to third parties and how to set up your project, while React is much more lightweight, essentially only packaging a way to create view components. However, no sane project chooses to combine these - although they technically serve different purposes, it is an effectively mutually exclusive choice.</p>
+
+<p>So why React? As someone on HackerNews said in a thread I cannot find anymore, React essentially did WebComponents better than WebComponents. WebComponents are of course, the proposed W3C spec for browsers standardizing custom reusable HTML5 components. React did this problem so well it seems to have put a serious damper on how fast the WebComponent spec is working through the committee. React is no Windows Forms, but it is very good.</p>
+
+<p>I would be remiss not to mention Vue.js. Just as React was an upstart, so too is Vue. There’s a lot to like about it, and if you know React, it’s easy to pick up View. Additionally, Vue has ginormous support by Chinese developers. The majority of front end projects that I encounter with Chinese authors choose Vue as their front end framework of choice.</p>
+
+<p>The choice here came down to the same reasons TypeScript was chosen - It looks like it is winning. If I were a betting man, I would bet that React will be here longer. The community is excited about React unlike Angular, companies are choosing React more than Angular, it even seems like it chilled the W3C. React seems like the more solid choice, and so React it is.</p>
+
+<h3 id="react-structure">React Structure</h3>
+
+<p>There are a number of components the project uses, most are located under <code>src/components/</code>, but some which require direct Redux access are located under <code>src/containers/</code>. Some of these controls include</p>
+
+<ul>
+<li>PagingBox, which controls flipping through pages of Spotify Playlists, Smart Playlists, or Listeners</li>
+<li>ListenerTree, which is a wrapper for <code>react-sortable-tree</code>, and</li>
+<li>RuleNode / RuleGroupNode, which are how Lyricall displays its atomic units</li>
+</ul>
+
+<p>These components were made as Stateless Function Components (SFC) by default, and upgraded to a full Class if necessary, such as is the case with with <code>ListenerTree</code>.</p>
+
+<p>All these components have their corresponding ReactProps and ReactState if necessary, and are of course typed.</p>
+
+<p>These react components are how the user interacts with Lyricall - and either directly or indirectly are what call the back end REST API.</p>
+
+<h1 id="back-end-1">Back End</h1>
+
+<h2 id="database-postgresql">Database - PostgreSQL</h2>
+
+<p><img src="/lyricallarch/postgres.svg" height="150"></p>
+
+<h3 id="why-postgres">Why Postgres</h3>
+
+<p>During the initial setup, I was conflicted on what to use for the Database. I have a lot of experience with SQLite, but as the developer says, SQLite is a replacement FOpen(), not a database. Lyricall is a small project that will likely see very few people using it, let alone concurrently. In this instance, SQLite would probably have been a fine choice for the back end database, but I took it as a learning project to get familiar with a real production database.</p>
+
+<p>The standard options for anyone wanting to deploy such a database includes the usual suspects:</p>
+
+<ul>
+<li>MySQL</li>
+<li>PostgreSQL</li>
+<li>SQL Server</li>
+<li>MongoDB</li>
+</ul>
+
+<p>In addition, there are a bunch of other non standard databases that are interesting as well:</p>
+
+<ul>
+<li>RethinkDB</li>
+<li>Cassandra</li>
+<li>MariaDB</li>
+</ul>
+
+<p>While surely useful in their niches and certainly interesting in their own right, it seemed like a good idea to steer clear of that second set of databases, leaving us in the first set. My impression upon hearing the word “MySQL” is to recoil - after all, it is an Oracle project, and separately has a reputation for being a stodgey old-timer. Although research revealed that modern day MySQL seems to have caught up to the pack, I just didn’t feel like using it.</p>
+
+<p>SQL Server is, I hear, a fantastic database, but it is a Microsoft enterprise offering meaning that it comes with an incredible price tag. I am not averse to paying money for a good solution, but the database space is special in that there’s really no reason to. The open source solutions are cutting edge, stable, and well documented. Why pay for what I don’t have to?</p>
+
+<p>Thus the choice came down to either Mongo or Postgres. Although Mongo specifically, and NoSQL options more generally are darlings of practitioners of modern web design, my work with previous databases combined with the fact that my software engineering upbringing was not on the web, leaves me with a visceral dislike of NoSQL.</p>
+
+<p>The idea that my data is unstructured, as a general statement, strikes me as profoundly wrong. Aside from certain fields like genomics where the data really can’t be counted on to be structured, or in situations where massive horizontal sharding is required, a NoSQL solution seems like the wrong choice. Additionally, though perhaps more personally, the idea that a structured database with strong types slows down development time is ludicrous. For myself at least, strong types are necessary for moving fast.</p>
+
+<p>By process of elimination therefore, PostgreSQL was the last man standing. I’d like to note that the tooling is really what won it for Postgres. Although not quite as extensive as Mongo’s tooling, there is just the right amount of excellent support for the database - a good enough GUI client; iron-clad official documentation; thousands of competently answered StackOverflow questions; And most importantly, a fabulous .NET Core library that both integrates with Entity Framework and allows for complete manual control.</p>
+
+<p>If a a few of those, but most significantly the .NET Core library, were missing, I would have been forced to go with Mongo - thankfully I was able to avoid the swamp of misery that I’ve been mired in before with that database, and was able to successfully and pleasantly work with Postgres. I couldn’t be happier with this decision.</p>
+
+<h3 id="database-schema">Database Schema</h3>
+
+<p>There are 2 disjoint sets of tables in the schema - one is the custom Lyricall-only set of tables, and the other is the set of tables that comes with ASP.NET / Entity Framework’s authentication and identity addon.</p>
+
+<h3 id="lyricall-tables">Lyricall Tables</h3>
+
+<p><img src="/lyricallarch/LyricallTable.PNG" height="500"></p>
+
+<p>SmartPlaylists was intended on being the top-level table, but it ended up being that RuleGroups was the top-level. Meaning that in order to completely clear all lower level entries, deleting the rule group takes care of that, while deleting the Smart Playlist will leave remnant entries around.</p>
+
+<p>That being said, it functions perfectly fine, and is in no way an urgent or even necessary fix. It’s really just a design quirk.</p>
+
+<p>The scheme here is the product of a lot of back and forth about how best to represent the persistence layer. There’s an impedance mismatch between objects stored in memory and objects stored in a tabular format - this is of course well documented, well understood, and if one has the proper training, well taught. But it doesn’t go away, and figuring out how to resolve the mismatch in not just one direction, but two, is always an effort that will be resolved to better or worse degrees.</p>
+
+<p>Some things map one-to-one, like Sources. In memory, I have a Playlist object, which contains a bunch of metadata like</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpotifyPlaylist</span> : SpotifySource {
+  <span style="color:#66d9ef">string</span> PlaylistName;
+  User Owner;
+  <span style="color:#66d9ef">string</span> SpotifyId;
+  <span style="color:#66d9ef">string</span> SnapshotId;
+}</code></pre></div>
+<p>among other fields. The main playlist object has more complicated fields like its own tracks, but Lyricall has no need to keep track of that, and can safely ignore their existence. This leaves us a simple object that can be mapped easily to a table with the fields</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> Sources(
+  ID TEXT <span style="color:#66d9ef">Primary</span> <span style="color:#66d9ef">Key</span>,
+  OwnerID TEXT, 
+  PlaylistName TEXT,
+  SnapshotId TEXT,
+);</code></pre></div>
+<p>Easy.
+We go slightly astray from a simple mapping when we have to account for the User Library, a Spotify object that resembles a playlist but is critically different. It has no Id, no Owner, and no Name. But it functions like a playlist, is structured like a playlist, and is handled, by the end user, like a playlist. And yet, it is not a playlist. So in memory, we end up with an object that looks like this,</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserLibrary</span> : SpotifySource {
+
+}</code></pre></div>
+<p>Yes, it is empty.</p>
+
+<p>Its purpose is to be a differentiator in a list of Sources, held in memory. There are operations we perform that go over a list of <code>Sources</code>, and the two available types of sources are <code>SmartPlaylist</code> and <code>UserLibrary</code>.</p>
+
+<p>Unfortunately now we have to put that into the same Sources table as well. There are surely other ways to solve this particular issue, but I settled on what’s known as a discriminator, a field that exists in the Database but does not exist on the in-memory class, letting us serialize and deserialize with much more certainty.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> Sources(
+  ID TEXT <span style="color:#66d9ef">Primary</span> <span style="color:#66d9ef">Key</span>,
+  OwnerID TEXT, 
+  PlaylistName TEXT,
+  SnapshotId TEXT,
+  IsLibrary BOOLEAN
+);</code></pre></div>
+<p>That wasn’t too hard either.</p>
+
+<p>Where we’ve run into the trickiest problem of the Database was transforming our tree-like rule structure into flat, tabular one.</p>
+
+<p>In memory our rules look like this</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">interface</span> Listener {<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">  [...]</span>
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rule</span> : Listener {<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">  [...]</span>
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RuleGroup</span>  : Listener {<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">  [...]</span>
+  List&lt;Listener&gt; rules;<span style="color:#a6e22e">
+</span><span style="color:#a6e22e">  [...]</span>
+}</code></pre></div>
+<p>A <code>Rule</code> is a <code>Listener</code>.
+Not a problem. Add a Rule table.</p>
+
+<p>A <code>RuleGroup</code> is a <code>Listener</code>.
+Still not a big deal, add mapping table with a discriminator.</p>
+
+<p>A <code>RuleGroup</code> can contain arbitrarily deep nested <code>Listeners</code>, which in turn may also contain arbitrarily deep nested <code>Listeners</code>.
+Now we’re getting into a fun problem.</p>
+
+<p>The solution is to use a mapping table with a loop. Each entry in the RuleMap points to either:</p>
+
+<ul>
+<li>A <code>Rule</code> entry, or</li>
+<li>A <code>RuleGroup</code> entry</li>
+</ul>
+
+<p>with the <code>IsRuleGroup</code> we’re able to at least determine what kind of <code>Listener</code> we’re looking at, but if we’ve referenced a <code>RuleGroup</code>, then we still have the problem of getting the next layer of <code>Listeners</code> that <code>RuleGroup</code> has. Thus we have a <code>ParentRuleGroupId</code> field which is a key to both a   <code>RuleGroup</code> and a recursive entry in <code>RuleMap</code>, solving our arbitrary nesting problem.</p>
+
+<p>To an experienced developer, this solution likely sounds either obvious or suboptimal. For a developer like myself who has much experience with SQL but only a handful of run-ins with tree data, this was, while not a huge challenge, certainly not obvious.</p>
+
+<p>There are a handful of other tables connected here. Their purposes are, briefly:</p>
+
+<ul>
+<li><code>ScansInProgress</code>: If a playlist is being scanned and hasn’t completed, it goes here. Prevents launching multiple scans of the same Smart Playlist.</li>
+<li><code>StagedTracksAddedMap</code>: Tracks that meet the criteria for a Smart Playlist are placed here until they can be uploaded successfully. Prevents permanent non-addition of tracks due to server failure.</li>
+<li><code>TracksAddedMap</code>: Tracks that have been successfully added are removed from <code>StagedTracksAddedMap</code> and placed here. Prevents adding duplicate tracks to the same playlist. May be cleared by a <code>force</code> scan.</li>
+<li><code>LyricallConditions</code> and <code>LyricallProperties</code>: Database versions of Lyricall Rule Properties. Prevents tampering of incoming data, such as if someone were to supply a field for rule scans that didn’t exist. This is essentially a source of truth. No operations by the server ever modify this.</li>
+</ul>
+
+<h3 id="straggler-tables">Straggler Tables</h3>
+
+<p><img src="/lyricallarch/Misc.PNG" height="500"></p>
+
+<ul>
+<li><code>_EFMIgrationsHistory</code>: Entity Framework curated migration table. Not relevant to this technical discussion.</li>
+<li><code>ScanLimits</code>: Records how many times a User has requested a scan in a single Lyricall-Day. Because I try to avoid maxing out my Spotify API rate limit, this table restricts users from spamming scans. The limit is set by the Server, but hovers around 10 scans a day.</li>
+<li><code>SpotifyAudioAnalysis</code>: A JSON store table keeping the extremely heavy <code>AudioAnalysis</code> objects from Spotify. This, along with <code>SpotifyAudioFeatures</code>, are caching tables which allow us to minimize calls to the Spotify API service.</li>
+<li><code>SpotifyAudioFeatures</code>: Caches from the <code>get-audio-features</code> Spotify endpoint.</li>
+</ul>
+
+<h3 id="asp-net-entity-framework-tables">ASP.NET / Entity Framework Tables</h3>
+
+<p><img src="/lyricallarch/EfCoreTable.PNG" height="500"></p>
+
+<p>These are included for completeness’ sake, but are completely auto-generated by the Entity Framework’s migration tools dotnet ef migrations add and dotnet ef migrations update.</p>
+
+<p>Noteworthy is mostly that an AspNetUser is a 1:1 mapping of a SpotifyUser, minus a bunch of fields that aren’t supplied by Spotify or aren’t useful to the lyricall.net service .</p>
+
+<p>We also store the users OAuth access and refresh tokens in the AspNetUserTokens table.</p>
+
+<p>In the future, I’d like to link the deletion of a user to the automatic deletion of their SmartPlaylists/RuleGroups via a foreign key constraint on SmartPlaylists.OwnerId =&gt; AspNetUser.Id, but as it stands now, doing a manual query on matching OwnerIds is a perfectly fine process.</p>
+
+<h1 id="server-net-core-2-0-asp-net-core-2-0">Server - .NET Core 2.0 / ASP.NET Core 2.0</h1>
+
+<p><img src="/lyricallarch/netcore.svg" height="150"></p>
+
+<h2 id="why-net-core">Why .NET Core</h2>
+
+<p>Similar to the discussion preceding the choice of Postgres as my database, I also had to make the decision of what would be the primary server.</p>
+
+<p>The choices were:</p>
+
+<ul>
+<li>Node (JavaScript)</li>
+<li>Flask or Django (Python)</li>
+<li>Rails (Ruby)</li>
+<li>ASP.NET Core</li>
+</ul>
+
+<p>Reading anything about web development over the last 5 years would lead one to believe that there is only NodeJS, and that all others are pretenders. Thankfully that isn’t so, and despite the mind bogglingly immense amount of articles, StackOverflow posts and hackathons evangelizing it, there are numerous better alternatives.
+And that’s fabulous, because like Mongo, my experience with Node isn’t amazing, and I’d like to avoid it if I can get away with it.</p>
+
+<p>Coming from a heavy C# background also means coming with a number of convictions and expectations that are often in diametric opposition to the values espoused in modern, or at least, vocal, web development circles. For example, like most people, I don’t like JavaScript. But heretically, I also don’t think it’s necessary. I understand that it is the lingua franca of the front-end web, but why for the love of god must I put it on my server too? There is simply no need for that. As long as I have a say in it, there’s no room for JavaScript on the server while better solutions exist. I’d damn sooner write something in pure C than JavaScript.</p>
+
+<p>Strike Node from the list.</p>
+
+<p>Flask or Django are certainly nice servers, and Python is a wonderful language, especially since the community has decided to finally move to 3+, but I just wasn’t that keen on doing what I imagined would be a decently complicated application in a dynamically typed language. That’s even with me knowing Python very well. The problem is compounded for a language like Ruby, which I don’t know anything about at all.</p>
+
+<p>Barring the more interesting choice of .NET Core, I’d likely have chosen one of the Python servers, but .NET Core 2.0 had recently entered the final stages of its pre-release cycle, and the beta was rapidly approaching an end. In addition, I am extremely well versed in C# and enjoy the language immensely.</p>
+
+<p>This decision was just as easy as the database one.</p>
+
+<p>.NET Core 2.0 it would be.</p>
+
+<h2 id="intermission-the-dotnetstandardspotifywebapi-library">Intermission - the DotNetStandardSpotifyWebApi library</h2>
+
+<p>Before we discuss how the actual backend operates, its important to draw attention to two external dependencies of the lyricall project - the DotNetStandardSpotifyWebApi and ASP.NET Security project.</p>
+
+<p>I’ve been using Spotify as a testing grounds for a number of projects, some of which get released, others which don’t - but whenever there’s an idea I’d like to test out or try, Spotify is often the first place I turn to provide some kind of application for the concept.</p>
+
+<p>Originally I had a project that helped a user classify songs according to some user-specified criteria, which required pulling from the Spotify web api, pushing back to the service, and performing other related operations. This application was built as an early UWP project, and had a tightly coupled, highly intermixed way of interacting with the Spotify API.</p>
+
+<p>Eventually the Spotify API portion was spun off into off into its own library, although it was still coupled around UWP, and was thus not portable outside the platform.</p>
+
+<p>With the release of .NET Core also including the reveal of the .NET Standard, which specifies a unified API surface across all .NET implementations, it felt like the right time to update my Spotify Library. Although a lot of the building blocks were in place from all these prior iterations, specifically the data structures around the formalizing of json structures into C# classes like the <code>Track</code> or <code>Album</code>, much of the plumbing around fetching the data wasn’t up to par.</p>
+
+<p>After a number of days of work refreshing the project for use as a .NET Standard library and writing tests for it, it looked good enough to place on GitHub, where it resides now. It isn’t finished, although it close. I imagine the remaining gaps will be filled in when I do a project that requires the missing features.</p>
+
+<p>The Library provides an abstraction around Spotify’s API, allowing for someone to simply request a <code>Track</code> by the specified <code>Artist</code>, or to work easily on a <code>Playlist</code>, or any other such way of using their API.</p>
+
+<h2 id="intermission-the-asp-net-security-project">Intermission - the ASP.NET Security Project</h2>
+
+<p>Just having an easy-and-ready-to-use Spotify library wasn’t enough to begin work on the Lyricall.</p>
+
+<p>Because the application is entirely dependent upon a user and their Spotify account, it’s necessary to be able to authenticate with Spotify and get a token that can be used to act upon the users account. Spotify, like many APIs, supports this scenario via the OAuth 2.0 authentication process.</p>
+
+<p>I had, in the earlier versions of the DotNetSpotifyWebApi library, done this kind of OAuth authenticating by hand, which was overly reliant upon specific HTTP Clients in the .Net Framework, were prone to various failures, and was as a whole an unstable ill-tested mess liable to collapse at any moment.</p>
+
+<p>As I was in the midst of updating that library anyway, it seemed like a good time to shop around for more professional authentication solutions than my own hand-rolled one, an enlightening learning experience though it was.</p>
+
+<p>Research led me around the internet to various places and projects but none really fit the bill for what I needed. There were handfuls of pre-existing libraries for this that were built for NodeJS or Flask, but none for ASP.NET.</p>
+
+<p>Given that Microsoft had recently open-sourced the entire .NET platform, and because Microsoft supplies a small number of official implementations for authenticating against various services, I decided to write another OAuth authenticator based around how Microsoft did it.</p>
+
+<p>This was a successful endeavor, but it was hodgepodged together with kludges and certainly not best-practice development choices. As I later put it on a GitHub issue, it was a “homeless amalgam”. Bits from here, bits from there, and no real good place to put it for future use.</p>
+
+<p>After some additional research some number of days later, I came across a promising community project, linked to from the official Microsoft docs, about OAuth processing for ASP.NET, called the ASP.NET Security project, which contained dozens and dozens of pre-supplied and pre-tested OAuth plugins for providers like YouTube, Twitch, Baidu, and others. Unfortunately, their main branch, while massive and thorough, was only for .NET Core 1.0. The 1.0 release and the 2.0 release had enough breaking changes that it was impossible to use 1.0 libraries as a drop-in solution in 2.0 projects, and unfortunately, 2.0 is where I had invested my time.</p>
+
+<p>This led me to prowl around their issue tracker, where I found a thread asking about .NET Core 2.0 versions of the project - although there had been a fair amount of activity in that thread, it looked pretty dead by the time I arrived. Nevertheless, I posted about my working-but-wonky Spotify authentication, and asked if there was work being done that I could contribute to.</p>
+
+<p>Fortunately for me, this necroposting revived the thread and spurred a bunch of latent activity on the project - including from the maintainers, who pointed me towards a beta 2.0 branch, and suggested placing my project there.</p>
+
+<p>I had to scrap and rewrite my authentication program because it was so far out of the project guidelines, but in the end I was able to produce a well formatted and complete Spotify authentication solution for this project. Maybe others will find it useful as well.</p>
+
+<p>The wonders of Open Source.</p>
+
+<h1 id="api">API</h1>
+
+<p>There are presently 18 public endpoints structured as a REST application that a client may hit:</p>
+
+<table>
+<thead>
+<tr>
+<th>method</th>
+<th>endpoint</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>GET</td>
+<td>/api/v1/revoke</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/playlists?id={id}</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/playlists</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/api/v1/playlists</td>
+</tr>
+
+<tr>
+<td>DELETE</td>
+<td>/api/v1/playlists?id={id}</td>
+</tr>
+
+<tr>
+<td>DELETE</td>
+<td>/api/v1/unfollow?id={id}</td>
+</tr>
+
+<tr>
+<td>DELETE</td>
+<td>/api/v1/deletesmart?id={id}</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/fetch?id={id}</td>
+</tr>
+
+<tr>
+<td>POST</td>
+<td>/api/v1/playlists/update</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/me/smartplaylists</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/me/Spotifyplaylists</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/premade/</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/fetch?id={id}&amp;force=[t/f]</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/pause?id={id}</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/resume?id={id}</td>
+</tr>
+
+<tr>
+<td>PUT</td>
+<td>/api/v1/clear?id={id}</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/tracks?id={id}</td>
+</tr>
+
+<tr>
+<td>GET</td>
+<td>/api/v1/listenerinfo</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="server-architecture">Server Architecture</h1>
+
+<p>At the root level, the project is structured to contain multiple projects, because they aren’t available on Nuget yet, as well as projects for tests. That looks like this:</p>
+
+<ul>
+<li>Lyricall/
+
+<ul>
+<li>AspNet.Security.OAuth.Spotify/</li>
+<li>DotNetStandardSpotifyWebApi/</li>
+<li>Lyricall.IntegrationTests/</li>
+<li>Lyricall.UnitTests/</li>
+<li>Lyricall/</li>
+</ul></li>
+</ul>
+
+<p>Of course the magic happens in <code>Lyricall/Lyricall/</code>:
+* Lyricall/
+    * wwwroot/
+    * Client/
+    * Controllers/
+    * Data/
+        * Migrations/
+    * Models/
+        * Domain/
+        * Staged/
+    * Services/
+    * Views/</p>
+
+<p><code>wwwroot/</code> stores our deployed front end, which is the fully compiled forms of the TypeScript project, as well as the static html files found under <code>Client/</code>.</p>
+
+<p>Like all ASP.NET projects, the public API is defined by the controllers located under <code>Controllers/</code>. Logins are processed via <code>HomeController</code> and <code>AccountController</code>. These are holdovers from the default project where corresponding <code>Views/Home.cshtml</code> and <code>Views/Account.cshtml</code> views existed. Although the naming and structure is somewhat vestigial, their login and authentication functionality remains.</p>
+
+<p>The heavy lifting API is defined by the <code>SmartPlaylistController</code> class. This is where <code>GetAPlaylist()</code>, <code>Update()</code>, <code>ClearAddedTracks()</code>, and the rest of the public API reside.</p>
+
+<p>Sign in and authentication happen by first hooking the Spotify OAuth project into the <code>Startup.ConfigureServices()</code> method:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddAuthentication().AddSpotify((options =&gt; {
+        AppConstants.ClientId = Configuration<span style="color:#a6e22e">[AppConstants.ClientIdKey]</span>;
+        AppConstants.ClientSecret = Configuration<span style="color:#a6e22e">[AppConstants.ClientSecretKey]</span>;
+        options.ClientId = AppConstants.ClientId;
+        options.ClientSecret = AppConstants.ClientSecret;
+        options.SaveTokens = <span style="color:#66d9ef">true</span>;
+        options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.PLAYLIST_MODIFY_PUBLIC.Name);
+        options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.PLAYLIST_READ_COLLABORATIVE.Name);
+        options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.PLAYLIST_READ_PRIVATE.Name);
+        options.Scope.Add(DotNetStandardSpotifyWebApi.Authorization.SpotifyScopeEnum.USER_LIBRARY_READ.Name);
+}));</code></pre></div>
+<p>The scope additions are what this particular Spotify-API based application needs, which is the ability to:</p>
+
+<ul>
+<li>Read and write access to a user’s public playlists so that we may add songs</li>
+<li>Read and write access to a user’s collaborative playlists for the same reason</li>
+<li>Read and write access to a user’s private playlists, for the same reasons</li>
+<li>Read access to a user’s Library, so we can use it as a source</li>
+</ul>
+
+<p>There are a handful of other permissions that we could request, but Lyricall doesn’t need them to work, so we do not have to request any extraneous permissions.</p>
+
+<p>We also use the built-in ASP.NET identity module, which uses the Entity Framework to handle the database structure, serializing/deserializing, and migration creation with respect to Users:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;()
+        .AddEntityFrameworkStores&lt;ApplicationDbContext&gt;()
+        .AddDefaultTokenProviders();</code></pre></div>
+<p>The ApplicationDbContext contains the necessary information for the application to create the identity table structures. This comes as a freebie default by creating an ASP.NET identity application.</p>
+
+<h3 id="entity-framework-vs-hand-crafted-sql">Entity Framework vs Hand Crafted SQL</h3>
+
+<p>There’s a discrepancy which should be addressed at this point. We use Entity Framework to handle identity, but we constructed all the other relevant tables in the Lyricall database by hand. In fact, we never use Entity Framework, or any further ApplicationDbContexts at all beyond its one purpose. The reason for this is the embodiment of a long-running argument in the programming community about ORMs vs No ORMs. ORMs make it easy to do simple things like accessing one table with no dependencies on other tables, but performing joins or ensuring foreign key constraints quickly undoes the benefits of the ORM.</p>
+
+<p>Additionally, ORM’s have a tendency to require that the code be mutilated to appease it - suddenly there are decorators everywhere, public methods, getter/setters on every field. Principles of least access and separation of concern are sacrificed to fit the code model that the ORM expects in order to function properly.</p>
+
+<p>An ORM is not without its benefits - they make migrations dead simple, easily auditable, trivially reproducible - but for me, the benefits do not counter the sheer weight they add to the project.</p>
+
+<p>Thus, lyricall is a mixed project, where the things that are handled well and by default by the ORM like Identity and Authorization, are allowed to do so, while the custom sections of the application are done by hand.</p>
+
+<h3 id="automatic-timed-services">Automatic Timed Services</h3>
+
+<p>Returning to <code>Startup.cs</code>, we have a number of hosted services:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#75715e">//These two singletons are responsible for populating the list of To-Scan items every 10 minutes
+</span><span style="color:#75715e"></span>services.AddSingleton&lt;UpcommingScansProvider&gt;();
+services.AddSingleton&lt;IHostedService, ScansRefreshService&gt;();
+<span style="color:#75715e">//These two singletons are responsible for actually dequeuing and scanning the items from the previous service
+</span><span style="color:#75715e"></span>services.AddSingleton&lt;ScannerProvider&gt;();
+services.AddSingleton&lt;IHostedService, ScanProviderService&gt;();
+<span style="color:#75715e">//These two singletons are responsible for resetting everyone&#39;s Scan Counts at midnight
+</span><span style="color:#75715e"></span>services.AddSingleton&lt;ScanCountResetProvider&gt;();
+services.AddSingleton&lt;IHostedService, ScanCountResetService&gt;();</code></pre></div>
+<p>The comments should be explanatory. These services run at specified intervals and are responsible for ensuring the continuing automatic operation of the server. This way, a user’s smart playlist can be updated without further input by the user.</p>
+
+<h3 id="services">Services</h3>
+
+<p>The public API of the controllers is generally self contained, and strives to keep a separation between it and other parts of the application. When interoperability between application sections is required, travel through some of the static Service classes is encouraged.</p>
+
+<p>For example, interaction with Spotify, via the <code>DotNetStandardSpotifyWebApi</code> library, is further abstracted out into the SpotiifyService class, where methods like <code>CreateSpotifyPlaylist()</code>, <code>FetchAudioFeatures()</code>, and <code>UploadSongs()</code> reside.</p>
+
+<p>Interaction with the Database goes through the <code>DatabaseService</code> class. In specific, the <code>DatabaseService</code> class is split into two partial class sections - one which defines the actual database methods like <code>GetSmartPlaylistSources</code> and <code>SetSourceScanCrashPoint</code>, and another which contains private classes and structures needed, such as <code>PlaylistMetadata</code>, <code>FlattenedStagedListeners</code> as well as methods which specifically operate upon or with those classes.</p>
+
+<p>Previously mentioned auto-timer services also reside under <code>Services/</code>.</p>
+
+<h3 id="models">Models</h3>
+
+<ul>
+<li>Models/
+
+<ul>
+<li>Domain/
+
+<ul>
+<li>Listener/
+
+<ul>
+<li>ErrorObject.cs</li>
+<li>Listener.cs</li>
+<li>RuleGroup.cs</li>
+<li>Rule.cs</li>
+</ul></li>
+<li>LyricallException.cs</li>
+<li>LyricallCondition/
+
+<ul>
+<li>LyricallCondition.cs</li>
+<li>StringCondition.cs</li>
+<li>NumberConditon.cs</li>
+<li>BooleanCondition.cs</li>
+</ul></li>
+<li>LyricallObject/
+
+<ul>
+<li>LyricallObject.cs</li>
+<li>AdditionalDataFlags.cs</li>
+<li>LyricallMatchObject.cs</li>
+<li>SmartPlaylist.cs</li>
+<li>SimpleSmartPlaylist.cs</li>
+<li>LyricallTrack.cs</li>
+<li>LyricallPaging.cs</li>
+<li>PremadeListeners.cs</li>
+</ul></li>
+<li>LyricallProperty/
+
+<ul>
+<li>LyricallProperty.cs</li>
+<li>TrackProperty.cs</li>
+<li>AlbumProperty.cs</li>
+<li>ArtistProperty.cs</li>
+<li>AudioFeaturesProperty.cs</li>
+<li>PlaylistProperty.cs</li>
+<li>LibraryProperty.cs</li>
+<li>Range.cs</li>
+<li>LongRange.cs</li>
+<li>IntNumberRange.cs</li>
+<li>DoubleNumberRange.cs</li>
+<li>StringRange.cs</li>
+<li>BooleanRange.cs</li>
+</ul></li>
+<li>ProgressObject/
+
+<ul>
+<li>NextScanTimes.cs</li>
+<li>ProgressObject.cs</li>
+</ul></li>
+<li>SpotifySource/
+
+<ul>
+<li>SpotifySource.cs</li>
+<li>SpotifyPlaylist.cs</li>
+<li>UserLibrary.cs</li>
+</ul></li>
+<li>UserTokens.cs</li>
+</ul></li>
+<li>Staged/
+
+<ul>
+<li>StagedListener/
+
+<ul>
+<li>StagedListener.cs</li>
+<li>StagedRuleGroup.cs</li>
+<li>StagedRule.cs</li>
+</ul></li>
+<li>StagedSmartPlaylist.cs</li>
+<li>ValidationReasult.cs</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p>Lyricall is focused around automatically updating Smart Playlists - and almost every class represented within are directly in support of that.</p>
+
+<p>The core class is <code>SmartPlaylist</code>, which is structured, with simplifications, like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SmartPlaylist</span> {
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> Type = <span style="color:#e6db74">&#34;SmartPlaylist&#34;</span>;
+        <span style="color:#75715e">/// Spotify ID generated on submitting a Create Playlist request to Spotify
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> PlaylistId { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">/// Spotify ID of the user who owns this playlist. 
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">/// In context of Smart Playlists, it is always the user who created it
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> OwnerId { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">/// Name of the Playlist - the User specifies its name.
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> PlaylistName { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">/// The timestamp of the last source scan this playlist underwent
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> DateTime LastFetched { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">/// Timestamp of the next upcoming source scan this playlist will undergo
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> DateTime NextFetch { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">/// The list of sources this Smart Playlist draws from
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> IReadOnlyList&lt;SpotifySource&gt; Sources { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#75715e">/// The top level group to match on.
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">/// May contain a single Rule, or RuleGroup, or any number of any combination
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">public</span> RuleGroup Listeners { <span style="color:#66d9ef">get</span>; }
+        <span style="color:#66d9ef">public</span> JObject ToJson();
+        <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> HasAtLeastOneRule(SmartPlaylist sp);
+    }</code></pre></div>
+<p>All classes that get JSONified and sent to a client have two properties: a <code>const string Type</code> field which nominalizes the class for use in a JavaScript deserializer, and a <code>public JObject ToJson()</code> method, which does what it says on the tin, using the now-built-in <code>Newtonsoft.Json</code> library.</p>
+
+<p>The Smart Playlist is the complex, fully constructed main functional unit of the application. It’s two most important aspects are the <code>Sources</code> field and the <code>Listeners</code> field.</p>
+
+<p><code>Sources</code> is the list of Spotify Sources that this playlist is designated to draw from - this can be a user’s Saved Songs, or any <code>Playlist</code> that they follow on Spotify. <code>Sources</code> are very simple classes, which implement the <code>SpotifySource</code> interface.</p>
+
+<p><code>Listeners</code> is the source of nearly all of Lyricall’s complexity - much effort has been put into attempting to compensate and work around the complexity of this field. Two aspects of the complexity are because listeners are arbitrarily nested trees of listeners which has implications for scanning/matching and database de/serialization, and also because there is a fairly broad amount of things that can be listened for, which are each narrowly defined in terms of their accepted values.</p>
+
+<p>An easy but wrong way to counter the complexity would be to simply leave user-input unguided and unvalidated - but we’ve chosen to formalize what a listener is allowed to do, what accepted values are and what range they fall into. For example, a Track Property defines the fields that can be listened to when evaluating a specific track:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TrackProperty</span> : LyricallProperty {
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> TrackProperty TrackName = <span style="color:#66d9ef">new</span> TrackProperty(<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;Track Name&#34;</span>, StringCondition.AllConditions, StringRange.GenericRange);
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> TrackProperty Markets = <span style="color:#66d9ef">new</span> TrackProperty(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Available Markets&#34;</span>, StringCondition.AllConditions, StringRange.GenericRange);
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> TrackProperty DiscNumber = <span style="color:#66d9ef">new</span> TrackProperty(<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;Disc Number&#34;</span>, NumberCondition.AllConditions, IntNumberRange.GenericRange);
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> TrackProperty Duration = <span style="color:#66d9ef">new</span> TrackProperty(<span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#34;Duration&#34;</span>, NumberCondition.AllConditions, IntNumberRange.DurationRange);
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> TrackProperty Explicit = <span style="color:#66d9ef">new</span> TrackProperty(<span style="color:#ae81ff">4</span>, <span style="color:#e6db74">&#34;Explicit&#34;</span>, BooleanCondition.AllConditions, BooleanRange.GenereicRange);
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> TrackProperty Popularity = <span style="color:#66d9ef">new</span> TrackProperty(<span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#34;Popularity&#34;</span>, NumberCondition.AllConditions, IntNumberRange.DurationRange);
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> TrackProperty TrackNumber = <span style="color:#66d9ef">new</span> TrackProperty(<span style="color:#ae81ff">6</span>, <span style="color:#e6db74">&#34;Track Number&#34;</span>, NumberCondition.AllConditions, IntNumberRange.GenericRange);
+    }</code></pre></div>
+<p>The constructor and supporting fields are omitted for clarity’s sake, but they include a private static <code>Dictionary&lt;int, TrackProperty&gt;</code> for in-memory storage.</p>
+
+<p>A <code>TrackProperty</code> can be a listener assigned to a few specific fields:</p>
+
+<ul>
+<li>Track Name</li>
+<li>Available Markets</li>
+<li>Disc Number</li>
+<li>Duration</li>
+<li>Explicit</li>
+<li>Popularity</li>
+<li>Track Number</li>
+</ul>
+
+<p>Each of those fields has specific value types and value ranges they accept, and are specified by their third constructor argument. For example, <code>StringCondition.AllConditions</code> means the field accepts string values, and its allowed conditions includes</p>
+
+<ul>
+<li>is</li>
+<li>is not</li>
+<li>contains</li>
+<li>does not contain</li>
+<li>starts with</li>
+<li>does not start with</li>
+<li>ends with</li>
+<li>does not end with</li>
+</ul>
+
+<p>Meanwhile, Duration is <code>NumberCondition.AllConditions</code>, meaning it accepts integers (as specified by the Spotify API, duration is an integer not a long), and its allowed conditions include:</p>
+
+<ul>
+<li>Less Than</li>
+<li>Less Than Or Equal To</li>
+<li>Greater Than</li>
+<li>Greater Than Or Equal To</li>
+<li>Equal To</li>
+<li>Not Equal To</li>
+</ul>
+
+<h3 id="validation">Validation</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Listener</span>: LyricallObject {
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Id { <span style="color:#66d9ef">get</span>; }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> AdditionalDataFlags AdditionalDataFlags { <span style="color:#66d9ef">get</span>; }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">bool</span> Matches(LyricallMatchObject lmo);
+}
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RuleGroup</span> : Listener {
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> GroupName { <span style="color:#66d9ef">get</span>; }
+    <span style="color:#66d9ef">public</span> EveryAny EveryAny { <span style="color:#66d9ef">get</span>; }
+    <span style="color:#66d9ef">public</span> IReadOnlyList&lt;Listener&gt; Rules { <span style="color:#66d9ef">get</span>; }
+    <span style="color:#66d9ef">private</span> AdditionalDataFlags _AdditionalDataFlags = AdditionalDataFlags.Unset;
+}
+
+ <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rule</span> : Listener {
+    <span style="color:#66d9ef">public</span> LyricallProperty Property { <span style="color:#66d9ef">get</span>; }
+    <span style="color:#66d9ef">public</span> LyricallCondition Condition { <span style="color:#66d9ef">get</span>; }
+    <span style="color:#66d9ef">private</span> AdditionalDataFlags _AdditionalDataFlags = AdditionalDataFlags.Unset;
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Value { <span style="color:#66d9ef">get</span>; }
+    <span style="color:#66d9ef">private</span> Func&lt;LyricallMatchObject, <span style="color:#66d9ef">bool</span>&gt; Matcher { <span style="color:#66d9ef">get</span>; }
+ }</code></pre></div>
+<p>When a rule, which is a combination of a specific <code>LyricallProperty</code> like <code>Duration</code> or <code>Artist Name</code> or <code>Danceability</code>, a a specific <code>LyricallCondition</code> like <code>Starts With</code> or <code>Greater Than</code>, and a value, it is run through a validation process which checks that:</p>
+
+<ul>
+<li>The <code>Property</code> is a valid, existing property and wasn’t mal- or maliciously formed. i.e., <code>Coolness Level</code> is not a valid property.</li>
+<li>The <code>Condition</code> is valid and wasn’t also maliciously formed, and that it is correct for the <code>Property</code>. i.e., <code>Track Name Greater Than &quot;hello&quot;</code> is invalid.</li>
+<li>The value falls within the specified range of the field. For example, negative values don’t make any sense for some fields, meanwhile other fields are doubles between 0.0 and 1.0.</li>
+</ul>
+
+<p>A supplied rule that violates any of these assumptions fails validation and the client is supplied with an error message representing the issue.</p>
+
+<p>This validation happens using specific <code>Staged</code> classes found under <code>Models/Staged/</code>. These classes are deserialized from json and usually ignore supplied Id fields, and are only allowed to touch certain parts of the inner applications. This prevents malicious or malformed input from affecting the system improperly.</p>
+
+<p>A similar validation check happens at every step where user input is supplied - supplied Spotify Sources are validated for both format and existence on Spotify. Edits to a SmartPlaylist not only ensure that the values, conditions and property combinations are valid, but also that the present user actually owns the SmartPlaylist they are attempting to edit, and that any rules don’t have their Id tampered with such that a rogue user can edit the rules of another user.</p>
+
+<p>The User is an adversarial component, we do not trust that any of their inputs is legitimate or properly formatted. In a future update, we’d like to treat the Database as an adversarial component as well.</p>
+
+<h3 id="scanning">Scanning</h3>
+
+<p>When a scan is requested, or when a scan is automatically triggered, an asynchronous scan is kicked off with the <code>NaiveScanner</code> class.</p>
+
+<p><code>NaiveScanner</code> is so named because future iterations are planned where playlists with similar sources will be batched together and matched at the same time, reducing our overall workload as well as stress on Spotify’s servers. At the moment of writing however, this optimization does not occur, hence it is a naive scan.</p>
+
+<p>The scanner first loads a <code>SmartPlaylist</code> from the database by its Id, counts its sources, and then queue them up for scanning.</p>
+
+<p>Each source checks a number of conditions, like if there any songs in it, or if it crashed or otherwise failed to complete an earlier scan - if it did fail, then it attempts to pick back up from the spot it failed at. Otherwise, it starts from the beginning, keeping track of its offset. A crash in the scan will update the Database with its last known offset, and will continue automatically at a later time, until a certain number of scan failures occur.</p>
+
+<p>Failures can include any number of things such as Spotify enabling rate-limiting on the account, network failures, or token revocations. All of these initiate the crash-failure protocol.</p>
+
+<p>The scanner has some optimizations in place to reduce load in various places:</p>
+
+<ul>
+<li>If the user no longer follows the smart playlist on their Spotify account, the <code>SmartPlaylist</code> is deleted form the Lyricall database and the scan as a whole does not proceed.</li>
+<li>If a <code>source</code> has no songs, the scan for that <code>source</code> is marked as ‘complete’ and completes early.</li>
+<li>If a <code>source</code> hasn’t changed since the last scan on this <code>SmartPlaylist</code> was performed (through the <code>ETag</code> attribute, or the <code>SnapshotId</code> attribute), then the scan for that source is marked as ‘complete’ and completes early.</li>
+<li>If a <code>source</code> reaches all the way to end, where there is no longer a defined next page to request, the scan is marked as complete.</li>
+<li>If a <code>source</code> has changed since last time, we complete the scan for that source when we reach the last known position of the previous scan, preventing us from double-scanning sources and wasting api calls and bandwidth.</li>
+</ul>
+
+<p>If the Smart Playlist has a rule that needs access to <code>AudioFeatures</code> or <code>AudioAnalysis</code> data, the Database cache is checked for presence of the data-heavy Audio object before asking Spotify for more data. Of course, the <code>GetMany</code> variant of the Spotify API call is used to minimize API rate limiting. If a call is necessary, we check against what is already in the cache, and only request the ones that we need. Although this does not affect our rate limit, it does lower the overall bandwidth required. New data returned is subsequently cached into the Database.</p>
+
+<p>As a technical detail, we compile each track we see into a <code>LyricallMatchObject</code>, which rectifies the impedance mismatch between a <code>SavedTrack</code>, a <code>PlaylistTrackObject</code>, and a direct <code>Track</code>, which are all defined by Spotify, and are very similar but have slightly different semantics. This lets us scan over a user’s Saved Songs library, a Playlist or, later, an Album or Artist without significant deviation in methods. This is especially useful when passing the track down the chain for the Rule Matching process.</p>
+
+<p>Each track is passed to the Rule Matcher, which is a huge switch statement that simply checks if the value of the rule matches the value of the field in the track we’re looking at.</p>
+
+<p>Each matched rule returns a boolean, <code>true</code> for a successful match, <code>false</code> otherwise. Within a RuleGroup, we check, depending on the flag, whether we need to match all rules or any rule. The obvious optimizations apply: If all, then a single <code>false</code> returns <code>false</code> for the group. If any, then a single <code>true</code> returns <code>true</code> for the group.</p>
+
+<p>If a song passes all its checks, then it gets added to an in-memory list which, upon source scan completion, will be transferred to the databases <code>StagedTracks</code> table.</p>
+
+<p>When the scan as a whole completes, the <code>StagedTracks</code> is scheduled to upload as soon as possible, and the <code>NextScan</code> and <code>LastScanned</code> fields are updated appropriately.</p>
+
+<h1 id="hosting-1">Hosting</h1>
+
+<h2 id="digital-ocean">Digital Ocean</h2>
+
+<p><img src="/lyricallarch/digitalocean.svg" height="150">
+The Postgres instance resides on Digital Ocean. A number of other web services offer managed Postgres services, but they are often either expensive, confusing, or in beta. I looked at Heroku, but I was unsure on how to access the instance from outside the Heroku platform, and they constantly change the database credentials, meaning the lyricall.net server would require an additional Heroku library to properly interface with them to get the refreshed credentials. Since Heroku Postgres is designed to be used with other Heroku services and everything else seems secondary, I opted to not use them.</p>
+
+<p>Azure was another choice, but a managed database requires a minimum service class of at least $39/month, which was out of scope for this project - in addition, managed Postgres is in beta on their platform.</p>
+
+<p>So, back to Digital Ocean, my go-to default for whenever I need a cloud solution. Digital Ocean doesn’t offer any managed services, but all I needed was a cheap linux host that I could install Postgres on, so I just opted for a $5/month Ubuntu 16 VM.</p>
+
+<h3 id="security">Security</h3>
+
+<p>Because it is a publically available computer, steps had to be taken to secure both the database and the computer.</p>
+
+<p>An overview of the measures taken include:</p>
+
+<ul>
+<li>SSH only root login</li>
+<li>Non-default SSH port</li>
+<li>non-root account where any server actions are done</li>
+<li>SSH only remote login to that account</li>
+<li>Minimal other services running on machine</li>
+<li>System firewall (ufw) for only the SSH port and the Postgres port</li>
+<li>Randomized Postgres database name</li>
+<li>Randomized Postgres username</li>
+<li>Randomized Postgres password</li>
+<li>EnforceSSL only connections to Postgres, with one  authorized user on one database</li>
+</ul>
+
+<p>Further security considerations include only allowing Postgres connections from the static IP of the ASP.NET server, or somehow putting it on a Private Network with that server.</p>
+
+<h3 id="backups">Backups</h3>
+
+<p>None are performed. This is an obvious gap in the system and will be remedied in the future.</p>
+
+<h3 id="ci-cd">CI/CD</h3>
+
+<p>Unlike a managed solution, there is no quick way to deploy a new schema, and migrations must be done manually. This is another obvious gap.</p>
+
+<h2 id="microsoft-azure">Microsoft Azure</h2>
+
+<p><img src="/lyricallarch/azure.svg" height="150" width="150">
+Unlike the digital ocean offering, the Azure instance is a fully managed platform. Although they do offer open do-it-yourself VMs, for this project, I went with a managed Web-App. Technically it’s using a windows server instance, but that’s an implementation detail and can be changed at a later date with minimal administrative effort and zero programming effort.</p>
+
+<p>Using an Azure Web App, we deploy our .Net Core 2.0 project via a <code>git push azure master</code>. For most project dependencies, the .csproj file will specify what needs to be downloaded and the rest will handled by Azure’s deployment process. For the rest, such as <code>DotNetStandardSpotifyWebApi</code> and the unreleased ASP.NET Security branch, we bundle the projects directly with the release ourselves.</p>
+
+<p>Combined with custom domain names purchased from NameCheap, we point our DNS to the Azure websites IP, and we have a functioning back end / front end / database client-server application.</p>
+
+<h3 id="backups-1">Backups</h3>
+
+<p>Given that the webapp on Azure is a managed service, backups happen automatically.</p>
+
+<h3 id="ci-cd-1">CI/CD</h3>
+
+<p>Configuring the Azure Web-App to use a local git repository means that any commit to an upstream Azure branch will automatically compile and deploy the application. With respect to CI, a separate project is set up within VSTS, but it isn’t integrated into the deployment process yet.</p>
+
+<h1 id="let-s-encrypt">Let&rsquo;s Encrypt</h1>
+
+<p><img src="/lyricallarch/letsencrypt.svg" height="150">
+Security should never be an afterthought - the entire application from start to finish has been designed with security in mind, and the raw http connection is no different.</p>
+
+<p>Let’s Encrypt has made it quick and (mostly) easy to get an SSL certificate, so there’s no reason not to anymore.</p>
+
+<p>The Postgres server resides on an SSL-only connection from database to server with an LE certificate, although after obtaining the certificate it occurred to me that because the database is essentially a private network and I control both endpoints of the connection, that there’s no need for a third-party certificate authority to sign the certificate. In the future, I will self-sign a certificate and use that as the encryption for the connection, removing an unnecessary dependency on a third party.</p>
+
+<p>For the Azure web site however, Let’s Encrypt is a godsend, if a huge hassle to set up. I followed Troy Hunt’s excellent, if complicated guide on loading a third-party certificate to Azure.</p>
+
+<p>Thanks to Let’s Encrypt, there’s never a single insecure connection established in any step of the lyricall.net chain</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+        
+      </div>
+    </main>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://0xnf.github.io" >
+    &copy; 2018 Nothing in Particular
+  </a>
+  
+
+
+
+
+
+
+
+
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

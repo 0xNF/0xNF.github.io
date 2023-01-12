@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <title>
+    
+        |
+        Machine Levine Mk. I
+      
+
+    
+
+  </title>
+
+  
+  <meta charset="utf-8" /><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="" />
+  <meta
+    name="description"
+    content="Part 2 of the Machine Levine series, in which we discuss how the original Matt Bot came to be."
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.ba004976221e613a16542d07a2deca5d0377ff5e6a22dec5fcec01480ba967cf.css"
+      integrity="sha256-ugBJdiIeYToWVC0Hot7KXQN3/15qIt7F/OwBSAupZ88="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.793b323d7f2d9fbfd0b93f4d593fb5ad77b918716ed33eddea403fa87f770403.css"
+    integrity="sha256-eTsyPX8tn7/QuT9NWT&#43;1rXe5GHFu0z7d6kA/qH93BAM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.7f3c2281c7f965ce3c64888aa452793252a0416909c181097f81d0a0f7d1624e.css"
+    integrity="sha256-fzwigcf5Zc48ZIiKpFJ5MlKgQWkJwYEJf4HQoPfRYk4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.35fc032da8ede6681675d20a2f862fb9e1045c1d512d495fcf862c054daffef2.css"
+    integrity="sha256-NfwDLajt5mgWddIKL4YvueEEXB1RLUlfz4YsBU2v/vI="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.3b92357925ea7284f0c6b0378396f39f470f7842ed9702f337e667c4026bf837.css"
+    integrity="sha256-O5I1eSXqcoTwxrA3g5bzn0cPeELtlwLzN&#43;ZnxAJr&#43;Dc="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.ebb1096e1976e8cc4e2532cfa050b8f30eb13b8eb06be5cee3e38eb426b838ea.css"
+    integrity="sha256-67EJbhl26MxOJTLPoFC48w6xO46wa&#43;XO4&#43;OOtCa4OOo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="https://0xnf.github.io/posts/ml/mk1/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.5c846cefa5ed21cceee981c70901aaf21b17b4e0b05bd777af840780918abea9.js"
+    integrity="sha256-XIRs76XtIczu6YHHCQGq8hsXtOCwW9d3r4QHgJGKvqk="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.46e991c2fcb035fc0060a792f1eb0c93ecacc9e76cd7445d6531a5cf2928686d.js"
+      integrity="sha256-RumRwvywNfwAYKeS8esMk&#43;ysyeds10RdZTGlzykoaG0="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Machine Levine Mk. I"/>
+<meta name="twitter:description" content="Part 2 of the Machine Levine series, in which we discuss how the original Matt Bot came to be."/>
+
+
+
+  
+  <meta property="og:title" content="Machine Levine Mk. I" />
+<meta property="og:description" content="Part 2 of the Machine Levine series, in which we discuss how the original Matt Bot came to be." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xnf.github.io/posts/ml/mk1/" />
+<meta property="article:published_time" content="2018-11-02T20:08:56-07:00" />
+<meta property="article:modified_time" content="2018-11-02T20:08:56-07:00" />
+
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Machine Levine Mk. I",
+        "headline": "Machine Levine Mk. I",
+        "alternativeHeadline": "",
+        "description": "
+      Part 2 of the Machine Levine series, in which we discuss how the original Matt Bot came to be.
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/0xnf.github.io\/posts\/ml\/mk1\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightYear" : "2018",
+        "dateCreated": "2018-11-02T20:08:56.00Z",
+        "datePublished": "2018-11-02T20:08:56.00Z",
+        "dateModified": "2018-11-02T20:08:56.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name":  null ,
+            "url": "https://0xnf.github.io/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/0xnf.github.io\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/0xnf.github.io\/posts\/ml\/mk1\/",
+        "wordCount" : "1462",
+        "genre" : [ 
+      
+      "Machine Learning"
+
+    
+      
+        ,
+
+      
+      "NLP"
+
+    
+      
+        ,
+
+      
+      "fast.ai"
+
+    ],
+        "keywords" : [ 
+      
+      "rnn"
+
+    
+      
+        ,
+
+      
+      "parsing"
+
+    
+      
+        ,
+
+      
+      "web scraping"
+
+    
+      
+        ,
+
+      
+      "data cleanup"
+
+    ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/"></a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p></p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      <h1>Machine Levine Mk. I</h1>
+      <p>This is a description of how the first of the Matt Bots came into existence. Few things in this document should be interpreted as the best or even a correct way to do anything - this bot is an academic exercise. That being said, here is how he was made.</p>
+<h1 id="data-collection">Data Collection</h1>
+<p>Like the <a href="/posts/ml/machinelevine">general post</a> describes, the data used to train the Matt model was derived from Matt Levine&rsquo;s at-the-time 571-count archive of <a href="https://www.bloomberg.com/view/topics/money-stuff">Money Stuff</a> articles.</p>
+<p>The data was downloaded using a simple web scraper to collect the URLs of each article, which were then downloaded in a way which definitely tripped the Bloomberg anti-scraping mechanisms.</p>
+<h2 id="data-cleanup">Data Cleanup</h2>
+<p>The cleanup script can be found at <a href="">html2taggedtext.py</a>.</p>
+<p>Once all the articles had been downloaded, they were passed into a python script using <a href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> to extract the meaningful pieces of information.</p>
+<h3 id="extraneous-html">Extraneous HTML</h3>
+<p>Before further processing, some of the HTML was transformed in various ways to facilitate data extraction. For example:</p>
+<ul>
+<li>
+<p>Some of the downloaded html tags weren&rsquo;t meaningful, so I struck them from the html tree. Any <code>&lt;aside&gt;</code> tags, or <code>&lt;div&gt;</code> with any classes matching <code>hardwall</code>, <code>softwall</code>, <code>page-ad</code>, <code>trashling</code>, <code>disclaimer</code>, etc is removed without consideration.</p>
+</li>
+<li>
+<p>Any <code>&lt;br&gt;</code> tags are replaced with newlines <code>\n</code>.</p>
+</li>
+<li>
+<p>Any links are replaced with their inline text.</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">You can find the link &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;www.someurl.com&#34;</span>&gt;here&lt;/<span style="color:#f92672">a</span>&gt;.
+</code></pre></div><p>becomes</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">You can find the link here.
+</code></pre></div><h3 id="tagging">Tagging</h3>
+<p>We surround each sub-section of a given Money Stuff article with enclosing <code>&lt;</code> and <code>&gt;</code> tags. This hopefully allows the neural network to learn that what a section is.</p>
+<h3 id="mistakes">Mistakes</h3>
+<p>Due to an oversight, I forgot to include three pieces of information that would be really useful:</p>
+<p>The title of the article, the subtitle, and the date the article was published.</p>
+<p>This means that any model created using the data that has been collected will be incapable of generating article titles and subtitles. As a workaround, I have a post-processing script that assembles article these things from generated section titles, but it is a less than perfect state of affairs.</p>
+<h3 id="saving">Saving</h3>
+<p>Once the data from a given article has been cleaned to an acceptable extent, it is saved into a different folder as a bunch of raw text. A single cleaned article will look like:</p>
+<p><code>active-funds-and-hidden-commissions.html.txt</code>
+and its contents will look like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&lt;Should active management be illegal?&gt; Look, you know the things:The average active manager will underperform the average passive manager, because of fees.
+[...]
+</code></pre></div><h1 id="ml-setup">ML Setup</h1>
+<p>The details of the setup can be found under <a href="">MattAttempt.ipynb</a>.</p>
+<h2 id="validation-and-test-sets">Validation and Test Sets</h2>
+<p>Although we failed to encode it in our data, the articles are actually time-dependent. Topics in one article may be referenced in a future article, and the language Matt uses may match that. In fact he does this very often. &ldquo;We talked yesterday about &hellip;&rdquo; is a common refrain in Money Stuff.</p>
+<p>Because of this, we&rsquo;ll simply say that our validation set is the last <code>x%</code> of articles in our dataset.</p>
+<p>The question to grapple with is what is our <code>x</code>? Jeremy of Fast.ai recommends 20% on any given dataset, which is an empirical number he finds to be generally useful. Unfortunately because I&rsquo;m working with such a small dataset, I decided to halve that to 10%.</p>
+<p>I also dedicated an additional 10% of articles to the Test set.</p>
+<h1 id="loading-data">Loading Data</h1>
+<h2 id="concatenation">Concatenation</h2>
+<p>TorchText, which sits below FastAIs NLP APIs prefers to load all NLP data as a single big string, where each observation (in our case, a single article), is concatenated to the end of the previous observation.</p>
+<p>Unfortunately the tagging phase for Mk. I didn&rsquo;t include any kind of article start or end information, so all the articles run together. This means that Mk. I will not be able to gain any sense of how long an article is, how many sections an article has, or how articles are typically ended. We leave this to Mk. II and beyond.</p>
+<h2 id="tokenization">Tokenization</h2>
+<p>For this first Matt Bot, we elect not to tokenize beyond simply creating a list of each output character. Rather than using a word-level output, Mk. 1 uses a character-level output, meaning that he will construct words character by character. With respect to tokenization, this just means that we only need a list of the ascii values. Enough to encode English words and punctuation.</p>
+<h2 id="frequency-counting">Frequency Counting</h2>
+<p>To avoid having the bot attempt to learn unpredictable and rare characters, we eliminate any characters that were seen below a certain frequency. For our experiments, we say that any character that occurs less than 3 times gets replaced by a character representing an unknown value. This way, the model can learn an average encoding for all words and apply it, rather than attempting to correctly weight rarely seen and likely misencoded data.</p>
+<h2 id="strings-to-numbers">Strings to Numbers</h2>
+<p>Of course a computer can&rsquo;t weight a character, so we create a mapping that moves the character to an integer representation, and another mapping that goes backwards.</p>
+<p>This way we can hand the model a list of characters as input, and receive a list of characters as output.</p>
+<h1 id="model">Model</h1>
+<h2 id="architecture">Architecture</h2>
+<p>Our actual PyTorch model that we used to train Mk. 1 looks like the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CharSeqStatefulLSTM</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, vocab_size, emb_size, batch_size, num_layers):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>vocab_size,self<span style="color:#f92672">.</span>num_layers <span style="color:#f92672">=</span> vocab_size,num_layers
+        self<span style="color:#f92672">.</span>e <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Embedding(vocab_size, emb_size)
+        self<span style="color:#f92672">.</span>rnn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>LSTM(emb_size, num_hidden, num_layers, dropout<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>)
+        self<span style="color:#f92672">.</span>l_out <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(num_hidden, vocab_size)
+        self<span style="color:#f92672">.</span>init_hidden(batch_size)
+        
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, cs):
+        batch_size <span style="color:#f92672">=</span> cs[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)
+        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>h[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">!=</span> batch_size: self<span style="color:#f92672">.</span>init_hidden(batch_size)
+        outp,h <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>rnn(self<span style="color:#f92672">.</span>e(cs), self<span style="color:#f92672">.</span>h)
+        self<span style="color:#f92672">.</span>h <span style="color:#f92672">=</span> repackage_var(h)
+        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>log_softmax(self<span style="color:#f92672">.</span>l_out(outp), dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, self<span style="color:#f92672">.</span>vocab_size)
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">init_hidden</span>(self, batch_size):
+        self<span style="color:#f92672">.</span>h <span style="color:#f92672">=</span> (V(torch<span style="color:#f92672">.</span>zeros(self<span style="color:#f92672">.</span>num_layers, batch_size, num_hidden)),
+                  V(torch<span style="color:#f92672">.</span>zeros(self<span style="color:#f92672">.</span>num_layers, batch_size, num_hidden)))
+</code></pre></div><p>What we&rsquo;ve chosen to encode here is that we&rsquo;re going to have an embeddings matrix with <code>vocab_size</code> rows and <code>emb_size</code> columns, where vocab_size is how many unique tokens we found in our input text, and <code>emb_size</code> is a number chosen by us at our discretion.</p>
+<p>This will operate like Word2Vec does, but rather that being the first and last step, will be simply the first block of our network.</p>
+<p>Our second block will be a <code>num_hidden</code> size LSTM RNN, with an input size of <code>emb_hidden</code>, because it will be fed the output of the embeddings layer. We give it a dropout of 50% because dropout is an easy way to reduce overfitting and increase model performance. Why 50%? Why not. It works, basically.</p>
+<p>Our final block is a simple linear layer going from <code>num_hidden</code> to <code>vocab_size</code>, where the output will be a <code>vocab_size</code> list of probabilities of the likeliest next character.</p>
+<p>We take what is essentially the item with the highest probability from that list to construct our final output character.</p>
+<h2 id="fitting">Fitting</h2>
+<p>Our hyperparameters are setup as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>
+backprop<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>
+emb_size<span style="color:#f92672">=</span><span style="color:#ae81ff">42</span> 
+num_hidden <span style="color:#f92672">=</span> <span style="color:#ae81ff">512</span>
+num_layers <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</code></pre></div><p>We use the FastAI library to create a model data object, which is responsible for moving and loading our data and handing it to our model architecture as such:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;path/to/text/files/to/load/&#34;</span>
+TEXT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;path/to/pre-saved/tokens.npy&#34;</span>
+md <span style="color:#f92672">=</span> LanguageModelData<span style="color:#f92672">.</span>from_text_files(PATH, TEXT, <span style="color:#f92672">**</span>FILES, bs<span style="color:#f92672">=</span>batch_size, bptt<span style="color:#f92672">=</span>backprop, min_freq<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+</code></pre></div><p>We can then instantiate a model like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m <span style="color:#f92672">=</span> CharSeqStatefulLSTM(num_tokens, emb_size, batch_size, num_layers)<span style="color:#f92672">.</span>cuda()
+lo <span style="color:#f92672">=</span> LayerOptimizer(optim<span style="color:#f92672">.</span>Adam, m, <span style="color:#ae81ff">1e-2</span>, <span style="color:#ae81ff">1e-5</span>)
+</code></pre></div><p>Where <code>lo</code> is an object that manages our learning rate. We want it to use the <code>Adam</code> gradient descent optimizer, and use to anneal it&rsquo;s learning rate from a relatively high <code>0.01</code> to <code>0.0001</code></p>
+<p>Finally we can call <code>fit</code> with the following parameters:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">35</span>
+fit(m, md, epochs, lo<span style="color:#f92672">.</span>opt, F<span style="color:#f92672">.</span>nll_loss)
+</code></pre></div><p>The key in all of this is picking the right hyperparameters, especially the learning rate. This is a game that falls somewhere between blind dart-throwing and intuition, so you just have to keep at it and try a bunch of different things, although keeping the learning rate really close to zero is usually a good idea.</p>
+<p>After training for a few hours, we end up with training/validation losses of []</p>
+<h2 id="pulling-data">Pulling data</h2>
+<p>We use the following methods to pull data out from our newly generated model:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_next</span>(inp):
+    idxs <span style="color:#f92672">=</span> TEXT<span style="color:#f92672">.</span>numericalize(inp)<span style="color:#f92672">.</span>cpu() <span style="color:#75715e"># Comment to enable GPU computation. Be sure to also undo gpu stuff in Forward</span>
+    t <span style="color:#f92672">=</span> idxs<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)
+    v <span style="color:#f92672">=</span> V(t)
+    p <span style="color:#f92672">=</span> m(v)
+    p <span style="color:#f92672">=</span> m(V(idxs<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)))
+    r <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>multinomial(p[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>exp(), <span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">return</span> TEXT<span style="color:#f92672">.</span>vocab<span style="color:#f92672">.</span>itos[to_np(r)[<span style="color:#ae81ff">0</span>]]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_next_n</span>(inp, n):
+    res <span style="color:#f92672">=</span> inp
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n):
+        c <span style="color:#f92672">=</span> get_next(inp)
+        res <span style="color:#f92672">+=</span> c
+        inp <span style="color:#f92672">=</span> inp[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">+</span>c
+    <span style="color:#66d9ef">return</span> res
+</code></pre></div><p>Let&rsquo;s see what we get with it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nt <span style="color:#f92672">=</span> get_next_n(<span style="color:#e6db74">&#39;goldman&#39;</span>, <span style="color:#ae81ff">200</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&#39;goldman\&#39;s craby floor 10\\)-2,000 insurann, and divorced by the deduction.&gt;and the service point, the model. &#34;economi soussip ipo.&gt;you &#34;i already momimiolist, because including, but i as new y-based coins. pa&#39;
+</code></pre></div><p>It&rsquo;s a bit gibberish, but it does kind of look a little like the finance-y writings of Matt.</p>
+<p>As far as first foray into machine learning goes, I&rsquo;m quite pleased with this as an introductory result!</p>
+<h2 id="the-finished-product">The Finished Product</h2>
+<p>You can see other articles generated by this Matt Bot, as well as generate your own articles using it, over here at <a href="http://machinelevine.winetech.com/bots/ml1">machinelevine.winetech.com</a></p>
+
+
+
+<h3>Posts in this series</h3>
+<ul>
+  
+    <li><a href="/posts/ml/mk2/">Machine Levine Mk. II</a></li>
+  
+    <li><a href="/posts/ml/mk1/">Machine Levine Mk. I</a></li>
+  
+    <li><a href="/posts/ml/machinelevine/">Machine Levine</a></li>
+  
+</ul>
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/machine-learning/">Machine Learning</a><a class="category" href="/categories/nlp/">NLP</a><a class="category" href="/categories/fast%2eai/">fast.ai</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/rnn/">rnn</a><a class="tag" href="/tags/parsing/">parsing</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-cleanup/">data cleanup</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

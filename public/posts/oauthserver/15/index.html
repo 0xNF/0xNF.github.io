@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <title>
+    
+        |
+        Implement an OAuth 2.0 Server (Part 15)
+      
+
+    
+
+  </title>
+
+  
+  <meta charset="utf-8" /><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="" />
+  <meta
+    name="description"
+    content="In this section of our OAuth tutorial we add the ability to authorize against the scopes we created back in part 8 using ASP.NET policies."
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.ba004976221e613a16542d07a2deca5d0377ff5e6a22dec5fcec01480ba967cf.css"
+      integrity="sha256-ugBJdiIeYToWVC0Hot7KXQN3/15qIt7F/OwBSAupZ88="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.793b323d7f2d9fbfd0b93f4d593fb5ad77b918716ed33eddea403fa87f770403.css"
+    integrity="sha256-eTsyPX8tn7/QuT9NWT&#43;1rXe5GHFu0z7d6kA/qH93BAM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.7f3c2281c7f965ce3c64888aa452793252a0416909c181097f81d0a0f7d1624e.css"
+    integrity="sha256-fzwigcf5Zc48ZIiKpFJ5MlKgQWkJwYEJf4HQoPfRYk4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.35fc032da8ede6681675d20a2f862fb9e1045c1d512d495fcf862c054daffef2.css"
+    integrity="sha256-NfwDLajt5mgWddIKL4YvueEEXB1RLUlfz4YsBU2v/vI="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.3b92357925ea7284f0c6b0378396f39f470f7842ed9702f337e667c4026bf837.css"
+    integrity="sha256-O5I1eSXqcoTwxrA3g5bzn0cPeELtlwLzN&#43;ZnxAJr&#43;Dc="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.ebb1096e1976e8cc4e2532cfa050b8f30eb13b8eb06be5cee3e38eb426b838ea.css"
+    integrity="sha256-67EJbhl26MxOJTLPoFC48w6xO46wa&#43;XO4&#43;OOtCa4OOo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="https://0xnf.github.io/posts/oauthserver/15/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.5c846cefa5ed21cceee981c70901aaf21b17b4e0b05bd777af840780918abea9.js"
+    integrity="sha256-XIRs76XtIczu6YHHCQGq8hsXtOCwW9d3r4QHgJGKvqk="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.46e991c2fcb035fc0060a792f1eb0c93ecacc9e76cd7445d6531a5cf2928686d.js"
+      integrity="sha256-RumRwvywNfwAYKeS8esMk&#43;ysyeds10RdZTGlzykoaG0="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Implement an OAuth 2.0 Server (Part 15)"/>
+<meta name="twitter:description" content="In this section of our OAuth tutorial we add the ability to authorize against the scopes we created back in part 8 using ASP.NET policies."/>
+
+
+
+  
+  <meta property="og:title" content="Implement an OAuth 2.0 Server (Part 15)" />
+<meta property="og:description" content="In this section of our OAuth tutorial we add the ability to authorize against the scopes we created back in part 8 using ASP.NET policies." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xnf.github.io/posts/oauthserver/15/" />
+<meta property="article:published_time" content="2018-06-18T18:11:49-07:00" />
+<meta property="article:modified_time" content="2018-06-18T18:11:49-07:00" />
+
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Implement an OAuth 2.0 Server (Part 15)",
+        "headline": "Implement an OAuth 2.0 Server (Part 15)",
+        "alternativeHeadline": "",
+        "description": "
+      In this section of our OAuth tutorial we add the ability to authorize against the scopes we created back in part 8 using ASP.NET policies.
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/0xnf.github.io\/posts\/oauthserver\/15\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightYear" : "2018",
+        "dateCreated": "2018-06-18T18:11:49.00Z",
+        "datePublished": "2018-06-18T18:11:49.00Z",
+        "dateModified": "2018-06-18T18:11:49.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name":  null ,
+            "url": "https://0xnf.github.io/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/0xnf.github.io\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/0xnf.github.io\/posts\/oauthserver\/15\/",
+        "wordCount" : "1970",
+        "genre" : [ 
+      
+      "Security"
+
+    
+      
+        ,
+
+      
+      "Identity"
+
+    
+      
+        ,
+
+      
+      "Authentication"
+
+    
+      
+        ,
+
+      
+      "Authorization"
+
+    ],
+        "keywords" : [ 
+      
+      "OAuth2.0"
+
+    
+      
+        ,
+
+      
+      "OpenIdConnect"
+
+    
+      
+        ,
+
+      
+      "Tutorial"
+
+    
+      
+        ,
+
+      
+      "CSharp"
+
+    
+      
+        ,
+
+      
+      ".NET Core"
+
+    ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/"></a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p></p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      <h1>Implement an OAuth 2.0 Server (Part 15)</h1>
+      <p>Welcome to the fifteenth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+<h1 id="scope-authorization-with-policies-requirements-and-handlers">Scope Authorization with Policies, Requirements and Handlers</h1>
+<p>Just adding Authorization attributes is insufficient for our purposes - our tokens have scopes associated with them, and our endpoint authorization checks should reflect that. 
+To do so, we will use policies, which you can read about on the <a href="https://docs.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-2.0">Microsoft Docs</a>.</p>
+<p>Policies are fragments you can add to an authorization attribute that confirm whether a given HttpContext meets the requirements of the attribute, beyond simply being authenticated or not.</p>
+<p>Policies are composed of two parts - the actual policy, referred to as the <code>AuthorizationRequirement</code>, and the class responsible validating the requirement, known as the <code>AuthorizationHandler</code>.</p>
+<p>The handlers are generic classes that accept a <code>&lt;T&gt;</code> requirement - and then <code>Handle</code> it appropriately. For any given policy, a handler can choose to <code>Succeed</code>, or pass the requirement, <code>Fail</code> or reject the requirement, or ignore it altogether and let someone else handle it.</p>
+<p>A single authorization attribute can go through multiple different policy handlers, and they operate on a short-circuit policy - meaning that the first policy to <code>Succeed</code> means the entire chain succeeds. Following that, the first policy to <code>Fail</code> means the whole chain fails. Any policy that is ignored passes the responsibility to the next item in the chain.</p>
+<p>If the context is never marked as succeeded, then the chain implicitly fails.</p>
+<h1 id="has-scope-policy">Has Scope Policy</h1>
+<p>Create a new folder named <code>Policies/</code> and add a <code>HasScopeRequirement</code> class:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HasScopeRequirement</span> : IAuthorizationRequirement {
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Issuer { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Scope { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+    <span style="color:#66d9ef">public</span> HasScopeRequirement(<span style="color:#66d9ef">string</span> scope, <span style="color:#66d9ef">string</span> issuer) {
+        Scope = scope ?? <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(nameof(scope));
+        Issuer = issuer ?? <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(nameof(issuer));
+    }
+}
+</code></pre></div><p>Requirements need to implement <code>IAuthozationRequirement</code>, which alert the authorization provider that it is, rather obviously, a requirement.</p>
+<p>The primary thing we&rsquo;re concerned with is the <code>Scope</code>, but because this server is capable of also being an <code>OpenId</code> provider, we should double check the <code>Issuer</code> to make sure that we issued the item being authenticated.</p>
+<p>It is possible that someone else authenticating against our server has scopes of the same name for their own service that we do not wish to authenticate for, so we&rsquo;ll include an issuer check.</p>
+<h1 id="has-scope-handler">Has Scope Handler</h1>
+<p>Also under <code>Policies/</code>, create a <code>HasScopeHandler</code> class, inheriting from <code>AuthorizationHandler&lt;T&gt;</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HasScopeHandler</span> : AuthorizationHandler&lt;HasScopeRequirement&gt; {
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> Task HandleRequirementAsync(AuthorizationHandlerContext context, HasScopeRequirement requirement) {
+        IEnumerable&lt;Claim&gt; scopeClaims = context.User.FindAll(x =&gt; x.Type == <span style="color:#e6db74">&#34;scope&#34;</span> &amp;&amp; x.Issuer == requirement.Issuer);
+        <span style="color:#75715e">// If user does not have the scope claim, get out of here
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (!scopeClaims.Any()) {
+            <span style="color:#66d9ef">return</span> Task.CompletedTask;
+        }
+        <span style="color:#75715e">// Split the scopes string into an array
+</span><span style="color:#75715e"></span>        IEnumerable&lt;<span style="color:#66d9ef">string</span>&gt; scopes = scopeClaims.Select(x =&gt; x.Value);
+        <span style="color:#75715e">// Succeed if the scope array contains the required scope
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (scopes.Any(s =&gt; s == requirement.Scope)) {
+            context.Succeed(requirement);
+        }
+        <span style="color:#66d9ef">return</span> Task.CompletedTask;
+    }
+}
+</code></pre></div><p>Take note of the <code>FindAll</code> method used - multiple claims of the same type can exist on the same object, so grabbing the first scope result that matches could potentially be insufficient.</p>
+<p>You can choose to implement either <code>HandleRequirement</code> or <code>HandleRequirementAsync</code>.</p>
+<p>The comments explain the process inside the handler - we get all claims on the user of type <code>scope</code>, and of the issuer that we specify in our requirement.</p>
+<pre><code>Note: Requirements are typically instantiated at startup with immutable values and then compared when needed - a HasScopeRequirement is therefore flexible enough to handle any potential scope, which is why we did not define one for each that we have.
+</code></pre>
+<p>Assuming that the resulting list isn&rsquo;t empty, we check to see if the scopes on this claim match the scope in the passed-in requirement. If a scope exists as such, then we <code>Succeed</code> the context and move on. If no scope matches, then we leave it to the other parts of the authentication pipeline to determine if the request is valid.</p>
+<p>Perhaps you have other policies in your pipeline that you want to check against, so we&rsquo;ll let it implicitly fail rather than explicitly fail.</p>
+<pre><code>Note: you have to supply the requirement that succeeded if you `Succeed` the context: context.Succeed(requirement)
+</code></pre>
+<h1 id="dynamically-handling-policies">Dynamically Handling Policies</h1>
+<pre><code>shout out to Jerrie Pelser, whose post on dynamic policy resolution is the basis for this section: 
+https://www.jerriepelser.com/blog/creating-dynamic-authorization-policies-aspnet-core/
+</code></pre>
+<p>Typically specifying policies is an only-once-at-startup affair, meaning that we have to specify the universe of potential policies upfront. In our case, we know what the whole set will be, but that doesn&rsquo;t negate the tedium of manufacturing policies and handlers for each one, which is a code-increasing and developer-time-consuming task.</p>
+<p>To alleviate these pressures, we&rsquo;ll create a dynamic handler that will create a new Requirement for each policy that it encounters at runtime.</p>
+<p>Under <code>Policies/</code>, create an <code>AuthorizationPolicyProvider</code> class:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AuthorizationPolicyProvider</span> : DefaultAuthorizationPolicyProvider {
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IConfiguration _configuration;
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> AuthorizationOptions _options;
+
+    <span style="color:#66d9ef">public</span> AuthorizationPolicyProvider(IOptions&lt;AuthorizationOptions&gt; options, IConfiguration configuration) : <span style="color:#66d9ef">base</span>(options) {
+        _configuration = configuration;
+        _options = options.Value;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task&lt;AuthorizationPolicy&gt; GetPolicyAsync(<span style="color:#66d9ef">string</span> policyName) {
+        <span style="color:#75715e">// Check static policies first
+</span><span style="color:#75715e"></span>        AuthorizationPolicy policy = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.GetPolicyAsync(policyName);
+
+        <span style="color:#66d9ef">if</span> (policy == <span style="color:#66d9ef">null</span>) {
+            policy = <span style="color:#66d9ef">new</span> AuthorizationPolicyBuilder()
+                .AddRequirements(<span style="color:#66d9ef">new</span> HasScopeRequirement(policyName, <span style="color:#e6db74">&#34;LOCAL AUTHORITY&#34;</span>))
+                .Build();
+            _options.AddPolicy(policyName, policy);
+        }
+        <span style="color:#66d9ef">return</span> policy;
+    }
+
+}
+</code></pre></div><p>We inherit from the Default provider because we will override it at startup with our own, hence why we also hand in the <code>options</code> and <code>configurations</code>.
+The main part of the provider that we&rsquo;re interested is the overridden <code>GetPolicyAsync</code>.</p>
+<pre><code>Note: you are free to implement the non-async GetPolicy if that suits your project requirements better.
+</code></pre>
+<p>For any policy, defined simply as being a string, that this provider encounters, it checks to see if an existing one is already registered. If it is, then we simply pass the found policy along.
+If the policy is not yet defined, then we create one on the fly using <code>AuthorizationPolicyBuilder</code> and give it a single <code>HasScopeRequirement</code> from earlier.</p>
+<p>The created requirement is given the name of the new string, and an issuer of <code>LOCAL AUTHORITY</code>, which the default issuer name for claims. Again, this is relevant for <code>OpenID</code> providers, which you may or may not be.</p>
+<pre><code>Note: if you're serious about being a provider or consumer of third party OpenId tokens, you should change &quot;LOCAL AUTHORITY&quot; to something that uniquely identifies your service. 
+
+Anyone else issuing tokens will have the same default name.
+</code></pre>
+<p>Finally, we add our requirement back into the pool of requirements for our application. 
+The next time a requirement of this scope is requested, it will be able to pull it from the pool instead of creating a new one.</p>
+<h1 id="registering-our-authorizationpolicyprovider">Registering our AuthorizationPolicyProvider</h1>
+<p>Open <code>ConfigureServices</code> and add the following two highlight lines. They should be familiar at this point:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>        options.UseSqlite(Configuration.GetConnectionString(<span style="color:#e6db74">&#34;DefaultConnection&#34;</span>)));
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>    services.AddIdentity&lt;ApplicationUser, IdentityRole&gt;((x) =&gt; {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>        x.Password.RequiredLength = <span style="color:#ae81ff">6</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>        x.Password.RequiredUniqueChars = <span style="color:#ae81ff">0</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>        x.Password.RequireNonAlphanumeric = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>        x.Password.RequireDigit = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>        x.Password.RequireLowercase = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>        x.Password.RequireUppercase = <span style="color:#66d9ef">false</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>    })
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>        .AddEntityFrameworkStores&lt;ApplicationDbContext&gt;()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>        .AddDefaultTokenProviders();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    services.AddAuthentication()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>        .AddOAuthValidation()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>        .AddOpenIdConnectServer(options =&gt; {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>            options.UserinfoEndpointPath = <span style="color:#e6db74">&#34;/api/v1/me&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>            options.TokenEndpointPath = <span style="color:#e6db74">&#34;/api/v1/token&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>            options.AuthorizationEndpointPath = <span style="color:#e6db74">&#34;/authorize/&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>            options.UseSlidingExpiration = <span style="color:#66d9ef">false</span>; <span style="color:#75715e">// False means that new Refresh tokens aren&#39;t issued. Our implementation will be doing a no-expiry refresh, and this is one part of it.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span style="color:#75715e"></span>            options.AllowInsecureHttp = <span style="color:#66d9ef">true</span>; <span style="color:#75715e">// ONLY FOR TESTING
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span style="color:#75715e"></span>            options.AccessTokenLifetime = TimeSpan.FromHours(<span style="color:#ae81ff">1</span>); <span style="color:#75715e">// An access token is valid for an hour - after that, a new one must be requested.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span style="color:#75715e"></span>            options.RefreshTokenLifetime = TimeSpan.FromDays(<span style="color:#ae81ff">365</span> * <span style="color:#ae81ff">1000</span>); <span style="color:#75715e">//NOTE - Later versions of the ASOS library support `TimeSpan?` for these lifetime fields, meaning no expiration. 
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span style="color:#75715e"></span>                                                                            <span style="color:#75715e">// The version we are using does not, so a long running expiration of one thousand years will suffice.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span style="color:#75715e"></span>            options.AuthorizationCodeLifetime = TimeSpan.FromSeconds(<span style="color:#ae81ff">60</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>            options.IdentityTokenLifetime = options.AccessTokenLifetime;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>            options.ProviderType = <span style="color:#66d9ef">typeof</span>(OAuthProvider);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>        });
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>    <span style="color:#75715e">// Add application services.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span style="color:#75715e"></span>    services.AddTransient&lt;IEmailSender, EmailSender&gt;();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>    services.AddScoped&lt;OAuthProvider&gt;();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>    services.AddTransient&lt;ValidationService&gt;();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>    services.AddTransient&lt;TokenService&gt;();
+<span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>    services.AddSingleton&lt;IAuthorizationPolicyProvider, AuthorizationPolicyProvider&gt;();
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>    services.AddSingleton&lt;IAuthorizationHandler, HasScopeHandler&gt;();
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>    services.AddMvc();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>}
+</code></pre></div>
+<p>We add them as singletons because there is no need for a given requirement, once instantiated, to exist multiple times. Same for the handler. Nothing is different about it from run-to-run, so a singleton suits them best.</p>
+<h1 id="adding-scope-policies-to-the-authorization-attributes">Adding Scope Policies to the Authorization Attributes</h1>
+<p>Recall the scopes we chose to include in our token grants:</p>
+<table>
+<thead>
+<tr>
+<th>Scope Name</th>
+<th>Scope Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user-read-email</code></td>
+<td>Permission to know your email address</td>
+</tr>
+<tr>
+<td><code>user-read-birthdate</code></td>
+<td>Permission to know your birthdate</td>
+</tr>
+<tr>
+<td><code>user-modify-email</code></td>
+<td>Permission to change your email address</td>
+</tr>
+<tr>
+<td><code>user-modify-birthdate</code></td>
+<td>Permission to change your birthdate</td>
+</tr>
+</tbody>
+</table>
+<p>Let&rsquo;s add them to our <code>[Authorize]</code> attributes:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#75715e">// Scoped Methods - Authenticated methods that require certain scopes
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#75715e"></span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-read-birthdate&#34;)]</span>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#a6e22e">[HttpGet(&#34;birthdate&#34;)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#66d9ef">public</span> IActionResult GetBirthdate() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>    <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Birthdate Get Request was successful but this endpoint is not yet implemented&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#a6e22e">
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-read-email&#34;)]</span>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#a6e22e">[HttpGet(&#34;email&#34;)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; GetEmail() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>    <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Email Get Request was successful but this endpoint is not yet implemented&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span style="color:#a6e22e">
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-modify-birthdate&#34;)]</span>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span style="color:#a6e22e">[HttpPut(&#34;birthdate&#34;)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span style="color:#66d9ef">public</span> IActionResult ChangeBirthdate(<span style="color:#66d9ef">string</span> birthdate) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Birthdate Put successful but this endpoint is not yet implemented&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span style="color:#a6e22e">
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span style="color:#a6e22e">[Authorize(AuthenticationSchemes = AspNet.Security.OAuth.Validation.OAuthValidationDefaults.AuthenticationScheme, Policy = &#34;user-modify-email&#34;)]</span>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span style="color:#a6e22e">[HttpPut(&#34;email&#34;)]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; ChangeEmail(<span style="color:#66d9ef">string</span> email) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>    <span style="color:#66d9ef">return</span> Ok(<span style="color:#e6db74">&#34;Email Put request received, but function is not yet implemented&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>}
+</code></pre></div>
+<h1 id="multiple-policies-per-authorize">Multiple Policies per Authorize</h1>
+<p>If you wish to add multiple policies to authorize against in a single attribute, you&rsquo;ll need to implement them in the handler. There is unfortunately no way to list multiple policies within the attribute. See <a href="https://stackoverflow.com/questions/35609632/asp-net-5-authorize-against-two-or-more-policies">this StackOverflow post</a> for more details.</p>
+<p>You can however, have multiple requirements in a given handler. That is covered in the <a href="https://docs.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-2.0">Microsoft Docs</a> page for Policies.</p>
+<h1 id="testing-scopes">Testing Scopes</h1>
+<p>Launch the server and ensure the following:</p>
+<ol>
+<li>Make sure you are logged in, or register and log in if you deleted the database.</li>
+<li>Create a client application, and add a valid redirect uri</li>
+</ol>
+<p>Once you have those checked, navigate to the authorization url and make sure <code>scope</code> is a part of your querystring. As an example, our test client application url looks like this:</p>
+<p>http://localhost:5000/authorize/?scope=user-read-birthdate&amp;response_type=token&amp;client_id=77904dfb-8fc2-498d-8317-e5a5f7fc3386&amp;redirect_uri=http://localhost/cb</p>
+<p>You should see that it&rsquo;s requesting the <code>user-read-birthdate</code> scope:</p>
+<p><img src="/oauthserver/part15/scoperequested.png" alt="requesting scopes"></p>
+<p>Your redirect uri is almost certainly not valid, so grab the supplied access token from the url your browser navigated to:</p>
+<p><img src="/oauthserver/part15/token.png" alt="grab the token"></p>
+<p>Use curl to construct a request using our OAuth Token:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -H <span style="color:#e6db74">&#34;Authorization: Bearer CfDJ8IGBmusd_JZPhIsNcrUVwgchLN8qKVeq-iU6xMgilkUY5co4KfikjrZ5aBQI1f_Rvu63TIDfsK7alCs5CC5Pw1Xw1NzR72O4pTpeYlGvTZA5zNfOW0ltbdE_MZBFYRf-hoUJdPDkjxJ1Fqv9Xo_Iy4fH2iPpwkelVp9yT11J-lUQB0lkX7b-WSG0K0EQ4uwWU9Ub9Dtl3SNqXM-46SN2FdjcK4ublKuFMMs5tWi80XIb3y1Boq8u5TvBEr2pYYKrteTTlNCXCu9Sj0D_BfJtXUiCx74hN89uSCnSFhqrFre-fowHBMs2lSpa05FfFEqEHwKKbft0HvuEcHfwVN1c1_1NjwL8GBhJ4RMEfDawguukJTjkHnuzFku5z7epUsh56Arrmje3aD-NGJpfFAUKYqlGAAOZvuSt88p4lRHBim5p89S7VwuJJjgB2RR16YdsJIhIL3tVaWLADPsh2r-CyV_gUNnYPLRrNPWkniGgxo5YBeerou7zEGUvVakgBD1VKRBwpI6wUabnLCJSm8u9StRb8TOO7cvG7HiVpEg44BHlArHfDeln3EFfEu4MY7IhAwHQ04_GihHdHFV0VGT3guDZ8_MFZddGNr-0PD_AD5Jr_gtxz7oZTJu59xmvkhE0ae_VlfO1phEDwTVliokFpyF36g-tukKqqp_Rjy13Y8DgW7oifnE2OJvTuEClhwKvCXGTmgqckSqbiWqS548ezvPh_qcSxhAnxnfd-DRJ0-koiXtA5xdD6LiWPHAY9DZK7D_kC-SNAKSWzgmxT4oHgc4iCTO4o0UWPYw3nuQX9FAuiwOxXc_M4Ce-Q_myHBwOMkUq-PZjSIPpyiG8kKDyl9-WQyZDg3vANVFGQpdrjPkx0uTMPjRgyvA1OfTslZBq46gOESWWeuBRNebfv6QzgfEaV4BPiUV-PzXeILjHFNPtWKOiAz6bTKI5HHOjrXqktH9008CBRVxr5wpGIQAIjhWmMCpd2uxi8dGIssj8U4RM&#34;</span> http://localhost:5000/api/v1/hello
+</code></pre></div><p>OAuth Validation is looking for an authorization header with a key-value pair where the key is <code>Bearer</code> and the value is our token. <code>-H</code> means add a header. You&rsquo;ll need to enclose it in quotes (<code>&quot;</code>)</p>
+<h2 id="hello">/hello</h2>
+<p>Hello should return fine, because it is unauthenticated:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">djori@jormungandr:~/projects/OAuthTutorial<span style="color:#960050;background-color:#1e0010">$</span> curl -H <span style="color:#e6db74">&#34;Authorization: Bearer CfDJ8IGBmusd_JZPhIsNcrUVwgchLN8qKVeq-iU6xMgilkUY5co4KfikjrZ5aBQI1f_Rvu63TIDfsK7alCs5CC5Pw1Xw1NzR72O4pTpeYlGvTZA5zNfOW0ltbdE_MZBFYRf-hoUJdPDkjxJ1Fqv9Xo_Iy4fH2iPpwkelVp9yT11J-lUQB0lkX7b-WSG0K0EQ4uwWU9Ub9Dtl3SNqXM-46SN2FdjcK4ublKuFMMs5tWi80XIb3y1Boq8u5TvBEr2pYYKrteTTlNCXCu9Sj0D_BfJtXUiCx74hN89uSCnSFhqrFre-fowHBMs2lSpa05FfFEqEHwKKbft0HvuEcHfwVN1c1_1NjwL8GBhJ4RMEfDawguukJTjkHnuzFku5z7epUsh56Arrmje3aD-NGJpfFAUKYqlGAAOZvuSt88p4lRHBim5p89S7VwuJJjgB2RR16YdsJIhIL3tVaWLADPsh2r-CyV_gUNnYPLRrNPWkniGgxo5YBeerou7zEGUvVakgBD1VKRBwpI6wUabnLCJSm8u9StRb8TOO7cvG7HiVpEg44BHlArHfDeln3EFfEu4MY7IhAwHQ04_GihHdHFV0VGT3guDZ8_MFZddGNr-0PD_AD5Jr_gtxz7oZTJu59xmvkhE0ae_VlfO1phEDwTVliokFpyF36g-tukKqqp_Rjy13Y8DgW7oifnE2OJvTuEClhwKvCXGTmgqckSqbiWqS548ezvPh_qcSxhAnxnfd-DRJ0-koiXtA5xdD6LiWPHAY9DZK7D_kC-SNAKSWzgmxT4oHgc4iCTO4o0UWPYw3nuQX9FAuiwOxXc_M4Ce-Q_myHBwOMkUq-PZjSIPpyiG8kKDyl9-WQyZDg3vANVFGQpdrjPkx0uTMPjRgyvA1OfTslZBq46gOESWWeuBRNebfv6QzgfEaV4BPiUV-PzXeILjHFNPtWKOiAz6bTKI5HHOjrXqktH9008CBRVxr5wpGIQAIjhWmMCpd2uxi8dGIssj8U4RM&#34;</span> http:<span style="color:#75715e">//localhost:5000/api/v1/hello
+</span><span style="color:#75715e"></span>
+<span style="display:block;width:100%;background-color:#3c3d38">Hello
+</span></code></pre></div>
+<h2 id="clientcount">/clientcount</h2>
+<p>Client Count should return fine - because our access token is valid:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">jori@jormungandr:~/projects/OAuthTutorial<span style="color:#960050;background-color:#1e0010">$</span> curl -H <span style="color:#e6db74">&#34;Authorization: Bearer CfDJ8IGBmusd_JZPhIsNcrUVwgchLN8qKVeq-iU6xMgilkUY5co4KfikjrZ5aBQI1f_Rvu63TIDfsK7alCs5CC5Pw1Xw1NzR72O4pTpeYlGvTZA5zNfOW0ltbdE_MZBFYRf-hoUJdPDkjxJ1Fqv9Xo_Iy4fH2iPpwkelVp9yT11J-lUQB0lkX7b-WSG0K0EQ4uwWU9Ub9Dtl3SNqXM-46SN2FdjcK4ublKuFMMs5tWi80XIb3y1Boq8u5TvYYKrteTTlNCXCu9Sj0D_BfJtXUiCx74hN89uSCnSFhqrFre-fowHBMs2lSpa05FfFEqEHwKKbft0HvuEcHfwVN1c1_1NjwL8GBhJ4RMEfDawguukJTjkHnuzFku5z7epUsh56Arrmje3aD-NGJpfFAUKYqlGAAOZvuSt88p4lRHBim5p89S7VwuJJjgB2RR16YdsJIhIL3tVaWLADPsh2r-CyV_gUNnYPLRrNPWkniGgxo5YBeerou7zEGUvVakgBD1VKRBwpI6wUabnLCJSm8u9StRb8TOO7cvG7HiVpEg44BHlArHfDeln3EFfEu4MY7IhAwHQ04_GihHdHFV0VGT3guDZ8_MFZddGNr-0PD_AD5Jr_gtxz7oZTJu59xmvkhE0ae_VlfO1phEDwTVliokFpyF36g-tukKqqp_Rjy13Y8DgW7oifnE2OJvTuEClhwKvCXGTmgqckSqbiWqS548ezvPh_qcSxhAnxnfd-DRJ0-koiXtA5xdD6LiWPHAY9DZK7D_kC-SNAKSWzgmxT4oHgc4iCTO4o0UWPYw3nuQX9FAuiwOxXc_M4Ce-Q_myHBwOMkUq-PZjSIPpyiG8kKDyl9-WQyZDg3vANVFGQpdrjPkx0uTMPjRgyvA1OfTslZBq46gOESWWeuBRNebfv6QzgfEaV4BPiUV-PzXeILjHFNPtWKOiAz6bTKI5HHOjrXqktH9008CBRVxr5wpGIQAIjhWmMCpd2uxi8dGIssj8U4RM&#34;</span> http:<span style="color:#75715e">//localhost:5000/api/v1/clientcount
+</span><span style="color:#75715e"></span>
+<span style="display:block;width:100%;background-color:#3c3d38">Client Count Get Request was successful but <span style="color:#66d9ef">this</span> endpoint <span style="color:#66d9ef">is</span> not yet implemented
+</span></code></pre></div>
+<h2 id="birthdate">/birthdate</h2>
+<p>Birthdate should be fine as well, because we asked for the <code>user-read-birthdate</code> scope when we requested our token:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">djori@jormungandr:~/projects/OAuthTutorial<span style="color:#960050;background-color:#1e0010">$</span> curl -H <span style="color:#e6db74">&#34;Authorization: Bearer CfDJ8IGBmusd_JZPhIsNcrUVwgchLN8qKVeq-iU6xMgilkUY5co4KfikjrZ5aBQI1f_Rvu63TIDfsK7alCs5CC5Pw1Xw1NzR72O4pTpeYlGvTZA5zNfOW0ltbdE_MZBFYRf-hoUJdPDkjxJ1Fqv9Xo_Iy4fH2iPpwkelVp9yT11J-lUQB0lkX7b-WSG0K0EQ4uwWU9Ub9Dtl3SNqXM-46SN2FdjcK4ublKuFMMs5tWi80XIb3y1Boq8u5TvBEr2pYYKrteTTlNCXCu9Sj0D_BfJtXUiCx74hN89uSCnSFhqrFre-fowHBMs2lSpa05FfFEqEHwKKbft0HvuEcHfwVN1c1_1NjwL8GBhJ4RMEfDawguukJTjkHnuzFku5z7epUsh56Arrmje3aD-NGJpfFAUKYqlGAAOZvuSt88p4lRHBim5p89S7VwuJJjgB2RR16YdsJIhIL3tVaWLADPsh2r-CyV_gUNnYPLRrNPWkniGgxo5YBeerou7zEGUvVakgBD1VKRBwpI6wUabnLCJSm8u9StRb8TOO7cvG7HiVpEg44BHlArHfDeln3EFfEu4MY7IhAwHQ04_GihHdHFV0VGT3guDZ8_MFZddGNr-0PD_AD5Jr_gtxz7oZTJu59xmvkhE0ae_VlfO1phEDwTVliokFpyF36g-tukKqqp_Rjy13Y8DgW7oifnE2OJvTuEClhwKvCXGTmgqckSqbiWqS548ezvPh_qcSxhAnxnfd-DRJ0-koiXtA5xdD6LiWPHAY9DZK7D_kC-SNAKSWzgmxT4oHgc4iCTO4o0UWPYw3nuQX9FAuiwOxXc_M4Ce-Q_myHBwOMkUq-PZjSIPpyiG8kKDyl9-WQyZDg3vANVFGQpdrjPkx0uTMPjRgyvA1OfTslZBq46gOESWWeuBRNebfv6QzgfEaV4BPiUV-PzXeILjHFNPtWKOiAz6bTKI5HHOjrXqktH9008CBRVxr5wpGIQAIjhWmMCpd2uxi8dGIssj8U4RM&#34;</span> http:<span style="color:#75715e">//localhost:5000/api/v1/birthdate
+</span><span style="color:#75715e"></span>
+<span style="display:block;width:100%;background-color:#3c3d38">Birthdate Get Request was successful but <span style="color:#66d9ef">this</span> endpoint <span style="color:#66d9ef">is</span> not yet implemented
+</span></code></pre></div>
+<h2 id="email">/email</h2>
+<p>We did not ask for the <code>user-read-email</code> scope, so a request to <code>/email</code> should fail:</p>
+<p>We&rsquo;ll add the <code>-v</code> flag to our curl request so that we can see the headers:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+&gt; GET /api/v1/email HTTP/1.1
+&gt; Host: localhost:5000
+&gt; User-Agent: curl/7.47.0
+&gt; Accept: */*
+&gt; Authorization: Bearer CfDJ8IGBmusd_JZPhIsNcrUVwgchLN8qKVeq-iU6xMgilkUY5co4KfikjrZ5aBQI1f_Rvu63TIDfsK7alCs5CC5Pw1Xw1NzR72O4pTpeYlGvTZA5zNfOW0ltbdE_MZBFYRf-hoUJdPDkjxJ1Fqv9Xo_Iy4fH2iPpwkelVp9yT11J-lUQB0lkX7b-WSG0K0EQ4uwWU9Ub9Dtl3SNqXM-46SN2FdjcK4ublKuFMMs5tWi80XIb3y1Boq8u5TvBEr2pYYKrteTTlNCXCu9Sj0D_BfJtXUiCx74hN89uSCnSFhqrFre-fowHBMs2lSpa05FfFEqEHwKKbft0HvuEcHfwVN1c1_1NjwL8GBhJ4RMEfDawguukJTjkHnuzFku5z7epUsh56Arrmje3aD-NGJpfFAUKYqlGAAOZvuSt88p4lRHBim5p89S7VwuJJjgB2RR16YdsJIhIL3tVaWLADPsh2r-CyV_gUNnYPLRrNPWkniGgxo5YBeerou7zEGUvVakgBD1VKRBwpI6wUabnLCJSm8u9StRb8TOO7cvG7HiVpEg44BHlArHfDeln3EFfEu4MY7IhAwHQ04_GihHdHFV0VGT3guDZ8_MFZddGNr-0PD_AD5Jr_gtxz7oZTJu59xmvkhE0ae_VlfO1phEDwTVliokFpyF36g-tukKqqp_Rjy13Y8DgW7oifnE2OJvTuEClhwKvCXGTmgqckSqbiWqS548ezvPh_qcSxhAnxnfd-DRJ0-koiXtA5xdD6LiWPHAY9DZK7D_kC-SNAKSWzgmxT4oHgc4iCTO4o0UWPYw3nuQX9FAuiwOxXc_M4Ce-Q_myHBwOMkUq-PZjSIPpyiG8kKDyl9-WQyZDg3vANVFGQpdrjPkx0uTMPjRgyvA1OfTslZBq46gOESWWeuBRNebfv6QzgfEaV4BPiUV-PzXeILjHFNPtWKOiAz6bTKI5HHOjrXqktH9008CBRVxr5wpGIQAIjhWmMCpd2uxi8dGIssj8U4RM
+&gt;
+<span style="display:block;width:100%;background-color:#3c3d38">&lt; HTTP/1.1 <span style="color:#ae81ff">403</span> Forbidden
+</span>&lt; Server: Kestrel
+&lt; X-SourceFiles: <span style="color:#f92672">=</span>?UTF-8?B?QzpcVXNlcnNcRGpvcmlcRG9jdW1lbnRzXHByb2plY3RzXE9BdXRoVHV0b3JpYWxcT0F1dGhUdXRvcmlhbFxhcGlcdjFcZW1haWw<span style="color:#f92672">=</span>?<span style="color:#f92672">=</span>
+&lt; X-Powered-By: ASP.NET
+&lt; Date: Mon, <span style="color:#ae81ff">18</span> Jun <span style="color:#ae81ff">2018</span> 17:34:38 GMT
+&lt; Content-Length: <span style="color:#ae81ff">0</span></code></pre></div>
+<p>the returned data has been edited for brevity, but the highlighted line shows a status code of  <code>403 Forbidden</code>, which is the correct behavior, because we did not have a token that could pass the <code>user-read-email</code> check.</p>
+<h1 id="moving-on">Moving On</h1>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/15-Policies">here on GitHub</a>.</p>
+<p>In the next section, we&rsquo;ll implement Token Revocation, along with some pages under <code>/manage</code> to make it easy for users to do so.</p>
+<p><a href="/posts/oauthserver/16">Next</a></p>
+
+
+
+<h3>Posts in this series</h3>
+<ul>
+  
+    <li><a href="/posts/oauthserver/19/">Implement an OAuth 2.0 Server (Part 19)</a></li>
+  
+    <li><a href="/posts/oauthserver/18/">Implement an OAuth 2.0 Server (Part 18)</a></li>
+  
+    <li><a href="/posts/oauthserver/17/">Implement an OAuth 2.0 Server (Part 17)</a></li>
+  
+    <li><a href="/posts/oauthserver/16/">Implement an OAuth 2.0 Server (Part 16)</a></li>
+  
+    <li><a href="/posts/oauthserver/15/">Implement an OAuth 2.0 Server (Part 15)</a></li>
+  
+    <li><a href="/posts/oauthserver/14/">Implement an OAuth 2.0 Server (Part 14)</a></li>
+  
+    <li><a href="/posts/oauthserver/13/">Implement an OAuth 2.0 Server (Part 13)</a></li>
+  
+    <li><a href="/posts/oauthserver/12/">Implement an OAuth 2.0 Server (Part 12)</a></li>
+  
+    <li><a href="/posts/oauthserver/11/">Implement an OAuth 2.0 Server (Part 11)</a></li>
+  
+    <li><a href="/posts/oauthserver/10/">Implement an OAuth 2.0 Server (Part 10)</a></li>
+  
+    <li><a href="/posts/oauthserver/09/">Implement an OAuth 2.0 Server (Part 09)</a></li>
+  
+    <li><a href="/posts/oauthserver/08/">Implement an OAuth 2.0 Server (Part 08)</a></li>
+  
+    <li><a href="/posts/oauthserver/07/">Implement an OAuth 2.0 Server (Part 07)</a></li>
+  
+    <li><a href="/posts/oauthserver/06/">Implement an OAuth 2.0 Server (Part 06)</a></li>
+  
+    <li><a href="/posts/oauthserver/05/">Implement an OAuth 2.0 Server (Part 05)</a></li>
+  
+    <li><a href="/posts/oauthserver/04/">Implement an OAuth 2.0 Server (Part 04)</a></li>
+  
+    <li><a href="/posts/oauthserver/03/">Implement an OAuth 2.0 Server (Part 03)</a></li>
+  
+    <li><a href="/posts/oauthserver/02/">Implement an OAuth 2.0 Server (Part 02)</a></li>
+  
+    <li><a href="/posts/oauthserver/01/">Implement an OAuth 2.0 Server (Part 01)</a></li>
+  
+</ul>
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/security/">Security</a><a class="category" href="/categories/identity/">Identity</a><a class="category" href="/categories/authentication/">Authentication</a><a class="category" href="/categories/authorization/">Authorization</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/oauth2%2e0/">OAuth2.0</a><a class="tag" href="/tags/openidconnect/">OpenIdConnect</a><a class="tag" href="/tags/tutorial/">Tutorial</a><a class="tag" href="/tags/csharp/">CSharp</a><a class="tag" href="/tags/%2enet-core/">.NET Core</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

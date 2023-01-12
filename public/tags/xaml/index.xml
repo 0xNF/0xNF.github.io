@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>xaml on Nothing in Particular</title>
+    <link>https://0xnf.github.io/tags/xaml/</link>
+    <description>Recent content in xaml on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Jul 2018 09:06:33 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/tags/xaml/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>UWP: ListView Row Height</title>
+      <link>https://0xnf.github.io/posts/uwp/listview-row-height/</link>
+      <pubDate>Thu, 19 Jul 2018 09:06:33 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/uwp/listview-row-height/</guid>
+      
+        <description>When dealing with ListViews in UWP, sometimes more information density is desired, and the quickest way to get that density is to adjust the row height of each item in the ListView.</description>
+      
+    </item>
+    
+  </channel>
+</rss>

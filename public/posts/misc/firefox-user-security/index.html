@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <title>
+    
+        |
+        Towards a Secure and Private Firefox Installation
+      
+
+    
+
+  </title>
+
+  
+  <meta charset="utf-8" /><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="" />
+  <meta
+    name="description"
+    content="A post where we look at what extensions and browser overrides can make a modern security and privacy focused environment for Firefox in 2018."
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.ba004976221e613a16542d07a2deca5d0377ff5e6a22dec5fcec01480ba967cf.css"
+      integrity="sha256-ugBJdiIeYToWVC0Hot7KXQN3/15qIt7F/OwBSAupZ88="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.793b323d7f2d9fbfd0b93f4d593fb5ad77b918716ed33eddea403fa87f770403.css"
+    integrity="sha256-eTsyPX8tn7/QuT9NWT&#43;1rXe5GHFu0z7d6kA/qH93BAM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.7f3c2281c7f965ce3c64888aa452793252a0416909c181097f81d0a0f7d1624e.css"
+    integrity="sha256-fzwigcf5Zc48ZIiKpFJ5MlKgQWkJwYEJf4HQoPfRYk4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.35fc032da8ede6681675d20a2f862fb9e1045c1d512d495fcf862c054daffef2.css"
+    integrity="sha256-NfwDLajt5mgWddIKL4YvueEEXB1RLUlfz4YsBU2v/vI="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.3b92357925ea7284f0c6b0378396f39f470f7842ed9702f337e667c4026bf837.css"
+    integrity="sha256-O5I1eSXqcoTwxrA3g5bzn0cPeELtlwLzN&#43;ZnxAJr&#43;Dc="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.ebb1096e1976e8cc4e2532cfa050b8f30eb13b8eb06be5cee3e38eb426b838ea.css"
+    integrity="sha256-67EJbhl26MxOJTLPoFC48w6xO46wa&#43;XO4&#43;OOtCa4OOo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="https://0xnf.github.io/posts/misc/firefox-user-security/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.5c846cefa5ed21cceee981c70901aaf21b17b4e0b05bd777af840780918abea9.js"
+    integrity="sha256-XIRs76XtIczu6YHHCQGq8hsXtOCwW9d3r4QHgJGKvqk="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.46e991c2fcb035fc0060a792f1eb0c93ecacc9e76cd7445d6531a5cf2928686d.js"
+      integrity="sha256-RumRwvywNfwAYKeS8esMk&#43;ysyeds10RdZTGlzykoaG0="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Towards a Secure and Private Firefox Installation"/>
+<meta name="twitter:description" content="A post where we look at what extensions and browser overrides can make a modern security and privacy focused environment for Firefox in 2018."/>
+
+
+
+  
+  <meta property="og:title" content="Towards a Secure and Private Firefox Installation" />
+<meta property="og:description" content="A post where we look at what extensions and browser overrides can make a modern security and privacy focused environment for Firefox in 2018." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xnf.github.io/posts/misc/firefox-user-security/" />
+<meta property="article:published_time" content="2018-07-05T07:20:43-07:00" />
+<meta property="article:modified_time" content="2018-07-05T07:20:43-07:00" />
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Towards a Secure and Private Firefox Installation",
+        "headline": "Towards a Secure and Private Firefox Installation",
+        "alternativeHeadline": "",
+        "description": "
+      A post where we look at what extensions and browser overrides can make a modern security and privacy focused environment for Firefox in 2018.
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/0xnf.github.io\/posts\/misc\/firefox-user-security\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightYear" : "2018",
+        "dateCreated": "2018-07-05T07:20:43.00Z",
+        "datePublished": "2018-07-05T07:20:43.00Z",
+        "dateModified": "2018-07-05T07:20:43.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name":  null ,
+            "url": "https://0xnf.github.io/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/0xnf.github.io\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/0xnf.github.io\/posts\/misc\/firefox-user-security\/",
+        "wordCount" : "1748",
+        "genre" : [ 
+      
+      "security"
+
+    
+      
+        ,
+
+      
+      "privacy"
+
+    
+      
+        ,
+
+      
+      "browser"
+
+    ],
+        "keywords" : [ 
+      
+      "overview"
+
+    
+      
+        ,
+
+      
+      "firefox"
+
+    ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/"></a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p></p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      <h1>Towards a Secure and Private Firefox Installation</h1>
+      <p>With the massive overhaul that was Firefox Quantum (FF57), it&rsquo;s worth checking out how to make a modern Firefox install secure.</p>
+<p>Much of modern Firefox&rsquo;s security comes from the fact that in addition to doing extensive work on the architecture underlying the browser as a whole, they also removed the old extensions system. That has been a double-edged sword, because many beloved extensions relied on the that old architecture, but the Firefox developers have been working closely with the authors of popular extensions to add back in the necessary pieces they require.</p>
+<p>As explained in <a href="">this post</a>, security and privacy are separate but related concepts. Security ultimately comes down to controlling untrusted third-party code, which is what the first extension section covers, and privacy comes down to restricting information flow, which is what the second covers.</p>
+<p>Security, like always, comes down to layers. No one thing is a silver bullet, but with enough protections in place, something resembling a secure system comes into existence. And hopefully we can accomplish this without reducing the usability of the web browser too much.</p>
+<p>Let&rsquo;s examine some of the ways we can take a fresh install of Firefox make it both secure and private:</p>
+<h1 id="extensions---security">Extensions - Security</h1>
+<p>These extensions focus on improving the security of your Firefox browsing environment, although they come with privacy benefits as well.</p>
+<h2 id="noscripthttpsaddonscdnmozillanetuser-mediaaddon_icons0722-64pngmodifiedmcrushed-noscripthttpsaddonsmozillaorgen-usfirefoxaddonnoscript"><img src="https://addons.cdn.mozilla.net/user-media/addon_icons/0/722-64.png?modified=mcrushed" alt="NoScript"> <a href="https://addons.mozilla.org/en-US/Firefox/addon/noscript/">NoScript</a></h2>
+<p>If you can only choose one addon to install, this is the one. This venerated extension has existed since 2004 and is the number one thing to install.</p>
+<p>At its most basic level, NoScript is JavaScript whitelisting addon which prevents JavaScript from running on a website by default, unless explicitly allowed by the user.</p>
+<p>JavaScript is untrusted third party code and can have all sorts of negative effects from slowing down your browser, loading potentially malicious advertisements, running crypto-currency miners in the background, or logging your keystrokes in the extreme cases.</p>
+<p>Unfortunately, JavaScript is necessary for the proper functioning of many websites, so you will have to enable JavaScript on a lot of sites you encounter, but once you get used to the whitelisting flow, you&rsquo;ll appreciate the additional security and improved performance your browser offers. The web becomes a nicer, smoother experience when javascript is disabled by default.</p>
+<h2 id="ublockoriginhttpsaddonscdnmozillanetuser-mediaaddon_icons607607454-64pngmodifiedmcrushed-ublock-originhttpsaddonsmozillaorgen-usfirefoxaddonublock-originsrcuserprofile"><img src="https://addons.cdn.mozilla.net/user-media/addon_icons/607/607454-64.png?modified=mcrushed" alt="uBlockOrigin"> <a href="https://addons.mozilla.org/en-US/Firefox/addon/ublock-origin/?src=userprofile">uBlock Origin</a></h2>
+<p>If you&rsquo;ve been using an AdBlocker, then you&rsquo;ve been doing good. But if you haven&rsquo;t been using uBlockOrigin, then you can do even better.</p>
+<p>The original king of AdBlocking, AdBlock Plus, has changed its priorities and now comes preinstalled with a whitelist of advertiser domains. Companies can pay to be placed on the whitelist, effectively defeating the entire purpose. uBlock Origin is the spiritual successor to AdBlock Plus, and its better in basically every way at that.</p>
+<p>We discussed the performance and privacy benefits of disabling JavaScript by default, and this continues along those lines. Ads are a primary source of website sluggishness, so disabling them will greatly improve performance. Ads are also a primary source of malicious and shady behavior, meaning that you reduce your attack surface, as well as increase your privacy by disabling them.</p>
+<p>You are free to disable the adblocker on any given site if you so choose, but you will likely never encounter a reason to do so. Unlock NoScript, the internet works perfectly well with ads perpetually blocked.</p>
+<h1 id="extensions---privacy">Extensions - Privacy</h1>
+<p>These extensions focus on improving the privacy environment of your browser by disabling various tracking methods.</p>
+<h2 id="firefox-multi-account-containershttpsaddonscdnmozillanetuser-mediaaddon_icons782782160-64pngmodifiedmcrushed-firefox-multi-account-containershttpsaddonsmozillaorgen-usfirefoxaddonmulti-account-containers"><img src="https://addons.cdn.mozilla.net/user-media/addon_icons/782/782160-64.png?modified=mcrushed" alt="Firefox Multi-Account Containers"> <a href="https://addons.mozilla.org/en-US/Firefox/addon/multi-account-containers/">Firefox Multi-Account Containers</a></h2>
+<p>Containers are a recently introduced way to divide a Firefox session into any number of completely unrelated sessions - that is, any cookies, local storage, or followed-links aren&rsquo;t shared between contained. This super useful feature allows you to, for instance, be logged into multiple Google or Facebook accounts at the same time.</p>
+<p>In fact, Mozilla&rsquo;s flagship use for this technology is specifically separating Facebook into its own thing. There&rsquo;s a special Facebook Container extension you can install for that  specific usecase, which makes separating Facebook specifically one-click easy.</p>
+<p>It&rsquo;s worth knowing that the Facebook Container is built upon the more general purpose Multi-Account Containers extension linked above.</p>
+<p>This is a great way to keep tracking cookies, session cookies and other identity related information cleanly separated from any other aspect of your web use.</p>
+<p>One wonderful usecase, besides Facebook, is to have a container for your banking activities. Don&rsquo;t let Google track your bank account behavior, and don&rsquo;t let your banks track your behavior across the web.</p>
+<p>Although this is downloaded as an addon, it&rsquo;s a core Firefox feature built and distributed by the Mozilla team themselves.</p>
+<h2 id="privacy-badgerhttpsaddonscdnmozillanetuser-mediaaddon_icons506506646-64pngmodifiedmcrushed-privacybadgerhttpsaddonsmozillaorgen-usfirefoxaddonprivacy-badger17"><img src="https://addons.cdn.mozilla.net/user-media/addon_icons/506/506646-64.png?modified=mcrushed" alt="Privacy Badger"> <a href="https://addons.mozilla.org/en-US/Firefox/addon/privacy-badger17/">PrivacyBadger</a></h2>
+<p>In place of PrivacyBadger Ghostery and/or Disconnect used to be highly advocated for, but recent developments suggest that both of those extensions are either unhelpful or actively compromised. Stepping up to the plate is Privacy Badger by the Electronic Frontier Foundation.</p>
+<p>An anti-tracking addon, PrivacyBadger looks at the scripts and adverts that a site is trying to load and blocks their attempts to track you. Crucially, PrivacyBadger is trying to prevent violation of consent. PrivacyBadger will monitor for Do-Not-Track requests from your browser, and if a script or ad continues to collect information despite that, PrivacyBadger will blacklist it.</p>
+<p>Things blocked by PrivacyBadger include cookies, script loading, and http requests to third parties.</p>
+<h2 id="tracking-token-stripperhttpsaddonscdnmozillanetuser-mediaaddon_icons939939692-64pngmodified1519183224-tracking-token-stripperhttpsaddonsmozillaorgen-usfirefoxaddonutm-tracking-token-stripper"><img src="https://addons.cdn.mozilla.net/user-media/addon_icons/939/939692-64.png?modified=1519183224" alt="Tracking Token Stripper"> <a href="https://addons.mozilla.org/en-US/Firefox/addon/utm-tracking-token-stripper/">Tracking Token Stripper</a></h2>
+<p>GoogleAnalytics is a massively popular library supplied by Google that allows developers to embed certain tracking and user statics features into their webpage. Often when sharing a webpage with GoogleAnalytics embedded in it, the URL will contain an extra bit of tracking information known as a UTM - an Urchin Tracking Module. Read more about what these do, straight from the digital marketers who use them <a href="https://www.launchdigitalmarketing.com/what-are-utm-codes/">here</a>. The short of it is that it can contain any kind of embedding that a marketer wants - your user name, what site you came from, your browser history if available.</p>
+<p>This addon deletes UTMs of most formats from URLS when they are clicked. This makes it harder for marketers to follow you around on the web.</p>
+<h2 id="cookie-autodeletehttpsaddonscdnmozillanetuser-mediaaddon_icons784784287-64pngmodifiedmcrushed-cookie-autodeletehttpsaddonsmozillaorgen-usfirefoxaddoncookie-autodeletesrcuserprofile"><img src="https://addons.cdn.mozilla.net/user-media/addon_icons/784/784287-64.png?modified=mcrushed" alt="Cookie AutoDelete"> <a href="https://addons.mozilla.org/en-US/Firefox/addon/cookie-autodelete/?src=userprofile">Cookie AutoDelete</a></h2>
+<p>This extension contains a lot more complicated behavior than just offering to automatically delete cookies - as it says in the description, once installed it replaces Firefox&rsquo;s default Cookie Manager.</p>
+<p>When you close your browser, all cookies are automatically deleted, which is one of the effects of browsing in private mode, if you choose to do that.</p>
+<p>Additionally, there&rsquo;s a regularly scheduled auto delete function which will periodically delete cookies that have accumulated. This is an optional feature that you can turn on or off at will.</p>
+<p>It also allows you to whitelist or greylist domains. Greylisted sites will stay until the end of session, i.e., until you close the browser window, while whitelisted cookies will not be deleted unless manually cleaned. Grey listing overrides the auto-delete system.</p>
+<p>Cookies are one of the primary ways companies track you across the internet and use them to associate your identity even across sessions.</p>
+<h1 id="aboutconfig-changes">About:Config changes</h1>
+<p>In the options menu, or alternatively, at the url <code>about:preferences</code>, both lead to the same place, we should check a few of the Privacy and Security options. We&rsquo;re only going to cover options that don&rsquo;t come pre-checked by default from Mozilla.</p>
+<h2 id="cookies-and-site-data">Cookies and Site Data</h2>
+<h3 id="accept-third-party-cookies-and-site-data">Accept Third-Party Cookies and Site Data</h3>
+<p>By default, this is set to <code>Always</code>, which is code-word for &ldquo;third-party&rdquo;. This isn&rsquo;t recommended because third party cookies almost always amount to tracker cookies from advertisers. The recommended option is to select <code>From Visited</code>, which means &ldquo;first party&rdquo;. We can&rsquo;t do away with cookies entirely, but this lets us control them a bit more.</p>
+<p>This is mostly made redundant with the various cookie extensions above, but its nice to tell Firefox to handle it at a lower, more core level as well.</p>
+<h2 id="tracking-protection">Tracking Protection</h2>
+<p>&ldquo;Send websites a “Do Not Track” signal that you don’t want to be tracked&rdquo; should be set to <code>Always</code>. Without this, PrivacyBadger won&rsquo;t operate properly.</p>
+<p>There are some downsides to consider with this, since it can, in certain circumstances, make your browser more likely to be fingerprinted and therefore can actually reduce your privacy sometimes, but other addons like PrivacyBadger work to counteract those effects.</p>
+<p>Enabling Do Not Track is recommended.</p>
+<h1 id="why-not-use-chrome">Why not use Chrome?</h1>
+<p>One question that gets asked sometimes is why not just stick to Chrome? As it pertains to extensions, the Firefox Quantum revamp brought parity to the extension mechanisms, which means, for the most part, that any extension available to Chrome is available to Firefox. That that case, why use Firefox at all?</p>
+<p>One of the common cases made for Chrome is that it&rsquo;s fast - Firefox Quantum brings the speed of Firefox past that of Chrome, and now Firefox is the fastest browser around. Memory bloat is no longer an issue with Firefox either, unlike Chrome, which continues to use up to 300mb per tab.</p>
+<p>From the security angle however, from the perspective of the user, Chrome&rsquo;s security model is the same as Firefox&rsquo;s. Meaning that it suffers from the same problems of cookies, trackers and potentially malicious advertisements.</p>
+<p>The second thing to consider is Google&rsquo;s priorities. Much of the browser that Chrome is built on, Chromium, is open sourced, but the core aspects of it are not. The things that make Chrome into Chrome are not available for review, while the entirety of Firefox is. If this matters to you, then that&rsquo;s a strike against it.</p>
+<p>Furthermore, and perhaps more sinisterly, Google is an advertising company for which the vast majority of its revenue comes from enabling the effective delivery of ads, which they do by using your rich user data. This is stance that is fundamentally at odds with user privacy, and Google has a direct conflict-of-interest between offering sufficiently effective privacy focused tooling and satisfying their patrons.</p>
+<p>The Google built-in adblocker for instance comes with whitelisting for certain google domains and trusted advertisers.</p>
+<h1 id="final-thoughts">Final Thoughts</h1>
+<p>In short, Firefox is:</p>
+<ul>
+<li>Fast</li>
+<li>Open Source</li>
+<li>Privacy Focused</li>
+</ul>
+<p>As always, if a website is acting up, you should look into temporarily whitelisting it in your addons. Allow Scripts, followed by allow cookies, followed by allow ads.</p>
+<p>In the most extreme cases, you can disable the addons entirely and try again - but rather than doing that, it is strongly recommended to instead try using the offending website in a different, less locked down browser. Always have a backup browser, maybe even multiple. For me, those backup browsers are Edge, Chrome, and Internet Explorer, in that order.</p>
+<p>Enjoy having a secure, private, fast web browsing experience.</p>
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/security/">security</a><a class="category" href="/categories/privacy/">privacy</a><a class="category" href="/categories/browser/">browser</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/overview/">overview</a><a class="tag" href="/tags/firefox/">firefox</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

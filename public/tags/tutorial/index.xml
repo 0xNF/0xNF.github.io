@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tutorial on Nothing in Particular</title>
+    <link>https://0xnf.github.io/tags/tutorial/</link>
+    <description>Recent content in Tutorial on Nothing in Particular</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Jun 2018 18:11:56 -0700</lastBuildDate><atom:link href="https://0xnf.github.io/tags/tutorial/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 19)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/19/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/19/</guid>
+      
+        <description>The final part of our OAuth tutorial where we deploy to Azure.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 18)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/18/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:54 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/18/</guid>
+      
+        <description>We continue our work on the OAuth server by adding Rate Limits, using a custom controller [Attribute]. Also there are some structs.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 17)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/17/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:52 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/17/</guid>
+      
+        <description>We enter the home stretch of our OAuth server by adding Rate Limits to our application. We use a dual limit structure where we can discriminate against both clients and users individually.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 16)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/16/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:50 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/16/</guid>
+      
+        <description>Here we implement Token Revocation using some custom views and controllers. We also let the user view what applications they have outstanding authorizations with.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 15)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/15/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:49 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/15/</guid>
+      
+        <description>In this section of our OAuth tutorial we add the ability to authorize against the scopes we created back in part 8 using ASP.NET policies.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 14)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/14/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:47 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/14/</guid>
+      
+        <description>In this section of our OAuth tutorial, we&#39;ll add OAuth Validation to our application and actually authenticate a user with their access tokens.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 13)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/13/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:45 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/13/</guid>
+      
+        <description>Here we work with Identity, Claims, and Authorization tickets so that the OpenIdConnectServer library can generate a valid and useful access token for our users.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 12)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/12/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:43 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/12/</guid>
+      
+        <description>We&#39;re ready to start working more seriously on issuing access tokens - the first step of which is to show the users a page that lets them review what permissions an application is requesting, and giving them the opportunity to accept or deny the request.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 11)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/11/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:42 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/11/</guid>
+      
+        <description>In this part of our OAuth tutorial, we implement the missing services that help us validate our tokens and write to the database.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 10)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/10/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:40 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/10/</guid>
+      
+        <description>This is part 2 of 2 for setting up our OpenIdConnectServerProvider, where we&#39;ll wrap it up by implementing the Token series of methods</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 09)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/09/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:28 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/09/</guid>
+      
+        <description>This is our first real exposure to the OpenIdConnectServer library - this is part 1 of 2 for setting this class up. We&#39;ll handle the Authorization series of methods in this section.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 08)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/08/</link>
+      <pubDate>Mon, 18 Jun 2018 18:11:26 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/08/</guid>
+      
+        <description>We&#39;ll add client scopes in this section - such as defining what it takes to read user information like email or birthdate.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 07)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/07/</link>
+      <pubDate>Thu, 07 Jun 2018 19:12:13 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/07/</guid>
+      
+        <description>We&#39;ll wrap up creating the OAuth Client views by adding the actual razor page templated .cshtml views to our project.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 06)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/06/</link>
+      <pubDate>Wed, 06 Jun 2018 16:16:01 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/06/</guid>
+      
+        <description>We&#39;ll spend some time creating setting up the OAuth Client views, which let a user register and edit an OAuth Client. This section deals with the ViewModels and Controllers.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 05)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/05/</link>
+      <pubDate>Wed, 06 Jun 2018 16:15:59 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/05/</guid>
+      
+        <description>In this part of our tutorial, we add the models that our application needs to work with, including the OAuth Client Application and OAuth Tokens. We also work with the Entity Framework&#39;s Fluent API to properly set up our database with foreign key relationships and ON DELETE CASCADE events.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 04)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/04/</link>
+      <pubDate>Wed, 06 Jun 2018 16:15:58 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/04/</guid>
+      
+        <description>For this part of our tutorial, we set up a basic public API that will eventually be what we authenticate our OAuth Tokens again in the future.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 03)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/03/</link>
+      <pubDate>Wed, 06 Jun 2018 16:15:56 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/03/</guid>
+      
+        <description>We&#39;re still at the beginning of our OAuth 2 server tutorial, where we spend some time getting familiar with password requirements and Entity Framework migrations. Also we show how to make an ASP.NET Core project use SQLite instead of SQL Server.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 02)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/02/</link>
+      <pubDate>Wed, 06 Jun 2018 16:15:55 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/02/</guid>
+      
+        <description>In this lightweight part of our OAuth 2 server tutorial, we set up the project, download our dependencies and move on.</description>
+      
+    </item>
+    
+    <item>
+      <title>Implement an OAuth 2.0 Server (Part 01)</title>
+      <link>https://0xnf.github.io/posts/oauthserver/01/</link>
+      <pubDate>Wed, 06 Jun 2018 16:15:39 -0700</pubDate>
+      
+      <guid>https://0xnf.github.io/posts/oauthserver/01/</guid>
+      
+        <description>This is the first part of a 19-part tutorial on how to implement an OAuth 2.0 / OpenIdConnect server. This tutorial will take us from start to finish using ASP.NET Core 2 from project creation to azure deployment.</description>
+      
+    </item>
+    
+  </channel>
+</rss>

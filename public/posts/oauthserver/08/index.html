@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <title>
+    
+        |
+        Implement an OAuth 2.0 Server (Part 08)
+      
+
+    
+
+  </title>
+
+  
+  <meta charset="utf-8" /><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="" />
+  <meta
+    name="description"
+    content="We&#39;ll add client scopes in this section - such as defining what it takes to read user information like email or birthdate."
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.ba004976221e613a16542d07a2deca5d0377ff5e6a22dec5fcec01480ba967cf.css"
+      integrity="sha256-ugBJdiIeYToWVC0Hot7KXQN3/15qIt7F/OwBSAupZ88="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.793b323d7f2d9fbfd0b93f4d593fb5ad77b918716ed33eddea403fa87f770403.css"
+    integrity="sha256-eTsyPX8tn7/QuT9NWT&#43;1rXe5GHFu0z7d6kA/qH93BAM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.7f3c2281c7f965ce3c64888aa452793252a0416909c181097f81d0a0f7d1624e.css"
+    integrity="sha256-fzwigcf5Zc48ZIiKpFJ5MlKgQWkJwYEJf4HQoPfRYk4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.35fc032da8ede6681675d20a2f862fb9e1045c1d512d495fcf862c054daffef2.css"
+    integrity="sha256-NfwDLajt5mgWddIKL4YvueEEXB1RLUlfz4YsBU2v/vI="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.3b92357925ea7284f0c6b0378396f39f470f7842ed9702f337e667c4026bf837.css"
+    integrity="sha256-O5I1eSXqcoTwxrA3g5bzn0cPeELtlwLzN&#43;ZnxAJr&#43;Dc="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.ebb1096e1976e8cc4e2532cfa050b8f30eb13b8eb06be5cee3e38eb426b838ea.css"
+    integrity="sha256-67EJbhl26MxOJTLPoFC48w6xO46wa&#43;XO4&#43;OOtCa4OOo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="https://0xnf.github.io/posts/oauthserver/08/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.5c846cefa5ed21cceee981c70901aaf21b17b4e0b05bd777af840780918abea9.js"
+    integrity="sha256-XIRs76XtIczu6YHHCQGq8hsXtOCwW9d3r4QHgJGKvqk="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.46e991c2fcb035fc0060a792f1eb0c93ecacc9e76cd7445d6531a5cf2928686d.js"
+      integrity="sha256-RumRwvywNfwAYKeS8esMk&#43;ysyeds10RdZTGlzykoaG0="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Implement an OAuth 2.0 Server (Part 08)"/>
+<meta name="twitter:description" content="We&#39;ll add client scopes in this section - such as defining what it takes to read user information like email or birthdate."/>
+
+
+
+  
+  <meta property="og:title" content="Implement an OAuth 2.0 Server (Part 08)" />
+<meta property="og:description" content="We&#39;ll add client scopes in this section - such as defining what it takes to read user information like email or birthdate." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xnf.github.io/posts/oauthserver/08/" />
+<meta property="article:published_time" content="2018-06-18T18:11:26-07:00" />
+<meta property="article:modified_time" content="2018-06-18T18:11:26-07:00" />
+
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Implement an OAuth 2.0 Server (Part 08)",
+        "headline": "Implement an OAuth 2.0 Server (Part 08)",
+        "alternativeHeadline": "",
+        "description": "
+      We\x27ll add client scopes in this section - such as defining what it takes to read user information like email or birthdate.
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/0xnf.github.io\/posts\/oauthserver\/08\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightYear" : "2018",
+        "dateCreated": "2018-06-18T18:11:26.00Z",
+        "datePublished": "2018-06-18T18:11:26.00Z",
+        "dateModified": "2018-06-18T18:11:26.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name":  null ,
+            "url": "https://0xnf.github.io/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/0xnf.github.io\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/0xnf.github.io\/posts\/oauthserver\/08\/",
+        "wordCount" : "830",
+        "genre" : [ 
+      
+      "Security"
+
+    
+      
+        ,
+
+      
+      "Identity"
+
+    
+      
+        ,
+
+      
+      "Authentication"
+
+    
+      
+        ,
+
+      
+      "Authorization"
+
+    ],
+        "keywords" : [ 
+      
+      "OAuth2.0"
+
+    
+      
+        ,
+
+      
+      "OpenIdConnect"
+
+    
+      
+        ,
+
+      
+      "Tutorial"
+
+    
+      
+        ,
+
+      
+      "CSharp"
+
+    
+      
+        ,
+
+      
+      ".NET Core"
+
+    ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/"></a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p></p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      <h1>Implement an OAuth 2.0 Server (Part 08)</h1>
+      <p>Welcome to the eighth part of a series of posts where we will implement an OAuth 2 Server using <a href="https://github.com/aspnet-contrib/AspNet.Security.OpenIdConnect.Server">AspNet.Security.OpenIdConnectServer</a>.</p>
+<h1 id="adding-client-scopes">Adding Client Scopes</h1>
+<p>Scopes are ways to limit a client&rsquo;s ability to act on behalf of the user. The scopes are defined by the <code>Resource Server</code>, like <code>Spotify</code> or <code>Google</code>. The client requests the scopes they want to work with, and those scopes are presented to the <code>Resource Owner</code> for authorization - they can then choose to accept or reject the authorization request, meaning that just because an application requests certain, potentially high-value access, doesn&rsquo;t mean it automatically gets it.</p>
+<h2 id="spotifys-scopes-example">Spotify&rsquo;s Scopes Example</h2>
+<p>We&rsquo;ll take a short tour of <code>Spotify's</code> scopes as a demonstration of what we need to implement. You can view their list of scopes <a href="https://developer.spotify.com/documentation/general/guides/scopes/">here</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Scope Name</th>
+<th>Scope Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user-library-read</code></td>
+<td>Read access to a user&rsquo;s &ldquo;Your Music&rdquo; library.</td>
+</tr>
+<tr>
+<td><code>user-library-modify</code></td>
+<td>Write/delete access to a user&rsquo;s &ldquo;Your Music&rdquo; library.</td>
+</tr>
+<tr>
+<td><code>user-read-email</code></td>
+<td>Read access to user’s email address.</td>
+</tr>
+<tr>
+<td><code>user-follow-modify</code></td>
+<td>Write/delete access to the list of artists and other users that the user follows.</td>
+</tr>
+</tbody>
+</table>
+<p>There are a dozen more potential scopes that Spotify defines for their third-party OAuth Clients, but the idea is clear. Scopes define what a client is allowed to do. The developer of the application selects what scopes they want based on what they need their application to do.</p>
+<p>Developers are encouraged to request only the minimum scopes necessary, but it is ultimately up to the user to authorize or reject an applications scope requests.</p>
+<h2 id="adding-our-own-scope-class">Adding our own Scope Class</h2>
+<p>Create a new file under <code>Models/OAuth</code> named <code>OAuthScope.cs</code> and add a class named <code>OAuthScope</code>.</p>
+<p>We&rsquo;ll be using the <code>Type-Safe Enum</code> pattern to define the scopes. You can read more about it <a href="https://ardalis.com/enum-alternatives-in-c">here</a>, or anywhere on google. The basic idea is that <code>enums</code> can be a problem because they&rsquo;re a wrapper over <code>integers</code>, and therefore, even though you define a handful of enumerations, any valid integer is also a valid <code>enum</code> of your type, which can lead to a number of undesirable situations. Additionally, performing enum to string or vice versa operations is expensive. A type-safe enum pattern lets us strongly define the boundaries of our enumerations, while letting us give them low-cost string names.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuthScope</span> {
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> List&lt;OAuthScope&gt; _AllScopes = <span style="color:#66d9ef">new</span> List&lt;OAuthScope&gt;();
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IReadOnlyList&lt;OAuthScope&gt; AllScopes =&gt; _AllScopes;
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">string</span> Name;
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">string</span> Description;
+
+    <span style="color:#66d9ef">private</span> OAuthScope(<span style="color:#66d9ef">string</span> name, <span style="color:#66d9ef">string</span> description) {
+        <span style="color:#66d9ef">if</span> (NameInScopes(name)) {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> DuplicateNameException(<span style="color:#e6db74">$&#34;Tried to add an OAuthScope with the name {name}, but this name already existed&#34;</span>);
+        }
+
+        <span style="color:#66d9ef">this</span>.Name = name;
+        <span style="color:#66d9ef">this</span>.Description = description;
+        _AllScopes.Add(<span style="color:#66d9ef">this</span>);
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> NameInScopes(<span style="color:#66d9ef">string</span> name) {
+        <span style="color:#66d9ef">return</span> _AllScopes.Any(x =&gt; x.Name == name);
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> OAuthScope GetScope(<span style="color:#66d9ef">string</span> name) {
+        <span style="color:#66d9ef">return</span> _AllScopes.First(x =&gt; x.Name == name);
+    }
+}
+</code></pre></div><p>We define a static collection of our scopes that any application that needs to lookup if a scope exists or not can do so. We also allow public access to an <code>IReadOnlyList</code> version of the same collection so that any consumer can request a non-modifiable list of scopes.</p>
+<p>Scopes have a description so that the end-user being presented with an authorization request doesn&rsquo;t have to decipher the techno-jargon of our internal naming schemes.</p>
+<p>We also add a few helper methods that let us quickly check those collections. Like the base collections the class is built around, accessing without confirming the existence of the requested key may result in an <code>ArgumentException</code>.</p>
+<p>A Scope&rsquo;s name is unique- you are free to disable this requirement, but only if it makes sense for you.</p>
+<h2 id="adding-scopes">Adding Scopes</h2>
+<p>You have to define what you want your application to do before you can start to add meaningful scopes, but since we&rsquo;re at the very least working with <code>ApplicationUsers</code>, we can start by locking away some user information behind the appropriate scopes, like Spotify does.</p>
+<p>Let&rsquo;s add the following:</p>
+<ol>
+<li><code>user-read-email</code></li>
+<li><code>user-read-birthdate</code></li>
+<li><code>user-modify-email</code></li>
+<li><code>user-modify-birthdate</code></li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuthScope</span> {
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> List&lt;OAuthScope&gt; _AllScopes = <span style="color:#66d9ef">new</span> List&lt;OAuthScope&gt;();
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> IReadOnlyList&lt;OAuthScope&gt; AllScopes =&gt; _AllScopes;
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">string</span> Name;
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">string</span> Description;
+
+    <span style="color:#66d9ef">private</span> OAuthScope(<span style="color:#66d9ef">string</span> name, <span style="color:#66d9ef">string</span> description) {
+        <span style="color:#66d9ef">if</span> (NameInScopes(name)) {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> DuplicateNameException(<span style="color:#e6db74">$&#34;Tried to add an OAuthScope with the name {name}, but this name already existed&#34;</span>);
+        }
+
+        <span style="color:#66d9ef">this</span>.Name = name;
+        <span style="color:#66d9ef">this</span>.Description = description;
+        _AllScopes.Add(<span style="color:#66d9ef">this</span>);
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> NameInScopes(<span style="color:#66d9ef">string</span> name) {
+        <span style="color:#66d9ef">return</span> _AllScopes.Any(x =&gt; x.Name == name);
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> OAuthScope GetScope(<span style="color:#66d9ef">string</span> name) {
+        <span style="color:#66d9ef">return</span> _AllScopes.First(x =&gt; x.Name == name);
+    }
+
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">static</span> OAuthScope UserReadEmail = <span style="color:#66d9ef">new</span> OAuthScope(<span style="color:#e6db74">&#34;user-read-email&#34;</span>, <span style="color:#e6db74">&#34;Permission to know your email address&#34;</span>);
+</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">static</span> OAuthScope UserReadBirthdate = <span style="color:#66d9ef">new</span> OAuthScope(<span style="color:#e6db74">&#34;user-read-birthdate&#34;</span>, <span style="color:#e6db74">&#34;Permission to know your birthdate&#34;</span>);
+</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">static</span> OAuthScope UserModifyEmail = <span style="color:#66d9ef">new</span> OAuthScope(<span style="color:#e6db74">&#34;user-modify-email&#34;</span>, <span style="color:#e6db74">&#34;Permission to change your email address&#34;</span>);
+</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">static</span> OAuthScope UserModifyBirthdate = <span style="color:#66d9ef">new</span> OAuthScope(<span style="color:#e6db74">&#34;user-modify-birthdate&#34;</span>, <span style="color:#e6db74">&#34;Permission to change your birthdate&#34;</span>);
+</span>
+}
+</code></pre></div>
+<p>The actual assignment and checking of scopes comes later, but this is the groundwork for it.</p>
+<h1 id="moving-on">Moving On</h1>
+<p>The demo of this project to this point can be found <a href="https://github.com/0xNF/OAuthTutorial/tree/08-Scopes">here on GitHub</a>.</p>
+<p>In the next section, start investigating the heart of the ASOS library and implement the first bits of the Authorization Provider.</p>
+<p><a href="/posts/oauthserver/09">Next</a></p>
+
+
+
+<h3>Posts in this series</h3>
+<ul>
+  
+    <li><a href="/posts/oauthserver/19/">Implement an OAuth 2.0 Server (Part 19)</a></li>
+  
+    <li><a href="/posts/oauthserver/18/">Implement an OAuth 2.0 Server (Part 18)</a></li>
+  
+    <li><a href="/posts/oauthserver/17/">Implement an OAuth 2.0 Server (Part 17)</a></li>
+  
+    <li><a href="/posts/oauthserver/16/">Implement an OAuth 2.0 Server (Part 16)</a></li>
+  
+    <li><a href="/posts/oauthserver/15/">Implement an OAuth 2.0 Server (Part 15)</a></li>
+  
+    <li><a href="/posts/oauthserver/14/">Implement an OAuth 2.0 Server (Part 14)</a></li>
+  
+    <li><a href="/posts/oauthserver/13/">Implement an OAuth 2.0 Server (Part 13)</a></li>
+  
+    <li><a href="/posts/oauthserver/12/">Implement an OAuth 2.0 Server (Part 12)</a></li>
+  
+    <li><a href="/posts/oauthserver/11/">Implement an OAuth 2.0 Server (Part 11)</a></li>
+  
+    <li><a href="/posts/oauthserver/10/">Implement an OAuth 2.0 Server (Part 10)</a></li>
+  
+    <li><a href="/posts/oauthserver/09/">Implement an OAuth 2.0 Server (Part 09)</a></li>
+  
+    <li><a href="/posts/oauthserver/08/">Implement an OAuth 2.0 Server (Part 08)</a></li>
+  
+    <li><a href="/posts/oauthserver/07/">Implement an OAuth 2.0 Server (Part 07)</a></li>
+  
+    <li><a href="/posts/oauthserver/06/">Implement an OAuth 2.0 Server (Part 06)</a></li>
+  
+    <li><a href="/posts/oauthserver/05/">Implement an OAuth 2.0 Server (Part 05)</a></li>
+  
+    <li><a href="/posts/oauthserver/04/">Implement an OAuth 2.0 Server (Part 04)</a></li>
+  
+    <li><a href="/posts/oauthserver/03/">Implement an OAuth 2.0 Server (Part 03)</a></li>
+  
+    <li><a href="/posts/oauthserver/02/">Implement an OAuth 2.0 Server (Part 02)</a></li>
+  
+    <li><a href="/posts/oauthserver/01/">Implement an OAuth 2.0 Server (Part 01)</a></li>
+  
+</ul>
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/security/">Security</a><a class="category" href="/categories/identity/">Identity</a><a class="category" href="/categories/authentication/">Authentication</a><a class="category" href="/categories/authorization/">Authorization</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/oauth2%2e0/">OAuth2.0</a><a class="tag" href="/tags/openidconnect/">OpenIdConnect</a><a class="tag" href="/tags/tutorial/">Tutorial</a><a class="tag" href="/tags/csharp/">CSharp</a><a class="tag" href="/tags/%2enet-core/">.NET Core</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

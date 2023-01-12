@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <title>
+    
+        |
+        UWP: Simple Events
+      
+
+    
+
+  </title>
+
+  
+  <meta charset="utf-8" /><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="" />
+  <meta
+    name="description"
+    content="Some problems are just made so much easier in XAML based apps if you use the Event pub/sub model. In this post we explore an easy way to create and subscribe to both typed and untyped events in UWP."
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.ba004976221e613a16542d07a2deca5d0377ff5e6a22dec5fcec01480ba967cf.css"
+      integrity="sha256-ugBJdiIeYToWVC0Hot7KXQN3/15qIt7F/OwBSAupZ88="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.793b323d7f2d9fbfd0b93f4d593fb5ad77b918716ed33eddea403fa87f770403.css"
+    integrity="sha256-eTsyPX8tn7/QuT9NWT&#43;1rXe5GHFu0z7d6kA/qH93BAM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.7f3c2281c7f965ce3c64888aa452793252a0416909c181097f81d0a0f7d1624e.css"
+    integrity="sha256-fzwigcf5Zc48ZIiKpFJ5MlKgQWkJwYEJf4HQoPfRYk4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.35fc032da8ede6681675d20a2f862fb9e1045c1d512d495fcf862c054daffef2.css"
+    integrity="sha256-NfwDLajt5mgWddIKL4YvueEEXB1RLUlfz4YsBU2v/vI="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.3b92357925ea7284f0c6b0378396f39f470f7842ed9702f337e667c4026bf837.css"
+    integrity="sha256-O5I1eSXqcoTwxrA3g5bzn0cPeELtlwLzN&#43;ZnxAJr&#43;Dc="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.ebb1096e1976e8cc4e2532cfa050b8f30eb13b8eb06be5cee3e38eb426b838ea.css"
+    integrity="sha256-67EJbhl26MxOJTLPoFC48w6xO46wa&#43;XO4&#43;OOtCa4OOo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="https://0xnf.github.io/posts/uwp/simple-events/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.5c846cefa5ed21cceee981c70901aaf21b17b4e0b05bd777af840780918abea9.js"
+    integrity="sha256-XIRs76XtIczu6YHHCQGq8hsXtOCwW9d3r4QHgJGKvqk="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.46e991c2fcb035fc0060a792f1eb0c93ecacc9e76cd7445d6531a5cf2928686d.js"
+      integrity="sha256-RumRwvywNfwAYKeS8esMk&#43;ysyeds10RdZTGlzykoaG0="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="UWP: Simple Events"/>
+<meta name="twitter:description" content="Some problems are just made so much easier in XAML based apps if you use the Event pub/sub model. In this post we explore an easy way to create and subscribe to both typed and untyped events in UWP."/>
+
+
+
+  
+  <meta property="og:title" content="UWP: Simple Events" />
+<meta property="og:description" content="Some problems are just made so much easier in XAML based apps if you use the Event pub/sub model. In this post we explore an easy way to create and subscribe to both typed and untyped events in UWP." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xnf.github.io/posts/uwp/simple-events/" />
+<meta property="article:published_time" content="2018-07-19T15:31:28-07:00" />
+<meta property="article:modified_time" content="2018-07-19T15:31:28-07:00" />
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "UWP: Simple Events",
+        "headline": "UWP: Simple Events",
+        "alternativeHeadline": "",
+        "description": "
+      Some problems are just made so much easier in XAML based apps if you use the Event pub\/sub model. In this post we explore an easy way to create and subscribe to both typed and untyped events in UWP.
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/0xnf.github.io\/posts\/uwp\/simple-events\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightYear" : "2018",
+        "dateCreated": "2018-07-19T15:31:28.00Z",
+        "datePublished": "2018-07-19T15:31:28.00Z",
+        "dateModified": "2018-07-19T15:31:28.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name":  null ,
+            "url": "https://0xnf.github.io/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/0xnf.github.io\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/0xnf.github.io\/posts\/uwp\/simple-events\/",
+        "wordCount" : "243",
+        "genre" : [ 
+      
+      "UWP"
+
+    ],
+        "keywords" : [ 
+      
+      "event routing"
+
+    ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/"></a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p></p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      <h1>UWP: Simple Events</h1>
+      <h4 id="notes">Notes</h4>
+<p>[07/19/2018] Note: This post refers to the library <code>Microsoft.NETCore.UniversalWindowsPlatform</code>, version <code>6.2.0-Preview1-26502-02</code>.</p>
+<h1 id="events">Events</h1>
+<p>Some problems are just made so much easier in XAML based apps if you use the Event pub/sub model.</p>
+<p>We&rsquo;ll structure our events the way the excellent Template10 does:</p>
+<ul>
+<li>One event</li>
+<li>One EventRaised method</li>
+</ul>
+<h2 id="untyped-events">Untyped Events</h2>
+<p>These events carry no information aside form the fact that it occurred.</p>
+<p>In the class that the event originates from:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyEventPublisherClass</span> {
+
+    <span style="color:#75715e">/* This the event that will be subscribed to. */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">event</span> EventHandler MyEvent;
+
+    <span style="color:#75715e">/* This is a convenience function that calls the event. */</span>
+    <span style="color:#66d9ef">void</span> RaiseMyEvent() =&gt; MyEvent?.Invoke(<span style="color:#66d9ef">this</span>, <span style="color:#66d9ef">new</span> EventArgs { });
+}
+</code></pre></div><p>This is an untyped event, so we use the Event version of an empty constructor with the <code>new EventArgs {}</code> syntax. The base EventArgs class contains no other fields.</p>
+<p>In the class that you wish to receive event notifications from:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyEventSubscriberClass</span> {
+
+    <span style="color:#66d9ef">public</span> MyEventSubscriberClass() {
+        <span style="color:#75715e">/* Somewhere, usually in the constructor, we subscribe to the event*/</span>
+        MyEventPublisherClass.MyEvent += OnMyEventMethod;
+    }
+
+    <span style="color:#75715e">/* This is the method that gets called when the event is triggerd */</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> OnMyEventMethod(<span style="color:#66d9ef">object</span> sender, EventArgs e) {
+        <span style="color:#75715e">// Do Something
+</span><span style="color:#75715e"></span>    }
+
+}
+</code></pre></div><h2 id="typed-events">Typed Events</h2>
+<p>These events carry additional, arbitrary information of your choice.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyTypedEventPublisherClass</span> {
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">event</span> EventHandler&lt;<span style="color:#66d9ef">string</span>&gt; MyTypedEvent;
+    <span style="color:#66d9ef">void</span> RaiseMyTypedEvent(<span style="color:#66d9ef">string</span> <span style="color:#66d9ef">value</span>) =&gt; MyTypedEvent?.Invoke(<span style="color:#66d9ef">this</span>, <span style="color:#66d9ef">value</span>);
+}
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyTypedEventSubscriberClass</span> {
+
+    <span style="color:#66d9ef">public</span> MyTypedEventSubscriberClass  () {
+        MyTypedEventPublisherClass.MyTypedEvent += OnMyTypedEventMethod;
+    }
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> OnMyTypedEventMethod(<span style="color:#66d9ef">object</span> sender,  <span style="color:#66d9ef">string</span> e) {
+        <span style="color:#75715e">// Do something
+</span><span style="color:#75715e"></span>    }
+}
+</code></pre></div></div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/uwp/">UWP</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/event-routing/">event routing</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></body>
+</html>

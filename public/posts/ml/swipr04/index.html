@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html
+  dir="ltr"
+  lang="en"
+  data-theme=""
+  
+    class="html theme--light"
+  
+><head>
+  <title>
+    
+        |
+        Swipr - Data Collection (Part 2 of 2)
+      
+
+    
+
+  </title>
+
+  
+  <meta charset="utf-8" /><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="author" content="" />
+  <meta
+    name="description"
+    content="Part 4 of the Swipr series. In which we discuss downloading 100 GB of pictures."
+  />
+  
+  
+    
+    
+    <link
+      rel="stylesheet"
+      href="/scss/main.min.ba004976221e613a16542d07a2deca5d0377ff5e6a22dec5fcec01480ba967cf.css"
+      integrity="sha256-ugBJdiIeYToWVC0Hot7KXQN3/15qIt7F/OwBSAupZ88="
+      crossorigin="anonymous"
+      type="text/css"
+    />
+  
+
+  
+  <link
+    rel="stylesheet"
+    href="/css/markupHighlight.min.793b323d7f2d9fbfd0b93f4d593fb5ad77b918716ed33eddea403fa87f770403.css"
+    integrity="sha256-eTsyPX8tn7/QuT9NWT&#43;1rXe5GHFu0z7d6kA/qH93BAM="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/fontawesome.min.7f3c2281c7f965ce3c64888aa452793252a0416909c181097f81d0a0f7d1624e.css"
+    integrity="sha256-fzwigcf5Zc48ZIiKpFJ5MlKgQWkJwYEJf4HQoPfRYk4="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/solid.min.35fc032da8ede6681675d20a2f862fb9e1045c1d512d495fcf862c054daffef2.css"
+    integrity="sha256-NfwDLajt5mgWddIKL4YvueEEXB1RLUlfz4YsBU2v/vI="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/regular.min.3b92357925ea7284f0c6b0378396f39f470f7842ed9702f337e667c4026bf837.css"
+    integrity="sha256-O5I1eSXqcoTwxrA3g5bzn0cPeELtlwLzN&#43;ZnxAJr&#43;Dc="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link
+    rel="stylesheet"
+    href="/fontawesome/css/brands.min.ebb1096e1976e8cc4e2532cfa050b8f30eb13b8eb06be5cee3e38eb426b838ea.css"
+    integrity="sha256-67EJbhl26MxOJTLPoFC48w6xO46wa&#43;XO4&#43;OOtCa4OOo="
+    crossorigin="anonymous"
+    type="text/css"
+  />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="canonical" href="https://0xnf.github.io/posts/ml/swipr04/" />
+
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/anatole-header.min.5c846cefa5ed21cceee981c70901aaf21b17b4e0b05bd777af840780918abea9.js"
+    integrity="sha256-XIRs76XtIczu6YHHCQGq8hsXtOCwW9d3r4QHgJGKvqk="
+    crossorigin="anonymous"
+  ></script>
+
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/anatole-theme-switcher.min.46e991c2fcb035fc0060a792f1eb0c93ecacc9e76cd7445d6531a5cf2928686d.js"
+      integrity="sha256-RumRwvywNfwAYKeS8esMk&#43;ysyeds10RdZTGlzykoaG0="
+      crossorigin="anonymous"
+    ></script>
+  
+
+  
+
+
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Swipr - Data Collection (Part 2 of 2)"/>
+<meta name="twitter:description" content="Part 4 of the Swipr series. In which we discuss downloading 100 GB of pictures."/>
+
+
+
+  
+  <meta property="og:title" content="Swipr - Data Collection (Part 2 of 2)" />
+<meta property="og:description" content="Part 4 of the Swipr series. In which we discuss downloading 100 GB of pictures." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xnf.github.io/posts/ml/swipr04/" />
+<meta property="article:published_time" content="2018-12-11T13:29:43-08:00" />
+<meta property="article:modified_time" content="2018-12-11T13:29:43-08:00" />
+
+
+
+
+  
+  
+  
+  
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "articleSection": "posts",
+        "name": "Swipr - Data Collection (Part 2 of 2)",
+        "headline": "Swipr - Data Collection (Part 2 of 2)",
+        "alternativeHeadline": "",
+        "description": "
+      Part 4 of the Swipr series. In which we discuss downloading 100 GB of pictures.
+
+
+    ",
+        "inLanguage": "en-us",
+        "isFamilyFriendly": "true",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/0xnf.github.io\/posts\/ml\/swipr04\/"
+        },
+        "author" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "creator" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "accountablePerson" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightHolder" : {
+            "@type": "Person",
+            "name": ""
+        },
+        "copyrightYear" : "2018",
+        "dateCreated": "2018-12-11T13:29:43.00Z",
+        "datePublished": "2018-12-11T13:29:43.00Z",
+        "dateModified": "2018-12-11T13:29:43.00Z",
+        "publisher":{
+            "@type":"Organization",
+            "name":  null ,
+            "url": "https://0xnf.github.io/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https:\/\/0xnf.github.io\/favicon-32x32.png",
+                "width":"32",
+                "height":"32"
+            }
+        },
+        "image": 
+      [
+      ]
+
+    ,
+        "url" : "https:\/\/0xnf.github.io\/posts\/ml\/swipr04\/",
+        "wordCount" : "988",
+        "genre" : [ 
+      
+      "machine learning"
+
+    
+      
+        ,
+
+      
+      "fast.ai"
+
+    ],
+        "keywords" : [ 
+      
+      "CNN"
+
+    
+      
+        ,
+
+      
+      "web scraping"
+
+    
+      
+        ,
+
+      
+      "data collection"
+
+    
+      
+        ,
+
+      
+      "architecture"
+
+    ]
+    }
+  </script>
+
+
+</head>
+<body class="body">
+    <div class="wrapper">
+      <aside
+        
+          class="wrapper__sidebar"
+        
+      ><div
+  class="sidebar
+    animated fadeInDown
+  "
+>
+  <div class="sidebar__content">
+    <div class="sidebar__introduction">
+      <img
+        class="sidebar__introduction-profileimage"
+        src="/"
+        alt="profile picture"
+      />
+      
+        <div class="sidebar__introduction-title">
+          <a href="/"></a>
+        </div>
+      
+      <div class="sidebar__introduction-description">
+        <p></p>
+      </div>
+    </div>
+    <ul class="sidebar__list">
+      
+    </ul>
+  </div><footer class="footer footer__sidebar">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></div>
+</aside>
+      <main
+        
+          class="wrapper__main"
+        
+      >
+        <header class="header"><div
+  class="
+    animated fadeInDown
+  "
+>
+  <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+    <span aria-hidden="true" class="navbar-burger__line"></span>
+  </a>
+  <nav class="nav">
+    <ul class="nav__list" id="navMenu">
+      
+      
+    </ul>
+    <ul class="nav__list nav__list--end">
+      
+      
+        <li class="nav__list-item">
+          <div class="themeswitch">
+            <a title="Switch Theme">
+              <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+</header>
+  <div
+    class="post 
+      animated fadeInDown
+    "
+  >
+    
+    <div class="post__content">
+      <h1>Swipr - Data Collection (Part 2 of 2)</h1>
+      <h1 id="downloading-from-instagram">Downloading from Instagram</h1>
+<p>There are a number of solutions for scraping Instagram, and it&rsquo;s mostly a pick-your-poison kind of affair. we picked the first well-supported google result for &ldquo;Instagram scaper&rdquo; and came up with <a href="https://github.com/althonos/InstaLooter">Instalooter</a>. It seemed to come with good documentation and sufficient automation facilities.</p>
+<h2 id="rate-limits">Rate Limits</h2>
+<p>We are told that prior to April 2018, downloading from Instagram was a much more lackadaisical affair. There was allegedly a generous rate limit for a given Instagram login token, upwards of 5,000 page requests per hour. This mythical time must have been the golden era for Instagram scraping.</p>
+<p>Instagram has since dramatically reduced the limit to roughly 20 API calls per hour, where each call corresponds to about 50 images returned per request.</p>
+<p>This severely increases the time it takes to download.</p>
+<h2 id="paging-limits">Paging Limits</h2>
+<p>Additionally due to the way Instagram does paging, no one involved with Instalooter knows how to jump to a specific page for any given user. The tl;dr here is that it is impossible to download any given user&rsquo;s complete post history provided they have more than 20 pages (1,000 pictures) of posts.</p>
+<p>This is not that big a deal, because 1,000 pictures of one user is really more than good enough. we consider this and a few a few upcoming parts of the pipeline to be kind of like the UDP protocol. we don&rsquo;t need all of it, just enough of it to make sense.</p>
+<h2 id="instalooter-usability--ilm">Instalooter Usability / ILM</h2>
+<p>Instalooter has a useful batch feature that takes in a structured file and attempts to download each profile. Unfortunately it is not, as the engineers would say, &ldquo;robust to failure&rdquo; and will stop execution the moment something fails even a little bit. The most common problem is encountering a timeout, but other errors can occur like an improperly formatted url string, an invalid username, or that the supplied profile might not be public.</p>
+<p>In all of these cases, Instalooter&rsquo;s batch processing function will stop and not pick up.</p>
+<p>This lead us to write a python script, a sort of framework that sits on top of and around Instalooter that manages and monitors Instalooter for errors during batch processing and can recover with as much grace as possible.</p>
+<p>You can find more on the GitHub page for the project, called ILM, or <a href="https://github.com/0xNF/ilm">Instalooter Monitor</a>.</p>
+<p>The big idea behind ILM is that given a list of profiles to download, it will download until it errors out on a profile, wait for the expiration of a timeout if applicable, and continue downloading the list. It attempts to minimize user input, meaning you can let it run across  days unmonitored while it does its thing.</p>
+<h2 id="final-picture-count">Final Picture Count</h2>
+<p>After letting ILM run for about 10 days due to the low rate limits (curse you Instagram), we amassed 279,262 pictures totaling approximately 100 GB of data. This necessitated busting out an old 1TB hard drive we had in order to store everything.</p>
+<p>Additionally, like we alluded to earlier, we supplemented our Instagram data with the data from the People&rsquo;s Republic of Tinder. This accounted for an additional 2GB of data, bringing our total to about 102GB of data.</p>
+<h1 id="transferring-to-paperspace">Transferring to Paperspace</h1>
+<p>An equally hard problem to downloading 100GB of data is uploading 100GB of data.</p>
+<p>Between space requirements and network instability, transferring a raw 100GB with no plan for recovery would be absolute madness.</p>
+<h2 id="targz">tar.gz</h2>
+<p>To get around this, we&rsquo;ll divvy up our pictures into their main groupings. For each major category of image we turn each into a tarball with <code>tar -czf</code>.</p>
+<p>It only later occurred to us that <code>gzipping</code> each archive wasn&rsquo;t just a waste of time but actually harmful to some things we wanted to do later with respect to mitigating the constraints of the sizing on our remote hard drive.</p>
+<p>JPEGs, especially of natural shapes like photographs of the real world are high entropy and are essentially as compressed as they can already be. Gzipping will at best shave off a few megabytes from the entire multi-gigabyte package, and at worse add a few given the overhead of adding a gzip header for each file. This was a bad idea, but by the time we realized that we was too far into the data transfer to back out.</p>
+<p>Don&rsquo;t gzip your JPEGs, kids.</p>
+<h2 id="split">split</h2>
+<p>Just gzipping gave us an archive file for each category-folder that still totaled  between 7GB and 60GB, which remains madness to attempt to transfer as-is.</p>
+<p>To our rescue is the GNU tool <code>split</code>, which does what it says on the tin and cuts files into pieces specified by various command line arguments.</p>
+<p>We settled on a sizable 350MB for each chunk, using the following command:</p>
+<pre><code>split -b 350MB -d ./inputfile
+</code></pre><p>This gives us a variable number of 350MB chunks of data, giving us something much easier to upload. In the event of a network failure during transfer, we will only ever lose the work associated with a single chunk, allowing for graceful and economical recoveries.</p>
+<h2 id="rsync">rsync</h2>
+<p>Continuing the thought process of mad ideas, it would be mad to attempt to use a simple protocol like <code>scp</code> to transfer the sheer amount of files. In comes the stalwart <code>rsync</code>, with such options like automatic retry, read-from-list capability, remove-completed-from-list functionality, and the ability to show progress bars.</p>
+<p>For such a massive procedure like this, rsync is our saving grace.</p>
+<p>Our go-to rsync command looked like this:</p>
+<pre><code> rsync --files-from=./file_list.txt --remove-source-files --progress -avz . serverAddress:~/data/swipr/
+</code></pre><p>It took approximately 18 hours to upload all 102 GB of data.</p>
+<h2 id="cat">cat</h2>
+<p>After the transfer of all this data was completed, we were able to finally use <code>cat</code> the way it was intended, concatenating files together at the bit level. Using <code>cat</code>, we re-created the tarballs that we split from before the transfer, and then untarballed everything to get back the 300,000 files.</p>
+<h1 id="moving-on">Moving On</h1>
+<p>In the next section, we&rsquo;ll discuss doing data cleanup with DFace.</p>
+<p><a href="/posts/ml/swipr05">Next Section - Data Cleanup</a></p>
+
+
+
+<h3>Posts in this series</h3>
+<ul>
+  
+    <li><a href="/posts/ml/swipr10/">Swipr - Server</a></li>
+  
+    <li><a href="/posts/ml/swipr09/">Swipr - Datastore</a></li>
+  
+    <li><a href="/posts/ml/swipr08/">Swipr - LibSwipr</a></li>
+  
+    <li><a href="/posts/ml/swipr07/">Swipr - Swipr Script Service</a></li>
+  
+    <li><a href="/posts/ml/swipr06/">Swipr - Fast.ai and CNNs</a></li>
+  
+    <li><a href="/posts/ml/swipr05/">Swipr - Data Cleaning</a></li>
+  
+    <li><a href="/posts/ml/swipr04/">Swipr - Data Collection (Part 2 of 2)</a></li>
+  
+    <li><a href="/posts/ml/swipr03/">Swipr - Data Collection (Part 1 of 2)</a></li>
+  
+    <li><a href="/posts/ml/swipr02/">Swipr - Scope</a></li>
+  
+    <li><a href="/posts/ml/swipr01/">Swipr - Overview</a></li>
+  
+</ul>
+</div>
+    <div class="post__footer">
+      
+        <span><a class="category" href="/categories/machine-learning/">machine learning</a><a class="category" href="/categories/fast%2eai/">fast.ai</a></span>
+
+
+      
+
+      
+        <span><a class="tag" href="/tags/cnn/">CNN</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-collection/">data collection</a><a class="tag" href="/tags/architecture/">architecture</a></span>
+
+
+      
+    </div>
+
+    
+  </div>
+
+      </main>
+    </div><footer class="footer footer__base">
+  <ul class="footer__list">
+    <li class="footer__item">
+      &copy;
+      
+        
+        2023
+      
+    </li>
+    
+  </ul>
+</footer>
+  
+  <script
+    type="text/javascript"
+    src="/js/medium-zoom.min.7d3bf3472b73d9ba107b3de37d0df8fa736593a3c6638c95eaed42006bfc0193.js"
+    integrity="sha256-fTvzRytz2boQez3jfQ34&#43;nNlk6PGY4yV6u1CAGv8AZM="
+    crossorigin="anonymous"
+  ></script></body>
+</html>
