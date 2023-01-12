@@ -10,4 +10,4 @@
 	url = https://github.com/dim0627/hugo_theme_beg.git
 [submodule "anatole"]
 	path = anatole
-	url = https://github.com/lxndrblz/anatole
+	url = https://github.com/lxndrblz/anatole.git
