@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content="Post Summary"><title>Mfsong&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.7d3384298b257eff2f84ff7d48ac8cd76c2fa0934b90672393d7368ca3ea117b1e18c7a4e0fa643a0c235a1b935b34ba.css" integrity="sha384-fTOEKYslfv8vhP99SKyM12wvoJNLkGcjk9c2jKPqEXseGMek4PpkOgwjWhuTWzS6"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Mfsong" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Mfsong</h1><p class="article date">Monday, October 1, 2018</p></section><article class="article markdown-body"><h1 id="data-collection">Data Collection</h1>
+<p>Using the Spotify API, we collect as many songs as possible, ideally from as diverse genres as possible.</p>
+<p>In our case, we collected my Library, which consists of about 2,000 songs, mostly of various EDM and American pop flavors. We also collected the nearly 6,000 song collection of my father, which is almost entirely country, bluegrass, and soft-rock.</p>
+<p>Hopefully this spread of genres will be broad enough that any given model will not overfit into one particular genre.</p>
+<h1 id="data-tagging">Data Tagging</h1>
+<p>Using Classy for Spotify, we classify as many songs as possible into a number of distinct categories:</p>
+<ol>
+<li>Male</li>
+<li>Female</li>
+<li>Instrumental</li>
+<li>Ambiguous</li>
+</ol>
+<p>The categorizations are relatively complicated because some are mutually exclusive while others are not.</p>
+<p>For example, a song can be both Male and Female, indicating that it is a duet, or otherwise has multiple singers. Meanwhile, a song cannot be both Male and Instrumental for obvious reasons.</p>
+<p>Ambiguous indicates that the song has neither a strong male or female vocal tint.</p>
+<h1 id="training-and-validation-sets">Training and Validation Sets</h1>
+<p>Once we&rsquo;ve classified a sufficent number songs this way, we use the export feature to assemble a CSV of songs and their associated tags. The CSV is in the format of:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csv" data-lang="csv"><span class="line"><span class="cl"><span class="s">Spotify Id</span><span class="p">,</span><span class="s"> quality_a</span><span class="p">,</span><span class="s"> quality_b</span><span class="p">,</span><span class="s"> quality_c</span><span class="p">,</span><span class="s"> etc</span><span class="p">
+</span></span></span></code></pre></div><p>For example,</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csv" data-lang="csv"><span class="line"><span class="cl"><span class="s">Spotify Id</span><span class="p">,</span><span class="s">Androgynous</span><span class="p">,</span><span class="s">Instrumental</span><span class="p">,</span><span class="s">Female</span><span class="p">,</span><span class="s">Male</span><span class="p">
+</span></span></span><span class="line"><span class="cl"><span class="s">4L5XnD2PMJrc9A4Mcp1asi</span><span class="p">,,,,,</span><span class="s">Male</span><span class="p">
+</span></span></span><span class="line"><span class="cl"><span class="s">1V9KNH4YAyJ1JchUELTCUk</span><span class="p">,,</span><span class="s">Instrumental</span><span class="p">,,
+</span></span></span><span class="line"><span class="cl"><span class="s">0p0XWfIcOKZRhTIOrNF0kA</span><span class="p">,,,</span><span class="s">Female</span><span class="p">,</span><span class="s">Male</span><span class="p">
+</span></span></span></code></pre></div><p>A blank space indicates that the quality was not found on the song.</p>
+<p>For the validation set, we&rsquo;ll randomly take 20% of the ids and place them into a <code>/validation</code> folder. Because our data is discrete, i.e., no song has any relationship to any other song, we don&rsquo;t need to take any further precautions in constructing our set.</p>
+<pre><code>why 20%? Because Jeremy says it's good. It is empirical, not scientific.
+</code></pre>
+<p>As optional step which we may revist depending on performance needs, a possible validation set improvement would be to graph the number of songs and their lengths, and make sure that our validation set contains a similar ratio of <code>short songs : average songs : long songs</code>. This would help the model not overfit to songs of a certain length.</p>
+<h1 id="input-data">Input Data</h1>
+<p>With the data collected and tagged, we now consider what we&rsquo;ll actually hand into our model.</p>
+<p>The Audio Analysis endpoint returns a massive JSON object for each song containing nearly every important piece of information about a song except for the raw audio itself. After reading <a href="">a</a> <a href="">few</a> <a href="">papers</a> on the subject of gender identification in songs, it seems that the most important single determining factor is timbre, possibly followed by pitch.</p>
+<p>Thankfully this endpoint, among other things, returns two arrays, one of pitches, and one of timbres. The number of entries in each array varies depending on the length of the song, but each array entry itself contains a 12-dimensional array of values.  The dimensions of each array are therefore <code>x * 12</code> where x is the number of &lsquo;beats&rsquo; in the track.</p>
+<p>After trimming down the excess in each analysis object returned, the input data for a given track will amount to a <code>x * 12</code> array looking like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csv" data-lang="csv"><span class="line"><span class="cl"><span class="s"> [0.245</span><span class="p">,</span><span class="s"> 0.192</span><span class="p">,</span><span class="s"> 0.588</span><span class="p">,</span><span class="s"> 0.134</span><span class="p">,</span><span class="s"> 0.09</span><span class="p">,</span><span class="s"> 0.1</span><span class="p">,</span><span class="s"> 0.113</span><span class="p">,</span><span class="s"> 0.223</span><span class="p">,</span><span class="s"> 0.218</span><span class="p">,</span><span class="s"> 1.0</span><span class="p">,</span><span class="s"> 0.157</span><span class="p">,</span><span class="s"> 0.086]</span><span class="p">,
+</span></span></span><span class="line"><span class="cl"><span class="s"> [0.694</span><span class="p">,</span><span class="s"> 0.05</span><span class="p">,</span><span class="s"> 0.04</span><span class="p">,</span><span class="s"> 0.033</span><span class="p">,</span><span class="s"> 0.048</span><span class="p">,</span><span class="s"> 0.088</span><span class="p">,</span><span class="s"> 0.037</span><span class="p">,</span><span class="s"> 0.093</span><span class="p">,</span><span class="s"> 0.079</span><span class="p">,</span><span class="s"> 1.0</span><span class="p">,</span><span class="s"> 0.054</span><span class="p">,</span><span class="s"> 0.075]</span><span class="p">,
+</span></span></span><span class="line"><span class="cl"><span class="s"> [0.558</span><span class="p">,</span><span class="s"> 0.327</span><span class="p">,</span><span class="s"> 1.0</span><span class="p">,</span><span class="s"> 0.094</span><span class="p">,</span><span class="s"> 0.052</span><span class="p">,</span><span class="s"> 0.072</span><span class="p">,</span><span class="s"> 0.045</span><span class="p">,</span><span class="s"> 0.073</span><span class="p">,</span><span class="s"> 0.076</span><span class="p">,</span><span class="s"> 0.419</span><span class="p">,</span><span class="s"> 0.14</span><span class="p">,</span><span class="s"> 0.071]</span><span class="p">
+</span></span></span><span class="line"><span class="cl"><span class="s"> ...</span><span class="p">
+</span></span></span></code></pre></div><p>Each track has its own file of the form <code>$spotify_id.txt</code>, such as <code>4L5XnD2PMJrc9A4Mcp1asi.txt</code>, filled with the above array data.</p>
+<p>n.b. for this first experiment we will just hand in the Timbres array.</p>
+<h1 id="setting-up-the-notebook">Setting up the Notebook</h1>
+<h1 id="data-augmentation">Data Augmentation</h1>
+<p>Data augmentation is a great way to reduce the chances of overfitting. In the case of images, rotating at various angles, skewing a bit left to right, and zooming in a little are all ways to augment the data. The contents of the image, though a bit warped, remain the same. A cat at an angle remains a cat.</p>
+<p>Methods of augmenting images are known and understood. Augmenting other types of data is still an emerging subfield of ML.</p>
+<h2 id="augmentation-1---reverse-order">Augmentation 1 - Reverse Order</h2>
+<p>In the case of our data, which is a time-linear sequence of pitches, we can reverse the order of the array entries. Instead of reading our <code>x * 12</code> matrix from top to bottom, we can read it from bottom to top. Although we can reverse the order of the matrix rows, it is important that we <em>do not</em> reverse the order of the matrix columns. The order of those 12 columns, which amounts to some kind of unknown (to us. Echo nest didn&rsquo;t leave Spotify with great documentation on their properties.) embeddings array is important.</p>
+<h2 id="augmentation-2---value-adjustment">Augmentation 2 - Value Adjustment</h2>
+<p>Because the Timbres are on a scale of -infinity to +infinity, and tend to hover between -100 and +100, we can also slightly modify the timbres. Each entry is continuous, meaning the difference between 42 and 43 means only a slight nudge towards whatever the cell represents, and doesn&rsquo;t necessarily represent a rollover into a new category.</p>
+<p>Given this, we could, within small bounds, add random positive or negative values to some cells. A song whose values have been augmented this way should by and large continue to represent the same song.</p>
+<p>Given that we do not know the exact nature of these embeddings however, this might be a risky strategy, since modiying one of these variables one way while modifying a different one another way may not make logical sense. There&rsquo;s now way to know though - there&rsquo;s no documentaion on them.</p>
+<h1 id="testing-accuracy-vs">Testing Accuracy vs</h1>
+</article><section class="article labels"><a class="category" href=/categories/defaultcategory/>defaultcategory</a><a class="tag" href=/tags/defaulttag/>defaulttag</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/triple_s/tshirts0/"><span class="iconfont icon-article"></span>Tshirts0</a></p><p><a class="link" href="/posts/security/long-lived-ssh-keys-considered-harmful/"><span class="iconfont icon-article"></span>Long Lived SSH Keys Considered Harmful</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2026</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section></body>
+
+</html>

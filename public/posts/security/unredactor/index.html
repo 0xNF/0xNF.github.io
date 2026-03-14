@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content="Post Summary"><title>Unredactor&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.7d3384298b257eff2f84ff7d48ac8cd76c2fa0934b90672393d7368ca3ea117b1e18c7a4e0fa643a0c235a1b935b34ba.css" integrity="sha384-fTOEKYslfv8vhP99SKyM12wvoJNLkGcjk9c2jKPqEXseGMek4PpkOgwjWhuTWzS6"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Unredactor" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Unredactor</h1><p class="article date">Sunday, August 26, 2018</p></section><article class="article markdown-body"><p>Given an image of text, where some of that text is blacked out, attempt to fit a sequence of characters that lines up with the edges of that text.</p>
+<ol>
+<li>Detect overall Skew (i.e., rotate -23 degrees in order to make it flat)</li>
+<li>Detect (or be given) a Font</li>
+<li>Detect (or be told) number of lines</li>
+<li>Detect (or be told) where the line breaks are</li>
+<li>Detect (or be told) the anchor points
+<ul>
+<li>Need at least one, and preferably two, ideally n-many anchor points around the redacted zone. These are used to detect if generated sequence matches well.</li>
+</ul>
+</li>
+<li>Be given a character set
+<ul>
+<li>alpha</li>
+<li>numeric</li>
+<li>special</li>
+<li>upper</li>
+<li>lower</li>
+<li>foreignN</li>
+<li>full-ascii</li>
+<li>full-unicode</li>
+</ul>
+</li>
+<li>Be given heuristics:
+<ul>
+<li>names
+<ul>
+<li>[sub: <em>these</em> names]</li>
+</ul>
+</li>
+<li>numbers
+<ul>
+<li>[sub: <em>these</em> numbers]</li>
+</ul>
+</li>
+<li>Words
+<ul>
+<li>[sub: <em>these</em> words (Individual-1, US Person 2, etc)]</li>
+</ul>
+</li>
+<li>character count
+<ul>
+<li>i.e, serial numbers are, lets say, 12 chars</li>
+</ul>
+</li>
+<li>document source, field type:
+<ul>
+<li>i.e, Best Buy uses Arial 12 point 17 char serial codes.</li>
+</ul>
+</li>
+<li>Whether document breaks on words, or on characters.</li>
+</ul>
+</li>
+</ol>
+<p>Generate a potential combination. Upon generation, overlay text onto document, detect how far away by euclidian distance the new text is from the anchor points of the input text. Keep n-number of closest generations, show results to user.</p>
+<h2 id="manual-process">Manual Process:</h2>
+<ol>
+<li>Upload document</li>
+<li>Assign Font</li>
+<li>Assign char set</li>
+<li>Assign custom heuristics</li>
+<li>Add bounding boxes and anchor points</li>
+<li>Run</li>
+</ol>
+<h2 id="automatic-process">Automatic Process:</h2>
+<ol>
+<li>Upload document</li>
+<li>Run</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">string</span> <span class="n">DetectFont</span><span class="p">(</span><span class="n">Image</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">double</span> <span class="n">DetectFontSize</span><span class="p">(</span><span class="n">Image</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">double</span> <span class="n">DetectKerning</span><span class="p">(</span><span class="n">Image</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">double</span> <span class="n">DetectSkew</span><span class="p">(</span><span class="n">Image</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">int</span> <span class="n">DetectLines</span><span class="p">(</span><span class="n">Image</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Point</span><span class="p">&gt;</span> <span class="n">DetectLineBreaks</span><span class="p">(</span><span class="n">Image</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Point</span><span class="p">&gt;</span> <span class="n">DetectAnchorPoints</span><span class="p">(</span><span class="n">Image</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Point</span><span class="p">&gt;</span> <span class="n">TestOverlay</span><span class="p">(</span><span class="n">Image</span> <span class="n">i</span><span class="p">,</span> <span class="kt">double</span> <span class="n">tolerance</span><span class="p">,</span> <span class="n">ImageOptions</span> <span class="n">io</span><span class="p">,</span> <span class="kt">string</span> <span class="n">text</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ImageOptions</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">string</span> <span class="n">Font</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">FontSize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">Length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">Skew</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">Kerning</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">List</span><span class="p">&lt;</span><span class="n">Point</span><span class="p">&gt;</span> <span class="n">AnchorPoints</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">List</span><span class="p">&lt;</span><span class="n">Point</span><span class="p">&gt;</span> <span class="n">LineBreaks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">BreaksOn</span> <span class="n">BreaksOn</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">enum</span> <span class="n">BreaksOn</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Words</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Chars</span> <span class="p">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></article><section class="article labels"><a class="category" href=/categories/defaultcategory/>defaultcategory</a><a class="tag" href=/tags/defaulttag/>defaulttag</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/esk8bst/esk8bst/"><span class="iconfont icon-article"></span>ESK8BST -  Electric Skateboard Buy / Sell / Trade</a></p><p><a class="link" href="/posts/security/proper2fa/"><span class="iconfont icon-article"></span>Proper 2-Factor Auth</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2026</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section></body>
+
+</html>

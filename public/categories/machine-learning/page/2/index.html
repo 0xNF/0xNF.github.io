@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content=""><title>Machine Learning&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.7d3384298b257eff2f84ff7d48ac8cd76c2fa0934b90672393d7368ca3ea117b1e18c7a4e0fa643a0c235a1b935b34ba.css" integrity="sha384-fTOEKYslfv8vhP99SKyM12wvoJNLkGcjk9c2jKPqEXseGMek4PpkOgwjWhuTWzS6"><link rel="alternate" type="application/rss+xml" href="/categories/machine-learning/index.xml" title="Sidequesting" /><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Machine Learning" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><section class="article header"><h1>Machine Learning</h1></section><ul class="note list"><li class="item">
+        
+        <a class="note" href="/posts/ml/mk2/">
+        
+            <p class="note title">Machine Levine Mk. II</p><p class="note date">Saturday, November 3, 2018</p><p class="note content">Machine Levine Mk. II is the second of the Matt Bots, and the first of which can produce any kind of coherent output. A brief description of his capabilities are described at his homepage over at http://machinelevine.winetech.com/bots/ml2, but we&rsquo;ll deal with some deeper ideas behind his creation and operation here.
+Data Collection Mk. II uses the same initial corpus that Mk. I uses. For more details on data collection, refer to Mk. I&rsquo;s Data Collection section.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/machine-learning/">Machine Learning</a><a class="category" href="/categories/nlp/">NLP</a><a class="category" href="/categories/fast%2eai/">fast.ai</a><a class="tag" href="/tags/rnn/">rnn</a><a class="tag" href="/tags/parsing/">parsing</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-cleanup/">data cleanup</a></p></li><li class="item">
+        
+        <a class="note" href="/posts/ml/mk1/">
+        
+            <p class="note title">Machine Levine Mk. I</p><p class="note date">Friday, November 2, 2018</p><p class="note content">This is a description of how the first of the Matt Bots came into existence. Few things in this document should be interpreted as the best or even a correct way to do anything - this bot is an academic exercise. That being said, here is how he was made.
+Data Collection Like the general post describes, the data used to train the Matt model was derived from Matt Levine&rsquo;s at-the-time 571-count archive of Money Stuff articles.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/machine-learning/">Machine Learning</a><a class="category" href="/categories/nlp/">NLP</a><a class="category" href="/categories/fast%2eai/">fast.ai</a><a class="tag" href="/tags/rnn/">rnn</a><a class="tag" href="/tags/parsing/">parsing</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-cleanup/">data cleanup</a></p></li><li class="item">
+        
+        <a class="note" href="/posts/ml/machinelevine/">
+        
+            <p class="note title">Machine Levine</p><p class="note date">Thursday, November 1, 2018</p><p class="note content">The Goal In order to better understand machine learning, I decided to see if I could get a neural network to write articles like Matt Levine. The original goal was to sort Spotify songs by male or female vocals, but I had been learning all of this stuff by following along with the fast.ai courses, and that specific use case was a bit afield of the coursework and forum discussions happening in the MOOC. Fast.ai, great as is it, has a focus on image data and NLP applications. As a compromise, I decided to learn by creating a bot that writes just like Matt Levine of Bloomberg.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/machine-learning/">Machine Learning</a><a class="category" href="/categories/nlp/">NLP</a><a class="category" href="/categories/fast%2eai/">fast.ai</a><a class="tag" href="/tags/rnn/">rnn</a><a class="tag" href="/tags/parsing/">parsing</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-cleanup/">data cleanup</a></p></li><li class="item">
+        
+        <a class="note" href="/posts/ml/mk3/">
+        
+            <p class="note title">Machine Levine Mk III</p><p class="note date">Thursday, October 18, 2018</p><p class="note content"> Data Collection Data Cleanup Tagging Mistakes Saving ML Setup WikiText 103 Validation and Test Sets Loading Data Concatenation Tokenizing Data Collection Machine Levine Mk III aims to both remedy some of the data collection errors while also improving the title generating situation.
+Data collection this time around involves a slightly different method:
+We will crawl every page of Matt Levine articles available from Bloomberg via the API:
+https://www.bloomberg.com/lineup/api/lazy_load_author_stories?slug=ARbTQlRLRjE/matthew-s-levine&authorType=opinion&page=0
+The structure of the returned object is:
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/machine-learning/">Machine Learning</a><a class="category" href="/categories/nlp/">NLP</a><a class="category" href="/categories/fast%2eai/">fast.ai</a><a class="tag" href="/tags/rnn/">rnn</a><a class="tag" href="/tags/parsing/">parsing</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-cleanup/">data cleanup</a></p></li></ul><div class="pagination">
+    <ul><li><a class="" href="/categories/machine-learning/">1</a></li><li><a class="active" href="/categories/machine-learning/page/2/">2</a></li></ul>
+</div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2026</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section></body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content="Post Summary"><title>Machine Levine Mk III&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.7d3384298b257eff2f84ff7d48ac8cd76c2fa0934b90672393d7368ca3ea117b1e18c7a4e0fa643a0c235a1b935b34ba.css" integrity="sha384-fTOEKYslfv8vhP99SKyM12wvoJNLkGcjk9c2jKPqEXseGMek4PpkOgwjWhuTWzS6"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Machine Levine Mk III" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Machine Levine Mk III</h1><p class="article date">Thursday, October 18, 2018</p></section><article class="article markdown-body"><ul>
+<li><a href="#data-collection">Data Collection</a>
+<ul>
+<li><a href="#data-cleanup">Data Cleanup</a>
+<ul>
+<li><a href="#tagging">Tagging</a></li>
+<li><a href="#mistakes">Mistakes</a></li>
+<li><a href="#saving">Saving</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#ml-setup">ML Setup</a>
+<ul>
+<li><a href="#wikitext-103">WikiText 103</a></li>
+<li><a href="#validation-and-test-sets">Validation and Test Sets</a></li>
+</ul>
+</li>
+<li><a href="#loading-data">Loading Data</a>
+<ul>
+<li><a href="#concatenation">Concatenation</a></li>
+<li><a href="#tokenizing">Tokenizing</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="data-collection">Data Collection</h1>
+<p>Machine Levine Mk III aims to both remedy some of the data collection errors while also improving the title generating situation.</p>
+<p>Data collection this time around involves a slightly different method:</p>
+<p>We will crawl every page of Matt Levine articles available from Bloomberg via the API:</p>
+<p><a href="https://www.bloomberg.com/lineup/api/lazy_load_author_stories?slug=ARbTQlRLRjE/matthew-s-levine&amp;authorType=opinion&amp;page=0"target="_blank" rel="noopener noreferrer">https://www.bloomberg.com/lineup/api/lazy_load_author_stories?slug=ARbTQlRLRjE/matthew-s-levine&authorType=opinion&page=0</a></p>
+<p>The structure of the returned object is:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-TypeScript" data-lang="TypeScript"><span class="line"><span class="cl"><span class="kr">interface</span> <span class="nx">ArticleList</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">html</span>: <span class="kt">string</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">done</span>: <span class="kt">boolean</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Where we continue adding one to the page count until <code>done === True</code>.</p>
+<p>We have to parse the supplied <code>html</code> field for all unique <code>href=</code>s.</p>
+<p>This gives us what are essentially four different types of articles:</p>
+<ul>
+<li>Money Stuff articles</li>
+<li>News Articles</li>
+<li>Snippets</li>
+<li>Levine on Wall Street</li>
+</ul>
+<h1></h1>
+<p>All Tokens, but only using Embedding dataloader
+=&gt; Final training = [trn/val/acc] = [2.95 / 4.39 / 0.28]</p>
+<p>All tokens, after training on embeddings and using MoneyStuff
+=&gt;</p>
+<p>&hellip;</p>
+<p>Other Tokens only, training on Other
+=&gt;     3.052371   3.96384    0.321008
+Money Stuff Tokens</p>
+</article><section class="article labels"><a class="category" href=/categories/machine-learning/>Machine Learning</a><a class="category" href=/categories/nlp/>NLP</a><a class="category" href=/categories/fast%2eai/>fast.ai</a><a class="tag" href=/tags/rnn/>rnn</a><a class="tag" href=/tags/parsing/>parsing</a><a class="tag" href=/tags/web-scraping/>web scraping</a><a class="tag" href=/tags/data-cleanup/>data cleanup</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/misc/big-git-slow-vscode/"><span class="iconfont icon-article"></span>Git Change Tracking Causes VS Code Freezes</a></p><p><a class="link" href="/posts/security/securityquestions/"><span class="iconfont icon-article"></span>A system for approaching security questions</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2026</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section></body>
+
+</html>
