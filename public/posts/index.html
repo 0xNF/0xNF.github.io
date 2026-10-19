@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=34247&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><meta name="description" content=""><title>Posts&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.7d3384298b257eff2f84ff7d48ac8cd76c2fa0934b90672393d7368ca3ea117b1e18c7a4e0fa643a0c235a1b935b34ba.css" integrity="sha384-fTOEKYslfv8vhP99SKyM12wvoJNLkGcjk9c2jKPqEXseGMek4PpkOgwjWhuTWzS6"><link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Sidequesting" /><meta name="twitter:card" content="summary" />
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content=""><title>Posts&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.1912ded78f688bbd516afb7cab34b50ded577caf45cf75bc1af5d38655c05000847900a4cf8d2cfe19578a79343797c0.css" integrity="sha384-GRLe149oi71Ravt8qzS1De1XfK9Fz3W8GvXThlXAUACEeQCkz40s/hlXink0N5fA"><link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Sidequesting" /><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Posts" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><section class="article header"><h1>Posts</h1></section><ul class="note list"><li class="item">
+        
+        <a class="note" href="/posts/agentic/workflows/rev1/">
+        
+            <p class="note title">Agentic Workflow as of October 2026</p><p class="note date">Sunday, October 18, 2026</p><p class="note content">tl;dr: This post describes my first current very rough approach to agentic development. This approach is heavy on docs, folder structure, and copipus tools and scripts for verification feedback.
+My current approach is codified by the Winetech Standard Repo, which is a barebones skeleton of the structure and built-in agent ready documentation to get started on a new project.
+Actual Take-Aways Use ADRs Prune memories, AGENTS.md, and other context-filling documents regularly Provide a space to put observations found during their tasks so don&rsquo;t get distracted and information doesn&rsquo;t get lost Keep as much inside the repo as possible, to provide agents with the context on demand that they need Provide tools and scripts that can give negative feedback to the agents so they can quickly course-correct on their own Give them a runtime of your application to test against in a live setting. Static analysis not enough. Table of Contents tl;dr: Actual Take-Aways Prerequisites Models Harnesses Subscriptions Project Ownership Folder Structure adr/ investigations/ tickets/ backlog.md Verification and Feedback Repo Tools AGENTS.md and Memories AGENTS.md Memories Skills Pruning files when they get too big or outdated Working with the Agents Prompting Style Corrections Lean into their biases and expectations for tools and docs Hooks and notifications Paralleization Some Usage Patterns &ldquo;Wrap up&rdquo; Handoff Documents Rewrite To Be Forward Looking Team A vs Team B Recent Worked Examples Reducing Token Spend on Backtracking during Failed Test Runs Test Suite Optimization Automation and Accessibility Migrating a Failing Robotics Sample From Gazebo to MuJoCo Prerequisites People get different results from the diffeent workflows, tools, models and harnesses they use, so I&rsquo;d like to set out what my partifuclar set up looks like at the outside, so you can adjust your own expectations.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/llm/">llm</a><a class="tag" href="/tags/llm/">llm</a></p></li><li class="item">
         
         <a class="note" href="/posts/oauth1/">
         
@@ -68,19 +75,13 @@ We&rsquo;ll also leave out building the Razor Pages and the views, dealing with 
         
             <p class="note title">Swipr - Datastore</p><p class="note date">Thursday, December 13, 2018</p><p class="note content">We need a datastore. Primarily so that we can stow a given user&rsquo;s Tinder information &ndash; Facebooked ID, Facebooked password, Facebooked access token, and Tinder access token, &ndash; but also because we now have a complicated application it&rsquo;s state must be preserved somehow.
 We&rsquo;re going to skip talking about tables relating to how ASP.NET Core projects do identity because there are a lot of tables for that. The only thing worth pointing out with respect to that is many of our tables will keep a foreign key to the autogenerated AspNetUsers.Id field.
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/machine-learning/">machine learning</a><a class="category" href="/categories/fast%2eai/">fast.ai</a><a class="tag" href="/tags/cnn/">CNN</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-collection/">data collection</a><a class="tag" href="/tags/architecture/">architecture</a></p></li><li class="item">
-        
-        <a class="note" href="/posts/ml/swipr08/">
-        
-            <p class="note title">Swipr - LibSwipr</p><p class="note date">Thursday, December 13, 2018</p><p class="note content">As a harness for our model, we&rsquo;ll create a server that serves as a centralized access point. This server provides the necessary facilities to register an account with it, interact with Tinder, and receive responses from the model.
-The general architecture for the server will go something like this:
-SwiprServer is the server, in our case, an ASP.NET Core 2 project, and LibSwipr is our custom tooling around all the other interactions.
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/machine-learning/">machine learning</a><a class="category" href="/categories/fast%2eai/">fast.ai</a><a class="tag" href="/tags/cnn/">CNN</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-collection/">data collection</a><a class="tag" href="/tags/architecture/">architecture</a></p></li></ul><div class="pagination">
     <ul><li><a class="active" href="/posts/">1</a></li><li><a class="" href="/posts/page/2/">2</a></li><li><a class="" href="/posts/page/3/">3</a></li><li><a class="" href="/posts/page/4/">4</a></li><li><a class="" href="/posts/page/5/">5</a></li><li><a href="/posts/page/2/"><span class="iconfont icon-pagenext"></span></a></li></ul>
 </div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2026</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section></body>
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section><script src="/js/core.min.39702cb95f7cf70f6dddc93246c80e02ba6bf318843f08ab21eff518160a6c40b563bcaa2aa342f4221ec7a0e60c64b8.js" integrity="sha384-OXAsuV989w9t3ckyRsgOArpr8xiEPwirIe/1GBYKbEC1Y7yqKqNC9CIex6DmDGS4"></script></body>
 
 </html>
+

@@ -1,0 +1,10 @@
+details.toc { margin: 0 0 2rem; padding: .75rem 1.25rem; border: 1px solid rgba(128,128,128,.25); border-radius: 6px; background: rgba(128,128,128,.06); }
+details.toc summary { cursor: pointer; font-weight: 600; }
+details.toc nav ul { margin: .5rem 0 0; padding-left: 1.25rem; list-style: none; }
+details.toc nav ul ul { margin: 0; }
+details.toc li { margin: .15rem 0; line-height: 1.4; }
+details.toc a { text-decoration: none; }
+details.toc a:hover { text-decoration: underline; }
+details.toc code { background: none; color: inherit; padding: 0; font-size: .9em; }
+.copy-btn { position: absolute; top: .4rem; right: .4rem; padding: .15rem .5rem; font-size: .75rem; cursor: pointer; opacity: 0; transition: opacity .15s; color: inherit; background: rgba(128,128,128,.2); border: 1px solid rgba(128,128,128,.4); border-radius: 4px; }
+pre:hover .copy-btn, .copy-btn:focus { opacity: 1; }

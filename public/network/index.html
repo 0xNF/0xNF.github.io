@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=34247&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content=""><title>Networks&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.1912ded78f688bbd516afb7cab34b50ded577caf45cf75bc1af5d38655c05000847900a4cf8d2cfe19578a79343797c0.css" integrity="sha384-GRLe149oi71Ravt8qzS1De1XfK9Fz3W8GvXThlXAUACEeQCkz40s/hlXink0N5fA"><link rel="alternate" type="application/rss+xml" href="/network/index.xml" title="Sidequesting" /><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Networks" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><section class="article header"><h1>Networks</h1></section><ul class="note list"><li class="item">
+        
+        <a class="note" href="/network/home/home3_addressing/">
+        
+            <p class="note title">Addressing and Naming</p><p class="note date">Sunday, April 5, 2026</p><p class="note content">Naming Everything on the network gets a specific hostname, which follows a template. The naming template you choose for your own network is likely to be different based on your own desires, but here&rsquo;s the one I&rsquo;ve chosen:
+$TwoLetterSiteCode-$RoleTemplate-$instanceNumberOrUnit.
+Two Letter Site Code The two-letter-site-code is an abbreviation for sites that I have, or am likely to have, devices or vms located at. For devices, this is straight forward since they must physically exist somehwere. For VMs its trickier, because they could float around from place to place. For now, I&rsquo;ve simply decided that VMs have a site code equal to their hypervisor host, but it&rsquo;s open to modification in the future. E.g., &rsquo;s ln for London, se for Seattle, etc.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
+        
+        <a class="note" href="/network/openvpn/mtu/">
+        
+            <p class="note title">OpenVPN - Message Too Long</p><p class="note date">Saturday, March 28, 2026</p><p class="note content">If your OpenVPN logs show something like:
+Write UDPv4: Message too log
+Then you should double-check your MTU settings. You can either set it on the client connection directly by overriding the .ovpn profile, ala:
+Or more permanetly, by adding it directly into the OpenVPN template settings for your instance:
+In this case we&rsquo;ve chosen an MTU = 1425. if you&rsquo;re calculating the MSSFix manually, apparently the optimal MSSFix value is MTU - 40 = 1385 in our case, but your mileage may varry.
+</p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
+        
+        <a class="note" href="/network/home/home7_openvpn/">
+        
+            <p class="note title">Home7_openvpn</p><p class="note date">Saturday, March 28, 2026</p><p class="note content"> MTU + MSS fix Gotchas: dont vip yourself to oblivion Data Ciphers and Fallback Cipher is empty by default, set to aes-gcm-256 Copy as CN Strict checking udp v4 keep-alive: empty -&gt; 60 time-to-live: empty -&gt; 120 Bind Address -&gt; Empty (fine for all) Server (is what Address space it hands out) -&gt; to .240, then note about vlans Locla Routes (is what we can access) -&gt; underlay overlay Discuss fact that networking of OpenVPN is almost fully indistinct from networking owned by OPNSense Discuss Gotchas on client:
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
+        
+        <a class="note" href="/network/home/home6_pki/">
+        
+            <p class="note title">Home Networking 6 - Public Key Infrastructure (PKI)</p><p class="note date">Saturday, March 28, 2026</p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
+        
+        <a class="note" href="/network/home/home5_opnsense/">
+        
+            <p class="note title">Home Networking 4 - Switch</p><p class="note date">Saturday, March 28, 2026</p><p class="note content">TODO Find the tutorials used and link them VIPS (plus vip gotchas) As Alias, not as CARP because only one ISP KEA DHCP (plus restart requiredness) Interface Devices User creation SSH key uploads Root disable Setting TOTP access LAGG because of physical machine weirdness Firewall Groups DHCPGroup InternetAccess LiterallALL OpenVPN Overlay Rules Floating Fiewall Services (dns, ntp, etc) ICMP pings InternetAccess Group Not Private Address Space OpenVPN access LAN IPv4 to any IPv6 to any OpenVPN Any to Any </p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
+        
+        <a class="note" href="/network/opnsense/reset_web_ui_cert/">
+        
+            <p class="note title">Reset_web_ui_cert</p><p class="note date">Tuesday, March 24, 2026</p><p class="note content">Upload a bad certificate to your OPNSense firewall? If you can ssh in, you can run configctl webgui restart renew to reset the certificate and get web-ui access again.
+h/t https://docs.opnsense.org/troubleshooting/webgui.html
+If you can&rsquo;t ssh in, then you&rsquo;ll need to find another solution.
+Good luck.
+</p></a><p class="note labels"><a class="category" href="/categories/opnsense/">opnsense</a><a class="tag" href="/tags/tls/">tls</a><a class="tag" href="/tags/https/">https</a><a class="tag" href="/tags/certs/">certs</a></p></li><li class="item">
+        
+        <a class="note" href="/network/certs/xca_template_validity_period/">
+        
+            <p class="note title">Fixing missing, undefined, or incorrect validity periods for XCA issued certificates</p><p class="note date">Saturday, March 21, 2026</p><p class="note content">Check your template applications.
+Shot Recently while trying to issue some certificates from XCA, I struggled with getting XCA to issue certifivates with a defind expiry datetime. No matter what I did to set the dates manually, the validity period expires at was always &ldquo;undefined&rdquo; aka &ldquo;forever&rdquo;.
+Chaser Turns out the the reaosn is because I was applying an XCA template that specifically checked [x] No Defindd Expiry Time.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/networking/">networking</a><a class="category" href="/categories/certificates/">certificates</a><a class="tag" href="/tags/xca/">xca</a><a class="tag" href="/tags/certs/">certs</a><a class="tag" href="/tags/x509/">x509</a><a class="tag" href="/tags/certificate-authority/">certificate authority</a></p></li><li class="item">
+        
+        <a class="note" href="/network/home/home4_switch/">
+        
+            <p class="note title">Home Networking 4 - Switch</p><p class="note date">Monday, March 16, 2026</p><p class="note content">TODO VLAn Setup Configuration Backups SSH keys NTP, which isn&rsquo;t working Setting the HTTPS flag Portfast and Spanning Tree on 1/12 &ldquo;never ever disable it. Except sometimes. because portstroms&rdquo; Switch Setup This post continues from Home Networking 3.
+Here we&rsquo;ll set up our FS S3900 Switch. If you have an FS switch, it may be useful to you. If you don&rsquo;t, then maybe you can at least see the general idea of what&rsquo;s happening.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
+        
+        <a class="note" href="/network/home/home3_ap_wifi/">
+        
+            <p class="note title">Home Networking 3 - Access Point and WiFi</p><p class="note date">Sunday, March 15, 2026</p><p class="note content">TODO VLan tags With mixup of Bands Access Point Setup This post continues from Home Networking 3.
+We&rsquo;re setting up the Access Point here &ndash; this comes before the switch setup because there&rsquo;s some initial wonkiness with the single-port nature of our access point that I&rsquo;d like to get out of the way first, and will make describing the Switch setup in part 4 easier.
+Purchasing After frying my R7800, and being gifted a Linksys E8450 that turns out also doesn&rsquo;t boot, I decided why not just get an Access Point, and skip the Router step. I had a few requirements for what to buy:
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
+        
+        <a class="note" href="/network/home/home2_architecture/">
+        
+            <p class="note title">Home Networking 2 - Architecture</p><p class="note date">Sunday, March 15, 2026</p><p class="note content">Physical and Logical Architecture This post continues from Home Networking 1.
+Brief VLAN legend The vlans we&rsquo;re using for now are established like so:
+VLAN Purpose 1 untagged 100 Infrastructure management panels 900 Inbound ISP traffic 1016 Trusted network 1032 Guest network Logical Layout Recall from earlier we mentioned Router On a Stick, implemented thusly:
+--- title: Logical VLAN connections --- graph LR; sfp((ISP/WAN)); switch; ap(access point); hypervisor; firewall; sfp--&gt;|vlan/900|switch; subgraph vlan/all; switch&lt;--&gt;|vlan100,vlan/all|firewall; end subgraph vlan/other; switch&lt;--&gt;|vlan100,vlanall|hypervisor end subgraph WiFi Networks; ap&lt;--&gt;|vlan/1016, vlan/1032, vlan/100 |switch end ISP modem goes into the switch, which in turn goes to the firewall. The ISP modem is an SFP unit, so it goes into one of the switches SFP+ slots. From there, a different switch-inserted SFP+ module connects to an SFP+ module on the firewall, over 10GB optical cables. The optical cables we&rsquo;re using are &ldquo;LC UPC Duplex&rdquo;, meaning there&rsquo;s one dedicated line for outgoing, and one dedicated line for incoming. Things can, in theory, go very fast on the internal network.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li></ul><div class="pagination">
+    <ul><li><a class="active" href="/network/">1</a></li><li><a class="" href="/network/page/2/">2</a></li></ul>
+</div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2026</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section><script src="/js/core.min.39702cb95f7cf70f6dddc93246c80e02ba6bf318843f08ab21eff518160a6c40b563bcaa2aa342f4221ec7a0e60c64b8.js" integrity="sha384-OXAsuV989w9t3ckyRsgOArpr8xiEPwirIe/1GBYKbEC1Y7yqKqNC9CIex6DmDGS4"></script></body>
+
+</html>
+

@@ -12,7 +12,8 @@
 
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 12px; /* width of the entire scrollbar */
+  width: 12px;
+  /* width of the entire scrollbar */
   height: 12px
 }
 
@@ -21,14 +22,18 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent /* color of the tracking area */
+  background: transparent
+    /* color of the tracking area */
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.175);   /* color of the scroll thumb */
+  background-color: rgba(0, 0, 0, 0.175);
+  /* color of the scroll thumb */
   background-clip: padding-box;
-  border-radius: 6px;       /* roundness of the scroll thumb */
-  border: 2px solid transparent  /* creates padding around scroll thumb */
+  border-radius: 6px;
+  /* roundness of the scroll thumb */
+  border: 2px solid transparent
+    /* creates padding around scroll thumb */
 }
 
 *::-webkit-scrollbar-thumb:hover {
@@ -47,13 +52,14 @@ body {
   color: #24292e;
   background-color: #f3f6f9;
 
-  word-break: normal;
+  word-break: break-word;
   word-wrap: break-word;
+  white-space: normal;
 
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
+  hyphens: none;
+  -webkit-hyphens: inherit;
+  -ms-hyphens: inherit;
+  -moz-hyphens: inherit;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -349,13 +355,13 @@ b {
   background-color: #fff;
   border-radius: 6px;
   box-shadow: inset -1px 0 0 0 rgba(224, 227, 231, .6),
-              inset 0 -1px 0 0 #e0e4e7, inset 1px 0 0 0 rgba(224, 227, 231, .6);
+    inset 0 -1px 0 0 #e0e4e7, inset 1px 0 0 0 rgba(224, 227, 231, .6);
 }
 
 .note.list .item:hover {
   box-shadow: 0 2px 6px 0 #e0e4e7,
-              inset -1px 0 0 0 rgba(224, 227, 231, .3), inset 0 -1px 0 0 #e0e4e7,
-              inset 1px 0 0 0 rgba(224, 227, 231, .2);
+    inset -1px 0 0 0 rgba(224, 227, 231, .3), inset 0 -1px 0 0 #e0e4e7,
+    inset 1px 0 0 0 rgba(224, 227, 231, .2);
 }
 
 .nav.item:hover {
@@ -527,7 +533,7 @@ b {
 .slogan,
 .date,
 .license {
-  color: rgba(23,81,153,.72);
+  color: rgba(23, 81, 153, .72);
 }
 
 .pagination {
@@ -709,6 +715,7 @@ b {
 }
 
 @media (max-width: 1012px) {
+
   .note.list .item,
   .article-container {
     padding: 24px;

@@ -18,6 +18,10 @@ enableRobotsTXT = true
 codeFences = true
 noClasses = false
 
+[markup.tableOfContents]
+startLevel = 1
+endLevel = 2
+
 [markup.goldmark.renderer]
 unsafe = true  # enable raw HTML in Markdown
 
@@ -63,3 +67,7 @@ url = "/about"
 [[params.nav.custom]]
 title = "Hugo"
 url = "https://gohugo.io/"
+
+[params.assets]
+css = ["custom.css"]
+js = ["copy-code.js"]
