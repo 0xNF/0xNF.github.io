@@ -22,14 +22,14 @@ My current approach is codified by the [Winetech Standard Repo](https://github.c
 * Provide a space to put observations found during their tasks so don't get distracted and information doesn't get lost
 * Keep as much inside the repo as possible, to provide agents with the context on demand that they need
 * Provide tools and scripts that can give negative feedback to the agents so they can quickly course-correct on their own
-* Give them a runtime of your application to test against in a live setting. Static analysis not enough.
+* Give them a runtime of your application to test against in a live setting. Static analysis is not enough.
 
 {{< toc >}}
 
 
 # Prerequisites
 
-People get different results from the different workflows, tools, models and harnesses they use, so I'd like to set out what my particular set up looks like at the outside, so you can adjust your own expectations.
+People get different results from the different workflows, tools, models and harnesses they use, so I'd like to set out what my particular set up looks like at the outset, so you can adjust your own expectations.
 
 ## Models
 * Big Models
@@ -57,7 +57,7 @@ Because Anthropic doesn't permit using their Max subscriptions in other harnesse
 * Anthropic Teams Max Subscription
 * OpenAI GPT pay-as-you-go pricing
 
-Because of this set up, I prefer Claude because my usage is much less restricted. However, due to Anthropic's removal of some "bonus tokens" they've been giving out for a while, I am now routinely getting rate limited around Thursday, so it's become common for me to end by week in _omp_ with GPT Sol.
+Because of this set up, I prefer Claude because my usage is much less restricted. However, due to Anthropic's removal of some "bonus tokens" they've been giving out for a while, I am now routinely getting rate limited around Thursday, so it's become common for me to end my week in _omp_ with GPT Sol.
 
 
 ## Project Ownership
@@ -65,9 +65,9 @@ I largely possess autonomous control over how I approach my repositories, so I c
 
 
 # Folder Structure
-LLMs love to have context, and to have access to more context, so I have a folder structure with some initial files that seem to be working for me.
+LLMs love to have context, and to have on-demand access to even more context, so I have a folder structure with some initial files that supports their access patterns, and it has been working for me so far.
 
-I won't explain it in full here, but you should check out my [Winetech Standard Repo](https://github.com/0xNF/wtstandardrepo) repo lays out much of how I've started to structure my repositories these days.
+I won't explain it in full here, but you should check out my [Winetech Standard Repo](https://github.com/0xNF/wtstandardrepo), which lays out much of how I've started to structure my repositories these days.
 
 In brief, it takes the following shape:
 ```bash
@@ -156,11 +156,11 @@ This is an AWS deployment:
 0012 — OpenVPN, IPv6-Only Split-Tunnel, Certificate-Only, tls-crypt-v2 Hardened
 ```
 
-and it goes on like this. You can reference my standard [ADR baseline documen.](https://github.com/0xNF/wtstandardrepo/blob/master/docs/repo/adr/0000-adr-format.md).
+and it goes on like this. You can reference my standard [ADR baseline document](https://github.com/0xNF/wtstandardrepo/blob/master/docs/repo/adr/0000-adr-format.md).
 
-Because these ADRs are so often references by the models, I endeavor to keep irrelevant information like History out of them. History is still important to maintain, so history goes into its own dedicated history.md file.
+Because these ADRs are routinely referenced by the models, I endeavor to keep irrelevant information, like history, out of them. History is still important to maintain, so it goes into its own dedicated `history.md` file.
 
-The models really do reference ADRs all the time, and its been such a superpower that keeps them on track and consistent. It also catches my own inconsistencies, where the models will tell me that my own decision contradicts ADR #XYZ, which is a good moment for me to reflect on what I really want from a given session.
+The models really do reference ADRs all the time, and its been such a superpower that keeps them on track and consistent. It also catches inconsistencies in my requests, where the models will tell me that my own decision contradicts ADR #XYZ, which is a good moment for me to reflect on what I really want from a given session.
 
 ADRs are not considered static -- I edit them in place, and occasionally delete, reorganize, or adjust them as needed. 
 
@@ -350,7 +350,7 @@ For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall
 It pays to pay attention to what the agents are doing, to work alongside them.
 
 # AGENTS.md and Memories
-A good AGENTS.md (née CLAUDE.md) file is mandatory for giving agents the initial overview and philosophy of your repository. Everyone knows this, so i won't spend muxh time on it here.
+A good AGENTS.md (née CLAUDE.md) file is mandatory for giving agents the initial overview and philosophy of your repository. Everyone knows this, so i won't spend much time on it here.
 
 ## AGENTS.md
 In my case, my AGENTS.md contains things like:
@@ -380,7 +380,7 @@ I have not generally found skills to be very useful. I have nothing in particula
 
 
 ## Pruning files when they get too big or outdated
-Token budgets are not unlimited, and context size must be managed. To that end, one must consider on occasion to revisit the files you are asking the agents to work with on every request.
+Token budgets are not unlimited, and context size must be managed. To that end, one must on occasion revisiting the files you are asking the agents to work with on every request.
 
 AGENTS.md should be kept under `10,000` tokens, and even that is pushing it. Remember that this is sent on every request. It is worth looking at what needs to be understood all the time, versus what only needs to be understood some of the time, versus what doesnt need to be understood at all. 
 
@@ -400,7 +400,7 @@ Condense, Extract, Delete.
 Because I have what I consider to be fairly well crafted initial documents and on-demand context available for the agents, I don't put too much effort into my prompts, which are concise and minimal.
 
 * "Read this $document, and address the issues"
-* "Fix the bugs describes by the cleanup"
+* "Fix the bugs described by the cleanup"
 * "Continue working on this plan file"
 
 Except in rare circumstances, I don't write any additional context, because I've already given the context in the AGENTS.md, ADRs, and plan files. 
