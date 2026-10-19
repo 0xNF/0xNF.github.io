@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><meta name="description" content=""><title>Security&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.1912ded78f688bbd516afb7cab34b50ded577caf45cf75bc1af5d38655c05000847900a4cf8d2cfe19578a79343797c0.css" integrity="sha384-GRLe149oi71Ravt8qzS1De1XfK9Fz3W8GvXThlXAUACEeQCkz40s/hlXink0N5fA"><link rel="alternate" type="application/rss+xml" href="/categories/security/index.xml" title="Sidequesting" /><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Security" /><body><section id="header">
@@ -26,10 +26,6 @@ That being said, there are arguments against it that ought to be taken seriously
 Some of these arguments apply systemically, i.e., because of choices made by the browser vendors, such as the decision to mark all non-HTTPS sites as insecure by default.
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/security/">Security</a><a class="category" href="/categories/web/">Web</a><a class="tag" href="/tags/https/">HTTPS</a><a class="tag" href="/tags/tls/">tls</a><a class="tag" href="/tags/centralization/">centralization</a></p></li><li class="item">
         
-        <a class="note" href="/posts/security/proper2fa/">
-        
-            <p class="note title">Proper 2-Factor Auth</p><p class="note date">Sunday, August 26, 2018</p><p class="note content"> If your 2FA is an SMS message to your phone, you are not doing proper 2FA If you only have one 2FA device per account, you will get screwed when that device is lost or dies. If you use a manual TOTP 2FA and do not write down your security codes, you will get screwed when that device is lost or dies. You should probably use a U2F key instead, because [insert link here] [fishing can happen, even to you](&ndash;Insert Link here &ndash;). Proper storage of your 2FA codes is critical, but the depth of your strategy changes based on your threat model. See also, [threat modeling is how you make the tradeoffs between security vs convenience](&ndash;Insert Link Here&ndash;). </p></a><p class="note labels"><a class="category" href="/categories/authentication/">Authentication</a><a class="category" href="/categories/security/">Security</a><a class="tag" href="/tags/phishing/">phishing</a><a class="tag" href="/tags/fido-u2f/">FIDO U2F</a><a class="tag" href="/tags/2fa/">2FA</a><a class="tag" href="/tags/mfa/">MFA</a></p></li><li class="item">
-        
         <a class="note" href="/posts/security/what-good-are-vpns/">
         
             <p class="note title">What Good Are VPNs?</p><p class="note date">Tuesday, July 24, 2018</p><p class="note content">Good at some things, bad at others. At the most basic level, a VPN is an end-to-end service that encrypts network activity on one end and decrypts it at another. Depending on what kind of platform you are on, VPNs can be installed at different and deeper layers of the network stack.
@@ -49,20 +45,6 @@ That site is all about demonstrating through words, video, and actions, what hap
 Much of modern Firefox&rsquo;s security comes from the fact that in addition to doing extensive work on the architecture underlying the browser as a whole, they also removed the old extensions system. That has been a double-edged sword, because many beloved extensions relied on the that old architecture, but the Firefox developers have been working closely with the authors of popular extensions to add back in the necessary pieces they require.
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/security/">security</a><a class="category" href="/categories/privacy/">privacy</a><a class="category" href="/categories/browser/">browser</a><a class="tag" href="/tags/overview/">overview</a><a class="tag" href="/tags/firefox/">firefox</a></p></li><li class="item">
         
-        <a class="note" href="/posts/misc/modern-security/">
-        
-            <p class="note title">Modern Security</p><p class="note date">Friday, June 29, 2018</p><p class="note content">Target Audience A tech savvy computer user. Not a programmer, or even an IT repair guy, but not your average joe either.
-Dissection Security is a loaded term so we&rsquo;ll break it out.
-There are two overarching categories, and a bunch of others that fall underneath them.
-Privacy: Concealing information from others Authorization Integrity: Making sure that information is not tampered, sabotaged, or changed Permissions
-Untrusted Code
-Buffer overflow
-Tracking
-Data collection
-fingerprinting
-data leakage
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/security/">security</a><a class="tag" href="/tags/overview/">overview</a></p></li><li class="item">
-        
         <a class="note" href="/posts/oauthserver/19/">
         
             <p class="note title">Implement an OAuth 2.0 Server (Part 19)</p><p class="note date">Monday, June 18, 2018</p><p class="note content">Welcome to the nineteenth and final part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
@@ -75,6 +57,18 @@ For the purposes of this tutorial, I assume you already have a Microsoft account
             <p class="note title">Implement an OAuth 2.0 Server (Part 18)</p><p class="note date">Monday, June 18, 2018</p><p class="note content">Welcome to the eighteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
 Rate Limiting - Attribute Creation We left off last section with rate limits being granted to the to clients and tokens at creation time, but we don&rsquo;t yet have a way to check those limits when they call our API.
 To do so, we&rsquo;ll be making an Attribute that we can use to decorate the controllers or methods that we want to be rate limited.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/security/">Security</a><a class="category" href="/categories/identity/">Identity</a><a class="category" href="/categories/authentication/">Authentication</a><a class="category" href="/categories/authorization/">Authorization</a><a class="tag" href="/tags/oauth2%2e0/">OAuth2.0</a><a class="tag" href="/tags/openidconnect/">OpenIdConnect</a><a class="tag" href="/tags/tutorial/">Tutorial</a><a class="tag" href="/tags/csharp/">CSharp</a><a class="tag" href="/tags/%2enet-core/">.NET Core</a></p></li><li class="item">
+        
+        <a class="note" href="/posts/oauthserver/17/">
+        
+            <p class="note title">Implement an OAuth 2.0 Server (Part 17)</p><p class="note date">Monday, June 18, 2018</p><p class="note content">Rate Limiting - Models and Provider Changes There are any number of different ways to implement rate limits - the approach we will follow is outlined like so:
+All endpoints under /v1/api are limited, no endpoint is free. All endpoints share a limit. Calling /me 1,999 times, then /albums once will rate limit you on the next call. (Assuming a limit of 2,000 for some timeframe.) Renewing a token counts towards the limit - after all, the token endpoint is underneath /api/v1/. Different levels of authorization are granted different rate limits. In descending order of highest rate limits: Authorization Grants Implicit Grants Client Credentials Rate limits are incremented against both a client + user combo, and then again against just the client. This has implications we&rsquo;ll explore below A given client can be granted a rate limit override. The overall limit of a client can be overridden, and The limits granted to subordinate tokens can be overridden Rate Limits are on a rolling timespan of 1 hour Calls collect for an hour after the initial call, and are purged at the expiration of that hour. Implications of User + Client separate from Client limits In our implementation, a given client will have two rate limits: One for each user that requests a token, with a varying default based on the grant_type, and one for the client itself. The client one will be exponentially higher than the one applied to the users.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/security/">Security</a><a class="category" href="/categories/identity/">Identity</a><a class="category" href="/categories/authentication/">Authentication</a><a class="category" href="/categories/authorization/">Authorization</a><a class="tag" href="/tags/oauth2%2e0/">OAuth2.0</a><a class="tag" href="/tags/openidconnect/">OpenIdConnect</a><a class="tag" href="/tags/tutorial/">Tutorial</a><a class="tag" href="/tags/csharp/">CSharp</a><a class="tag" href="/tags/%2enet-core/">.NET Core</a></p></li><li class="item">
+        
+        <a class="note" href="/posts/oauthserver/16/">
+        
+            <p class="note title">Implement an OAuth 2.0 Server (Part 16)</p><p class="note date">Monday, June 18, 2018</p><p class="note content">Welcome to the sixteenth part of a series of posts where we will implement an OAuth 2 Server using AspNet.Security.OpenIdConnectServer.
+Token Revocation Token revocation is the process of invalidating already issued tokens. Because tokens are serialized with server data taken at a snapshot in time, there is no way for a token to know whether it&rsquo;s been invalidated, except for when it comes to its expiration date. Further, there&rsquo;s no given way for the server to know a token has been revoked either - at least, not without a backing datastore.
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/security/">Security</a><a class="category" href="/categories/identity/">Identity</a><a class="category" href="/categories/authentication/">Authentication</a><a class="category" href="/categories/authorization/">Authorization</a><a class="tag" href="/tags/oauth2%2e0/">OAuth2.0</a><a class="tag" href="/tags/openidconnect/">OpenIdConnect</a><a class="tag" href="/tags/tutorial/">Tutorial</a><a class="tag" href="/tags/csharp/">CSharp</a><a class="tag" href="/tags/%2enet-core/">.NET Core</a></p></li></ul><div class="pagination">
     <ul><li><a class="active" href="/categories/security/">1</a></li><li><a class="" href="/categories/security/page/2/">2</a></li><li><a class="" href="/categories/security/page/3/">3</a></li></ul>
 </div></section><section id="footer"><div class="footer-wrap">

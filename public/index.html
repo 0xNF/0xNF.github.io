@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><meta name="description" content=""><title>Sidequesting&nbsp;&ndash;&nbsp;99% JavaScript-free</title><link rel="stylesheet" href="/css/core.min.1912ded78f688bbd516afb7cab34b50ded577caf45cf75bc1af5d38655c05000847900a4cf8d2cfe19578a79343797c0.css" integrity="sha384-GRLe149oi71Ravt8qzS1De1XfK9Fz3W8GvXThlXAUACEeQCkz40s/hlXink0N5fA"><link rel="alternate" type="application/rss+xml" href="/index.xml" title="Sidequesting" /><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Sidequesting" /><body><section id="header">
@@ -15,7 +15,7 @@ Actual Take-Aways Use ADRs Prune memories, AGENTS.md, and other context-filling 
         
         <a class="note" href="/posts/oauth1/">
         
-            <p class="note title">Init</p><p class="note date">Monday, January 5, 2026</p><p class="note content">Prologue OAuth is a common peice of web technology infrastructure that underpins many common websites. To keep things short, its how you log into websites.
+            <p class="note title">Implementing OAuth 2.0 from the RFCs</p><p class="note date">Monday, January 5, 2026</p><p class="note content">Prologue OAuth is a common peice of web technology infrastructure that underpins many common websites. To keep things short, its how you log into websites.
 But we&rsquo;re here to learn more than that. First, how much detail would you like to learn? Select a skill level, and we&rsquo;ll work from there.
 n.b., we will only be covering OAuth 2.1 here, since OAuth 2.0 is now deprecated. That means no Implicit Flow, and Authorization will use PKCE only. Also, we&rsquo;re going to be deep-diving into a bunch of RFCs, so depending on the experience level, be prepared for some technical writing.
 <span class="mldr">&mldr;</span></p></a></li><li class="item">
@@ -26,17 +26,6 @@ n.b., we will only be covering OAuth 2.1 here, since OAuth 2.0 is now deprecated
 If Expressions Found in: Rust; probably other functional languages Irritatingly missing from: Everything let x = 5 + if true { 1 } else { 7 } println!(&#34;{x}&#34;); // 6 What I have to do instead:
 let x = 5; if true { x += 1; } else { x += 7; } System.Console.WriteLine($&#34;{x}&#34;); Ternary Found In: Everywhere except Go Ternaries are like If Expressions but less powerful
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/misc/">misc</a><a class="tag" href="/tags/misc/">misc</a></p></li><li class="item">
-        
-        <a class="note" href="/posts/misc/funwithfunctionpointers/">
-        
-            <p class="note title">Fun With Generic First Class Functions</p><p class="note date">Friday, September 17, 2021</p><p class="note content">Dart, like most modern languages worth using, has generics.
-It actually has some pretty powerful generics.
-Generic functions that take generic parameters which themselves are generic functions and then produce generic results.
-Sound confusing? It is. But it&rsquo;s also not that bad, and we can use them to do some really useful things.
-tl;dr Fancy schamncy functional generic stuff for smoother re-authorization.
-The Problem We have a client application that connects to a server to do some processing.
-That server requires an active login session in order to do anything. We can log in, get our session token, and then do our processing and that works just fine. But login sessions aren&rsquo;t forever, so what happens when it expires and we get logged out?
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/misc/">misc</a><a class="category" href="/categories/programming/">programming</a><a class="tag" href="/tags/dart/">dart</a></p></li><li class="item">
         
         <a class="note" href="/posts/music/channel2/">
         
@@ -75,6 +64,13 @@ We&rsquo;ll also leave out building the Razor Pages and the views, dealing with 
         
             <p class="note title">Swipr - Datastore</p><p class="note date">Thursday, December 13, 2018</p><p class="note content">We need a datastore. Primarily so that we can stow a given user&rsquo;s Tinder information &ndash; Facebooked ID, Facebooked password, Facebooked access token, and Tinder access token, &ndash; but also because we now have a complicated application it&rsquo;s state must be preserved somehow.
 We&rsquo;re going to skip talking about tables relating to how ASP.NET Core projects do identity because there are a lot of tables for that. The only thing worth pointing out with respect to that is many of our tables will keep a foreign key to the autogenerated AspNetUsers.Id field.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/machine-learning/">machine learning</a><a class="category" href="/categories/fast%2eai/">fast.ai</a><a class="tag" href="/tags/cnn/">CNN</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-collection/">data collection</a><a class="tag" href="/tags/architecture/">architecture</a></p></li><li class="item">
+        
+        <a class="note" href="/posts/ml/swipr08/">
+        
+            <p class="note title">Swipr - LibSwipr</p><p class="note date">Thursday, December 13, 2018</p><p class="note content">As a harness for our model, we&rsquo;ll create a server that serves as a centralized access point. This server provides the necessary facilities to register an account with it, interact with Tinder, and receive responses from the model.
+The general architecture for the server will go something like this:
+SwiprServer is the server, in our case, an ASP.NET Core 2 project, and LibSwipr is our custom tooling around all the other interactions.
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/machine-learning/">machine learning</a><a class="category" href="/categories/fast%2eai/">fast.ai</a><a class="tag" href="/tags/cnn/">CNN</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-collection/">data collection</a><a class="tag" href="/tags/architecture/">architecture</a></p></li></ul><div class="pagination">
     <ul><li><a class="active" href="/">1</a></li><li><a class="" href="/page/2/">2</a></li><li><a class="" href="/page/3/">3</a></li><li><a class="" href="/page/4/">4</a></li><li><a class="" href="/page/5/">5</a></li><li><a href="/page/2/"><span class="iconfont icon-pagenext"></span></a></li></ul>
 </div></section><section id="footer"><div class="footer-wrap">

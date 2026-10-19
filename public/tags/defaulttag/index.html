@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><meta name="description" content=""><title>Defaulttag&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.1912ded78f688bbd516afb7cab34b50ded577caf45cf75bc1af5d38655c05000847900a4cf8d2cfe19578a79343797c0.css" integrity="sha384-GRLe149oi71Ravt8qzS1De1XfK9Fz3W8GvXThlXAUACEeQCkz40s/hlXink0N5fA"><link rel="alternate" type="application/rss+xml" href="/tags/defaulttag/index.xml" title="Sidequesting" /><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Defaulttag" /><body><section id="header">
@@ -13,41 +13,6 @@ $TwoLetterSiteCode-$RoleTemplate-$instanceNumberOrUnit.
 Two Letter Site Code The two-letter-site-code is an abbreviation for sites that I have, or am likely to have, devices or vms located at. For devices, this is straight forward since they must physically exist somehwere. For VMs its trickier, because they could float around from place to place. For now, I&rsquo;ve simply decided that VMs have a site code equal to their hypervisor host, but it&rsquo;s open to modification in the future. E.g., &rsquo;s ln for London, se for Seattle, etc.
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
         
-        <a class="note" href="/network/openvpn/mtu/">
-        
-            <p class="note title">OpenVPN - Message Too Long</p><p class="note date">Saturday, March 28, 2026</p><p class="note content">If your OpenVPN logs show something like:
-Write UDPv4: Message too log
-Then you should double-check your MTU settings. You can either set it on the client connection directly by overriding the .ovpn profile, ala:
-Or more permanetly, by adding it directly into the OpenVPN template settings for your instance:
-In this case we&rsquo;ve chosen an MTU = 1425. if you&rsquo;re calculating the MSSFix manually, apparently the optimal MSSFix value is MTU - 40 = 1385 in our case, but your mileage may varry.
-</p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
-        
-        <a class="note" href="/network/home/home7_openvpn/">
-        
-            <p class="note title">Home7_openvpn</p><p class="note date">Saturday, March 28, 2026</p><p class="note content"> MTU + MSS fix Gotchas: dont vip yourself to oblivion Data Ciphers and Fallback Cipher is empty by default, set to aes-gcm-256 Copy as CN Strict checking udp v4 keep-alive: empty -&gt; 60 time-to-live: empty -&gt; 120 Bind Address -&gt; Empty (fine for all) Server (is what Address space it hands out) -&gt; to .240, then note about vlans Locla Routes (is what we can access) -&gt; underlay overlay Discuss fact that networking of OpenVPN is almost fully indistinct from networking owned by OPNSense Discuss Gotchas on client:
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
-        
-        <a class="note" href="/network/home/home6_pki/">
-        
-            <p class="note title">Home Networking 6 - Public Key Infrastructure (PKI)</p><p class="note date">Saturday, March 28, 2026</p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
-        
-        <a class="note" href="/network/home/home5_opnsense/">
-        
-            <p class="note title">Home Networking 4 - Switch</p><p class="note date">Saturday, March 28, 2026</p><p class="note content">TODO Find the tutorials used and link them VIPS (plus vip gotchas) As Alias, not as CARP because only one ISP KEA DHCP (plus restart requiredness) Interface Devices User creation SSH key uploads Root disable Setting TOTP access LAGG because of physical machine weirdness Firewall Groups DHCPGroup InternetAccess LiterallALL OpenVPN Overlay Rules Floating Fiewall Services (dns, ntp, etc) ICMP pings InternetAccess Group Not Private Address Space OpenVPN access LAN IPv4 to any IPv6 to any OpenVPN Any to Any </p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
-        
-        <a class="note" href="/network/home/home4_switch/">
-        
-            <p class="note title">Home Networking 4 - Switch</p><p class="note date">Monday, March 16, 2026</p><p class="note content">TODO VLAn Setup Configuration Backups SSH keys NTP, which isn&rsquo;t working Setting the HTTPS flag Portfast and Spanning Tree on 1/12 &ldquo;never ever disable it. Except sometimes. because portstroms&rdquo; Switch Setup This post continues from Home Networking 3.
-Here we&rsquo;ll set up our FS S3900 Switch. If you have an FS switch, it may be useful to you. If you don&rsquo;t, then maybe you can at least see the general idea of what&rsquo;s happening.
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
-        
-        <a class="note" href="/network/home/home3_ap_wifi/">
-        
-            <p class="note title">Home Networking 3 - Access Point and WiFi</p><p class="note date">Sunday, March 15, 2026</p><p class="note content">TODO VLan tags With mixup of Bands Access Point Setup This post continues from Home Networking 3.
-We&rsquo;re setting up the Access Point here &ndash; this comes before the switch setup because there&rsquo;s some initial wonkiness with the single-port nature of our access point that I&rsquo;d like to get out of the way first, and will make describing the Switch setup in part 4 easier.
-Purchasing After frying my R7800, and being gifted a Linksys E8450 that turns out also doesn&rsquo;t boot, I decided why not just get an Access Point, and skip the Router step. I had a few requirements for what to buy:
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
-        
         <a class="note" href="/network/home/home2_architecture/">
         
             <p class="note title">Home Networking 2 - Architecture</p><p class="note date">Sunday, March 15, 2026</p><p class="note content">Physical and Logical Architecture This post continues from Home Networking 1.
@@ -59,17 +24,7 @@ VLAN Purpose 1 untagged 100 Infrastructure management panels 900 Inbound ISP tra
         <a class="note" href="/network/home/home1_overview/">
         
             <p class="note title">Home Networking 1 - Overview</p><p class="note date">Sunday, March 15, 2026</p><p class="note content">Setup and Overview With advice from an expert friend, combined with barely even novice level talent and understanding of networks, here&rsquo;s how I&rsquo;ve begun to set up a network that may be used for both learning at home, and some minor commerical endevaors. One of the outstanding goals is to reduce reliance on cloud providers and proprietary solutions as much as is feasible. That process may also be a progressive one.
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/network/">network</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li><li class="item">
-        
-        <a class="note" href="/posts/music/channel3/">
-        
-            <p class="note title">Channel3</p><p class="note date">Friday, October 26, 2018</p><p class="note content">Branding Choices Last time we looked at 7 channels and examined their branding, which included their choice of name, iconography, video style, and video information.
-Today, we&rsquo;ll make some choices of our own.
-We&rsquo;re going to ask some questions here:
-What is our channel name What will our main graphics be? What will our Crest be What will our Stamp be What will our videos look like? What backgrounds will we use? Will we have animations? If so, what will our intro look like What will our post-intro look like Will we have a waveform of some sort? Will we display artist/song/genre info? Where will we display our own brand? Will our thumbnails be different from the video frames? Channel Name Our considerations, much like any other branding decision, are guided by a number of core ideas:
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/defaultcategory/">defaultcategory</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li></ul><div class="pagination">
-    <ul><li><a class="active" href="/tags/defaulttag/">1</a></li><li><a class="" href="/tags/defaulttag/page/2/">2</a></li></ul>
-</div></section><section id="footer"><div class="footer-wrap">
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/network/">network</a><a class="tag" href="/tags/defaulttag/">defaulttag</a></p></li></ul></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2026</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 

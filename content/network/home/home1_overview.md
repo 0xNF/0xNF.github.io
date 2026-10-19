@@ -1,7 +1,7 @@
 ---
 title: "Home Networking 1 - Overview"
 date: 2026-03-15T10:58:49+09:00
-draft: true
+draft: false
 description: "First post in the Home Networking series, describing what we're working with and what the baselines are"
 categories:
 - network

@@ -1,7 +1,7 @@
 ---
 title: "Addressing and Naming"
 date: 2026-04-05T14:59:46+09:00
-draft: true
+draft: false
 description: "Third post in the Home Networking series, describing how we set up ipv4 and 6 addrs, and naming schemes"
 categories:
 - defaultcategory

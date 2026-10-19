@@ -1,7 +1,7 @@
 ---
 title: "Home Networking 2 - Architecture"
 date: 2026-03-15T15:33:01+09:00
-draft: true
+draft: false
 description: "Second post in the Home Networking series, describing our network layers and architecture"
 categories:
 - defaultcategory

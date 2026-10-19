@@ -1,22 +1,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sidequesting</title>
-    <link>http://localhost:1313/ja/</link>
+    <link>https://example.com/ja/</link>
     <description>Recent content on Sidequesting</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>©2026</copyright>
     <lastBuildDate>Sun, 18 Oct 2026 11:32:06 -0400</lastBuildDate>
     
-        <atom:link href="http://localhost:1313/ja/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://example.com/ja/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>2026年10月時点のエージェント開発ワークフロー</title>
-      <link>http://localhost:1313/ja/posts/agentic/workflows/rev1/</link>
+      <link>https://example.com/ja/posts/agentic/workflows/rev1/</link>
       <pubDate>Sun, 18 Oct 2026 11:32:06 -0400</pubDate>
       
-      <guid>http://localhost:1313/ja/posts/agentic/workflows/rev1/</guid>
+      <guid>https://example.com/ja/posts/agentic/workflows/rev1/</guid>
       <description>&lt;h1 id=&#34;tldr&#34;&gt;tl;dr:&lt;/h1&gt;
 &lt;p&gt;この記事では、私が現在行っているエージェント開発のやり方を、まだ粗削りな第一版としてまとめます。
 このやり方は、ドキュメント、フォルダ構成、そして検証フィードバックのための豊富なツールやスクリプトに重きを置いています。&lt;/p&gt;

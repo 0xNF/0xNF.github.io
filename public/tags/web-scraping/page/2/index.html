@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="supported-color-schemes" content="light dark"><meta name="description" content=""><title>Web Scraping&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.1912ded78f688bbd516afb7cab34b50ded577caf45cf75bc1af5d38655c05000847900a4cf8d2cfe19578a79343797c0.css" integrity="sha384-GRLe149oi71Ravt8qzS1De1XfK9Fz3W8GvXThlXAUACEeQCkz40s/hlXink0N5fA"><link rel="alternate" type="application/rss+xml" href="/tags/web-scraping/index.xml" title="Sidequesting" /><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Web Scraping" /><body><section id="header">
@@ -21,15 +21,6 @@ Data Collection Like the general post describes, the data used to train the Matt
         <a class="note" href="/posts/ml/machinelevine/">
         
             <p class="note title">Machine Levine</p><p class="note date">Thursday, November 1, 2018</p><p class="note content">The Goal In order to better understand machine learning, I decided to see if I could get a neural network to write articles like Matt Levine. The original goal was to sort Spotify songs by male or female vocals, but I had been learning all of this stuff by following along with the fast.ai courses, and that specific use case was a bit afield of the coursework and forum discussions happening in the MOOC. Fast.ai, great as is it, has a focus on image data and NLP applications. As a compromise, I decided to learn by creating a bot that writes just like Matt Levine of Bloomberg.
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/machine-learning/">Machine Learning</a><a class="category" href="/categories/nlp/">NLP</a><a class="category" href="/categories/fast%2eai/">fast.ai</a><a class="tag" href="/tags/rnn/">rnn</a><a class="tag" href="/tags/parsing/">parsing</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-cleanup/">data cleanup</a></p></li><li class="item">
-        
-        <a class="note" href="/posts/ml/mk3/">
-        
-            <p class="note title">Machine Levine Mk III</p><p class="note date">Thursday, October 18, 2018</p><p class="note content"> Data Collection Data Cleanup Tagging Mistakes Saving ML Setup WikiText 103 Validation and Test Sets Loading Data Concatenation Tokenizing Data Collection Machine Levine Mk III aims to both remedy some of the data collection errors while also improving the title generating situation.
-Data collection this time around involves a slightly different method:
-We will crawl every page of Matt Levine articles available from Bloomberg via the API:
-https://www.bloomberg.com/lineup/api/lazy_load_author_stories?slug=ARbTQlRLRjE/matthew-s-levine&authorType=opinion&page=0
-The structure of the returned object is:
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="category" href="/categories/machine-learning/">Machine Learning</a><a class="category" href="/categories/nlp/">NLP</a><a class="category" href="/categories/fast%2eai/">fast.ai</a><a class="tag" href="/tags/rnn/">rnn</a><a class="tag" href="/tags/parsing/">parsing</a><a class="tag" href="/tags/web-scraping/">web scraping</a><a class="tag" href="/tags/data-cleanup/">data cleanup</a></p></li></ul><div class="pagination">
     <ul><li><a class="" href="/tags/web-scraping/">1</a></li><li><a class="active" href="/tags/web-scraping/page/2/">2</a></li></ul>
 </div></section><section id="footer"><div class="footer-wrap">

@@ -1,7 +1,7 @@
 +++
 date = '2026-01-05T22:58:37+09:00'
-draft = true
-title = 'Init'
+draft = false
+title = 'Implementing OAuth 2.0 from the RFCs'
 +++
 
 # Prologue

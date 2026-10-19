@@ -1,7 +1,7 @@
 ---
 title: "Agentic Workflow as of October 2026"
 date: 2026-10-18T11:32:06-04:00
-draft: true
+draft: false
 description: "Post Summary"
 categories:
 - llm
