@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Csharp on Sidequesting</title><link>https://example.com/tags/csharp/</link><description>Recent content in Csharp on Sidequesting</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>©2026</copyright><lastBuildDate>Tue, 19 Jun 2018 09:06:33 -0700</lastBuildDate><atom:link href="https://example.com/tags/csharp/index.xml" rel="self" type="application/rss+xml"/><item><title>Agentic Workflow as of October 2026</title><link>https://example.com/posts/agentic/workflows/rev1/</link><pubDate>Sun, 18 Oct 2026 11:32:06 -0400</pubDate><guid>https://example.com/posts/agentic/workflows/rev1/</guid><description>&lt;h1 id="tldr"&gt;tl;dr:&lt;/h1&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CSharp on Sidequesting</title><link>https://example.com/tags/csharp/</link><description>Recent content in CSharp on Sidequesting</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>©2026</copyright><lastBuildDate>Tue, 19 Jun 2018 09:06:33 -0700</lastBuildDate><atom:link href="https://example.com/tags/csharp/index.xml" rel="self" type="application/rss+xml"/><item><title>Agentic Workflow as of October 2026</title><link>https://example.com/posts/agentic/workflows/rev1/</link><pubDate>Sun, 18 Oct 2026 11:32:06 -0400</pubDate><guid>https://example.com/posts/agentic/workflows/rev1/</guid><description>&lt;h1 id="tldr"&gt;tl;dr:&lt;/h1&gt;
 &lt;p&gt;This post describes my first current very rough approach to agentic development.
 This approach is heavy on docs, folder structure, and copious tools and scripts for verification feedback.&lt;/p&gt;
 &lt;p&gt;My current approach is codified by the &lt;a href="https://github.com/0xNF/wtstandardrepo"target="_blank" rel="noopener noreferrer"&gt;Winetech Standard Repo&lt;/a&gt;, which is a barebones skeleton of the structure and built-in agent ready documentation to get started on a new project.&lt;/p&gt;
@@ -9,7 +9,7 @@ This approach is heavy on docs, folder structure, and copious tools and scripts 
 &lt;li&gt;Provide a space to put observations found during their tasks so don&amp;rsquo;t get distracted and information doesn&amp;rsquo;t get lost&lt;/li&gt;
 &lt;li&gt;Keep as much inside the repo as possible, to provide agents with the context on demand that they need&lt;/li&gt;
 &lt;li&gt;Provide tools and scripts that can give negative feedback to the agents so they can quickly course-correct on their own&lt;/li&gt;
-&lt;li&gt;Give them a runtime of your application to test against in a live setting. Static analysis not enough.&lt;/li&gt;
+&lt;li&gt;Give them a runtime of your application to test against in a live setting. Static analysis is not enough.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;details class="toc" open&gt;&lt;summary&gt;Table of Contents&lt;/summary&gt;&lt;nav id="TableOfContents"&gt;
 &lt;ul&gt;
@@ -75,7 +75,7 @@ This approach is heavy on docs, folder structure, and copious tools and scripts 
 &lt;/ul&gt;
 &lt;/nav&gt;&lt;/details&gt;
 &lt;h1 id="prerequisites"&gt;Prerequisites&lt;/h1&gt;
-&lt;p&gt;People get different results from the different workflows, tools, models and harnesses they use, so I&amp;rsquo;d like to set out what my particular set up looks like at the outside, so you can adjust your own expectations.&lt;/p&gt;
+&lt;p&gt;People get different results from the different workflows, tools, models and harnesses they use, so I&amp;rsquo;d like to set out what my particular set up looks like at the outset, so you can adjust your own expectations.&lt;/p&gt;
 &lt;h2 id="models"&gt;Models&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Big Models
@@ -107,12 +107,12 @@ alt="VS Code&amp;rsquo;s integration side by side with Claude Code"/&gt;&lt;/p&g
 &lt;li&gt;Anthropic Teams Max Subscription&lt;/li&gt;
 &lt;li&gt;OpenAI GPT pay-as-you-go pricing&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Because of this set up, I prefer Claude because my usage is much less restricted. However, due to Anthropic&amp;rsquo;s removal of some &amp;ldquo;bonus tokens&amp;rdquo; they&amp;rsquo;ve been giving out for a while, I am now routinely getting rate limited around Thursday, so it&amp;rsquo;s become common for me to end by week in &lt;em&gt;omp&lt;/em&gt; with GPT Sol.&lt;/p&gt;
+&lt;p&gt;Because of this set up, I prefer Claude because my usage is much less restricted. However, due to Anthropic&amp;rsquo;s removal of some &amp;ldquo;bonus tokens&amp;rdquo; they&amp;rsquo;ve been giving out for a while, I am now routinely getting rate limited around Thursday, so it&amp;rsquo;s become common for me to end my week in &lt;em&gt;omp&lt;/em&gt; with GPT Sol.&lt;/p&gt;
 &lt;h2 id="project-ownership"&gt;Project Ownership&lt;/h2&gt;
 &lt;p&gt;I largely possess autonomous control over how I approach my repositories, so I can structure them however I choose. The descriptions below may not be feasible in your own setups, due to team size, code review requirements, managerial processes, etc. But maybe some of the things herein can still be useful.&lt;/p&gt;
 &lt;h1 id="folder-structure"&gt;Folder Structure&lt;/h1&gt;
-&lt;p&gt;LLMs love to have context, and to have access to more context, so I have a folder structure with some initial files that seem to be working for me.&lt;/p&gt;
-&lt;p&gt;I won&amp;rsquo;t explain it in full here, but you should check out my &lt;a href="https://github.com/0xNF/wtstandardrepo"target="_blank" rel="noopener noreferrer"&gt;Winetech Standard Repo&lt;/a&gt; repo lays out much of how I&amp;rsquo;ve started to structure my repositories these days.&lt;/p&gt;
+&lt;p&gt;LLMs love to have context, and to have on-demand access to even more context, so I have a folder structure with some initial files that supports their access patterns, and it has been working for me so far.&lt;/p&gt;
+&lt;p&gt;I won&amp;rsquo;t explain it in full here, but you should check out my &lt;a href="https://github.com/0xNF/wtstandardrepo"target="_blank" rel="noopener noreferrer"&gt;Winetech Standard Repo&lt;/a&gt;, which lays out much of how I&amp;rsquo;ve started to structure my repositories these days.&lt;/p&gt;
 &lt;p&gt;In brief, it takes the following shape:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;.
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── docs
@@ -185,9 +185,9 @@ alt="VS Code&amp;rsquo;s integration side by side with Claude Code"/&gt;&lt;/p&g
 &lt;pre tabindex="0"&gt;&lt;code&gt;0001 — OpenTofu for Infrastructure Provisioning
 0008 — Layered Internal PKI: Offline Root + Online step-ca Intermediate + Short-Lived Auto-Renewed Certs
 0012 — OpenVPN, IPv6-Only Split-Tunnel, Certificate-Only, tls-crypt-v2 Hardened
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and it goes on like this. You can reference my standard &lt;a href="https://github.com/0xNF/wtstandardrepo/blob/master/docs/repo/adr/0000-adr-format.md"target="_blank" rel="noopener noreferrer"&gt;ADR baseline documen.&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Because these ADRs are so often references by the models, I endeavor to keep irrelevant information like History out of them. History is still important to maintain, so history goes into its own dedicated history.md file.&lt;/p&gt;
-&lt;p&gt;The models really do reference ADRs all the time, and its been such a superpower that keeps them on track and consistent. It also catches my own inconsistencies, where the models will tell me that my own decision contradicts ADR #XYZ, which is a good moment for me to reflect on what I really want from a given session.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and it goes on like this. You can reference my standard &lt;a href="https://github.com/0xNF/wtstandardrepo/blob/master/docs/repo/adr/0000-adr-format.md"target="_blank" rel="noopener noreferrer"&gt;ADR baseline document&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Because these ADRs are routinely referenced by the models, I endeavor to keep irrelevant information, like history, out of them. History is still important to maintain, so it goes into its own dedicated &lt;code&gt;history.md&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;The models really do reference ADRs all the time, and its been such a superpower that keeps them on track and consistent. It also catches inconsistencies in my requests, where the models will tell me that my own decision contradicts ADR #XYZ, which is a good moment for me to reflect on what I really want from a given session.&lt;/p&gt;
 &lt;p&gt;ADRs are not considered static &amp;ndash; I edit them in place, and occasionally delete, reorganize, or adjust them as needed.&lt;/p&gt;
 &lt;h2 id="investigations"&gt;&lt;code&gt;investigations/&lt;/code&gt;&lt;/h2&gt;
 &lt;p&gt;Sometimes a problem is found during a session, like an intermittent crash. It is helpful to provide the agent a place to put repeated observations of an issue along with a summary of the issue in the investigations README file. Once enough observations have been logged, it becomes its own dedicated session and can be used as the starting point for a full-on investigation. The benefit of doing it this way is that the agent won&amp;rsquo;t get distracted during a session, can recognize known failures, and eventually can work on this one problem full-time.&lt;/p&gt;
@@ -335,7 +335,7 @@ The purpose of this ticket structure is that it outlines clearly why this is an 
 For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall and reinstall an application, so instead of letting it waste tokens, and each time doing it slightly differnetly, I gave it a script that does it, consistently, every time. Now it knows to call &lt;code&gt;install_newest.ps1&lt;/code&gt; and it will wait for it to finish before continuing.&lt;/p&gt;
 &lt;p&gt;It pays to pay attention to what the agents are doing, to work alongside them.&lt;/p&gt;
 &lt;h1 id="agentsmd-and-memories"&gt;AGENTS.md and Memories&lt;/h1&gt;
-&lt;p&gt;A good AGENTS.md (née CLAUDE.md) file is mandatory for giving agents the initial overview and philosophy of your repository. Everyone knows this, so i won&amp;rsquo;t spend muxh time on it here.&lt;/p&gt;
+&lt;p&gt;A good AGENTS.md (née CLAUDE.md) file is mandatory for giving agents the initial overview and philosophy of your repository. Everyone knows this, so i won&amp;rsquo;t spend much time on it here.&lt;/p&gt;
 &lt;h2 id="agentsmd"&gt;AGENTS.md&lt;/h2&gt;
 &lt;p&gt;In my case, my AGENTS.md contains things like:&lt;/p&gt;
 &lt;ul&gt;
@@ -357,7 +357,7 @@ For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall
 &lt;h2 id="skills"&gt;Skills&lt;/h2&gt;
 &lt;p&gt;I have not generally found skills to be very useful. I have nothing in particular to write here on the subject.&lt;/p&gt;
 &lt;h2 id="pruning-files-when-they-get-too-big-or-outdated"&gt;Pruning files when they get too big or outdated&lt;/h2&gt;
-&lt;p&gt;Token budgets are not unlimited, and context size must be managed. To that end, one must consider on occasion to revisit the files you are asking the agents to work with on every request.&lt;/p&gt;
+&lt;p&gt;Token budgets are not unlimited, and context size must be managed. To that end, one must on occasion revisiting the files you are asking the agents to work with on every request.&lt;/p&gt;
 &lt;p&gt;AGENTS.md should be kept under &lt;code&gt;10,000&lt;/code&gt; tokens, and even that is pushing it. Remember that this is sent on every request. It is worth looking at what needs to be understood all the time, versus what only needs to be understood some of the time, versus what doesnt need to be understood at all.&lt;/p&gt;
 &lt;p&gt;If assumptions are outdated or have conflicting instructions, delete them. If things only apply some of the time, extract those sections to their own ADR or Workflow documents, and then put a reference in instead.&lt;/p&gt;
 &lt;p&gt;As simple as it can get, but no simpler.&lt;/p&gt;
@@ -369,7 +369,7 @@ For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall
 &lt;p&gt;Because I have what I consider to be fairly well crafted initial documents and on-demand context available for the agents, I don&amp;rsquo;t put too much effort into my prompts, which are concise and minimal.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&amp;ldquo;Read this $document, and address the issues&amp;rdquo;&lt;/li&gt;
-&lt;li&gt;&amp;ldquo;Fix the bugs describes by the cleanup&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Fix the bugs described by the cleanup&amp;rdquo;&lt;/li&gt;
 &lt;li&gt;&amp;ldquo;Continue working on this plan file&amp;rdquo;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Except in rare circumstances, I don&amp;rsquo;t write any additional context, because I&amp;rsquo;ve already given the context in the AGENTS.md, ADRs, and plan files.&lt;/p&gt;
