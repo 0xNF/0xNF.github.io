@@ -1,6 +1,6 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Longform Thoughts on Sidequesting</title><link>https://example.com/categories/longform-thoughts/</link><description>Recent content in Longform Thoughts on Sidequesting</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>©2026</copyright><lastBuildDate>Tue, 22 May 2018 15:34:47 -0700</lastBuildDate><atom:link href="https://example.com/categories/longform-thoughts/index.xml" rel="self" type="application/rss+xml"/><item><title>Agentic Workflow as of October 2026</title><link>https://example.com/posts/agentic/workflows/rev1/</link><pubDate>Sun, 18 Oct 2026 11:32:06 -0400</pubDate><guid>https://example.com/posts/agentic/workflows/rev1/</guid><description>&lt;h1 id="tldr"&gt;tl;dr:&lt;/h1&gt;
 &lt;p&gt;This post describes my first current very rough approach to agentic development.
-This approach is heavy on docs, folder structure, and copipus tools and scripts for verification feedback.&lt;/p&gt;
+This approach is heavy on docs, folder structure, and copious tools and scripts for verification feedback.&lt;/p&gt;
 &lt;p&gt;My current approach is codified by the &lt;a href="https://github.com/0xNF/wtstandardrepo"target="_blank" rel="noopener noreferrer"&gt;Winetech Standard Repo&lt;/a&gt;, which is a barebones skeleton of the structure and built-in agent ready documentation to get started on a new project.&lt;/p&gt;
 &lt;h2 id="actual-take-aways"&gt;Actual Take-Aways&lt;/h2&gt;
 &lt;ul&gt;
@@ -53,7 +53,7 @@ This approach is heavy on docs, folder structure, and copipus tools and scripts 
 &lt;li&gt;&lt;a href="#corrections"&gt;Corrections&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#lean-into-their-biases-and-expectations-for-tools-and-docs"&gt;Lean into their biases and expectations for tools and docs&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#hooks-and-notifications"&gt;Hooks and notifications&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#paralleization"&gt;Paralleization&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#parallelization"&gt;Parallelization&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;a href="#some-usage-patterns"&gt;Some Usage Patterns&lt;/a&gt;
@@ -75,7 +75,7 @@ This approach is heavy on docs, folder structure, and copipus tools and scripts 
 &lt;/ul&gt;
 &lt;/nav&gt;&lt;/details&gt;
 &lt;h1 id="prerequisites"&gt;Prerequisites&lt;/h1&gt;
-&lt;p&gt;People get different results from the diffeent workflows, tools, models and harnesses they use, so I&amp;rsquo;d like to set out what my partifuclar set up looks like at the outside, so you can adjust your own expectations.&lt;/p&gt;
+&lt;p&gt;People get different results from the different workflows, tools, models and harnesses they use, so I&amp;rsquo;d like to set out what my particular set up looks like at the outside, so you can adjust your own expectations.&lt;/p&gt;
 &lt;h2 id="models"&gt;Models&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Big Models
@@ -87,11 +87,11 @@ This approach is heavy on docs, folder structure, and copipus tools and scripts 
 &lt;li&gt;Fast
 &lt;ul&gt;
 &lt;li&gt;(Primary) Claude Sonnet 5.5 (medium)&lt;/li&gt;
-&lt;li&gt;(Secodary) GPT Terra 6.1 (medium)&lt;/li&gt;
+&lt;li&gt;(Secondary) GPT Terra 6.1 (medium)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;I have previously experiemmted with Mistral, and have only heard good things but not yet tried DeepSeek, GLM, or Kimi.&lt;/p&gt;
+&lt;p&gt;I have previously experimented with Mistral, and have only heard good things but not yet tried DeepSeek, GLM, or Kimi.&lt;/p&gt;
 &lt;h2 id="harnesses"&gt;Harnesses&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Claude Code&lt;/li&gt;
@@ -186,11 +186,11 @@ alt="VS Code&amp;rsquo;s integration side by side with Claude Code"/&gt;&lt;/p&g
 0008 — Layered Internal PKI: Offline Root + Online step-ca Intermediate + Short-Lived Auto-Renewed Certs
 0012 — OpenVPN, IPv6-Only Split-Tunnel, Certificate-Only, tls-crypt-v2 Hardened
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and it goes on like this. You can reference my standard &lt;a href="https://github.com/0xNF/wtstandardrepo/blob/master/docs/repo/adr/0000-adr-format.md"target="_blank" rel="noopener noreferrer"&gt;ADR baseline documen.&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Because these ADRs are so often references by the models, I endevaor to keep irrelevent information like History out of them. History is still important to maintain, so history goes into its own dedicatd history.md file.&lt;/p&gt;
+&lt;p&gt;Because these ADRs are so often references by the models, I endeavor to keep irrelevant information like History out of them. History is still important to maintain, so history goes into its own dedicated history.md file.&lt;/p&gt;
 &lt;p&gt;The models really do reference ADRs all the time, and its been such a superpower that keeps them on track and consistent. It also catches my own inconsistencies, where the models will tell me that my own decision contradicts ADR #XYZ, which is a good moment for me to reflect on what I really want from a given session.&lt;/p&gt;
 &lt;p&gt;ADRs are not considered static &amp;ndash; I edit them in place, and occasionally delete, reorganize, or adjust them as needed.&lt;/p&gt;
 &lt;h2 id="investigations"&gt;&lt;code&gt;investigations/&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;Sometimes a problem is found during a session, like an intermittent crash. It is helpful to provide the agent a place to put repeated observations of an issue along with a summary of the issue in the investigations readme file. Once enough observations have been logged, it becomes its own dedicated session and can be used as the starting point for a full-on investigation. The benefit of doing it this way is that the agent won&amp;rsquo;t get distracted during a session, can recognize known failurs, and eventually can work on this one problem full-time.&lt;/p&gt;
+&lt;p&gt;Sometimes a problem is found during a session, like an intermittent crash. It is helpful to provide the agent a place to put repeated observations of an issue along with a summary of the issue in the investigations README file. Once enough observations have been logged, it becomes its own dedicated session and can be used as the starting point for a full-on investigation. The benefit of doing it this way is that the agent won&amp;rsquo;t get distracted during a session, can recognize known failures, and eventually can work on this one problem full-time.&lt;/p&gt;
 &lt;p&gt;here are some example ongoing investigations I have open in one of my desktop applications:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├─── action-editor-hangs-on-load-and-selection
@@ -201,7 +201,7 @@ alt="VS Code&amp;rsquo;s integration side by side with Claude Code"/&gt;&lt;/p&g
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;└─── studio-process-outlives-its-window
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; README.md
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And a brief excerpt of what one such readme looks like:&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And a brief excerpt of what one such README looks like:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-markdown" data-lang="markdown"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gh"&gt;# Studio&amp;#39;s process can outlive its window and hold the layout
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gs"&gt;**Status: open.**&lt;/span&gt; Seven sightings of a stuck exit or windowless process between 2026-10-03 and 2026-10-18, and four timed closes on 2026-10-07 that did not reproduce it. The cause is not known. The leading candidate is a clipboard flush at exit, and it has not been tested. A fifth sighting, on 2026-10-09, was a start that failed and never exited, which has a known cause of its own.
@@ -297,7 +297,7 @@ The purpose of this ticket structure is that it outlines clearly why this is an 
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gh"&gt;# Methodology
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;-&lt;/span&gt; Consider breaking tasks into sub-tasks
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;-&lt;/span&gt; You have a dev deploymemt of the application on this box and permission to use and modify it;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;-&lt;/span&gt; You have a dev deployment of the application on this box and permission to use and modify it;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;-&lt;/span&gt; [...]
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
@@ -316,16 +316,16 @@ The purpose of this ticket structure is that it outlines clearly why this is an 
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[...]
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I&amp;rsquo;ve found that the agents are exceptional at filling in this file, and on later dedicated passes, are equally exceptional at churning through it.&lt;/p&gt;
-&lt;p&gt;Many ADR discrepencies, usability problems, and bad bugs have been found this way, all without the agent getting distracted.&lt;/p&gt;
+&lt;p&gt;Many ADR discrepancies, usability problems, and bad bugs have been found this way, all without the agent getting distracted.&lt;/p&gt;
 &lt;h1 id="verification-and-feedback"&gt;Verification and Feedback&lt;/h1&gt;
-&lt;p&gt;Agents work really well when they can correct their own assumptions in realtime. They react very well to negative feedback when they try something, such as compile-time failures or other errors that show them they had something incorrect.&lt;/p&gt;
-&lt;p&gt;You should encouage this by building and supplying tools that the agent can call. This can be as simple as supplying the language server for it to see diagnostic information in, or as complex as a custom constellation of scripts that do work in advance. For instance, in a desktop application, I have a series of scripts that check for banned APIs, or that certain structures aren&amp;rsquo;t used:&lt;/p&gt;
+&lt;p&gt;Agents work really well when they can correct their own assumptions in real-time. They react very well to negative feedback when they try something, such as compile-time failures or other errors that show them they had something incorrect.&lt;/p&gt;
+&lt;p&gt;You should encourage this by building and supplying tools that the agent can call. This can be as simple as supplying the language server for it to see diagnostic information in, or as complex as a custom constellation of scripts that do work in advance. For instance, in a desktop application, I have a series of scripts that check for banned APIs, or that certain structures aren&amp;rsquo;t used:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;.
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── check-serialization-contracts.ps1
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── check-source-rules.ps1
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── check-tooltips.ps1
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;└── check-window-ownership.ps1
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Among manny others. The tools provide output like:&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Among many others. The tools provide output like:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="m"&gt;2&lt;/span&gt; failed:
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Invalid API: src/models/ModelA.cs:76
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;{&lt;/span&gt;Binding&lt;span class="o"&gt;}&lt;/span&gt; instead of &lt;span class="o"&gt;{&lt;/span&gt;x:Bind&lt;span class="o"&gt;}&lt;/span&gt;: src/views/LogView.xaml:862
@@ -347,9 +347,9 @@ For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall
 &lt;/ul&gt;
 &lt;h2 id="memories"&gt;Memories&lt;/h2&gt;
 &lt;p&gt;The purpose of memories, as distinct from AGENTS.md or specific repo tooling is that it is meant to represent things that are not globally applicable.&lt;/p&gt;
-&lt;p&gt;Agents will often collect memories on their own, but sometimes its useful when you see persistent errors being made to encourage them to create memories under your guidance. Since I do a lot of work on Windows, and Agents have a not-unreasonable expectation that they&amp;rsquo;re in UNIX-land, I have make sure they have memories that relate to setting BOMs, and that the editors they often use eat backslashes and need different escapting rules.&lt;/p&gt;
+&lt;p&gt;Agents will often collect memories on their own, but sometimes its useful when you see persistent errors being made to encourage them to create memories under your guidance. Since I do a lot of work on Windows, and Agents have a not-unreasonable expectation that they&amp;rsquo;re in UNIX-land, I have make sure they have memories that relate to setting BOMs, and that the editors they often use eat backslashes and need different escaping rules.&lt;/p&gt;
 &lt;p&gt;I also use memories to give agents standing permission to do code commits, to make changes to the running development system, where to find temporary data, and what other nearby relevant repositories and documents are located that may be useful for the agent to be aware of.&lt;/p&gt;
-&lt;p&gt;These things are not global, and not applicable to other developers on this repository, so it&amp;rsquo;s not appropriate to put them into the repo-permaent AGENTS.md.&lt;/p&gt;
+&lt;p&gt;These things are not global, and not applicable to other developers on this repository, so it&amp;rsquo;s not appropriate to put them into the repo-permanent AGENTS.md.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;A side note: It &lt;em&gt;is&lt;/em&gt; permissible to make tooling around these specific assumptions by using the &lt;code&gt;repotools/$username/&lt;/code&gt; folders, which is where developer specific tooling should go. There is no expectation that tools under your own folder are useful, or indeed even run, under any other user. Repo-wide tools should graduate into the &lt;code&gt;repotools/public/&lt;/code&gt; folder.&lt;/p&gt;
 &lt;p&gt;This is why I think there&amp;rsquo;s a large synergy to be had with the repo tools folder in an agentic setting.&lt;/p&gt;
@@ -364,7 +364,7 @@ For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall
 &lt;p&gt;The same rules apply for your memory files, which can be found under &lt;code&gt;~/.claude/projects/$project/memory&lt;/code&gt;, or other similar harness-dependent locations.&lt;/p&gt;
 &lt;p&gt;Condense, Extract, Delete.&lt;/p&gt;
 &lt;h1 id="working-with-the-agents"&gt;Working with the Agents&lt;/h1&gt;
-&lt;p&gt;(LLM, Harness) pairs have their own runtime quirks and should be worked with the way a craftsman knows how to work with a powerdrill that whirls in one direction faster than the other, a hammer that isn&amp;rsquo;t perfectly flat and thus has slight directional preference, or a car that has a very delicate accelerator. The quirks are worth learning and using to your advantage. Don&amp;rsquo;t fight the agents, work with them.&lt;/p&gt;
+&lt;p&gt;(LLM, Harness) pairs have their own runtime quirks and should be worked with the way a craftsman knows how to work with a power-drill that whirls in one direction faster than the other, a hammer that isn&amp;rsquo;t perfectly flat and thus has slight directional preference, or a car that has a very delicate accelerator. The quirks are worth learning and using to your advantage. Don&amp;rsquo;t fight the agents, work with them.&lt;/p&gt;
 &lt;h2 id="prompting-style"&gt;Prompting Style&lt;/h2&gt;
 &lt;p&gt;Because I have what I consider to be fairly well crafted initial documents and on-demand context available for the agents, I don&amp;rsquo;t put too much effort into my prompts, which are concise and minimal.&lt;/p&gt;
 &lt;ul&gt;
@@ -375,7 +375,7 @@ For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall
 &lt;p&gt;Except in rare circumstances, I don&amp;rsquo;t write any additional context, because I&amp;rsquo;ve already given the context in the AGENTS.md, ADRs, and plan files.&lt;/p&gt;
 &lt;p&gt;Sometimes I have questions that require a more thorough examination before we can continue:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Extamine the feasability of adding the following feature to this application, and consider how many dependencies it would require to accomplish&lt;/li&gt;
+&lt;li&gt;Examine the feasibility of adding the following feature to this application, and consider how many dependencies it would require to accomplish&lt;/li&gt;
 &lt;li&gt;We are currently doing $X in our application, but I want to move to $Y instead, write a plan file for this process&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;I have found it productive to speak in mechanical, precise terminology. I do not abridge my requests, use shorthand slang, or speak casually with the agents. I do my best to give them accurate and clear phrases to work with. It helps to orient their initial manifolds when you say things like &amp;ldquo;Consider ahead-of-time compilation issues&amp;rdquo;, or &amp;ldquo;profile this slowdown and find whether a different algorithm should be used for this subroutine&amp;rdquo;, instead of &amp;ldquo;why is it slow&amp;rdquo; or &amp;ldquo;u should find the bug&amp;rdquo;. LLMs are often reflections of the tone and skill of the user prompt, and if you are sloppy in your input you will find it is sloppy in its&amp;rsquo; output.&lt;/p&gt;
@@ -383,18 +383,18 @@ For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall
 &lt;p&gt;Sometimes the Agents are confident in their assertion that some things cannot be done. It may be the case that you know better than they do - in those situations it is important to supply them with relevant documentation, at which point they will happily change course and begin working.&lt;/p&gt;
 &lt;p&gt;Remember that they have cut-off dates for their training, so they will only recall information up to that point. Any change in status of something that happened after that date needs to be supplied to them.&lt;/p&gt;
 &lt;h2 id="lean-into-their-biases-and-expectations-for-tools-and-docs"&gt;Lean into their biases and expectations for tools and docs&lt;/h2&gt;
-&lt;p&gt;Like said above, LLMs have quirks, biass and expectations, If you watch them long enough you&amp;rsquo;ll pick up this fact because you&amp;rsquo;ll see them say things like &amp;ldquo;That API doesn&amp;rsquo;t exist, I&amp;rsquo;ll try a different one&amp;rdquo;, or &amp;ldquo;Turns out ffmpeg isn&amp;rsquo;t found on this machine, so I&amp;rsquo;ll write a small script in python instead&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Like said above, LLMs have quirks, biases and expectations, If you watch them long enough you&amp;rsquo;ll pick up this fact because you&amp;rsquo;ll see them say things like &amp;ldquo;That API doesn&amp;rsquo;t exist, I&amp;rsquo;ll try a different one&amp;rdquo;, or &amp;ldquo;Turns out ffmpeg isn&amp;rsquo;t found on this machine, so I&amp;rsquo;ll write a small script in python instead&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;These are opportunities to do two things:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Make your token usage more efficient&lt;/li&gt;
 &lt;li&gt;Make your tools better&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Every time they backtrack on a choice is tokens that you&amp;rsquo;re spending, time you&amp;rsquo;re wasting, and context you&amp;rsquo;re eating up. Not all situations are equal, but on balance, you should consider adding what they&amp;rsquo;re expecting to your tools and your environment. They will be more competent in their tasks when they have what they want without the fuss of trying to work around it. They are also trained on those aspects, so they&amp;rsquo;ll be good at using them.&lt;/p&gt;
-&lt;p&gt;Additionally, especially when it comes to API surfaces, misaligned expectations are a solid indicator that your API deisgn is lacking in crucial ways. If your agent is making these mistakes, other people&amp;rsquo;s agents are also making the same mistake. And human users may also be under same misapprehension. It is worth considering deeply whether the design the agents expected is actually a better design &amp;ndash; very often, it is.&lt;/p&gt;
+&lt;p&gt;Additionally, especially when it comes to API surfaces, misaligned expectations are a solid indicator that your API design is lacking in crucial ways. If your agent is making these mistakes, other people&amp;rsquo;s agents are also making the same mistake. And human users may also be under same misapprehension. It is worth considering deeply whether the design the agents expected is actually a better design &amp;ndash; very often, it is.&lt;/p&gt;
 &lt;h3 id="a-brief-methodology"&gt;A brief methodology&lt;/h3&gt;
 &lt;p&gt;I recently went through my Claude session transcripts of the past month with another agent (GPT-Luna-6.1 via &lt;em&gt;omp&lt;/em&gt; because I was at my weekly Claude token limit at that time) with the instructions to:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&amp;ldquo;Read these session transscripts and find instances where the agent got confused, backtracked, realized a tool or program was missing, or used an API with an incorrect shape&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Read these session transcripts and find instances where the agent got confused, backtracked, realized a tool or program was missing, or used an API with an incorrect shape&amp;rdquo;.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;The results were a useful set of places to start working some immediate remediation candidates. I was able to update a handful of checker scripts in the repo, and also file some tickets against a sister repository for improvements this way. Here are some samples of what that scan turned up, and the resolution I opted for.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-markdown" data-lang="markdown"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1)
@@ -412,11 +412,11 @@ For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;-&lt;/span&gt; Actual: It had no resize verb, resized by using pointer and click APIs manually.
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;&amp;gt; &lt;/span&gt;&lt;span class="ge"&gt;Resolution: Added a `resize` verb to the automation tooling
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="hooks-and-notifications"&gt;Hooks and notifications&lt;/h2&gt;
-&lt;p&gt;Agent harnesses have started to support &lt;a href="https://code.claude.com/docs/en/hooks"target="_blank" rel="noopener noreferrer"&gt;Hooks&lt;/a&gt;, which are a standard comcept, just applied to this new tech.
+&lt;p&gt;Agent harnesses have started to support &lt;a href="https://code.claude.com/docs/en/hooks"target="_blank" rel="noopener noreferrer"&gt;Hooks&lt;/a&gt;, which are a standard concept, just applied to this new tech.
 Because I do most of my work in a Windows VM through a Linux host, and a lot of these tasks are long running, I am often delayed in returning to a session to assess output or answer questions. To address that problem, I built a &lt;a href="https://github.com/0xNF/vm_llm_notify"target="_blank" rel="noopener noreferrer"&gt;KDE taskbar widget&lt;/a&gt; that receives hooks from Claude Code. The taskbar widget lights up whenever an inner VM session is waiting for my assessment:&lt;/p&gt;
 &lt;p&gt;&lt;img loading="lazy" src="https://github.com/0xNF/vm_llm_notify/raw/master/llm_notify.gif"
 alt="KDE taskbar app that lights up when Claude requires attention"/&gt;&lt;/p&gt;
-&lt;h2 id="paralleization"&gt;Paralleization&lt;/h2&gt;
+&lt;h2 id="parallelization"&gt;Parallelization&lt;/h2&gt;
 &lt;p&gt;Sometimes I want to get multiple things done in one repo, and don&amp;rsquo;t want to wait for a single agent to churn through the tasks sequentially.
 If I have a set of tasks that I think are decent candidates for doing in parallel, as in, they touch different files and wont step on each other&amp;rsquo;s work, I open multiple panes of Claude Code and set them to their tasks. The first thing I writ in these prompts is:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -436,10 +436,10 @@ If I have a set of tasks that I think are decent candidates for doing in paralle
 &lt;p&gt;&lt;code&gt;handoff.md&lt;/code&gt; is a very temporary file, and is either constantly being rewritten depending on how extensive and token-intensive the task is, or just straight up deleted when no longer needed.&lt;/p&gt;
 &lt;p&gt;This goes hand-in-hand with the next item, &amp;ldquo;rewrite to be forward looking&amp;rdquo;.&lt;/p&gt;
 &lt;h2 id="rewrite-to-be-forward-looking"&gt;Rewrite To Be Forward Looking&lt;/h2&gt;
-&lt;p&gt;Plan files and Handoff files often get polutted, as time goes on, with historical state of the repsitory and the plan being implemented. Lots of:&lt;/p&gt;
+&lt;p&gt;Plan files and Handoff files often get polluted, as time goes on, with historical state of the repository and the plan being implemented. Lots of:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;(Done) Some Requsiite Feature A&lt;/p&gt;
+&lt;p&gt;(Done) Some Requisite Feature A&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;(Done) Some Requisite Feature B&lt;/p&gt;
@@ -451,25 +451,25 @@ If I have a set of tasks that I think are decent candidates for doing in paralle
 &lt;p&gt;[,,,]&lt;/p&gt;
 &lt;p&gt;and similar things. This is a quirk of the LLMs that may useful to them in the moment, but for new agents picking up work, is entirely unnecessary. At some point in becomes the prudent choice to tell the agent to&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rewrite this document to be foward looking&lt;/p&gt;
+&lt;p&gt;rewrite this document to be forward looking&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&amp;ldquo;forward looking&amp;rdquo; is a keyword taken from my observations of Opus. It often uses that phrase when it deletes old content, so I adopted it into my vocabulary to better trigger the behavior I&amp;rsquo;m loooking for.&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;forward looking&amp;rdquo; is a keyword taken from my observations of Opus. It often uses that phrase when it deletes old content, so I adopted it into my vocabulary to better trigger the behavior I&amp;rsquo;m looking for.&lt;/p&gt;
 &lt;p&gt;At the end of one of these requests, we get documents that are pruned of old detail, and only contain the necessary bits that are yet to be implemented. The agents are also smart enough to retain the items that are historical but highly relevant, like traps in the API or gaps in the machines expectations.&lt;/p&gt;
-&lt;p&gt;Of course, you can always give these documets a manual once-over with your own eyes to see if they left any details in that should be stricken.&lt;/p&gt;
+&lt;p&gt;Of course, you can always give these documents a manual once-over with your own eyes to see if they left any details in that should be stricken.&lt;/p&gt;
 &lt;h2 id="team-a-vs-team-b"&gt;Team A vs Team B&lt;/h2&gt;
-&lt;p&gt;I have dominion over a number of repositories that are interlinked at various levels to each other, and I often have VSCode windows up and agents working on those repos simultaneusly. Sometimes, features co-develop across repositories and require two agents across repos to work in tandem.&lt;/p&gt;
+&lt;p&gt;I have dominion over a number of repositories that are interlinked at various levels to each other, and I often have VSCode windows up and agents working on those repos simultaneously. Sometimes, features co-develop across repositories and require two agents across repos to work in tandem.&lt;/p&gt;
 &lt;p&gt;When this happens, I have Agent A in Repo 1 (1.A) work on some core feature, then ask for an Implementation Document for Agent B in Repo 2 (2.B).
-Then, I take that document, and give it directly to 2.B. Sometimes it becomes emergent that the feature set or details of the core project are missing something. To prevent 2.B from creating weird work-arounds or producing a sub-standard end result, I ask 2.B for a document outlining its requests for the Repo 1 Team, which it will write me, and then I can hand that document back to 1.A, which will address the issues, and the process repeats.&lt;/p&gt;
-&lt;p&gt;This is a great way to get a really polished feature across two repositories simultanepusly. The agents are indirectly asking each other questions, refinidng their assumptions, and creating featuees, fixing bugs, or polishing the experience.&lt;/p&gt;
-&lt;p&gt;I don&amp;rsquo;t combine the agents into one singular one becaue at the context sizes I am working with, it&amp;rsquo;s a lot easier and consistent to have each Repo Agent manage its own repo context. They can communicate to each other through me, and I can arbitrate their requests. Because ultimately, I am the consumer and the judge of their work product.&lt;/p&gt;
+Then, I take that document, and give it directly to 2.B. Sometimes it becomes emergent that the feature set or details of the core project are missing something. To prevent 2.B from creating weird workarounds or producing a sub-standard end result, I ask 2.B for a document outlining its requests for the Repo 1 Team, which it will write me, and then I can hand that document back to 1.A, which will address the issues, and the process repeats.&lt;/p&gt;
+&lt;p&gt;This is a great way to get a really polished feature across two repositories simultaneously. The agents are indirectly asking each other questions, refining their assumptions, and creating features, fixing bugs, or polishing the experience.&lt;/p&gt;
+&lt;p&gt;I don&amp;rsquo;t combine the agents into one singular one because at the context sizes I am working with, it&amp;rsquo;s a lot easier and consistent to have each Repo Agent manage its own repo context. They can communicate to each other through me, and I can arbitrate their requests. Because ultimately, I am the consumer and the judge of their work product.&lt;/p&gt;
 &lt;p&gt;I find this &amp;ldquo;Team A vs Team B&amp;rdquo; document passing to be really productive.&lt;/p&gt;
 &lt;h1 id="recent-worked-examples"&gt;Recent Worked Examples&lt;/h1&gt;
-&lt;p&gt;I&amp;rsquo;ll describe some thigs I&amp;rsquo;ve had the agents do recently, beyond just the standard &amp;ldquo;implement this feature&amp;rdquo; and &amp;lsquo;fix this bug&amp;quot; requests.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll describe some things I&amp;rsquo;ve had the agents do recently, beyond just the standard &amp;ldquo;implement this feature&amp;rdquo; and &amp;lsquo;fix this bug&amp;quot; requests.&lt;/p&gt;
 &lt;h2 id="reducing-token-spend-on-backtracking-during-failed-test-runs"&gt;Reducing Token Spend on Backtracking during Failed Test Runs&lt;/h2&gt;
 &lt;p&gt;A Desktop GUI C# application has a dedicated test suite project. It&amp;rsquo;s regular output contained all the successes and failures, but the failures were printed at the top of the output, and the agents have a habit of using &lt;code&gt;sed&lt;/code&gt;, &lt;code&gt;trim&lt;/code&gt;, and select-last in powershell, resulting in the test failures not being visible to the agent. What often happened is that it saw a generic failure (exit code 1), then re-ran the test suite with a new command just to get the failing test.&lt;/p&gt;
-&lt;p&gt;The resolution was to reduce stdout noise and print detailed test failure output only, so the agents have visibility into the only part of the test suite that matters: whether a ran succeedd, and if not, which ones failed. As before, this saves tokens, context, and time.&lt;/p&gt;
+&lt;p&gt;The resolution was to reduce stdout noise and print detailed test failure output only, so the agents have visibility into the only part of the test suite that matters: whether a ran succeeded, and if not, which ones failed. As before, this saves tokens, context, and time.&lt;/p&gt;
 &lt;h2 id="test-suite-optimization"&gt;Test Suite Optimization&lt;/h2&gt;
 &lt;p&gt;A perfect mix of three things that make LLM use optimal:&lt;/p&gt;
 &lt;ul&gt;
@@ -494,20 +494,20 @@ Then, I take that document, and give it directly to 2.B. Sometimes it becomes em
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;With these three items an LLM can really go into perfect overdrive to improve an outcome.&lt;/p&gt;
-&lt;p&gt;In this specifi case, I was able to work with the LLM to iteraively reduce a naively built C#/XAML test suite from 5 minutes per run, all the way down to 10 seconds. The steps in between were 1 minute, 30 seconds, 16 seconds, then 8 seconds.&lt;/p&gt;
-&lt;p&gt;The agent itself did a doggedly good job, but it was a tandem effort becaue I had to suggest paralleization and thread usage, eliminating old tests, and restructuring the project in ways that made it more amenable to testing.&lt;/p&gt;
+&lt;p&gt;In this specific case, I was able to work with the LLM to iteratively reduce a naively built C#/XAML test suite from 5 minutes per run, all the way down to 10 seconds. The steps in between were 1 minute, 30 seconds, 16 seconds, then 8 seconds.&lt;/p&gt;
+&lt;p&gt;The agent itself did a doggedly good job, but it was a tandem effort because I had to suggest parallelization and thread usage, eliminating old tests, and restructuring the project in ways that made it more amenable to testing.&lt;/p&gt;
 &lt;h2 id="automation-and-accessibility"&gt;Automation and Accessibility&lt;/h2&gt;
 &lt;p&gt;WinUI3, Microsoft&amp;rsquo;s modern desktop framework, supports &lt;a href="https://learn.microsoft.com/en-us/dotnet/framework/ui-automation/ui-automation-properties-overview"target="_blank" rel="noopener noreferrer"&gt;Automation Properties&lt;/a&gt;, which, if you are familiar with puppeteer or playwright, permits API control of the program. In the agentic era, a program that an agent can use, is a program that an agent can improve.&lt;/p&gt;
-&lt;p&gt;The first problem was getting this application to have automation properties in the first place. The solution of course was to supply the relevant documetation and then set the agents on their first task:&lt;/p&gt;
+&lt;p&gt;The first problem was getting this application to have automation properties in the first place. The solution of course was to supply the relevant documentation and then set the agents on their first task:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Add automation propreties this application&lt;/p&gt;
+&lt;p&gt;Add automation properties this application&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Once that was done, an ADR was created saying that &amp;ldquo;all UI elements must have automation properties&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;And finally, with it all in place, all future bug fix or feature implementation sessions can now be driven start to finish with the Agent all on its own, since it now has access to every part of the application.&lt;/p&gt;
 &lt;p&gt;With vision capable models like the large frontier ones, an agent is now much more powerful and can make quite delicate judgements and assess its own work much more accurately, because now it can also drive the application on its own as well.&lt;/p&gt;
 &lt;h2 id="migrating-a-failing-robotics-sample-from-gazebo-to-mujoco"&gt;Migrating a Failing Robotics Sample From Gazebo to MuJoCo&lt;/h2&gt;
-&lt;p&gt;A book I am following for robotics was built with the simulation program Gazebo, so all the examples in it are assuming and utilizing that program. However, Gazebo is widely understood to be bad, unreliable, have issues starting up, often misses messages passed between program nodes, and is generally a pain. This matches my experience. Some elder robotisics I have spoken to, when hearing of my woes, told me that I should spend my time in other simulators like Isaac or MuJoCo. So I had Opus take all the book&amp;rsquo;s example and move them into MuJoCo automatically.&lt;/p&gt;
-&lt;p&gt;It took about a week 12-hour days of time for Opus to churn through all the issues, but in the end, I had a proper simulator environent that had no runtime issues at all, and was very stable.&lt;/p&gt;</description></item><item><title>Addressing and Naming</title><link>https://example.com/network/home/home3_addressing/</link><pubDate>Sun, 05 Apr 2026 14:59:46 +0900</pubDate><guid>https://example.com/network/home/home3_addressing/</guid><description>&lt;h2 id="naming"&gt;Naming&lt;/h2&gt;
+&lt;p&gt;A book I am following for robotics was built with the simulation program Gazebo, so all the examples in it are assuming and utilizing that program. However, Gazebo is widely understood to be bad, unreliable, have issues starting up, often misses messages passed between program nodes, and is generally a pain. This matches my experience. Some elder robotics I have spoken to, when hearing of my woes, told me that I should spend my time in other simulators like Isaac or MuJoCo. So I had Opus take all the book&amp;rsquo;s example and move them into MuJoCo automatically.&lt;/p&gt;
+&lt;p&gt;It took about a week 12-hour days of time for Opus to churn through all the issues, but in the end, I had a proper simulator environment that had no runtime issues at all, and was very stable.&lt;/p&gt;</description></item><item><title>Addressing and Naming</title><link>https://example.com/network/home/home3_addressing/</link><pubDate>Sun, 05 Apr 2026 14:59:46 +0900</pubDate><guid>https://example.com/network/home/home3_addressing/</guid><description>&lt;h2 id="naming"&gt;Naming&lt;/h2&gt;
 &lt;p&gt;Everything on the network gets a specific hostname, which follows a template. The naming template you choose for your own network is likely to be different based on your own desires, but here&amp;rsquo;s the one I&amp;rsquo;ve chosen:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;$TwoLetterSiteCode-$RoleTemplate-$instanceNumberOrUnit&lt;/code&gt;.&lt;/p&gt;
 &lt;h3 id="two-letter-site-code"&gt;Two Letter Site Code&lt;/h3&gt;
