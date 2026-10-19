@@ -98,7 +98,7 @@
 &lt;li&gt;&lt;a href="https://github.com/can1357/oh-my-pi"target="_blank" rel="noopener noreferrer"&gt;OhMyPi&lt;/a&gt; (omp)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;作業時間の 9 割は VSCode の中で過ごすため、&lt;a href="https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code"target="_blank" rel="noopener noreferrer"&gt;Claude Code の Visual Studio 拡張機能&lt;/a&gt;も使っています。LLM の出力の隣で、リッチな Markdown やコードの編集ができるのが気に入っています。次のような感じです。&lt;/p&gt;
-&lt;p&gt;&lt;img loading="lazy" src="./vscode_claudecode_1.png"
+&lt;p&gt;&lt;img loading="lazy" src="https://example.com/img/agentic/workflows/rev1/vscode_claudecode_1.png"
 alt="VS Code と Claude Code を並べた画面"/&gt;&lt;/p&gt;
 &lt;p&gt;一方で &lt;em&gt;omp&lt;/em&gt; も好きです。Language Server が組み込まれているので、シンボルの名前変更などを効率よく、漏れなく行えます。&lt;/p&gt;
 &lt;p&gt;Anthropic は Max サブスクリプションを他のハーネスで使うことを認めていないため、&lt;em&gt;omp&lt;/em&gt; は OpenAI のモデルを使いたいときにだけ使っています。&lt;/p&gt;

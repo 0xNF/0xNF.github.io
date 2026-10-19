@@ -98,7 +98,7 @@ This approach is heavy on docs, folder structure, and copious tools and scripts 
 &lt;li&gt;&lt;a href="https://github.com/can1357/oh-my-pi"target="_blank" rel="noopener noreferrer"&gt;OhMyPi&lt;/a&gt; (omp).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Be aware that I live 90% of the time in VSCode, so I also use the the &lt;a href="https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code"target="_blank" rel="noopener noreferrer"&gt;Claude Code Visual Studio Extenstion&lt;/a&gt; which I like because I can have rich markdown and code editing support side by side with the LLM output, like this:&lt;/p&gt;
-&lt;p&gt;&lt;img loading="lazy" src="./vscode_claudecode_1.png"
+&lt;p&gt;&lt;img loading="lazy" src="https://example.com/img/agentic/workflows/rev1/vscode_claudecode_1.png"
 alt="VS Code&amp;rsquo;s integration side by side with Claude Code"/&gt;&lt;/p&gt;
 &lt;p&gt;However, I also like &lt;em&gt;omp&lt;/em&gt; because it has Language Server support built in, so it can do really efficient and thorough symbol renames, etc.&lt;/p&gt;
 &lt;p&gt;Because Anthropic doesn&amp;rsquo;t permit using their Max subscriptions in other harnesses, &lt;em&gt;omp&lt;/em&gt; only get used when I need to use OpenAI&amp;rsquo;s models.&lt;/p&gt;
