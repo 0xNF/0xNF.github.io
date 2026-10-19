@@ -47,7 +47,7 @@ I have previously experimented with Mistral, and have only heard good things but
 
 Be aware that I live 90% of the time in VSCode, so I also use the the [Claude Code Visual Studio Extenstion](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code) which I like because I can have rich markdown and code editing support side by side with the LLM output, like this:
 
-![VS Code's integration side by side with Claude Code](./vscode_claudecode_1.png)
+![VS Code's integration side by side with Claude Code](/img/agentic/workflows/rev1/vscode_claudecode_1.png)
 
 However, I also like _omp_ because it has Language Server support built in, so it can do really efficient and thorough symbol renames, etc.
 

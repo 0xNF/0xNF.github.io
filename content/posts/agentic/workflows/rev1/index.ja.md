@@ -47,7 +47,7 @@ tags:
 
 作業時間の 9 割は VSCode の中で過ごすため、[Claude Code の Visual Studio 拡張機能](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code)も使っています。LLM の出力の隣で、リッチな Markdown やコードの編集ができるのが気に入っています。次のような感じです。
 
-![VS Code と Claude Code を並べた画面](./vscode_claudecode_1.png)
+![VS Code と Claude Code を並べた画面](/img/agentic/workflows/rev1/vscode_claudecode_1.png)
 
 一方で _omp_ も好きです。Language Server が組み込まれているので、シンボルの名前変更などを効率よく、漏れなく行えます。
 
