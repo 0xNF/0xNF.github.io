@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content="Second post in the Home Networking series, describing our network layers and architecture"><title>Home Networking 2&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.2fd24d7c81c45878fdc9212b9f0d4de8f464a3301e51a8ce724588e1634f1e30f51eb9dad01be35790a45c5245c5c97c.css" integrity="sha384-L9JNfIHEWHj9ySErnw1N6PRkozAeUajOckWI4WNPHjD1Hrna0BvjV5CkXFJFxcl8"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Home Networking 2" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Home Networking 2</h1><p class="article date">Sunday, March 15, 2026</p></section><article class="article markdown-body"><h1 id="physical-and-logical-architecture">Physical and Logical Architecture</h1>
+<p>This post continues from <a href="/network/home/home1">Home Networking 1</a>.</p>
+<h1 id="brief-vlan-legend">Brief VLAN legend</h1>
+<p>The vlans we&rsquo;re using for now are established like so:</p>
+<table>
+  <thead>
+      <tr>
+          <th>VLAN</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>untagged</td>
+      </tr>
+      <tr>
+          <td>100</td>
+          <td>Infrastructure management panels</td>
+      </tr>
+      <tr>
+          <td>900</td>
+          <td>Inbound ISP traffic</td>
+      </tr>
+      <tr>
+          <td>1016</td>
+          <td>Trusted network</td>
+      </tr>
+      <tr>
+          <td>1032</td>
+          <td>Guest network</td>
+      </tr>
+  </tbody>
+</table>
+<h1 id="logical-layout">Logical Layout</h1>
+<p>Recall from earlier we mentioned <a href="https://en.wikipedia.org/wiki/Router_on_a_stick"target="_blank" rel="noopener noreferrer">Router On a Stick</a>, implemented thusly:</p>
+<pre class="mermaid">
+  ---
+title: Logical VLAN connections
+---
+graph LR;
+sfp((ISP/WAN));
+switch;
+ap(access point);
+hypervisor;
+firewall;
+sfp--&gt;|vlan/900|switch;
+subgraph vlan/all;
+switch&lt;--&gt;|vlan100,vlan/all|firewall;
+end
+subgraph vlan/other;
+switch&lt;--&gt;|vlan100,vlanall|hypervisor
+end
+subgraph WiFi Networks;
+ap&lt;--&gt;|vlan/1016,
+vlan/1032,
+vlan/100
+|switch
+end
+</pre>
+<p>ISP modem goes into the switch, which in turn goes to the firewall. The ISP modem is an SFP unit, so it goes into one of the switches SFP+ slots. From there, a different switch-inserted SFP+ module connects to an SFP+ module on the firewall, over 10GB optical cables.
+The optical cables we&rsquo;re using are &ldquo;LC UPC Duplex&rdquo;, meaning there&rsquo;s one dedicated line for outgoing, and one dedicated line for incoming. Things can, in theory, go very fast on the internal network.</p>
+<p>Once network packets pass through the firewall, they go back out into the switch to their destination vlan device.</p>
+<p>ISP packets come in on a port marked for vlan 900. This is a standard marking for ISP / inbound-WAN traffic. Once it gets to the firewall, it will be sent back through the switch with whatever vlan is appropriate, defined by rules we will discuss later.</p>
+<h1 id="physical-layout">Physical Layout</h1>
+<p>Because our vlans are traveling over a physical switch with physical ports, we can&rsquo;t just define the vlans in the opnsense firewall, we also have to define them on the switch.</p>
+<p>On our 24 Ethernet / 4 SFP port switch, we have roughly the following layout:</p>
+<ul>
+<li>Ports 1-12 (<code>1/1 - 1/12</code> in FS switch parlance)  (ethrenet) -  <code>untagged*</code>, meaning that anything plugged into them is capable of being routed anywhere. This is done for management purposes, therefore anything plugged into this set of items should be for device and infrastructure management.
+<ul>
+<li>* &ldquo;Untagged&rdquo; in a vlan-aware system implies <code>vlan/1</code>. Don&rsquo;t ask me why.</li>
+</ul>
+</li>
+<li>Port 1 (1/1) - dedicated to the Managemnet interface of the Firewall. This provides us with direct access to the OPNSense control panel / CLI.</li>
+<li>Port 24 (reserved) - for future expansion, this is marked as being a Trunk (aka, capable of carrying multiple vlans) carrying other, yet to be defined vlans, which is meant to be connected to a yet-to-be-installed second switch. This is meant to allow us to drop in another switch onto th network if we run out of ports on our current one.</li>
+<li>Port 25 (SFP+/fiber) - the actual switch&lt;-&gt;firewall traffic. This port is makred as being a trunk for every for every single vlan (EXCEPT vlan/100 management traffic) we define on the network. This is necessary because we want <em>all</em> traffic to flow through the firewall.</li>
+<li>Port 28 (SFP+/fiber) (<code>1/28</code>) -  <code>vlan900</code> for ISP traffic, and is where the ISP&rsquo;s SFP+ WAN modem unit is plugged into.</li>
+</ul>
+<p>Or, in table form:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Port</th>
+          <th>VLAN</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1-12</td>
+          <td>untagged</td>
+          <td>For infrastructure access</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>untagged</td>
+          <td>Firewall management</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>untagged</td>
+          <td>Hypervisor management</td>
+      </tr>
+      <tr>
+          <td>23</td>
+          <td>untagged</td>
+          <td>Access Point* traffic</td>
+      </tr>
+      <tr>
+          <td>24</td>
+          <td>Trunk, all</td>
+          <td>Reserved for future switch expansion</td>
+      </tr>
+      <tr>
+          <td>25</td>
+          <td>Trunk, all</td>
+          <td>Firewall traffic</td>
+      </tr>
+      <tr>
+          <td>26</td>
+          <td>Trunk, all</td>
+          <td>Hypervisor VM traffic</td>
+      </tr>
+      <tr>
+          <td>28</td>
+          <td>900</td>
+          <td>ISP WAN access</td>
+      </tr>
+  </tbody>
+</table>
+<p>The other ports will be filled in later</p>
+<p>*the Access Point requires some &ldquo;&ldquo;&ldquo;flexibility&rdquo;&rdquo;&rdquo; in our system because it only has one port, meaning we have to combine our Management and Client traffic over one port using multiple VLANs on one port. Ideally we would have had two ports, one dedicated for management, and the other for client traffic. It gets a little tricky, and we will discuss this later.</p>
+<p>The actual physical port diagram looks like this:</p>
+<pre class="mermaid">
+  ---
+title: Physical Port Diagram
+---
+graph LR;
+switch;
+isp((ISP/WAN));
+ap(access point);
+hypervisor;
+firewall;
+switch--&gt;|1|firewall;
+switch--&gt;|2|hypervisor;
+switch--&gt;|24|ap;
+isp--&gt;|28|switch;
+switch--&gt;|25|firewall;
+switch--&gt;|26|hypervisor;
+</pre>
+<p>As you can see, the AP only having one port breaks the pattern a little bit, but we can work around it.</p>
+</article><section class="article labels"><a class="category" href=/categories/defaultcategory/>defaultcategory</a><a class="tag" href=/tags/defaulttag/>defaulttag</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/network/home/home3/"><span class="iconfont icon-article"></span>Home Networking 3</a></p><p><a class="link" href="/network/home/home1/"><span class="iconfont icon-article"></span>Home Networking 1</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2026</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section></body>
+
+</html>
+
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script>

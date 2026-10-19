@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=34247&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content="Third post in the Home Networking series, describing how we set up ipv4 and 6 addrs, and naming schemes"><title>Addressing and Naming&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.1912ded78f688bbd516afb7cab34b50ded577caf45cf75bc1af5d38655c05000847900a4cf8d2cfe19578a79343797c0.css" integrity="sha384-GRLe149oi71Ravt8qzS1De1XfK9Fz3W8GvXThlXAUACEeQCkz40s/hlXink0N5fA"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Addressing and Naming" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Addressing and Naming</h1><p class="article date">Sunday, April 5, 2026</p></section><article class="article markdown-body"><h2 id="naming">Naming</h2>
+<p>Everything on the network gets a specific hostname, which follows a template. The naming template you choose for your own network is likely to be different based on your own desires, but here&rsquo;s the one I&rsquo;ve chosen:</p>
+<p><code>$TwoLetterSiteCode-$RoleTemplate-$instanceNumberOrUnit</code>.</p>
+<h3 id="two-letter-site-code">Two Letter Site Code</h3>
+<p>The two-letter-site-code is an abbreviation for sites that I have, or am likely to have, devices or vms located at. For devices, this is straight forward since they must physically exist somehwere. For VMs its trickier, because they could float around from place to place. For now, I&rsquo;ve simply decided that VMs have a site code equal to their hypervisor host, but it&rsquo;s open to modification in the future. E.g., &rsquo;s <code>ln</code> for <code>London</code>, <code>se</code> for <code>Seattle</code>, etc.</p>
+<p><em>Physical</em></p>
+<table>
+  <thead>
+      <tr>
+          <th>2-letter ascii code</th>
+          <th>Location</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>ln</td>
+          <td>London</td>
+      </tr>
+      <tr>
+          <td>se</td>
+          <td>Seattle</td>
+      </tr>
+  </tbody>
+</table>
+<p>Additionally, we define two sets of pseudo-locations:</p>
+<p>Virtual is used when something we own is hosted on a cloud provider like AWS or Digital Ocean:</p>
+<p><em>Virtual</em></p>
+<table>
+  <thead>
+      <tr>
+          <th>2-letter ascii code</th>
+          <th>Location</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>do</td>
+          <td>Digitial Ocean</td>
+      </tr>
+      <tr>
+          <td>as</td>
+          <td>AWS</td>
+      </tr>
+  </tbody>
+</table>
+<p>And finally, &ldquo;Special&rdquo;, which is used for special case items, denotes with a <code>z</code> prefix.
+<em>Special</em>_</p>
+<table>
+  <thead>
+      <tr>
+          <th>2-letter ascii code</th>
+          <th>Location</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>zz</td>
+          <td>Floating, of indetermine location</td>
+      </tr>
+      <tr>
+          <td>za</td>
+          <td>Network-Wide: We need a prefix to make a name match, but there&rsquo;s only <em>ever</em> one of a thing. Those things get za.</td>
+      </tr>
+  </tbody>
+</table>
+<p>These codes are self-describing as long as you have the intution for how the abbreviations were constructed. It is recommended to keep a lookup table detailing these codes somewhere.</p>
+<h3 id="role-template">Role Template</h3>
+<p>The Role Template is a sub-template of the naming scheme, and is used to store information such as:</p>
+<ul>
+<li>
+<p>the main role</p>
+</li>
+<li>
+<p>its staging environment</p>
+</li>
+<li>
+<p>its group count within that environment</p>
+<p>Its of the form: <code>$role.$env.$groupCount</code></p>
+</li>
+</ul>
+<p><code>role</code> is an abbreviated string of things like.
+For example here is a highly abbriged list of roles I am using:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Code</th>
+          <th>Role</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>fw</td>
+          <td>Firewall</td>
+      </tr>
+      <tr>
+          <td>sw</td>
+          <td>Switch</td>
+      </tr>
+      <tr>
+          <td>hv</td>
+          <td>Hypervisor</td>
+      </tr>
+      <tr>
+          <td>srv</td>
+          <td>Generic Server</td>
+      </tr>
+      <tr>
+          <td>web</td>
+          <td>Generic Web Server</td>
+      </tr>
+      <tr>
+          <td>ca</td>
+          <td>Certificate Authority</td>
+      </tr>
+      <tr>
+          <td>ap</td>
+          <td>Access Point</td>
+      </tr>
+      <tr>
+          <td>zz</td>
+          <td>Other</td>
+      </tr>
+  </tbody>
+</table>
+<p>Once again, the <code>z</code> prefix is used to indiciate special things that don&rsquo;t otherwise fit.</p>
+<p>This list is not exhaustive, and contains more specialized role names for specific web services being run, e,g.:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Code</th>
+          <th>Role</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>hue</td>
+          <td>Philips Hue</td>
+      </tr>
+      <tr>
+          <td>appletv</td>
+          <td>Apple TV</td>
+      </tr>
+      <tr>
+          <td>homeasistant</td>
+          <td>Home Assistant</td>
+      </tr>
+      <tr>
+          <td>obsidian</td>
+          <td>Obsidian Notes</td>
+      </tr>
+      <tr>
+          <td>etc.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><code>env</code> is a 1-letter code indicating its environment:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Code</th>
+          <th>Meaning</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>p</td>
+          <td>production</td>
+      </tr>
+      <tr>
+          <td>d</td>
+          <td>development</td>
+      </tr>
+      <tr>
+          <td>s</td>
+          <td>staging</td>
+      </tr>
+      <tr>
+          <td>t</td>
+          <td>testing</td>
+      </tr>
+  </tbody>
+</table>
+<p>Your network may have more or different codes for other purposes.</p>
+<p>In my scheme, if no env code is found, it is implicitly of code <code>p</code> for <code>production</code>.</p>
+<p><code>groupCount</code> is which group this item belongs in. For instance, two different dev teams may have the same VM running for their own purposes. In which case, Team A gets <code>srv.d.1</code> and Team B gets <code>srv.d.2</code> for their individual purposes.</p>
+<p>If no group count is found, it is implicitly in group <code>1</code>.</p>
+<h3 id="instance-number--unit">Instance Number / Unit</h3>
+<p>All items get a defualt <code>-1</code> as the final portion of their hostname. A number greater than one indicates that the entre preceeding {Site-Code, RoleTemplate} has a second instance. For example, a -2 on a firewall could be a failover, -3 or -4 could be for load balancers.</p>
+<p>However, it&rsquo;s also possible to use colors: <code>-green</code> or <code>-blue</code>, which are used to inidicate co-equal items where no one unit is of greater implicit importance than the other. For example,
+&ldquo;firewall-green&rdquo; and &ldquo;firewall-blue&rdquo; are equivalent, and used in a prod/staging <a href="https://en.wikipedia.org/wiki/Flip-flop_%28electronics%29"target="_blank" rel="noopener noreferrer">flip-flop gate</a> where one is active currently, but may be backgrounded for the other at any point in time. These items can either be always co-equal, or take turns being the primary, but as far naming and setting up the hosts themselves, there is nothing intrinsict at setup time that would imply numeric naming. These items get the -color scheme.</p>
+<h3 id="example">Example</h3>
+<p>A fully built example hostname would be something like:</p>
+<ul>
+<li><code>ln-fw-green</code>,  meaning: &ldquo;green&rdquo; Firewall 1, located in the London office, the primary/standby status of which would be be queries spearately</li>
+<li><code>se-ap-3</code>, meaning: the third Access Point in the Seattle office</li>
+<li><code>mn-web.d.3-7</code> meaning: Montreal office; Dev Webserver third grouping, instance 7</li>
+<li><code>mn-web.d.3-8</code> meaning: Montreal office, Dev websever third grouping,  instance 8.</li>
+<li><code>mn-web.d.4.7</code> meaning: Montreal office, Dev Weberverr, fourth grouping, instance 7</li>
+</ul>
+<p>Typically, the unit number would be dependant on the grouping. Otherwise it should be taken that they are independent.</p>
+<h3 id="16-characters">16 characters</h3>
+<p>Windows Domains havea 16-character limit for hostnames. We <em>generally</em> try to restrict ourselves to the same limit, but we also break this from time to time. If you intend to manage windows domains, or intend to manage things from Active Directory, you should take care to make things fit into 16 characters, or at least be sure that the items that will be inclued in AD to be under that limit.u</p>
+<h2 id="static-assignments">Static Assignments</h2>
+<p>For the most part, everything that gets a hostname also gets a static IP assignment. One way of thinking about what gets a static IP is that clients make do with DHCP but servers get a static IP. Anything that needs to be accessed by other things gets an IP. Your phone doesn&rsquo;t need to be accessed except by you, and by physically operating it.</p>
+<p>My switch needs to be located often, so it needs a static IP.</p>
+<p>In our setup, we do not use DHCP reservations. You are free to use them, but we will just be using ip assignemnts on the devices themselves.</p>
+<p>For example, our firewall will be given the following static IP: <code>172.30.0.1</code>, and our main switching hub will be given <code>172.30.0.2</code>.  This list will include not just other infrastructure like our hypervisor, but also overlay things like Hue Bridges, or VMs serving important apps on our network. File storage? <code>10.96.16.35</code>. Mail server? <code>10.96.16.27</code>.</p>
+<p>Phones, desktops, etc can just rely on getting a dynamic IP from the DHCP server, since they are not expected to be accessible except by phsyical operators.</p>
+<h3 id="ula">ULA</h3>
+<p>Although the network will be primarily IPv4, it will also be created with an eye towards IPv6. One such IPv6-thing is the concept of a <a href="https://en.wikipedia.org/wiki/Unique_local_address"target="_blank" rel="noopener noreferrer">Unique Local Adddress (ULA)</a>, which is a specially derived IPv6 address with certain properties.</p>
+<p>The exact reasons for why ULAs are interesting is beyond the scope of this post, but among other things, it means:</p>
+<ul>
+<li>If in the future. networks merge together, there will be a statistically-zero chance of collision</li>
+<li>We can encode a lot of data into the ULA that make the addresses self-describing in certain capacities</li>
+</ul>
+<p>Using this <a href="https://iotools.cloud/tool/ipv6-ula-generator/"target="_blank" rel="noopener noreferrer">IO Tool&rsquo;s generator webapp</a>, we can create some initial ULA templates for use. For my purposes, I used the main MAC addresses of my firewall&rsquo;s built-in NIC for my underlay, and the MAC address of the SFP+ 520 card for the overlay, which mirrors the intended data that each card is expected to carry.</p>
+<h1 id="todo-ula-encoding">TODO ULA Encoding</h1>
+</article><section class="article labels"><a class="category" href=/categories/defaultcategory/>defaultcategory</a><a class="tag" href=/tags/defaulttag/>defaulttag</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/network/openvpn/mtu/"><span class="iconfont icon-article"></span>OpenVPN - Message Too Long</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2026</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section><script src="/js/core.min.39702cb95f7cf70f6dddc93246c80e02ba6bf318843f08ab21eff518160a6c40b563bcaa2aa342f4221ec7a0e60c64b8.js" integrity="sha384-OXAsuV989w9t3ckyRsgOArpr8xiEPwirIe/1GBYKbEC1Y7yqKqNC9CIex6DmDGS4"></script></body>
+
+</html>
+

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content="Prologue
+OAuth is a common peice of web technology infrastructure that underpins many common websites.
+To keep things short, its how you log into websites.
+But we&rsquo;re here to learn more than that. First, how much detail would you like to learn? Select a skill level, and we&rsquo;ll work from there.
+n.b., we will only be covering OAuth 2.1 here, since OAuth 2.0 is now deprecated. That means no Implicit Flow, and Authorization will use PKCE only.
+Also, we&rsquo;re going to be deep-diving into a bunch of RFCs, so depending on the experience level, be prepared for some technical writing."><title>Init&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.7d3384298b257eff2f84ff7d48ac8cd76c2fa0934b90672393d7368ca3ea117b1e18c7a4e0fa643a0c235a1b935b34ba.css" integrity="sha384-fTOEKYslfv8vhP99SKyM12wvoJNLkGcjk9c2jKPqEXseGMek4PpkOgwjWhuTWzS6"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Init" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Init</h1><p class="article date">Monday, January 5, 2026</p></section><article class="article markdown-body"><h1 id="prologue">Prologue</h1>
+<p>OAuth is a common peice of web technology infrastructure that underpins many common websites.
+To keep things short, its how you log into websites.</p>
+<p>But we&rsquo;re here to learn more than that. First, how much detail would you like to learn? Select a skill level, and we&rsquo;ll work from there.</p>
+<p>n.b., we will only be covering OAuth 2.1 here, since OAuth 2.0 is now deprecated. That means no Implicit Flow, and Authorization will use PKCE only.
+Also, we&rsquo;re going to be deep-diving into a bunch of RFCs, so depending on the experience level, be prepared for some technical writing.</p>
+<details>
+<summary>
+<h1 id="skill-level--1-just-the-summary">Skill Level -1 (just the summary)</h1>
+</summary>
+<p>[[Graph 1 &ndash; the drawing of Login With X]]</p>
+<p>It&rsquo;s when websites or apps ask you to &ldquo;Log In With Google&rdquo;, &ldquo;Log In With Instragram&rdquo;.</p>
+</details>
+<details>
+<summary> 
+<h1 id="skill-level-0-novice--just-a-random-internet-user">Skill Level 0 (novice / just a random internet user)</h1>
+</summary>
+<p>[[Get lots of pictures of OAuth here]]</p>
+<div class="row-container" style="display: flex; width: 100%; height: 100%; flex-direction: column; background-color: blue; overflow: hidden;">
+  <iframe src="/simple_auth_1/index.html" style="flex-grow: 1; border: none; margin: 0; padding: 0;" height="500"></iframe>
+</div>
+<p>OAuth, specifically OAuth 2.1, though commonly just referred to as OAuth 2, is how things like &ldquo;Log in with Google&rdquo;, or &ldquo;Log in with Instagram&rdquo; work. You already have an account with Instagram, so it&rsquo;s easier to just login with those credentials than to create a brand new login for yet another app.</p>
+<p>When you select Log In With Google, you get redirected to Google&rsquo;s own log-in form. This form shows you:</p>
+<ul>
+<li>Who is asking for permission from you</li>
+<li>What they want to have access to / what they want to be able to do</li>
+</ul>
+<p>After considering this form, you confirm or deny the Authorization Request, and then you get redirected back to the site you were trying to log into originally. There was a bit of a bouncing from hither and tither, but it worked well and now you&rsquo;re logged into the new website.</p>
+<p>This means:</p>
+<ul>
+<li>The website <em>does not know</em> your Google password</li>
+<li>The website <em>does not store</em> your Google password</li>
+<li>The website <em>cannot</em> login as you</li>
+<li>The website <em>cannot</em> impersonate you</li>
+<li>The website <em>cannot</em> do whatever it wants</li>
+</ul>
+<p>Whats important to know here is that when you login <em>with</em> Google, only Google knows about your password. The website doesn&rsquo;t know anything.
+All it does is give the website access to specific aspects your account. What, specifically, it has access to was shown to you on the Authorization Screen.</p>
+<p>For most purposes, the only thing you need to remember is that it reduces the amount of logins you need to keep track of. Instead of creating yet another account on yet another site, you can just use your Google account.</p>
+</details>
+<details>
+<summary>
+<h1 id="skill-level-1-developer-but-not-too-into-web-tech">Skill Level 1 (developer, but not too into web tech)</h1>
+</summary>
+<p>OAuth2 is how you login into one site with an account from another. It&rsquo;s designed to avoid sharing actual credentials such as passwords, while still letting you access things associated with your account on one service, while using a different service. One example of this would be <a href="stats.fm">stats.fm</a>, an app that shows listening statistics from your Spotify account. Stats.fm is not affiliated with Spotify, but it needs access to your Spotify account to work. When you log in, it asks you to &ldquo;connect your Spotify account&rdquo;, which brings you to the Spotify login screen. There, you log into Spotify like normal, on Spotify&rsquo;s actual spotify.com domain, and then you get redirected back to stats.fm, with the redirect operation carrying some extra information. It is with this extra information that the app now has access to knowledge related to your Spotify account.</p>
+<p>[[Animation 2 &ndash; anim including return of Access Token]]</p>
+<h3 id="access-token">Access Token</h3>
+<p>This is accomplished by the acquistion of an <em>Access Token</em>, which is string that is sent back and forth between stats.fm, and Spotify. This string is assocated with your specific account and gives its bearer access to information associated with your Spotify account. It is functionally similar to a cookie holding login information. The contents of the string are intended to be opaque to users. The contents are not important, what matters is that the string is sent over to the server exactly as-is.</p>
+<p>Whoever bears this token has access to everything the token was given access to during the initial Authorization. Because of this property, an Access Token, and all other tokens similar to it, are known as a broad category, as <em>Bearer Tokens</em>.  We will be referring to Bearer Tokens a lot, but just remember that a Bearer Token is a category of credential, and Access Tokens are a specific type of Bearer Token.</p>
+<p>Access Tokens are typically <em>short-lived</em>. What this means in practice is that access tokens have a lifetime of about an hour (3600 seconds, this number will appear a lot as well), after which the the token becomes invalid. Continuing to use the token will result in a lot of <em>403 Unauthorized</em> errors.</p>
+<h3 id="refresh-token">Refresh Token</h3>
+<p>So how do you get a new one if its expired? Does the user have to do another Authorization step? No, to get another Access Token we use something called a <em>Refresh Token</em>. When we got our original Access Token, a handful of other data was sent to us at the same time. One such piece data we got in addition to the Access Token was another token, called the Refresh Token. A Refresh Token&rsquo;s only purpose is to be given back to the main server. When we do so, the sever sends us back another Access Token, and another Refresh Token.</p>
+<p>[[Animation 3 &ndash; anim including return of Access And Refresh Tokens]]</p>
+</details>
+<details>
+<summary>
+<h1 id="skill-level-2-developer-in-charge-of-integrating-with-an-oauth-provider">Skill Level 2 (developer, in charge of integrating with an OAuth Provider)</h1>
+</summary>
+<p>[[Animation 4 &ndash; anim including the Auth Code, return, and exchange]]</p>
+<p>OAuth 2 is a set of specifications for supplying third-party applications with first-party  authorization (&ldquo;authz&rdquo;, or &ldquo;what you are allowed to do&rdquo;) information. What&rsquo;s important to know is that [OAuth 2.1[(21 RFC)] is the current main spec, and that it defines the Authorization Flow with PKCE, and the Client Credentials flow. There&rsquo;s also an extension to OAuth2 called OpenID Connect (OIDC) that deals with providing authentication (&ldquo;authn&rdquo;, or &ldquo;who you are&rdquo;) information. The difference between the two is often muddled.</p>
+<p>OAuth 2 uses a standard set of terminology that one should be familiar with, otherwise it becomes confusing trying to understand what is talking to who and under what circumstances.
+The entities commonly seen in the spec are:</p>
+<ul>
+<li>Authorization Server</li>
+<li>Resource Server</li>
+<li>Resource Owner</li>
+<li>Resouce</li>
+<li>Client</li>
+<li>User</li>
+<li>User Agent</li>
+<li>Flow</li>
+<li>Token</li>
+</ul>
+<p>The spec defines treats these entities seperately, but oftentimes they can be co-located, making the distinction hard to grasp when thinking about it from the perspective of certain services you may have encountered in the wild.</p>
+<h3 id="working-definitions">Working Definitions</h3>
+<p>You can find the true definitions in the spec, but let&rsquo;s outline them here:</p>
+<ul>
+<li><strong>Authorization Server</strong>
+<ul>
+<li>This is the authority with whom you are trying offer &ldquo;Log In With&rdquo; capability with.</li>
+<li>This is Spotify, Instagram, Google, etc, where the users actual account lies</li>
+<li>Specifically, this is their <code>accounts.xyz.com</code> doman, as opposed to their generaic <code>xyz.com</code> domain.</li>
+<li>From the perspective of OAuth, the Authorization Servers <em>only</em> responsibility is providing access to user account checks.</li>
+<li>Authorization Servers hold all the Resource Owners</li>
+</ul>
+</li>
+<li><strong>Resource Server</strong>
+<ul>
+<li>This is the server where &ldquo;resources&rdquo; are.</li>
+<li>Typically, this is the <code>api.xyz.com</code> domain or the <code>xyz.com/api/</code> endpoint.</li>
+<li>The resouce server does not Authorize,</li>
+</ul>
+</li>
+<li><strong>Resource</strong>
+<ul>
+<li>A resource is anything that your integrating application might be interested in
+<ul>
+<li>Liked Songs</li>
+<li>Friends List</li>
+<li>Calendar Events</li>
+<li>Product Reviews,</li>
+<li>etc</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Resource Owner</strong>
+<ul>
+<li>This a term describing <em>whose</em> things you&rsquo;re interested in</li>
+<li><em>whose</em> Liked Songs?</li>
+<li><em>whose</em> Friends List?</li>
+<li><em>whose</em> Calendar Events?</li>
+<li>From the perspctive of OAuth, the Resouce Owner is the literal user account on the Authorization Server. As a matter of philosophy, that means that a &ldquo;User&rdquo; and a  &ldquo;Resource Owner&rdquo; are the same abstract entity, represented at different concrete steps of the process.</li>
+<li>A Resource Owner necessarily has an account on the Authorization Server</li>
+</ul>
+</li>
+<li><strong>User</strong>
+<ul>
+<li>The person trying to login, the person actually phsyically performing the button clicks to initiate the varius Flows</li>
+</ul>
+</li>
+<li><strong>User Agent</strong>
+<ul>
+<li>The user&rsquo;s Browser, or the Web View used to phsyically handle the Authoriztion process</li>
+</ul>
+</li>
+<li><strong>Flow</strong>
+<ul>
+<li>Flows are a little more abstract, but they represent the various different types of back-and-forth to obtain Tokens</li>
+<li>the two major flows are <em>Client Credentials</em>, and <em>Authorization</em>
+<ul>
+<li>n.b, 1: Authorization used to be called &ldquo;Authorization&rdquo;, and then an extension known as &ldquo;Authorization with PKCE&rdquo; was introduced, and then that got absorped into the main spec, so now it&rsquo;s just back to &ldquo;Authorization&rdquo;.</li>
+<li>n.b, 2: There used to be something called the &ldquo;Implicit Flow&rdquo;. This is now deleted, and servers that continue to support it are out of compliance with the current specification.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Token</strong>
+<ul>
+<li>A string that can be used to access the API servers on behalf of a user.</li>
+</ul>
+</li>
+<li><strong>Client</strong>
+<ul>
+<li>A specific application that has bene registered with the Authorization Server, and is permitted to receive and use Tokens.</li>
+<li>From the perspective of you, a developer integrating with an OAuth Server, this is is <em>your</em> application, that you have registered with the OAuth Server.</li>
+</ul>
+</li>
+</ul>
+<p>For reference, here is how the OAuth Spec depicts the main Flow</p>
+<pre tabindex="0"><code>     +--------+                               +---------------+
+     |        |--(1)- Authorization Request -&gt;|   Resource    |
+     |        |                               |     Owner     |
+     |        |&lt;-(2)-- Authorization Grant ---|               |
+     |        |                               +---------------+
+     |        |
+     |        |                               +---------------+
+     |        |--(3)-- Authorization Grant --&gt;| Authorization |
+     | Client |                               |     Server    |
+     |        |&lt;-(4)----- Access Token -------|               |
+     |        |                               +---------------+
+     |        |
+     |        |                               +---------------+
+     |        |--(5)----- Access Token ------&gt;|    Resource   |
+     |        |                               |     Server    |
+     |        |&lt;-(6)--- Protected Resource ---|               |
+     +--------+                               +---------------+
+</code></pre><p>As comparison, here&rsquo;s how Spotify depicts the same process:</p>
+<p><img loading="lazy"  src="spotify_oauth_authflow.png"
+        alt="Spotify&rsquo;s Auth Flow Chart"/></p>
+<p>These graphs are as simple as it can be, but that doesn&rsquo;t make it necessarily <em>simple</em>.</p>
+</details>
+<h1 id="the-oauth-dance">The OAuth Dance</h1>
+<p>The OAuth Authorization Flow is like a three-person dance between the user, your Client, and the Authorization Server.</p>
+<p>You have to craft an <em>Authorization Request</em> with specific parameters, then send both the user and that crafted request to the Authorization Server.  At this step, your Client must wait while the two other parties dance on their own for a bit.</p>
+<p>The Authorization Server uses that request to ask the user if they acquiesce to the request. If so, the Authorization Server gives your Client an <em>Authorization Code</em>, and then your Client is back in the dance.</p>
+<p>The User is now retired from the dance completely, and its just your Client and Authorization Server now.</p>
+<p>Using the <em>Authorization Code</em>, your Client hands the Authorization Server the same <em>Authorization Code</em> it just received, and in return the Authorization Server hands your Client back an <em>Access Token</em>.</p>
+<p>At this point, the three-way dance concludes. The final result of the dance is the Acess Token, which you can now use to dance with the Resource Server, separately.</p>
+<h1></h1>
+<p>The dance is hard to understand in the abstract, and it&rsquo;s much easier to understand in motion. To that effect, you can see the dance happen with real information here:</p>
+</article>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/about/"><span class="iconfont icon-article"></span>About</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2026</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section></body>
+
+</html>

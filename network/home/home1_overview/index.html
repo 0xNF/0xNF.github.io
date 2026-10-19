@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=34247&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content="First post in the Home Networking series, describing what we&#39;re working with and what the baselines are"><title>Home Networking 1 - Overview&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.1912ded78f688bbd516afb7cab34b50ded577caf45cf75bc1af5d38655c05000847900a4cf8d2cfe19578a79343797c0.css" integrity="sha384-GRLe149oi71Ravt8qzS1De1XfK9Fz3W8GvXThlXAUACEeQCkz40s/hlXink0N5fA"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Home Networking 1 - Overview" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Home Networking 1 - Overview</h1><p class="article date">Sunday, March 15, 2026</p></section><article class="article markdown-body"><h1 id="setup-and-overview">Setup and Overview</h1>
+<p>With advice from an expert friend, combined with barely even novice level talent and understanding of networks, here&rsquo;s how I&rsquo;ve begun to set up a network that may be used for both learning at home, and some minor commerical endevaors.
+One of the outstanding goals is to reduce reliance on cloud providers and proprietary solutions as much as is feasible. That process may also be a progressive one.</p>
+<p>All of this is thanks to one specific friend. I won&rsquo;t name him here, but he knows who he is. As I am a cheapskate, if there&rsquo;s any kind of even remotely industrial hardware here, it is from his personal stash of equipment. In addition to his hardware, all of this is due to his many years of hard-earned expertise as a professional in the field, which I am fortunate to learn from.</p>
+<p>For context, remmber that I am a software developer who has successfully avoided networking since university. I don&rsquo;t know nothin&rsquo; about nothin'.</p>
+<h1 id="overview">Overview</h1>
+<p>This setup relies heavily on VLANs, hardware that supports VLANs, SFP+ modules, and other things that I have either only vaguely heard of, or have never heard of at all before this started.</p>
+<h2 id="flow">Flow</h2>
+<p>This series of posts will vaguely follow this outline:</p>
+<ul>
+<li>Overview (this post)</li>
+<li>Physical and Virtual architecture including vlans, wiring, etc</li>
+<li>Setting up the Access Point and WiFi</li>
+<li>Setting up the Switch</li>
+<li>Setting up OPNSense Firewall</li>
+<li>Setting up our Public Key Infrastructure (PKI)</li>
+<li>Setting up OpenVPN</li>
+<li>Setting up Proxmox</li>
+<li>Spinning up VMs</li>
+</ul>
+<h2 id="hardware">Hardware</h2>
+<ul>
+<li><a href="https://www.hardwarezone.com.sg/pc/components/tech-news-new-lian-li-pc-q21-tiny-spacious-mini-itx-chassis"target="_blank" rel="noopener noreferrer">Lian-Li PC-Q21</a>
+<ul>
+<li><a href="https://www.serversupply.com/NETWORKING/NETWORK%20INTERFACE%20CARD/10%20GIGABIT/INTEL/X520-DA2_138689.htm"target="_blank" rel="noopener noreferrer">Intel X520 DA-2</a> 2x SFP+ 10GB Network Adapter (aka, a NIC)</li>
+<li>Runs the firewall</li>
+</ul>
+</li>
+<li><a href="https://i.dell.com/sites/content/shared-content/data-sheets/en/Documents/dell-poweredge-t420-technical-guide.pdf"target="_blank" rel="noopener noreferrer">Dell T420</a>
+<ul>
+<li>Same Intel X520 DA-2 as above</li>
+<li>Runs the hypervisor</li>
+</ul>
+</li>
+<li><a href="https://www.fs.com/products/183384.html?attribute=127110&amp;id=4791550"target="_blank" rel="noopener noreferrer">FS S3900 24T4S</a> network switch</li>
+<li><a href="https://www.netgear.com/support/product/wax610"target="_blank" rel="noopener noreferrer">Netgear WAX610</a> Access Point</li>
+</ul>
+<p>Some questions you may have:</p>
+<blockquote>
+<p>Why such a heavy duty switch?</p>
+</blockquote>
+<p>Originally, I had a TP-Link switch. That, combined with the Lian-Li via one X520 NIC were supposed to be all that was needed for networking, but due to some ISP quirks related to the modem unit, the Intel branded NICs could not recognize the modem module, and a more heavy duty switch, the FS S3900, had to be brought in to handle that modem step. Aside from some general weirdness (why is the port numbering bottom-to-top? Why can&rsquo;t I upload a cert directly?) because FS the compnay is itself kind of weird, the switch is working fine. But only fine. This UIs on this thing are borderline unseable.</p>
+<blockquote>
+<p>Why an AP and not a router with OpenWRT, which surely you already had?</p>
+</blockquote>
+<p>Astutely observed. Sadly I fried my main router, a Nighthawk R7800 (RIP to a real one), by plugging in a 48v DC power adapter by accident, so that was the end of that. Then, a backup router my friend gave me also didn&rsquo;t boot, though we are uncertain if this is another 48v error, or if it wasn&rsquo;t working for other reasons. In any event, I figued that as I play pretend professional-network-engineer, I may as well lean into it and get something professional. We&rsquo;ll talk more about this one later, it largely works fine, with only one-and-half issues to complain about (tl;dr only 1 port, and does not yet run OpenWRT).</p>
+<p>For those in the know, this means that we ended up moving to a <a href="https://en.wikipedia.org/wiki/Router_on_a_stick"target="_blank" rel="noopener noreferrer">Router On a Stick</a> architecture. I don&rsquo;t know enough to say whether thats good, bad, or neutral, but apparently that&rsquo;s what it is.</p>
+<h3 id="wires-and-module-knicknacks">Wires and Module knicknacks</h3>
+<p>We&rsquo;re doing things with SFPs, so we also have 4x 10GB intel-compatible SFP+ optical modules, with associated <a href="">LC UPC Duplex to LC UPC Duplex, Multimode (OM4)</a> fiber patch cables to carry data over those modules.</p>
+<p>Plus, obviously, a ton of ethernet cables of various grades, though a move to consistent Cat6e is underway.</p>
+<h2 id="software">Software</h2>
+<ul>
+<li><a href="https://opnsense.org/"target="_blank" rel="noopener noreferrer">OPNSense</a>
+<ul>
+<li>Firewall, plus all the things that would otherwise be handled by the router including VLAN assignments, DHCP, etc</li>
+<li><a href="https://www.isc.org/kea/"target="_blank" rel="noopener noreferrer">Kea DHCP</a>
+<ul>
+<li>Bunled as part of OPNSense. Somewhat quirky, just like OPNSense, but it works.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://www.proxmox.com/en/"target="_blank" rel="noopener noreferrer">Proxmox</a>
+<ul>
+<li>Hypervisor, like Hyper-V for those coming from the Windows World like myself.</li>
+</ul>
+</li>
+<li><a href="https://openvpn.net/client/"target="_blank" rel="noopener noreferrer">OpenVPN</a>
+<ul>
+<li>Why not Wireguard? Because I intend to have multiple people on the network at once and wireguard is mostly single-user.</li>
+</ul>
+</li>
+</ul>
+<p>There&rsquo;s a bunch of other things that will make appearnces as appropriate, like certificate management software. OpenWRT in particular was supposed to appear here until the r7800 got zapped to death. And the switches run their own OSs which is not <em>ideal</em>, but is basically <em>fine</em>.</p>
+<p>The above 3 things are going to do the lions share of work to establish our network, its perimeters, and its rules.</p>
+<h1 id="keyword-jumble-of-tech-ive-had-to-become-acquainted-with">Keyword jumble of tech I&rsquo;ve had to become acquainted with</h1>
+<ul>
+<li>FreeBSD
+<ul>
+<li>And also its cousins OpenBSD (max security) and NetBSD (max device compatability), and why not to use them</li>
+</ul>
+</li>
+<li>OPNSense
+<ul>
+<li>With a heathy amount of dishing on PFsense</li>
+</ul>
+</li>
+<li>Proxmox</li>
+<li>&ldquo;Firewall&rdquo;, as opposed to just &ldquo;router&rdquo;, and also not just in the sense of &ldquo;blocking ports&rdquo; as though on a Host machine</li>
+<li>SFP+</li>
+<li>Infiniband</li>
+<li>Optical wiring</li>
+<li>Subnets and subnet masks</li>
+<li>VLANs
+<ul>
+<li>including Trunks, Tagged and Untagged, 802.1Q</li>
+</ul>
+</li>
+<li>Kea</li>
+<li>DHCP at more than just a surface level understanding of &ldquo;its the ip address assigner protocol&rdquo;
+<ul>
+<li>including DHCP pools</li>
+</ul>
+</li>
+<li>tcpdump beyond just &ldquo;oh yeah I&rsquo;ve heard of that&rdquo;</li>
+<li>UDP beyond &ldquo;its the thing thats not TCP&rdquo;</li>
+<li>&ldquo;Network Adapter&rdquo; as opposed to &ldquo;NIC&rdquo;</li>
+<li>IPv6 at deep level
+<ul>
+<li>ULA schemes</li>
+</ul>
+</li>
+<li>RAID</li>
+<li>Drive mirroring</li>
+<li>ZFS
+<ul>
+<li>including zpool, datasets, and iops</li>
+</ul>
+</li>
+<li>Underlay / Overlay networks</li>
+<li>PKI
+<ul>
+<li>including Certificate Authorities, Sub-CAs, Extended Key Usage, Subject Alternative Name, Certificate Revocation Lists, etc</li>
+</ul>
+</li>
+<li>TFTP</li>
+<li>RADIUS</li>
+<li>Virtual IP (VIP)</li>
+<li>S/MIME</li>
+<li>Syslog as a format (RFC5424), as opposed to the place on unix systems where system info get dumped to</li>
+<li>EEPROM</li>
+<li>Serial Console despite being ethernet shaped is not ethernet</li>
+<li>Baud rates</li>
+<li>&ldquo;Management&rdquo; with respect to device administration</li>
+<li>DynDNS</li>
+<li>LAGG</li>
+</ul>
+</article><section class="article labels"><a class="category" href=/categories/network/>network</a><a class="tag" href=/tags/defaulttag/>defaulttag</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/network/home/home2_architecture/"><span class="iconfont icon-article"></span>Home Networking 2 - Architecture</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2026</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section><script src="/js/core.min.39702cb95f7cf70f6dddc93246c80e02ba6bf318843f08ab21eff518160a6c40b563bcaa2aa342f4221ec7a0e60c64b8.js" integrity="sha384-OXAsuV989w9t3ckyRsgOArpr8xiEPwirIe/1GBYKbEC1Y7yqKqNC9CIex6DmDGS4"></script></body>
+
+</html>
+

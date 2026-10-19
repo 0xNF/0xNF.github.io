@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=34247&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content="Fourth post in the Home Networking series, describing setting up our Switch"><title>Home Networking 4 - Switch&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.1912ded78f688bbd516afb7cab34b50ded577caf45cf75bc1af5d38655c05000847900a4cf8d2cfe19578a79343797c0.css" integrity="sha384-GRLe149oi71Ravt8qzS1De1XfK9Fz3W8GvXThlXAUACEeQCkz40s/hlXink0N5fA"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Home Networking 4 - Switch" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Home Networking 4 - Switch</h1><p class="article date">Monday, March 16, 2026</p></section><article class="article markdown-body"><h2 id="todo">TODO</h2>
+<ul>
+<li>VLAn Setup</li>
+<li>Configuration Backups</li>
+<li>SSH keys</li>
+<li>NTP, which isn&rsquo;t working</li>
+<li>Setting the HTTPS flag</li>
+<li>Portfast and Spanning Tree on 1/12
+<ul>
+<li>&ldquo;never ever disable it. Except sometimes. because portstroms&rdquo;</li>
+</ul>
+</li>
+</ul>
+<h1 id="switch-setup">Switch Setup</h1>
+<p>This post continues from <a href="/network/home/home3">Home Networking 3</a>.</p>
+<p>Here we&rsquo;ll set up our FS S3900 Switch. If you have an FS switch, it may be useful to you. If you don&rsquo;t, then maybe you can at least see the general idea of what&rsquo;s happening.</p>
+<h2 id="updating">Updating</h2>
+<p>n.b., This switch was already fairly old when I got it, and it is even older now. It was outdated by many, many versions, and had to undergo multiple arcane step-wise update proceedures to bring it up to the modern OS version that FS officially supports. You should skip this section without losing any insights.</p>
+<p>The switch as I received it was using firmware version v0140, and the current supported firmware version is v0169. It&rsquo;s not enough to upgrade directly, there&rsquo;s shennanigans afoot. One first needs to upgrade to 150, and then to a step-upgrade firmware who&rsquo;se only purpose is to prepare to move beyond 150, and then finally to the modern 169.</p>
+<p>This switch was old. It had all sorts of issues with using outdated SSH ciphers that all my SSH clients did not support &ndash; I had to use Putty in legacy mode to access the ssh console. This was resoved after the latest version update, but it still have other sharp edges.</p>
+<h2 id="quirks">Quirks</h2>
+<h3 id="file-copying">File Copying</h3>
+<p>Getting the binaries onto the system itself is an exercise in confusion. There&rsquo;s strange UI translations from, presumably, Mandarin Chinese. There&rsquo;s weird button UX leading to places one wouldn&rsquo;t expect. And there&rsquo;s a deeply baffling upload procedure involving ambiguity of whether you&rsquo;re about to do what you think you&rsquo;re about to do.</p>
+<p>To upload a file is to click the &ldquo;Copy&rdquo; button. By default it will try to &ldquo;copy&rdquo; into a file that already exists. It can only store 2 binary files on the system at once. To delete, you also have to &ldquo;copy&rdquo;. And then delete after clicking &ldquo;copy&rdquo;, because &ldquo;copy&rdquo; just means &ldquo;file operation&rdquo;.</p>
+<h3 id="https-certificates">HTTPS Certificates</h3>
+<p>Certs can only be uploaded via a <a href="https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol"target="_blank" rel="noopener noreferrer">Trivial File Transfer Protocol (TFTP) server</a>, which is not an ftp server, an ftps server, or an sftp server. There is no way to upload a certificate manually in any otherwise normal way.</p>
+<p>See also: <a href="https://reintech.io/blog/installing-configuring-tftp-server-debian-12"target="_blank" rel="noopener noreferrer">https://reintech.io/blog/installing-configuring-tftp-server-debian-12</a></p>
+<p>Also, exactly what kind of certs it accepts are undocumented. I have been unable to get any of my certificates, each with increasingly degraded, broken, and ancient ciphers in hopes to getting it to upload successfully, but alas all my attempts have ever only been met with <code>File transfer: error</code>, which is almost poetic in how unhelpful it is as a diagnostics.</p>
+<p>I have tried:</p>
+<ul>
+<li>PEM-chain</li>
+<li>Bare PEM</li>
+<li>DER
+for the formats,
+and</li>
+<li>ED25519</li>
+<li>RSA 384</li>
+<li>P384
+for the ciphers, and all combinations thereof.</li>
+</ul>
+<p>I have made no progress on getting it to accept a certificate.</p>
+<h4 id="update-1">Update 1</h4>
+<p>Enabling the <code>https</code> option in the webui, or deleting <code>no service https enable</code> from the config file, you can turn on an https server, which comes with a default certificate.</p>
+<p>The cert is SHA-1, RSA-1024, with a ten-year expiry lasting until 2029. Not exactly industrial strength but it&rsquo;ll do.</p>
+<h4 id="updtae-2">Updtae 2</h4>
+<p>Using the <code>copy tftp https-certificate</code> command from inside the switch, and then looking at the logs, we can see the following:</p>
+<blockquote>
+<p>[1771] copy publickey TFTP(172.30.0.48/cert.key) to running-config failed.<br>
+[1770] copy publickey TFTP(172.30.0.48/cert.crt) to running-config succeeded.</p>
+</blockquote>
+<p>If the logs are accurate, and if my interpretation is correct, then it looks like the switch is trying to download the private key as a public key, and failing. This would mean the switch&rsquo;s firmware itself is busted.</p>
+<h1 id="other-links">other links</h1>
+<p>firewall setup:
+<a href="https://homenetworkguy.com/how-to/disable-root-user-opnsense/"target="_blank" rel="noopener noreferrer">https://homenetworkguy.com/how-to/disable-root-user-opnsense/</a>
+<a href="https://iampusateri.com/posts/sshd-config/"target="_blank" rel="noopener noreferrer">https://iampusateri.com/posts/sshd-config/</a>
+no-password login is already setup by opnsene default</p>
+</article><section class="article labels"><a class="category" href=/categories/defaultcategory/>defaultcategory</a><a class="tag" href=/tags/defaulttag/>defaulttag</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/network/certs/xca_template_validity_period/"><span class="iconfont icon-article"></span>Fixing missing, undefined, or incorrect validity periods for XCA issued certificates</a></p><p><a class="link" href="/network/home/home3_ap_wifi/"><span class="iconfont icon-article"></span>Home Networking 3 - Access Point and WiFi</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2026</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section><script src="/js/core.min.39702cb95f7cf70f6dddc93246c80e02ba6bf318843f08ab21eff518160a6c40b563bcaa2aa342f4221ec7a0e60c64b8.js" integrity="sha384-OXAsuV989w9t3ckyRsgOArpr8xiEPwirIe/1GBYKbEC1Y7yqKqNC9CIex6DmDGS4"></script></body>
+
+</html>
+
