@@ -1,22 +1,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Csharp on Sidequesting</title>
-    <link>http://localhost:34247/categories/csharp/</link>
+    <link>http://localhost:1313/categories/csharp/</link>
     <description>Recent content in Csharp on Sidequesting</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>©2026</copyright>
     <lastBuildDate>Mon, 18 Jun 2018 19:53:31 -0700</lastBuildDate>
     
-        <atom:link href="http://localhost:34247/categories/csharp/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://localhost:1313/categories/csharp/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Agentic Workflow as of October 2026</title>
-      <link>http://localhost:34247/posts/agentic/workflows/rev1/</link>
+      <link>http://localhost:1313/posts/agentic/workflows/rev1/</link>
       <pubDate>Sun, 18 Oct 2026 11:32:06 -0400</pubDate>
       
-      <guid>http://localhost:34247/posts/agentic/workflows/rev1/</guid>
+      <guid>http://localhost:1313/posts/agentic/workflows/rev1/</guid>
       <description>&lt;h1 id=&#34;tldr&#34;&gt;tl;dr:&lt;/h1&gt;
 &lt;p&gt;This post describes my first current very rough approach to agentic development.
 This approach is heavy on docs, folder structure, and copipus tools and scripts for verification feedback.&lt;/p&gt;
@@ -533,10 +533,10 @@ Then, I take that document, and give it directly to 2.B. Sometimes it becomes em
     
     <item>
       <title>Addressing and Naming</title>
-      <link>http://localhost:34247/network/home/home3_addressing/</link>
+      <link>http://localhost:1313/network/home/home3_addressing/</link>
       <pubDate>Sun, 05 Apr 2026 14:59:46 +0900</pubDate>
       
-      <guid>http://localhost:34247/network/home/home3_addressing/</guid>
+      <guid>http://localhost:1313/network/home/home3_addressing/</guid>
       <description>&lt;h2 id=&#34;naming&#34;&gt;Naming&lt;/h2&gt;
 &lt;p&gt;Everything on the network gets a specific hostname, which follows a template. The naming template you choose for your own network is likely to be different based on your own desires, but here&amp;rsquo;s the one I&amp;rsquo;ve chosen:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;$TwoLetterSiteCode-$RoleTemplate-$instanceNumberOrUnit&lt;/code&gt;.&lt;/p&gt;
@@ -760,19 +760,19 @@ For example here is a highly abbriged list of roles I am using:&lt;/p&gt;
     
     <item>
       <title>OpenVPN - Message Too Long</title>
-      <link>http://localhost:34247/network/openvpn/mtu/</link>
+      <link>http://localhost:1313/network/openvpn/mtu/</link>
       <pubDate>Sat, 28 Mar 2026 16:38:47 +0900</pubDate>
       
-      <guid>http://localhost:34247/network/openvpn/mtu/</guid>
+      <guid>http://localhost:1313/network/openvpn/mtu/</guid>
       <description>&lt;p&gt;If your OpenVPN logs show something like:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Write UDPv4: Message too log&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Then you should double-check your MTU settings. You can either set it on the client connection directly by overriding the .ovpn profile, ala:&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34;  src=&#34;http://localhost:34247/static/openvpn/opvnmtu.png&#34;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34;  src=&#34;http://localhost:1313/static/openvpn/opvnmtu.png&#34;
         alt=&#34;add override&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;Or more permanetly, by adding it directly into the OpenVPN template settings for your instance:&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34;  src=&#34;http://localhost:34247/static/openvpn/ovpninstancemtu.png&#34;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34;  src=&#34;http://localhost:1313/static/openvpn/ovpninstancemtu.png&#34;
         alt=&#34;add in instance&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;In this case we&amp;rsquo;ve chosen an &lt;code&gt;MTU = 1425&lt;/code&gt;. if you&amp;rsquo;re calculating the MSSFix manually, &lt;a href=&#34;https://www.krugdocs.com/openvpn/trouble-shooting/mtu-problem.html&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;apparently&lt;/a&gt; the optimal MSSFix value is &lt;code&gt;MTU - 40 = 1385&lt;/code&gt; in our case, but your mileage may varry.&lt;/p&gt;
 </description>
@@ -780,10 +780,10 @@ For example here is a highly abbriged list of roles I am using:&lt;/p&gt;
     
     <item>
       <title>Home7_openvpn</title>
-      <link>http://localhost:34247/network/home/home7_openvpn/</link>
+      <link>http://localhost:1313/network/home/home7_openvpn/</link>
       <pubDate>Sat, 28 Mar 2026 16:13:20 +0900</pubDate>
       
-      <guid>http://localhost:34247/network/home/home7_openvpn/</guid>
+      <guid>http://localhost:1313/network/home/home7_openvpn/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;MTU + MSS fix&lt;/li&gt;
 &lt;li&gt;Gotchas:
@@ -812,19 +812,19 @@ For example here is a highly abbriged list of roles I am using:&lt;/p&gt;
     
     <item>
       <title>Home Networking 6 - Public Key Infrastructure (PKI)</title>
-      <link>http://localhost:34247/network/home/home6_pki/</link>
+      <link>http://localhost:1313/network/home/home6_pki/</link>
       <pubDate>Sat, 28 Mar 2026 16:12:19 +0900</pubDate>
       
-      <guid>http://localhost:34247/network/home/home6_pki/</guid>
+      <guid>http://localhost:1313/network/home/home6_pki/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Home Networking 4 - Switch</title>
-      <link>http://localhost:34247/network/home/home5_opnsense/</link>
+      <link>http://localhost:1313/network/home/home5_opnsense/</link>
       <pubDate>Sat, 28 Mar 2026 16:11:24 +0900</pubDate>
       
-      <guid>http://localhost:34247/network/home/home5_opnsense/</guid>
+      <guid>http://localhost:1313/network/home/home5_opnsense/</guid>
       <description>&lt;h2 id=&#34;todo&#34;&gt;TODO&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Find the tutorials used and link them&lt;/li&gt;
@@ -882,10 +882,10 @@ For example here is a highly abbriged list of roles I am using:&lt;/p&gt;
     
     <item>
       <title>Reset_web_ui_cert</title>
-      <link>http://localhost:34247/network/opnsense/reset_web_ui_cert/</link>
+      <link>http://localhost:1313/network/opnsense/reset_web_ui_cert/</link>
       <pubDate>Tue, 24 Mar 2026 17:54:14 +0900</pubDate>
       
-      <guid>http://localhost:34247/network/opnsense/reset_web_ui_cert/</guid>
+      <guid>http://localhost:1313/network/opnsense/reset_web_ui_cert/</guid>
       <description>&lt;p&gt;Upload a bad certificate to your OPNSense firewall?
 If you can ssh in, you can run &lt;code&gt;configctl webgui restart renew&lt;/code&gt; to reset the certificate and get web-ui access again.&lt;/p&gt;
 &lt;p&gt;h/t &lt;a href=&#34;https://docs.opnsense.org/troubleshooting/webgui.html&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://docs.opnsense.org/troubleshooting/webgui.html&lt;/a&gt;&lt;/p&gt;
@@ -896,18 +896,18 @@ If you can ssh in, you can run &lt;code&gt;configctl webgui restart renew&lt;/co
     
     <item>
       <title>Fixing missing, undefined, or incorrect validity periods for XCA issued certificates</title>
-      <link>http://localhost:34247/network/certs/xca_template_validity_period/</link>
+      <link>http://localhost:1313/network/certs/xca_template_validity_period/</link>
       <pubDate>Sat, 21 Mar 2026 18:02:36 +0900</pubDate>
       
-      <guid>http://localhost:34247/network/certs/xca_template_validity_period/</guid>
+      <guid>http://localhost:1313/network/certs/xca_template_validity_period/</guid>
       <description>&lt;p&gt;Check your template applications.&lt;/p&gt;
 &lt;h2 id=&#34;shot&#34;&gt;Shot&lt;/h2&gt;
 &lt;p&gt;Recently while trying to issue some certificates from &lt;a href=&#34;https://hohnstaedt.de/xca/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;XCA&lt;/a&gt;, I struggled with getting XCA to issue certifivates with a defind expiry datetime. No matter what I did to set the dates manually, the validity period expires at was always &amp;ldquo;undefined&amp;rdquo; aka &amp;ldquo;forever&amp;rdquo;.&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34;  src=&#34;http://localhost:34247/static/certs/undefined_expiry.png&#34;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34;  src=&#34;http://localhost:1313/static/certs/undefined_expiry.png&#34;
         alt=&#34;expiry undefined&#34;/&gt;&lt;/p&gt;
 &lt;h2 id=&#34;chaser&#34;&gt;Chaser&lt;/h2&gt;
 &lt;p&gt;Turns out the the reaosn is because I was applying an XCA template that specifically checked &lt;code&gt;[x] No Defindd Expiry Time&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34;  src=&#34;http://localhost:34247/static/certs/no_well_defind_expiry.png&#34;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34;  src=&#34;http://localhost:1313/static/certs/no_well_defind_expiry.png&#34;
         alt=&#34;no well defined expiry time&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;The application of such a template overrides the expiry time of certificates, evem you specifically uncheck the option, and even if you specifically set an expiry time.&lt;/p&gt;
 &lt;p&gt;The UI won&amp;rsquo;t reflect this. The Certificate creation dialogs will tell you that you set an expiry time properly, but then you go and check the values of the created certificate and notice that the expiry date remains undefined.&lt;/p&gt;
@@ -917,10 +917,10 @@ If you can ssh in, you can run &lt;code&gt;configctl webgui restart renew&lt;/co
     
     <item>
       <title>Home Networking 4 - Switch</title>
-      <link>http://localhost:34247/network/home/home4_switch/</link>
+      <link>http://localhost:1313/network/home/home4_switch/</link>
       <pubDate>Mon, 16 Mar 2026 13:32:31 +0900</pubDate>
       
-      <guid>http://localhost:34247/network/home/home4_switch/</guid>
+      <guid>http://localhost:1313/network/home/home4_switch/</guid>
       <description>&lt;h2 id=&#34;todo&#34;&gt;TODO&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;VLAn Setup&lt;/li&gt;
@@ -935,7 +935,7 @@ If you can ssh in, you can run &lt;code&gt;configctl webgui restart renew&lt;/co
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&#34;switch-setup&#34;&gt;Switch Setup&lt;/h1&gt;
-&lt;p&gt;This post continues from &lt;a href=&#34;http://localhost:34247/network/home/home3&#34;&gt;Home Networking 3&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This post continues from &lt;a href=&#34;http://localhost:1313/network/home/home3&#34;&gt;Home Networking 3&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Here we&amp;rsquo;ll set up our FS S3900 Switch. If you have an FS switch, it may be useful to you. If you don&amp;rsquo;t, then maybe you can at least see the general idea of what&amp;rsquo;s happening.&lt;/p&gt;
 &lt;h2 id=&#34;updating&#34;&gt;Updating&lt;/h2&gt;
 &lt;p&gt;n.b., This switch was already fairly old when I got it, and it is even older now. It was outdated by many, many versions, and had to undergo multiple arcane step-wise update proceedures to bring it up to the modern OS version that FS officially supports. You should skip this section without losing any insights.&lt;/p&gt;
@@ -982,10 +982,10 @@ no-password login is already setup by opnsene default&lt;/p&gt;
     
     <item>
       <title>Home Networking 3 - Access Point and WiFi</title>
-      <link>http://localhost:34247/network/home/home3_ap_wifi/</link>
+      <link>http://localhost:1313/network/home/home3_ap_wifi/</link>
       <pubDate>Sun, 15 Mar 2026 17:42:51 +0900</pubDate>
       
-      <guid>http://localhost:34247/network/home/home3_ap_wifi/</guid>
+      <guid>http://localhost:1313/network/home/home3_ap_wifi/</guid>
       <description>&lt;h2 id=&#34;todo&#34;&gt;TODO&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;VLan tags
@@ -996,8 +996,8 @@ no-password login is already setup by opnsene default&lt;/p&gt;
 &lt;li&gt;Bands&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&#34;access-point-setup&#34;&gt;Access Point Setup&lt;/h1&gt;
-&lt;p&gt;This post continues from &lt;a href=&#34;http://localhost:34247/network/home/home2&#34;&gt;Home Networking 3&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;We&amp;rsquo;re setting up the Access Point here &amp;ndash; this comes before the switch setup because there&amp;rsquo;s some initial wonkiness with the single-port nature of our access point that I&amp;rsquo;d like to get out of the way first, and will make describing the Switch setup in &lt;a href=&#34;http://localhost:34247/network/home/home4&#34;&gt;part 4&lt;/a&gt; easier.&lt;/p&gt;
+&lt;p&gt;This post continues from &lt;a href=&#34;http://localhost:1313/network/home/home2&#34;&gt;Home Networking 3&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;re setting up the Access Point here &amp;ndash; this comes before the switch setup because there&amp;rsquo;s some initial wonkiness with the single-port nature of our access point that I&amp;rsquo;d like to get out of the way first, and will make describing the Switch setup in &lt;a href=&#34;http://localhost:1313/network/home/home4&#34;&gt;part 4&lt;/a&gt; easier.&lt;/p&gt;
 &lt;h1 id=&#34;purchasing&#34;&gt;Purchasing&lt;/h1&gt;
 &lt;p&gt;After frying my R7800, and being gifted a Linksys E8450 that turns out also doesn&amp;rsquo;t boot, I decided why not just get an Access Point, and skip the Router step. I had a few requirements for what to buy:&lt;/p&gt;
 &lt;ul&gt;

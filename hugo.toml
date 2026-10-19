@@ -3,7 +3,7 @@ title = "Sidequesting"
 theme = "hugo-notepadium"
 copyright = "©2026"
 
-languageCode = "en-us"
+defaultContentLanguage = "en"
 hasCJKLanguage = true
 
 enableRobotsTXT = true
@@ -13,6 +13,16 @@ enableRobotsTXT = true
 
 # [services.googleAnalytics]
 # id = '' # Google tag ID
+
+[languages.en]
+languageCode = "en-us"
+languageName = "English"
+weight = 1
+
+[languages.ja]
+languageCode = "ja-jp"
+languageName = "日本語"
+weight = 2
 
 [markup.highlight]
 codeFences = true
