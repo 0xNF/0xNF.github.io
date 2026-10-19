@@ -12,7 +12,7 @@ tags:
 
 # tl;dr:
 This post describes my first current very rough approach to agentic development.
-This approach is heavy on docs, folder structure, and copipus tools and scripts for verification feedback.
+This approach is heavy on docs, folder structure, and copious tools and scripts for verification feedback.
 
 My current approach is codified by the [Winetech Standard Repo](https://github.com/0xNF/wtstandardrepo), which is a barebones skeleton of the structure and built-in agent ready documentation to get started on a new project.
 
@@ -29,7 +29,7 @@ My current approach is codified by the [Winetech Standard Repo](https://github.c
 
 # Prerequisites
 
-People get different results from the diffeent workflows, tools, models and harnesses they use, so I'd like to set out what my partifuclar set up looks like at the outside, so you can adjust your own expectations.
+People get different results from the different workflows, tools, models and harnesses they use, so I'd like to set out what my particular set up looks like at the outside, so you can adjust your own expectations.
 
 ## Models
 * Big Models
@@ -37,9 +37,9 @@ People get different results from the diffeent workflows, tools, models and harn
   * (Secondary) GPT Sol 6.1 (xhigh)
 * Fast
   * (Primary) Claude Sonnet 5.5 (medium)
-  * (Secodary) GPT Terra 6.1 (medium)
+  * (Secondary) GPT Terra 6.1 (medium)
 
-I have previously experiemmted with Mistral, and have only heard good things but not yet tried DeepSeek, GLM, or Kimi.
+I have previously experimented with Mistral, and have only heard good things but not yet tried DeepSeek, GLM, or Kimi.
   
 ## Harnesses
 * Claude Code
@@ -158,7 +158,7 @@ This is an AWS deployment:
 
 and it goes on like this. You can reference my standard [ADR baseline documen.](https://github.com/0xNF/wtstandardrepo/blob/master/docs/repo/adr/0000-adr-format.md).
 
-Because these ADRs are so often references by the models, I endevaor to keep irrelevent information like History out of them. History is still important to maintain, so history goes into its own dedicatd history.md file.
+Because these ADRs are so often references by the models, I endeavor to keep irrelevant information like History out of them. History is still important to maintain, so history goes into its own dedicated history.md file.
 
 The models really do reference ADRs all the time, and its been such a superpower that keeps them on track and consistent. It also catches my own inconsistencies, where the models will tell me that my own decision contradicts ADR #XYZ, which is a good moment for me to reflect on what I really want from a given session.
 
@@ -166,7 +166,7 @@ ADRs are not considered static -- I edit them in place, and occasionally delete,
 
 
 ## `investigations/`
-Sometimes a problem is found during a session, like an intermittent crash. It is helpful to provide the agent a place to put repeated observations of an issue along with a summary of the issue in the investigations readme file. Once enough observations have been logged, it becomes its own dedicated session and can be used as the starting point for a full-on investigation. The benefit of doing it this way is that the agent won't get distracted during a session, can recognize known failurs, and eventually can work on this one problem full-time.
+Sometimes a problem is found during a session, like an intermittent crash. It is helpful to provide the agent a place to put repeated observations of an issue along with a summary of the issue in the investigations README file. Once enough observations have been logged, it becomes its own dedicated session and can be used as the starting point for a full-on investigation. The benefit of doing it this way is that the agent won't get distracted during a session, can recognize known failures, and eventually can work on this one problem full-time.
 
 here are some example ongoing investigations I have open in one of my desktop applications:
 ```bash
@@ -181,7 +181,7 @@ here are some example ongoing investigations I have open in one of my desktop ap
         README.md
 ```
 
-And a brief excerpt of what one such readme looks like:
+And a brief excerpt of what one such README looks like:
 
 
 ```markdown
@@ -299,7 +299,7 @@ Things found while working on something else: dead code, latent defects, and beh
 
 # Methodology
 - Consider breaking tasks into sub-tasks 
-- You have a dev deploymemt of the application on this box and permission to use and modify it;
+- You have a dev deployment of the application on this box and permission to use and modify it;
 - [...]
 
 
@@ -321,13 +321,13 @@ can reach, and update or root the affected dependencies rather than suppressing 
 
 I've found that the agents are exceptional at filling in this file, and on later dedicated passes, are equally exceptional at churning through it.
 
-Many ADR discrepencies, usability problems, and bad bugs have been found this way, all without the agent getting distracted.
+Many ADR discrepancies, usability problems, and bad bugs have been found this way, all without the agent getting distracted.
 
 
 # Verification and Feedback
-Agents work really well when they can correct their own assumptions in realtime. They react very well to negative feedback when they try something, such as compile-time failures or other errors that show them they had something incorrect.
+Agents work really well when they can correct their own assumptions in real-time. They react very well to negative feedback when they try something, such as compile-time failures or other errors that show them they had something incorrect.
 
-You should encouage this by building and supplying tools that the agent can call. This can be as simple as supplying the language server for it to see diagnostic information in, or as complex as a custom constellation of scripts that do work in advance. For instance, in a desktop application, I have a series of scripts that check for banned APIs, or that certain structures aren't used:
+You should encourage this by building and supplying tools that the agent can call. This can be as simple as supplying the language server for it to see diagnostic information in, or as complex as a custom constellation of scripts that do work in advance. For instance, in a desktop application, I have a series of scripts that check for banned APIs, or that certain structures aren't used:
 ```bash
 .
 ├── check-serialization-contracts.ps1
@@ -335,7 +335,7 @@ You should encouage this by building and supplying tools that the agent can call
 ├── check-tooltips.ps1
 └── check-window-ownership.ps1
 ```
-Among manny others. The tools provide output like:
+Among many others. The tools provide output like:
 ```bash
 2 failed: 
 Invalid API: src/models/ModelA.cs:76
@@ -364,11 +364,11 @@ In my case, my AGENTS.md contains things like:
 ## Memories
 The purpose of memories, as distinct from AGENTS.md or specific repo tooling is that it is meant to represent things that are not globally applicable. 
 
-Agents will often collect memories on their own, but sometimes its useful when you see persistent errors being made to encourage them to create memories under your guidance. Since I do a lot of work on Windows, and Agents have a not-unreasonable expectation that they're in UNIX-land, I have make sure they have memories that relate to setting BOMs, and that the editors they often use eat backslashes and need different escapting rules. 
+Agents will often collect memories on their own, but sometimes its useful when you see persistent errors being made to encourage them to create memories under your guidance. Since I do a lot of work on Windows, and Agents have a not-unreasonable expectation that they're in UNIX-land, I have make sure they have memories that relate to setting BOMs, and that the editors they often use eat backslashes and need different escaping rules. 
 
 I also use memories to give agents standing permission to do code commits, to make changes to the running development system, where to find temporary data, and what other nearby relevant repositories and documents are located that may be useful for the agent to be aware of.
 
-These things are not global, and not applicable to other developers on this repository, so it's not appropriate to put them into the repo-permaent AGENTS.md. 
+These things are not global, and not applicable to other developers on this repository, so it's not appropriate to put them into the repo-permanent AGENTS.md. 
 
 > A side note: It _is_ permissible to make tooling around these specific assumptions by using the `repotools/$username/` folders, which is where developer specific tooling should go. There is no expectation that tools under your own folder are useful, or indeed even run, under any other user. Repo-wide tools should graduate into the `repotools/public/` folder. 
 > 
@@ -394,7 +394,7 @@ Condense, Extract, Delete.
 
 # Working with the Agents
 
-(LLM, Harness) pairs have their own runtime quirks and should be worked with the way a craftsman knows how to work with a powerdrill that whirls in one direction faster than the other, a hammer that isn't perfectly flat and thus has slight directional preference, or a car that has a very delicate accelerator. The quirks are worth learning and using to your advantage. Don't fight the agents, work with them.
+(LLM, Harness) pairs have their own runtime quirks and should be worked with the way a craftsman knows how to work with a power-drill that whirls in one direction faster than the other, a hammer that isn't perfectly flat and thus has slight directional preference, or a car that has a very delicate accelerator. The quirks are worth learning and using to your advantage. Don't fight the agents, work with them.
 
 ## Prompting Style
 Because I have what I consider to be fairly well crafted initial documents and on-demand context available for the agents, I don't put too much effort into my prompts, which are concise and minimal.
@@ -406,7 +406,7 @@ Because I have what I consider to be fairly well crafted initial documents and o
 Except in rare circumstances, I don't write any additional context, because I've already given the context in the AGENTS.md, ADRs, and plan files. 
 
 Sometimes I have questions that require a more thorough examination before we can continue:
-* Extamine the feasability of adding the following feature to this application, and consider how many dependencies it would require to accomplish
+* Examine the feasibility of adding the following feature to this application, and consider how many dependencies it would require to accomplish
 * We are currently doing $X in our application, but I want to move to $Y instead, write a plan file for this process
 
 I have found it productive to speak in mechanical, precise terminology. I do not abridge my requests, use shorthand slang, or speak casually with the agents. I do my best to give them accurate and clear phrases to work with. It helps to orient their initial manifolds when you say things like "Consider ahead-of-time compilation issues", or "profile this slowdown and find whether a different algorithm should be used for this subroutine", instead of "why is it slow" or "u should find the bug". LLMs are often reflections of the tone and skill of the user prompt, and if you are sloppy in your input you will find it is sloppy in its' output. 
@@ -419,7 +419,7 @@ Remember that they have cut-off dates for their training, so they will only reca
 
 
 ## Lean into their biases and expectations for tools and docs
-Like said above, LLMs have quirks, biass and expectations, If you watch them long enough you'll pick up this fact because you'll see them say things like "That API doesn't exist, I'll try a different one", or "Turns out ffmpeg isn't found on this machine, so I'll write a small script in python instead".
+Like said above, LLMs have quirks, biases and expectations, If you watch them long enough you'll pick up this fact because you'll see them say things like "That API doesn't exist, I'll try a different one", or "Turns out ffmpeg isn't found on this machine, so I'll write a small script in python instead".
 
 These are opportunities to do two things:
 * Make your token usage more efficient
@@ -427,13 +427,13 @@ These are opportunities to do two things:
   
 Every time they backtrack on a choice is tokens that you're spending, time you're wasting, and context you're eating up. Not all situations are equal, but on balance, you should consider adding what they're expecting to your tools and your environment. They will be more competent in their tasks when they have what they want without the fuss of trying to work around it. They are also trained on those aspects, so they'll be good at using them.
 
-Additionally, especially when it comes to API surfaces, misaligned expectations are a solid indicator that your API deisgn is lacking in crucial ways. If your agent is making these mistakes, other people's agents are also making the same mistake. And human users may also be under same misapprehension. It is worth considering deeply whether the design the agents expected is actually a better design -- very often, it is. 
+Additionally, especially when it comes to API surfaces, misaligned expectations are a solid indicator that your API design is lacking in crucial ways. If your agent is making these mistakes, other people's agents are also making the same mistake. And human users may also be under same misapprehension. It is worth considering deeply whether the design the agents expected is actually a better design -- very often, it is. 
 
 
 ### A brief methodology
 I recently went through my Claude session transcripts of the past month with another agent (GPT-Luna-6.1 via _omp_ because I was at my weekly Claude token limit at that time) with the instructions to:
 
-> "Read these session transscripts and find instances where the agent got confused, backtracked, realized a tool or program was missing, or used an API with an incorrect shape".
+> "Read these session transcripts and find instances where the agent got confused, backtracked, realized a tool or program was missing, or used an API with an incorrect shape".
 
 The results were a useful set of places to start working some immediate remediation candidates. I was able to update a handful of checker scripts in the repo, and also file some tickets against a sister repository for improvements this way. Here are some samples of what that scan turned up, and the resolution I opted for.
 ```markdown
@@ -454,12 +454,12 @@ The results were a useful set of places to start working some immediate remediat
  ```
   
 ## Hooks and notifications
-Agent harnesses have started to support [Hooks](https://code.claude.com/docs/en/hooks), which are a standard comcept, just applied to this new tech. 
+Agent harnesses have started to support [Hooks](https://code.claude.com/docs/en/hooks), which are a standard concept, just applied to this new tech. 
 Because I do most of my work in a Windows VM through a Linux host, and a lot of these tasks are long running, I am often delayed in returning to a session to assess output or answer questions. To address that problem, I built a [KDE taskbar widget](https://github.com/0xNF/vm_llm_notify) that receives hooks from Claude Code. The taskbar widget lights up whenever an inner VM session is waiting for my assessment:
 
 ![KDE taskbar app that lights up when Claude requires attention](https://github.com/0xNF/vm_llm_notify/raw/master/llm_notify.gif)
 
-## Paralleization
+## Parallelization
 Sometimes I want to get multiple things done in one repo, and don't want to wait for a single agent to churn through the tasks sequentially. 
 If I have a set of tasks that I think are decent candidates for doing in parallel, as in, they touch different files and wont step on each other's work, I open multiple panes of Claude Code and set them to their tasks. The first thing I writ in these prompts is:
 
@@ -490,42 +490,42 @@ n conjunction with the `plans/` folder from the above folder structure, a simple
 This goes hand-in-hand with the next item, "rewrite to be forward looking". 
 
 ## Rewrite To Be Forward Looking
-Plan files and Handoff files often get polutted, as time goes on, with historical state of the repsitory and the plan being implemented. Lots of:
-* (Done) Some Requsiite Feature A 
+Plan files and Handoff files often get polluted, as time goes on, with historical state of the repository and the plan being implemented. Lots of:
+* (Done) Some Requisite Feature A 
 * (Done) Some Requisite Feature B
 * Previously we had bugs in Set A, but I fixed it for and Set B is now unblocked
 * [,,,]
   
   and similar things. This is a quirk of the LLMs that may useful to them in the moment, but for new agents picking up work, is entirely unnecessary. At some point in becomes the prudent choice to tell the agent to 
-  > rewrite this document to be foward looking
+  > rewrite this document to be forward looking
 
-"forward looking" is a keyword taken from my observations of Opus. It often uses that phrase when it deletes old content, so I adopted it into my vocabulary to better trigger the behavior I'm loooking for. 
+"forward looking" is a keyword taken from my observations of Opus. It often uses that phrase when it deletes old content, so I adopted it into my vocabulary to better trigger the behavior I'm looking for. 
 
 At the end of one of these requests, we get documents that are pruned of old detail, and only contain the necessary bits that are yet to be implemented. The agents are also smart enough to retain the items that are historical but highly relevant, like traps in the API or gaps in the machines expectations. 
 
-Of course, you can always give these documets a manual once-over with your own eyes to see if they left any details in that should be stricken. 
+Of course, you can always give these documents a manual once-over with your own eyes to see if they left any details in that should be stricken. 
 
 ## Team A vs Team B
-I have dominion over a number of repositories that are interlinked at various levels to each other, and I often have VSCode windows up and agents working on those repos simultaneusly. Sometimes, features co-develop across repositories and require two agents across repos to work in tandem. 
+I have dominion over a number of repositories that are interlinked at various levels to each other, and I often have VSCode windows up and agents working on those repos simultaneously. Sometimes, features co-develop across repositories and require two agents across repos to work in tandem. 
 
 When this happens, I have Agent A in Repo 1 (1.A) work on some core feature, then ask for an Implementation Document for Agent B in Repo 2 (2.B). 
-Then, I take that document, and give it directly to 2.B. Sometimes it becomes emergent that the feature set or details of the core project are missing something. To prevent 2.B from creating weird work-arounds or producing a sub-standard end result, I ask 2.B for a document outlining its requests for the Repo 1 Team, which it will write me, and then I can hand that document back to 1.A, which will address the issues, and the process repeats. 
+Then, I take that document, and give it directly to 2.B. Sometimes it becomes emergent that the feature set or details of the core project are missing something. To prevent 2.B from creating weird workarounds or producing a sub-standard end result, I ask 2.B for a document outlining its requests for the Repo 1 Team, which it will write me, and then I can hand that document back to 1.A, which will address the issues, and the process repeats. 
 
-This is a great way to get a really polished feature across two repositories simultanepusly. The agents are indirectly asking each other questions, refinidng their assumptions, and creating featuees, fixing bugs, or polishing the experience. 
+This is a great way to get a really polished feature across two repositories simultaneously. The agents are indirectly asking each other questions, refining their assumptions, and creating features, fixing bugs, or polishing the experience. 
 
-I don't combine the agents into one singular one becaue at the context sizes I am working with, it's a lot easier and consistent to have each Repo Agent manage its own repo context. They can communicate to each other through me, and I can arbitrate their requests. Because ultimately, I am the consumer and the judge of their work product. 
+I don't combine the agents into one singular one because at the context sizes I am working with, it's a lot easier and consistent to have each Repo Agent manage its own repo context. They can communicate to each other through me, and I can arbitrate their requests. Because ultimately, I am the consumer and the judge of their work product. 
 
 I find this "Team A vs Team B" document passing to be really productive. 
 
 
 # Recent Worked Examples
 
-I'll describe some thigs I've had the agents do recently, beyond just the standard "implement this feature" and 'fix this bug" requests.
+I'll describe some things I've had the agents do recently, beyond just the standard "implement this feature" and 'fix this bug" requests.
 
 ## Reducing Token Spend on Backtracking during Failed Test Runs
 A Desktop GUI C# application has a dedicated test suite project. It's regular output contained all the successes and failures, but the failures were printed at the top of the output, and the agents have a habit of using `sed`, `trim`, and select-last in powershell, resulting in the test failures not being visible to the agent. What often happened is that it saw a generic failure (exit code 1), then re-ran the test suite with a new command just to get the failing test. 
 
-The resolution was to reduce stdout noise and print detailed test failure output only, so the agents have visibility into the only part of the test suite that matters: whether a ran succeedd, and if not, which ones failed. As before, this saves tokens, context, and time.
+The resolution was to reduce stdout noise and print detailed test failure output only, so the agents have visibility into the only part of the test suite that matters: whether a ran succeeded, and if not, which ones failed. As before, this saves tokens, context, and time.
 
 ## Test Suite Optimization
 A perfect mix of three things that make LLM use optimal:
@@ -538,15 +538,15 @@ A perfect mix of three things that make LLM use optimal:
   
 With these three items an LLM can really go into perfect overdrive to improve an outcome.
 
-In this specifi case, I was able to work with the LLM to iteraively reduce a naively built C#/XAML test suite from 5 minutes per run, all the way down to 10 seconds. The steps in between were 1 minute, 30 seconds, 16 seconds, then 8 seconds. 
+In this specific case, I was able to work with the LLM to iteratively reduce a naively built C#/XAML test suite from 5 minutes per run, all the way down to 10 seconds. The steps in between were 1 minute, 30 seconds, 16 seconds, then 8 seconds. 
 
-The agent itself did a doggedly good job, but it was a tandem effort becaue I had to suggest paralleization and thread usage, eliminating old tests, and restructuring the project in ways that made it more amenable to testing.
+The agent itself did a doggedly good job, but it was a tandem effort because I had to suggest parallelization and thread usage, eliminating old tests, and restructuring the project in ways that made it more amenable to testing.
 
 ## Automation and Accessibility
 WinUI3, Microsoft's modern desktop framework, supports [Automation Properties](https://learn.microsoft.com/en-us/dotnet/framework/ui-automation/ui-automation-properties-overview), which, if you are familiar with puppeteer or playwright, permits API control of the program. In the agentic era, a program that an agent can use, is a program that an agent can improve.
 
-The first problem was getting this application to have automation properties in the first place. The solution of course was to supply the relevant documetation and then set the agents on their first task: 
-> Add automation propreties this application
+The first problem was getting this application to have automation properties in the first place. The solution of course was to supply the relevant documentation and then set the agents on their first task: 
+> Add automation properties this application
 
 Once that was done, an ADR was created saying that "all UI elements must have automation properties".
 
@@ -555,7 +555,7 @@ And finally, with it all in place, all future bug fix or feature implementation 
 With vision capable models like the large frontier ones, an agent is now much more powerful and can make quite delicate judgements and assess its own work much more accurately, because now it can also drive the application on its own as well.
 
 ## Migrating a Failing Robotics Sample From Gazebo to MuJoCo
-A book I am following for robotics was built with the simulation program Gazebo, so all the examples in it are assuming and utilizing that program. However, Gazebo is widely understood to be bad, unreliable, have issues starting up, often misses messages passed between program nodes, and is generally a pain. This matches my experience. Some elder robotisics I have spoken to, when hearing of my woes, told me that I should spend my time in other simulators like Isaac or MuJoCo. So I had Opus take all the book's example and move them into MuJoCo automatically.
+A book I am following for robotics was built with the simulation program Gazebo, so all the examples in it are assuming and utilizing that program. However, Gazebo is widely understood to be bad, unreliable, have issues starting up, often misses messages passed between program nodes, and is generally a pain. This matches my experience. Some elder robotics I have spoken to, when hearing of my woes, told me that I should spend my time in other simulators like Isaac or MuJoCo. So I had Opus take all the book's example and move them into MuJoCo automatically.
 
-It took about a week 12-hour days of time for Opus to churn through all the issues, but in the end, I had a proper simulator environent that had no runtime issues at all, and was very stable. 
+It took about a week 12-hour days of time for Opus to churn through all the issues, but in the end, I had a proper simulator environment that had no runtime issues at all, and was very stable. 
 
