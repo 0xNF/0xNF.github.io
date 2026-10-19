@@ -1,528 +1,203 @@
-<!DOCTYPE html>
-<html lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8"><meta name="generator" content="Hugo 0.155.3"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><meta name="description" content="Post Summary"><title>Agentic Workflow as of October 2026&nbsp;&ndash;&nbsp;Sidequesting</title><link rel="stylesheet" href="/css/core.min.1912ded78f688bbd516afb7cab34b50ded577caf45cf75bc1af5d38655c05000847900a4cf8d2cfe19578a79343797c0.css" integrity="sha384-GRLe149oi71Ravt8qzS1De1XfK9Fz3W8GvXThlXAUACEeQCkz40s/hlXink0N5fA"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Agentic Workflow as of October 2026" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sidequesting</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://gohugo%2eio/"target="_blank" rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class="title">99% JavaScript-free</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Agentic Workflow as of October 2026</h1><p class="article date">Sunday, October 18, 2026<span class="langs"><span class="lang"><a href="/ja/posts/agentic/workflows/rev1/">ja</a></span></span></p></section><article class="article markdown-body"><h1 id="tldr">tl;dr:</h1>
-<p>This post describes my first current very rough approach to agentic development.
-This approach is heavy on docs, folder structure, and copipus tools and scripts for verification feedback.</p>
-<p>My current approach is codified by the <a href="https://github.com/0xNF/wtstandardrepo"target="_blank" rel="noopener noreferrer">Winetech Standard Repo</a>, which is a barebones skeleton of the structure and built-in agent ready documentation to get started on a new project.</p>
-<h2 id="actual-take-aways">Actual Take-Aways</h2>
-<ul>
-<li>Use ADRs</li>
-<li>Prune memories, AGENTS.md, and other context-filling documents regularly</li>
-<li>Provide a space to put observations found during their tasks so don&rsquo;t get distracted and information doesn&rsquo;t get lost</li>
-<li>Keep as much inside the repo as possible, to provide agents with the context on demand that they need</li>
-<li>Provide tools and scripts that can give negative feedback to the agents so they can quickly course-correct on their own</li>
-<li>Give them a runtime of your application to test against in a live setting. Static analysis not enough.</li>
-</ul>
-<details class="toc" open><summary>Table of Contents</summary><nav id="TableOfContents">
-  <ul>
-    <li><a href="#tldr">tl;dr:</a>
-      <ul>
-        <li><a href="#actual-take-aways">Actual Take-Aways</a></li>
-      </ul>
-    </li>
-    <li><a href="#prerequisites">Prerequisites</a>
-      <ul>
-        <li><a href="#models">Models</a></li>
-        <li><a href="#harnesses">Harnesses</a></li>
-        <li><a href="#subscriptions">Subscriptions</a></li>
-        <li><a href="#project-ownership">Project Ownership</a></li>
-      </ul>
-    </li>
-    <li><a href="#folder-structure">Folder Structure</a>
-      <ul>
-        <li><a href="#adr"><code>adr/</code></a></li>
-        <li><a href="#investigations"><code>investigations/</code></a></li>
-        <li><a href="#tickets"><code>tickets/</code></a></li>
-        <li><a href="#backlogmd"><code>backlog.md</code></a></li>
-      </ul>
-    </li>
-    <li><a href="#verification-and-feedback">Verification and Feedback</a>
-      <ul>
-        <li><a href="#repo-tools">Repo Tools</a></li>
-      </ul>
-    </li>
-    <li><a href="#agentsmd-and-memories">AGENTS.md and Memories</a>
-      <ul>
-        <li><a href="#agentsmd">AGENTS.md</a></li>
-        <li><a href="#memories">Memories</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#pruning-files-when-they-get-too-big-or-outdated">Pruning files when they get too big or outdated</a></li>
-      </ul>
-    </li>
-    <li><a href="#working-with-the-agents">Working with the Agents</a>
-      <ul>
-        <li><a href="#prompting-style">Prompting Style</a></li>
-        <li><a href="#corrections">Corrections</a></li>
-        <li><a href="#lean-into-their-biases-and-expectations-for-tools-and-docs">Lean into their biases and expectations for tools and docs</a></li>
-        <li><a href="#hooks-and-notifications">Hooks and notifications</a></li>
-        <li><a href="#paralleization">Paralleization</a></li>
-      </ul>
-    </li>
-    <li><a href="#some-usage-patterns">Some Usage Patterns</a>
-      <ul>
-        <li><a href="#wrap-up">&ldquo;Wrap up&rdquo;</a></li>
-        <li><a href="#handoff-documents">Handoff Documents</a></li>
-        <li><a href="#rewrite-to-be-forward-looking">Rewrite To Be Forward Looking</a></li>
-        <li><a href="#team-a-vs-team-b">Team A vs Team B</a></li>
-      </ul>
-    </li>
-    <li><a href="#recent-worked-examples">Recent Worked Examples</a>
-      <ul>
-        <li><a href="#reducing-token-spend-on-backtracking-during-failed-test-runs">Reducing Token Spend on Backtracking during Failed Test Runs</a></li>
-        <li><a href="#test-suite-optimization">Test Suite Optimization</a></li>
-        <li><a href="#automation-and-accessibility">Automation and Accessibility</a></li>
-        <li><a href="#migrating-a-failing-robotics-sample-from-gazebo-to-mujoco">Migrating a Failing Robotics Sample From Gazebo to MuJoCo</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></details>
-
-<h1 id="prerequisites">Prerequisites</h1>
-<p>People get different results from the diffeent workflows, tools, models and harnesses they use, so I&rsquo;d like to set out what my partifuclar set up looks like at the outside, so you can adjust your own expectations.</p>
-<h2 id="models">Models</h2>
-<ul>
-<li>Big Models
-<ul>
-<li>(Primary) Claude Opus 5.5 (xhigh)</li>
-<li>(Secondary) GPT Sol 6.1 (xhigh)</li>
-</ul>
-</li>
-<li>Fast
-<ul>
-<li>(Primary) Claude Sonnet 5.5 (medium)</li>
-<li>(Secodary) GPT Terra 6.1 (medium)</li>
-</ul>
-</li>
-</ul>
-<p>I have previously experiemmted with Mistral, and have only heard good things but not yet tried DeepSeek, GLM, or Kimi.</p>
-<h2 id="harnesses">Harnesses</h2>
-<ul>
-<li>Claude Code</li>
-<li><a href="https://github.com/can1357/oh-my-pi"target="_blank" rel="noopener noreferrer">OhMyPi</a> (omp).</li>
-</ul>
-<p>Be aware that I live 90% of the time in VSCode, so I also use the the <a href="https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code"target="_blank" rel="noopener noreferrer">Claude Code Visual Studio Extenstion</a> which I like because I can have rich markdown and code editing support side by side with the LLM output, like this:</p>
-<p><img loading="lazy"  src="./vscode_claudecode_1.png"
-        alt="VS Code&rsquo;s integration side by side with Claude Code"/></p>
-<p>However, I also like <em>omp</em> because it has Language Server support built in, so it can do really efficient and thorough symbol renames, etc.</p>
-<p>Because Anthropic doesn&rsquo;t permit using their Max subscriptions in other harnesses, <em>omp</em> only get used when I need to use OpenAI&rsquo;s models.</p>
-<h2 id="subscriptions">Subscriptions</h2>
-<ul>
-<li>Anthropic Teams Max Subscription</li>
-<li>OpenAI GPT pay-as-you-go pricing</li>
-</ul>
-<p>Because of this set up, I prefer Claude because my usage is much less restricted. However, due to Anthropic&rsquo;s removal of some &ldquo;bonus tokens&rdquo; they&rsquo;ve been giving out for a while, I am now routinely getting rate limited around Thursday, so it&rsquo;s become common for me to end by week in <em>omp</em> with GPT Sol.</p>
-<h2 id="project-ownership">Project Ownership</h2>
-<p>I largely possess autonomous control over how I approach my repositories, so I can structure them however I choose. The descriptions below may not be feasible in your own setups, due to team size, code review requirements, managerial processes, etc. But maybe some of the things herein can still be useful.</p>
-<h1 id="folder-structure">Folder Structure</h1>
-<p>LLMs love to have context, and to have access to more context, so I have a folder structure with some initial files that seem to be working for me.</p>
-<p>I won&rsquo;t explain it in full here, but you should check out my <a href="https://github.com/0xNF/wtstandardrepo"target="_blank" rel="noopener noreferrer">Winetech Standard Repo</a> repo lays out much of how I&rsquo;ve started to structure my repositories these days.</p>
-<p>In brief, it takes the following shape:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">.
-</span></span><span class="line"><span class="cl">├── docs
-</span></span><span class="line"><span class="cl">│   ├── repo
-</span></span><span class="line"><span class="cl">│   │   ├── adr
-</span></span><span class="line"><span class="cl">│   │   │   └── 0000-adr-format.md
-</span></span><span class="line"><span class="cl">│   │   ├── investigations
-</span></span><span class="line"><span class="cl">│   │   │   └── README.md
-</span></span><span class="line"><span class="cl">│   │   ├── misc
-</span></span><span class="line"><span class="cl">│   │   │   ├── architecture.md
-</span></span><span class="line"><span class="cl">│   │   │   ├── debugging.md
-</span></span><span class="line"><span class="cl">│   │   │   ├── history.md
-</span></span><span class="line"><span class="cl">│   │   │   └── README.md
-</span></span><span class="line"><span class="cl">│   │   ├── plans
-</span></span><span class="line"><span class="cl">│   │   │   ├── inprogress
-</span></span><span class="line"><span class="cl">│   │   │   ├── README.md
-</span></span><span class="line"><span class="cl">│   │   │   └── unimplemented
-</span></span><span class="line"><span class="cl">│   │   │       └── backlog.md
-</span></span><span class="line"><span class="cl">│   │   └── workflows
-</span></span><span class="line"><span class="cl">│   │       └── README.md
-</span></span><span class="line"><span class="cl">│   ├── tickets
-</span></span><span class="line"><span class="cl">│   │   └── README.md
-</span></span><span class="line"><span class="cl">│   └── vendored
-</span></span><span class="line"><span class="cl">│       └── README.md
-</span></span><span class="line"><span class="cl">├── README.md
-</span></span><span class="line"><span class="cl">└── repotools
-</span></span><span class="line"><span class="cl">    ├── public
-</span></span><span class="line"><span class="cl">    │   ├── go
-</span></span><span class="line"><span class="cl">    │   ├── python
-</span></span><span class="line"><span class="cl">    │   └── rust
-</span></span><span class="line"><span class="cl">    └── README.md
-</span></span></code></pre></div><p>Each folder gets a README.md explaining its purpose, and what it&rsquo;s subfolders are for. For example, here is the main <code>docs/README.md</code> file, abbreviated for including in this post:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># Docs
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">The front door to a project&#39;s documentation. It says what lives where and points to the separate rules file and the scripts README.
-</span></span><span class="line"><span class="cl">Vendored documentation is available in <span class="sb">`vendored/`</span>, so that agents don&#39;t have to go to the Web to learn about the details of their dependencies.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## Main documents
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Standalone reference documents, listed in a table: a map of the system as it is, a symptom-first debugging index, a history of what was removed and why, rules for code that must survive a special compile step, a design and style guide, and an end-user guide that may lag the code.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## Workflows
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Step-by-step procedures, one file per recurring task. They cover building and testing, running and driving the app, reading logs, releasing, and querying a local backend. They also cover guides for risky kinds of change and one page per automated check script.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## Architecture decision records
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">A numbered log of significant choices currently in force, each with its context, alternatives and consequences. Records are edited, replaced or deleted, never marked &#34;superseded&#34;. Reversed designs go in the history document.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## Plans
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Work in flight, written when work starts and deleted when it ends. One standing backlog collects problems noticed in passing, so they get recorded rather than fixed unprompted.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## Investigations
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">One folder per problem whose cause is still unknown. It holds the symptom, dated observations, open and ruled-out causes, and next steps. It is deleted in the same commit as the fix.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## Tickets
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Defects and requests for code owned by other teams, filed one per file by owning component. Each ticket carries a priority (High, Medium or Low), a category, a validity note and verification evidence, and checks must not damage shared test environments.
-</span></span></code></pre></div><p>Each header is important in its own right, but I want to note that I have gotten a disproportionate amount of value from the following items in particular:</p>
-<h2 id="adr"><code>adr/</code></h2>
-<p>I took this from a Hacker News post a few months ago, and although I&rsquo;m using the traipsings of Architecture Decision Records, I am using my own, perhaps cursed, flavor of them. I have dropped the <code>status</code> portion, because in my world, they&rsquo;re always <code>accepted</code>, and my standing rule is that they are always edited-in-place, never obsoleted. If an ADR exists in the repo, it is an active document.</p>
-<p>I use them to record bite-sized facts about the repo in question. Here are a sample of ADRs in a few projects I am working with right now:</p>
-<p>These are from a C# desktop application:</p>
-<pre tabindex="0"><code>0002 — Layered MVVM application architecture
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.168.0"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><meta name=description content="Post Summary"><title>Agentic Workflow as of October 2026&nbsp;&ndash;&nbsp;Sidequesting</title><link rel=stylesheet href=/css/core.min.042fa52dfd5095a57e5638f22efe3230dd4f5d8804f4c316bf9d663d574753da4a501100d9d9d5857fc05d9b15513191.css integrity=sha384-BC+lLf1QlaV+VjjyLv4yMN1PXYgE9MMWv51mPVdHU9pKUBEA2dnVhX/AXZsVUTGR><meta name=twitter:card content="summary"><meta name=twitter:title content="Agentic Workflow as of October 2026"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Sidequesting</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a><a class="nav item" href=https://gohugo%2eio/ target=_blank rel="noopener noreferrer">Hugo</a></nav></div></span></div><div class="site slogan"><span class=title>99% JavaScript-free</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">Agentic Workflow as of October 2026</h1><p class="article date">Sunday, October 18, 2026<span class=langs><span class=lang><a href=/ja/posts/agentic/workflows/rev1/>ja</a></span></span></p></section><article class="article markdown-body"><h1 id=tldr>tl;dr:</h1><p>This post describes my first current very rough approach to agentic development.
+This approach is heavy on docs, folder structure, and copipus tools and scripts for verification feedback.</p><p>My current approach is codified by the <a href=https://github.com/0xNF/wtstandardrepo target=_blank rel="noopener noreferrer">Winetech Standard Repo</a>, which is a barebones skeleton of the structure and built-in agent ready documentation to get started on a new project.</p><h2 id=actual-take-aways>Actual Take-Aways</h2><ul><li>Use ADRs</li><li>Prune memories, AGENTS.md, and other context-filling documents regularly</li><li>Provide a space to put observations found during their tasks so don&rsquo;t get distracted and information doesn&rsquo;t get lost</li><li>Keep as much inside the repo as possible, to provide agents with the context on demand that they need</li><li>Provide tools and scripts that can give negative feedback to the agents so they can quickly course-correct on their own</li><li>Give them a runtime of your application to test against in a live setting. Static analysis not enough.</li></ul><details class=toc open><summary>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#tldr>tl;dr:</a><ul><li><a href=#actual-take-aways>Actual Take-Aways</a></li></ul></li><li><a href=#prerequisites>Prerequisites</a><ul><li><a href=#models>Models</a></li><li><a href=#harnesses>Harnesses</a></li><li><a href=#subscriptions>Subscriptions</a></li><li><a href=#project-ownership>Project Ownership</a></li></ul></li><li><a href=#folder-structure>Folder Structure</a><ul><li><a href=#adr><code>adr/</code></a></li><li><a href=#investigations><code>investigations/</code></a></li><li><a href=#tickets><code>tickets/</code></a></li><li><a href=#backlogmd><code>backlog.md</code></a></li></ul></li><li><a href=#verification-and-feedback>Verification and Feedback</a><ul><li><a href=#repo-tools>Repo Tools</a></li></ul></li><li><a href=#agentsmd-and-memories>AGENTS.md and Memories</a><ul><li><a href=#agentsmd>AGENTS.md</a></li><li><a href=#memories>Memories</a></li><li><a href=#skills>Skills</a></li><li><a href=#pruning-files-when-they-get-too-big-or-outdated>Pruning files when they get too big or outdated</a></li></ul></li><li><a href=#working-with-the-agents>Working with the Agents</a><ul><li><a href=#prompting-style>Prompting Style</a></li><li><a href=#corrections>Corrections</a></li><li><a href=#lean-into-their-biases-and-expectations-for-tools-and-docs>Lean into their biases and expectations for tools and docs</a></li><li><a href=#hooks-and-notifications>Hooks and notifications</a></li><li><a href=#paralleization>Paralleization</a></li></ul></li><li><a href=#some-usage-patterns>Some Usage Patterns</a><ul><li><a href=#wrap-up>&ldquo;Wrap up&rdquo;</a></li><li><a href=#handoff-documents>Handoff Documents</a></li><li><a href=#rewrite-to-be-forward-looking>Rewrite To Be Forward Looking</a></li><li><a href=#team-a-vs-team-b>Team A vs Team B</a></li></ul></li><li><a href=#recent-worked-examples>Recent Worked Examples</a><ul><li><a href=#reducing-token-spend-on-backtracking-during-failed-test-runs>Reducing Token Spend on Backtracking during Failed Test Runs</a></li><li><a href=#test-suite-optimization>Test Suite Optimization</a></li><li><a href=#automation-and-accessibility>Automation and Accessibility</a></li><li><a href=#migrating-a-failing-robotics-sample-from-gazebo-to-mujoco>Migrating a Failing Robotics Sample From Gazebo to MuJoCo</a></li></ul></li></ul></nav></details><h1 id=prerequisites>Prerequisites</h1><p>People get different results from the diffeent workflows, tools, models and harnesses they use, so I&rsquo;d like to set out what my partifuclar set up looks like at the outside, so you can adjust your own expectations.</p><h2 id=models>Models</h2><ul><li>Big Models<ul><li>(Primary) Claude Opus 5.5 (xhigh)</li><li>(Secondary) GPT Sol 6.1 (xhigh)</li></ul></li><li>Fast<ul><li>(Primary) Claude Sonnet 5.5 (medium)</li><li>(Secodary) GPT Terra 6.1 (medium)</li></ul></li></ul><p>I have previously experiemmted with Mistral, and have only heard good things but not yet tried DeepSeek, GLM, or Kimi.</p><h2 id=harnesses>Harnesses</h2><ul><li>Claude Code</li><li><a href=https://github.com/can1357/oh-my-pi target=_blank rel="noopener noreferrer">OhMyPi</a> (omp).</li></ul><p>Be aware that I live 90% of the time in VSCode, so I also use the the <a href="https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code" target=_blank rel="noopener noreferrer">Claude Code Visual Studio Extenstion</a> which I like because I can have rich markdown and code editing support side by side with the LLM output, like this:</p><p><img loading=lazy src=./vscode_claudecode_1.png alt="VS Code&rsquo;s integration side by side with Claude Code"></p><p>However, I also like <em>omp</em> because it has Language Server support built in, so it can do really efficient and thorough symbol renames, etc.</p><p>Because Anthropic doesn&rsquo;t permit using their Max subscriptions in other harnesses, <em>omp</em> only get used when I need to use OpenAI&rsquo;s models.</p><h2 id=subscriptions>Subscriptions</h2><ul><li>Anthropic Teams Max Subscription</li><li>OpenAI GPT pay-as-you-go pricing</li></ul><p>Because of this set up, I prefer Claude because my usage is much less restricted. However, due to Anthropic&rsquo;s removal of some &ldquo;bonus tokens&rdquo; they&rsquo;ve been giving out for a while, I am now routinely getting rate limited around Thursday, so it&rsquo;s become common for me to end by week in <em>omp</em> with GPT Sol.</p><h2 id=project-ownership>Project Ownership</h2><p>I largely possess autonomous control over how I approach my repositories, so I can structure them however I choose. The descriptions below may not be feasible in your own setups, due to team size, code review requirements, managerial processes, etc. But maybe some of the things herein can still be useful.</p><h1 id=folder-structure>Folder Structure</h1><p>LLMs love to have context, and to have access to more context, so I have a folder structure with some initial files that seem to be working for me.</p><p>I won&rsquo;t explain it in full here, but you should check out my <a href=https://github.com/0xNF/wtstandardrepo target=_blank rel="noopener noreferrer">Winetech Standard Repo</a> repo lays out much of how I&rsquo;ve started to structure my repositories these days.</p><p>In brief, it takes the following shape:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>.
+</span></span><span class=line><span class=cl>├── docs
+</span></span><span class=line><span class=cl>│   ├── repo
+</span></span><span class=line><span class=cl>│   │   ├── adr
+</span></span><span class=line><span class=cl>│   │   │   └── 0000-adr-format.md
+</span></span><span class=line><span class=cl>│   │   ├── investigations
+</span></span><span class=line><span class=cl>│   │   │   └── README.md
+</span></span><span class=line><span class=cl>│   │   ├── misc
+</span></span><span class=line><span class=cl>│   │   │   ├── architecture.md
+</span></span><span class=line><span class=cl>│   │   │   ├── debugging.md
+</span></span><span class=line><span class=cl>│   │   │   ├── history.md
+</span></span><span class=line><span class=cl>│   │   │   └── README.md
+</span></span><span class=line><span class=cl>│   │   ├── plans
+</span></span><span class=line><span class=cl>│   │   │   ├── inprogress
+</span></span><span class=line><span class=cl>│   │   │   ├── README.md
+</span></span><span class=line><span class=cl>│   │   │   └── unimplemented
+</span></span><span class=line><span class=cl>│   │   │       └── backlog.md
+</span></span><span class=line><span class=cl>│   │   └── workflows
+</span></span><span class=line><span class=cl>│   │       └── README.md
+</span></span><span class=line><span class=cl>│   ├── tickets
+</span></span><span class=line><span class=cl>│   │   └── README.md
+</span></span><span class=line><span class=cl>│   └── vendored
+</span></span><span class=line><span class=cl>│       └── README.md
+</span></span><span class=line><span class=cl>├── README.md
+</span></span><span class=line><span class=cl>└── repotools
+</span></span><span class=line><span class=cl>    ├── public
+</span></span><span class=line><span class=cl>    │   ├── go
+</span></span><span class=line><span class=cl>    │   ├── python
+</span></span><span class=line><span class=cl>    │   └── rust
+</span></span><span class=line><span class=cl>    └── README.md
+</span></span></code></pre></div><p>Each folder gets a README.md explaining its purpose, and what it&rsquo;s subfolders are for. For example, here is the main <code>docs/README.md</code> file, abbreviated for including in this post:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-markdown data-lang=markdown><span class=line><span class=cl><span class=gh># Docs
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The front door to a project&#39;s documentation. It says what lives where and points to the separate rules file and the scripts README.
+</span></span><span class=line><span class=cl>Vendored documentation is available in <span class=sb>`vendored/`</span>, so that agents don&#39;t have to go to the Web to learn about the details of their dependencies.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## Main documents
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Standalone reference documents, listed in a table: a map of the system as it is, a symptom-first debugging index, a history of what was removed and why, rules for code that must survive a special compile step, a design and style guide, and an end-user guide that may lag the code.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## Workflows
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Step-by-step procedures, one file per recurring task. They cover building and testing, running and driving the app, reading logs, releasing, and querying a local backend. They also cover guides for risky kinds of change and one page per automated check script.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## Architecture decision records
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>A numbered log of significant choices currently in force, each with its context, alternatives and consequences. Records are edited, replaced or deleted, never marked &#34;superseded&#34;. Reversed designs go in the history document.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## Plans
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Work in flight, written when work starts and deleted when it ends. One standing backlog collects problems noticed in passing, so they get recorded rather than fixed unprompted.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## Investigations
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>One folder per problem whose cause is still unknown. It holds the symptom, dated observations, open and ruled-out causes, and next steps. It is deleted in the same commit as the fix.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## Tickets
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Defects and requests for code owned by other teams, filed one per file by owning component. Each ticket carries a priority (High, Medium or Low), a category, a validity note and verification evidence, and checks must not damage shared test environments.
+</span></span></code></pre></div><p>Each header is important in its own right, but I want to note that I have gotten a disproportionate amount of value from the following items in particular:</p><h2 id=adr><code>adr/</code></h2><p>I took this from a Hacker News post a few months ago, and although I&rsquo;m using the traipsings of Architecture Decision Records, I am using my own, perhaps cursed, flavor of them. I have dropped the <code>status</code> portion, because in my world, they&rsquo;re always <code>accepted</code>, and my standing rule is that they are always edited-in-place, never obsoleted. If an ADR exists in the repo, it is an active document.</p><p>I use them to record bite-sized facts about the repo in question. Here are a sample of ADRs in a few projects I am working with right now:</p><p>These are from a C# desktop application:</p><pre tabindex=0><code>0002 — Layered MVVM application architecture
 0005 — Use NotifyingObject for change notification
 0024 — A message is a copyable dialog or a toast, and every message is kept
-</code></pre><p>This is an AWS deployment:</p>
-<pre tabindex="0"><code>0001 — OpenTofu for Infrastructure Provisioning
+</code></pre><p>This is an AWS deployment:</p><pre tabindex=0><code>0001 — OpenTofu for Infrastructure Provisioning
 0008 — Layered Internal PKI: Offline Root + Online step-ca Intermediate + Short-Lived Auto-Renewed Certs
 0012 — OpenVPN, IPv6-Only Split-Tunnel, Certificate-Only, tls-crypt-v2 Hardened
-</code></pre><p>and it goes on like this. You can reference my standard <a href="https://github.com/0xNF/wtstandardrepo/blob/master/docs/repo/adr/0000-adr-format.md"target="_blank" rel="noopener noreferrer">ADR baseline documen.</a>.</p>
-<p>Because these ADRs are so often references by the models, I endevaor to keep irrelevent information like History out of them. History is still important to maintain, so history goes into its own dedicatd history.md file.</p>
-<p>The models really do reference ADRs all the time, and its been such a superpower that keeps them on track and consistent. It also catches my own inconsistencies, where the models will tell me that my own decision contradicts ADR #XYZ, which is a good moment for me to reflect on what I really want from a given session.</p>
-<p>ADRs are not considered static &ndash; I edit them in place, and occasionally delete, reorganize, or adjust them as needed.</p>
-<h2 id="investigations"><code>investigations/</code></h2>
-<p>Sometimes a problem is found during a session, like an intermittent crash. It is helpful to provide the agent a place to put repeated observations of an issue along with a summary of the issue in the investigations readme file. Once enough observations have been logged, it becomes its own dedicated session and can be used as the starting point for a full-on investigation. The benefit of doing it this way is that the agent won&rsquo;t get distracted during a session, can recognize known failurs, and eventually can work on this one problem full-time.</p>
-<p>here are some example ongoing investigations I have open in one of my desktop applications:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./
-</span></span><span class="line"><span class="cl">├─── action-editor-hangs-on-load-and-selection
-</span></span><span class="line"><span class="cl">│       README.md
-</span></span><span class="line"><span class="cl">│
-</span></span><span class="line"><span class="cl">├─── studio-fails-fast-returning-to-actions-list
-</span></span><span class="line"><span class="cl">│       README.md
-</span></span><span class="line"><span class="cl">│
-</span></span><span class="line"><span class="cl">└─── studio-process-outlives-its-window
-</span></span><span class="line"><span class="cl">        README.md
-</span></span></code></pre></div><p>And a brief excerpt of what one such readme looks like:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># Studio&#39;s process can outlive its window and hold the layout
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gs">**Status: open.**</span> Seven sightings of a stuck exit or windowless process between 2026-10-03 and 2026-10-18, and four timed closes on 2026-10-07 that did not reproduce it. The cause is not known. The leading candidate is a clipboard flush at exit, and it has not been tested. A fifth sighting, on 2026-10-09, was a start that failed and never exited, which has a known cause of its own.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## The symptom
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">A Studio the user has closed stays alive with no window anyone knows of and one thread left, waiting in the kernel (state Wait, reason UserRequest). While it lives it holds the layout: refreshing it fails on <span class="sb">`gs.dll`</span> (robocopy exit 10), and <span class="sb">`Add-AppxPackage -Register`</span> fails with <span class="sb">`0x80073D02`</span>. Nothing on screen says why.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## Observations
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">| Sighting | Started                      | Remote Desktop | Copy before close | Threads, handles, memory | Exit code | Dump |
-</span></span><span class="line"><span class="cl">| -------- | ---------------------------- | -------------- | ----------------- | ------------------------ | --------- | ---- |
-</span></span><span class="line"><span class="cl">| 1        | 2026-10-03, how not recorded | not recorded   | not recorded      | 1, 918, 237 MB           | not read  | none |
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">### Sighting 1 -- 2026-10-03: alive eight minutes after its close
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">A Studio the user closed stayed alive for more than eight minutes.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## Candidates
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">### Ruled out
-</span></span></span><span class="line"><span class="cl">[...]
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">### Open
-</span></span></span><span class="line"><span class="cl">[...]
-</span></span></code></pre></div><h2 id="tickets"><code>tickets/</code></h2>
-<p>Tickets are where defects, feature requests, and larger behavioral changes go. I have outstanding instructions for agents to create tickets for items they&rsquo;ve found during their sessions into this folder. The subfolder structure is less defined, but I currently have them organized by owner. For example, big items that are found in <em>this repository</em> are placed into <code>$projectName/</code>, while defects found in, for example, the backend repo thats owned by another team, goes in <code>dependencyName/</code>.</p>
-<p>For example:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">.
-</span></span><span class="line"><span class="cl">├── desktop_app/
-</span></span><span class="line"><span class="cl">│   ├── camera-reset-keeps-selected-profile.md
-</span></span><span class="line"><span class="cl">│   └── maintenance-max-log-days-drifts-on-disk.md
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">├── upstream_dep1/
-</span></span><span class="line"><span class="cl">│   └── trigger-condition-schema-disagrees-with-the-hub.md
-</span></span><span class="line"><span class="cl">└── README.md
-</span></span></code></pre></div><p>The structure of my tickets here are also fluid, but I&rsquo;m currently using this format for a ticket:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">Reset leaves one setting in place
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## Assessment
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">-</span> **Priority:** Medium
-</span></span><span class="line"><span class="cl"><span class="k">-</span> **Category:** Correctness
-</span></span><span class="line"><span class="cl"><span class="k">-</span> **Validity:** Confirmed
-</span></span><span class="line"><span class="cl"><span class="k">-</span> **Assessed:** &lt;date&gt;
-</span></span><span class="line"><span class="cl"><span class="k">-</span> **Basis:** Reset promises the default state but keeps a manually chosen setting, so a bad choice can&#39;t be undone by resetting. Picking &#34;Auto&#34; explicitly still works as a workaround.
-</span></span><span class="line"><span class="cl"><span class="k">-</span> **Verification:** Confirmed by reading the source: the reset path applies defaults to every field except this one, and the code that reads the setting still honors any stored value. The API docs describe reset as a full restore with no exceptions. Not reproduced live, since no test device was in the required state.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">what the upstream system does:
-</span></span><span class="line"><span class="cl">  Reset restores most fields to their defaults but skips one. A device pinned
-</span></span><span class="line"><span class="cl">  to a manual setting comes back from a reset still pinned, while every other
-</span></span><span class="line"><span class="cl">  field in the response is a default.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">what we need:
-</span></span><span class="line"><span class="cl">  Reset should clear that setting too, so the result matches a fresh
-</span></span><span class="line"><span class="cl">  registration. If that isn&#39;t wanted, the docs should say it&#39;s deliberately
-</span></span><span class="line"><span class="cl">  excluded.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">impact:
-</span></span><span class="line"><span class="cl">  A device pinned to a setting that no longer exists can&#39;t be recovered by
-</span></span><span class="line"><span class="cl">  resetting it. It keeps failing, and the reset control reports success
-</span></span><span class="line"><span class="cl">  without touching the field that matters.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">evidence:
-</span></span><span class="line"><span class="cl">  The default-setting function covers six fields and omits this one. It&#39;s
-</span></span><span class="line"><span class="cl">  called from the reset handler. Other device types have no equivalent
-</span></span><span class="line"><span class="cl">  setting, so only this type is affected.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">workaround on our side:
-</span></span><span class="line"><span class="cl">  None. The UI redraws from the reset response, so it shows the setting that
-</span></span><span class="line"><span class="cl">  survived instead of hiding it. Users can still select Auto and save, which
-</span></span><span class="line"><span class="cl">  does clear it.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">once fixed, on our side:
-</span></span><span class="line"><span class="cl">  Nothing. The UI already renders whatever the response carries, so it will
-</span></span><span class="line"><span class="cl">  show Auto on its own.
-</span></span></code></pre></div><p>The categories I&rsquo;m using belong to the set of</p>
-<p><code>[Usability, Security, Correctness, Misc, Feature]</code>.</p>
-<p>Occasionally I will request the agents go through each filed ticket and re-assess whether it&rsquo;s still true or not.
-The purpose of this ticket structure is that it outlines clearly why this is an issue, and what this current repo is doing to work around it.</p>
-<h2 id="backlogmd"><code>backlog.md</code></h2>
-<p>One item I&rsquo;ve gotten a disproportionate amount of value from is the backlog.md file, which is the scratch space I provide to agents for them to put down small bugs, discrepencies, or things that need adjustment. This is similar to tickets, and indeed, until I decided that the tickets folder should also include the repo itself, is where feature requests and large changes went into. But after separating the two, this file is still very useful.</p>
-<p>When an agent is working, it will often encounter problems. Depending on the agent, it may get distracted trying to solve them, or it may just forget about the issue by the end of the session. To make sure that this information isn&rsquo;t lost, they have standing orders to note any such defects into the backlog.md file immediately, and then to continue the main assigned work. This keeps them on task, and ensures that I have a decent accounting of bugs in my code.</p>
-<p>Not everything they put in is necessary, so it is worthwhile to manually prune the file from time to time, but by and large, the defects that Claude and GPT find have been worth addressing.</p>
-<p>The format of my backlog file is like so:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># Code cleanup backlog
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Things found while working on something else: dead code, latent defects, and behaviour that looks wrong but was left alone because fixing it was outside the change at hand. Nothing here is blocking. Each entry is a decision for the user, not a task already agreed.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gs">**Add to this file rather than fixing in passing.**</span> When a change turns up an unrelated problem - an unreachable class, a notification that reaches nobody, a leak, a binding that has never worked - write it down here and carry on with the change you were making. Say what it is, where it is, what it costs to leave, and what fixing it would change. If you do fix one, delete it from this file.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gh"># Methodology
-</span></span></span><span class="line"><span class="cl"><span class="k">-</span> Consider breaking tasks into sub-tasks 
-</span></span><span class="line"><span class="cl"><span class="k">-</span> You have a dev deploymemt of the application on this box and permission to use and modify it;
-</span></span><span class="line"><span class="cl"><span class="k">-</span> [...]
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gh"># Backlog
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="gu">## Release dependencies report unresolved trim and AOT analysis warnings
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">The 2026-10-16 x64 <span class="sb">`just build aot`</span> run succeeds but reports IL2104 for <span class="sb">`WinUI.TableView`</span>,
-</span></span><span class="line"><span class="cl"><span class="sb">`Common.Logging`</span>, <span class="sb">`Microsoft.Data.SqlClient`</span>, <span class="sb">`Microsoft.Data.SqlClient.Internal.Logging`</span>
-</span></span><span class="line"><span class="cl">and <span class="sb">`System.Configuration.ConfigurationManager`</span>, and IL3053 for <span class="sb">`Microsoft.Data.SqlClient`</span>.
-</span></span><span class="line"><span class="cl">ILC also says <span class="sb">`Makaretu.Dns.LinuxHelper.ReuseAddresss(Socket)`</span> always throws because
-</span></span><span class="line"><span class="cl"><span class="sb">`Tmds.LibC`</span> cannot be loaded. No runtime failure was observed from these diagnostics; leaving
-</span></span><span class="line"><span class="cl">them unresolved makes the Release build&#39;s analysis inconclusive for those dependency paths.
-</span></span><span class="line"><span class="cl">Triage would inspect the detailed ILC diagnostics, determine which paths the Windows client
-</span></span><span class="line"><span class="cl">can reach, and update or root the affected dependencies rather than suppressing the summaries.
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">[...]
-</span></span></code></pre></div><p>I&rsquo;ve found that the agents are exceptional at filling in this file, and on later dedicated passes, are equally exceptional at churning through it.</p>
-<p>Many ADR discrepencies, usability problems, and bad bugs have been found this way, all without the agent getting distracted.</p>
-<h1 id="verification-and-feedback">Verification and Feedback</h1>
-<p>Agents work really well when they can correct their own assumptions in realtime. They react very well to negative feedback when they try something, such as compile-time failures or other errors that show them they had something incorrect.</p>
-<p>You should encouage this by building and supplying tools that the agent can call. This can be as simple as supplying the language server for it to see diagnostic information in, or as complex as a custom constellation of scripts that do work in advance. For instance, in a desktop application, I have a series of scripts that check for banned APIs, or that certain structures aren&rsquo;t used:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">.
-</span></span><span class="line"><span class="cl">├── check-serialization-contracts.ps1
-</span></span><span class="line"><span class="cl">├── check-source-rules.ps1
-</span></span><span class="line"><span class="cl">├── check-tooltips.ps1
-</span></span><span class="line"><span class="cl">└── check-window-ownership.ps1
-</span></span></code></pre></div><p>Among manny others. The tools provide output like:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="m">2</span> failed: 
-</span></span><span class="line"><span class="cl">Invalid API: src/models/ModelA.cs:76
-</span></span><span class="line"><span class="cl"><span class="o">{</span>Binding<span class="o">}</span> instead of <span class="o">{</span>x:Bind<span class="o">}</span>: src/views/LogView.xaml:862
-</span></span></code></pre></div><p>which tell the model where one of its assumptions went wrong, and what it needs to correct before continuing.</p>
-<h2 id="repo-tools">Repo Tools</h2>
-<p>In addition to tools that provide feedback, it&rsquo;s also useful to supply tools that give functionality that the agents keep writing for themselves.
-For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall and reinstall an application, so instead of letting it waste tokens, and each time doing it slightly differnetly, I gave it a script that does it, consistently, every time. Now it knows to call <code>install_newest.ps1</code> and it will wait for it to finish before continuing.</p>
-<p>It pays to pay attention to what the agents are doing, to work alongside them.</p>
-<h1 id="agentsmd-and-memories">AGENTS.md and Memories</h1>
-<p>A good AGENTS.md (née CLAUDE.md) file is mandatory for giving agents the initial overview and philosophy of your repository. Everyone knows this, so i won&rsquo;t spend muxh time on it here.</p>
-<h2 id="agentsmd">AGENTS.md</h2>
-<p>In my case, my AGENTS.md contains things like:</p>
-<ul>
-<li>a brief overview of what this repo hopes to accomplish</li>
-<li>The toolchain used for building and deployment, with references to <code>building.md</code> for details</li>
-<li>The style guidelines with references to <code>style.md</code> and <code>adr/</code> for details</li>
-<li>The instructions for code backlog, ticketing, and investigations, with references to the appropriate README.md files</li>
-<li>Other tools available on this dev box, like whether Python, ffmpeg, curl, imagemagick, etc are available</li>
-</ul>
-<h2 id="memories">Memories</h2>
-<p>The purpose of memories, as distinct from AGENTS.md or specific repo tooling is that it is meant to represent things that are not globally applicable.</p>
-<p>Agents will often collect memories on their own, but sometimes its useful when you see persistent errors being made to encourage them to create memories under your guidance. Since I do a lot of work on Windows, and Agents have a not-unreasonable expectation that they&rsquo;re in UNIX-land, I have make sure they have memories that relate to setting BOMs, and that the editors they often use eat backslashes and need different escapting rules.</p>
-<p>I also use memories to give agents standing permission to do code commits, to make changes to the running development system, where to find temporary data, and what other nearby relevant repositories and documents are located that may be useful for the agent to be aware of.</p>
-<p>These things are not global, and not applicable to other developers on this repository, so it&rsquo;s not appropriate to put them into the repo-permaent AGENTS.md.</p>
-<blockquote>
-<p>A side note: It <em>is</em> permissible to make tooling around these specific assumptions by using the <code>repotools/$username/</code> folders, which is where developer specific tooling should go. There is no expectation that tools under your own folder are useful, or indeed even run, under any other user. Repo-wide tools should graduate into the <code>repotools/public/</code> folder.</p>
-<p>This is why I think there&rsquo;s a large synergy to be had with the repo tools folder in an agentic setting.</p>
-</blockquote>
-<h2 id="skills">Skills</h2>
-<p>I have not generally found skills to be very useful. I have nothing in particular to write here on the subject.</p>
-<h2 id="pruning-files-when-they-get-too-big-or-outdated">Pruning files when they get too big or outdated</h2>
-<p>Token budgets are not unlimited, and context size must be managed. To that end, one must consider on occasion to revisit the files you are asking the agents to work with on every request.</p>
-<p>AGENTS.md should be kept under <code>10,000</code> tokens, and even that is pushing it. Remember that this is sent on every request. It is worth looking at what needs to be understood all the time, versus what only needs to be understood some of the time, versus what doesnt need to be understood at all.</p>
-<p>If assumptions are outdated or have conflicting instructions, delete them. If things only apply some of the time, extract those sections to their own ADR or Workflow documents, and then put a reference in instead.</p>
-<p>As simple as it can get, but no simpler.</p>
-<p>The same rules apply for your memory files, which can be found under <code>~/.claude/projects/$project/memory</code>, or other similar harness-dependent locations.</p>
-<p>Condense, Extract, Delete.</p>
-<h1 id="working-with-the-agents">Working with the Agents</h1>
-<p>(LLM, Harness) pairs have their own runtime quirks and should be worked with the way a craftsman knows how to work with a powerdrill that whirls in one direction faster than the other, a hammer that isn&rsquo;t perfectly flat and thus has slight directional preference, or a car that has a very delicate accelerator. The quirks are worth learning and using to your advantage. Don&rsquo;t fight the agents, work with them.</p>
-<h2 id="prompting-style">Prompting Style</h2>
-<p>Because I have what I consider to be fairly well crafted initial documents and on-demand context available for the agents, I don&rsquo;t put too much effort into my prompts, which are concise and minimal.</p>
-<ul>
-<li>&ldquo;Read this $document, and address the issues&rdquo;</li>
-<li>&ldquo;Fix the bugs describes by the cleanup&rdquo;</li>
-<li>&ldquo;Continue working on this plan file&rdquo;</li>
-</ul>
-<p>Except in rare circumstances, I don&rsquo;t write any additional context, because I&rsquo;ve already given the context in the AGENTS.md, ADRs, and plan files.</p>
-<p>Sometimes I have questions that require a more thorough examination before we can continue:</p>
-<ul>
-<li>Extamine the feasability of adding the following feature to this application, and consider how many dependencies it would require to accomplish</li>
-<li>We are currently doing $X in our application, but I want to move to $Y instead, write a plan file for this process</li>
-</ul>
-<p>I have found it productive to speak in mechanical, precise terminology. I do not abridge my requests, use shorthand slang, or speak casually with the agents. I do my best to give them accurate and clear phrases to work with. It helps to orient their initial manifolds when you say things like &ldquo;Consider ahead-of-time compilation issues&rdquo;, or &ldquo;profile this slowdown and find whether a different algorithm should be used for this subroutine&rdquo;, instead of &ldquo;why is it slow&rdquo; or &ldquo;u should find the bug&rdquo;. LLMs are often reflections of the tone and skill of the user prompt, and if you are sloppy in your input you will find it is sloppy in its&rsquo; output.</p>
-<h2 id="corrections">Corrections</h2>
-<p>Sometimes the Agents are confident in their assertion that some things cannot be done. It may be the case that you know better than they do - in those situations it is important to supply them with relevant documentation, at which point they will happily change course and begin working.</p>
-<p>Remember that they have cut-off dates for their training, so they will only recall information up to that point. Any change in status of something that happened after that date needs to be supplied to them.</p>
-<h2 id="lean-into-their-biases-and-expectations-for-tools-and-docs">Lean into their biases and expectations for tools and docs</h2>
-<p>Like said above, LLMs have quirks, biass and expectations, If you watch them long enough you&rsquo;ll pick up this fact because you&rsquo;ll see them say things like &ldquo;That API doesn&rsquo;t exist, I&rsquo;ll try a different one&rdquo;, or &ldquo;Turns out ffmpeg isn&rsquo;t found on this machine, so I&rsquo;ll write a small script in python instead&rdquo;.</p>
-<p>These are opportunities to do two things:</p>
-<ul>
-<li>Make your token usage more efficient</li>
-<li>Make your tools better</li>
-</ul>
-<p>Every time they backtrack on a choice is tokens that you&rsquo;re spending, time you&rsquo;re wasting, and context you&rsquo;re eating up. Not all situations are equal, but on balance, you should consider adding what they&rsquo;re expecting to your tools and your environment. They will be more competent in their tasks when they have what they want without the fuss of trying to work around it. They are also trained on those aspects, so they&rsquo;ll be good at using them.</p>
-<p>Additionally, especially when it comes to API surfaces, misaligned expectations are a solid indicator that your API deisgn is lacking in crucial ways. If your agent is making these mistakes, other people&rsquo;s agents are also making the same mistake. And human users may also be under same misapprehension. It is worth considering deeply whether the design the agents expected is actually a better design &ndash; very often, it is.</p>
-<h3 id="a-brief-methodology">A brief methodology</h3>
-<p>I recently went through my Claude session transcripts of the past month with another agent (GPT-Luna-6.1 via <em>omp</em> because I was at my weekly Claude token limit at that time) with the instructions to:</p>
-<blockquote>
-<p>&ldquo;Read these session transscripts and find instances where the agent got confused, backtracked, realized a tool or program was missing, or used an API with an incorrect shape&rdquo;.</p>
-</blockquote>
-<p>The results were a useful set of places to start working some immediate remediation candidates. I was able to update a handful of checker scripts in the repo, and also file some tickets against a sister repository for improvements this way. Here are some samples of what that scan turned up, and the resolution I opted for.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">1) 
-</span></span><span class="line"><span class="cl">    <span class="k">-</span> Expected: ffmpeg to be installed to change the encoding a screenshot
-</span></span><span class="line"><span class="cl">    <span class="k">-</span> Actual: not installed, wrote a python script to adjust the encoding by hand.
-</span></span><span class="line"><span class="cl"><span class="k">&gt; </span><span class="ge">Resolution: install ffmpeg
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">2)
-</span></span><span class="line"><span class="cl">    <span class="k">-</span> Expected: The same test date could be reused across pages.
-</span></span><span class="line"><span class="cl">    <span class="k">-</span> Actual: The user clarified that Data Viewer needed September to get real data.
-</span></span><span class="line"><span class="cl"><span class="k">&gt; </span><span class="ge">Resolution: Add a script that seeds test data before certain diagnostic runs
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">3)
-</span></span><span class="line"><span class="cl">    <span class="k">-</span> Expected: gsdrive can resize windows and click any named UI control.
-</span></span><span class="line"><span class="cl">    <span class="k">-</span> Actual: It had no resize verb, resized by using pointer and click APIs manually.
-</span></span><span class="line"><span class="cl"><span class="k">&gt; </span><span class="ge">Resolution: Added a `resize` verb to the automation tooling
-</span></span></span></code></pre></div><h2 id="hooks-and-notifications">Hooks and notifications</h2>
-<p>Agent harnesses have started to support <a href="https://code.claude.com/docs/en/hooks"target="_blank" rel="noopener noreferrer">Hooks</a>, which are a standard comcept, just applied to this new tech.
-Because I do most of my work in a Windows VM through a Linux host, and a lot of these tasks are long running, I am often delayed in returning to a session to assess output or answer questions. To address that problem, I built a <a href="https://github.com/0xNF/vm_llm_notify"target="_blank" rel="noopener noreferrer">KDE taskbar widget</a> that receives hooks from Claude Code. The taskbar widget lights up whenever an inner VM session is waiting for my assessment:</p>
-<p><img loading="lazy"  src="https://github.com/0xNF/vm_llm_notify/raw/master/llm_notify.gif"
-        alt="KDE taskbar app that lights up when Claude requires attention"/></p>
-<h2 id="paralleization">Paralleization</h2>
-<p>Sometimes I want to get multiple things done in one repo, and don&rsquo;t want to wait for a single agent to churn through the tasks sequentially.
-If I have a set of tasks that I think are decent candidates for doing in parallel, as in, they touch different files and wont step on each other&rsquo;s work, I open multiple panes of Claude Code and set them to their tasks. The first thing I writ in these prompts is:</p>
-<blockquote>
-<p>You are working in parallel with other agents in the same checkout of this git repo. Coordinate with each other as you work.</p>
-</blockquote>
-<p>I don&rsquo;t know about other harnesses, but for Claude Code, this works very well. The agents will then Post and Receive messages to each other, sharing their file lists, seeing who has the next build pipeline and if they can piggyback off it, taking turns driving the application test suites, and generally doing a good job together. In extreme cases the agents will often decide to make a new git worktree and rebase their changes onto the main delegate branch.</p>
-<p>I&rsquo;ve found that I only have the mental capacity to kepe track about 4 agents at once, after that I begin to lose the ability to keep accurate tabs on their motion, and risk each agent going a bit off the rails.</p>
-<h1 id="some-usage-patterns">Some Usage Patterns</h1>
-<p>Here are some patterns of interaction I have and employ with this generation of agents.</p>
-<h2 id="wrap-up">&ldquo;Wrap up&rdquo;</h2>
-<p>This seems to be a keyword that the frontier models are highly trained on. &ldquo;Wrap up&rdquo; means to them that they should finish their work in a good stopping place, and relinquish their turn. Eager agents that normally consume work items will pause, tidy up their solution, run one final test suite, and then leave the turn for the user. This is very useful in combination with the next item, the handoff document.</p>
-<h2 id="handoff-documents">Handoff Documents</h2>
-<p>When context starts getting too packed, especially on long-running tasks that require sustained attention, I ask the agent to wrap up and produce a handoff document.</p>
-<p>Handoff documents were a concept pioneered by the local agent harness crowd like the Pi harness, and has started to see adoption in other harnesses.</p>
-<p>The idea is that the this agent will stop working, and a new, fresh agent will pick up the work. We don&rsquo;t want to start with the main plan file, which has too much context, and has an unclear current-position. The handoff document exists in tandem with the plan file and represents the current state of the implementation, plus what a new agent needs to to know to immediately pick up the work where it was left off.</p>
-<p>n conjunction with the <code>plans/</code> folder from the above folder structure, a simple, sequential use of agents will produce a raw <code>handoff.md</code> file in the <code>plan/</code> directory, and a complicated plan will get its own dedicated folder with its own handoff document.</p>
-<p><code>handoff.md</code> is a very temporary file, and is either constantly being rewritten depending on how extensive and token-intensive the task is, or just straight up deleted when no longer needed.</p>
-<p>This goes hand-in-hand with the next item, &ldquo;rewrite to be forward looking&rdquo;.</p>
-<h2 id="rewrite-to-be-forward-looking">Rewrite To Be Forward Looking</h2>
-<p>Plan files and Handoff files often get polutted, as time goes on, with historical state of the repsitory and the plan being implemented. Lots of:</p>
-<ul>
-<li>
-<p>(Done) Some Requsiite Feature A</p>
-</li>
-<li>
-<p>(Done) Some Requisite Feature B</p>
-</li>
-<li>
-<p>Previously we had bugs in Set A, but I fixed it for and Set B is now unblocked</p>
-</li>
-<li>
-<p>[,,,]</p>
-<p>and similar things. This is a quirk of the LLMs that may useful to them in the moment, but for new agents picking up work, is entirely unnecessary. At some point in becomes the prudent choice to tell the agent to</p>
-<blockquote>
-<p>rewrite this document to be foward looking</p>
-</blockquote>
-</li>
-</ul>
-<p>&ldquo;forward looking&rdquo; is a keyword taken from my observations of Opus. It often uses that phrase when it deletes old content, so I adopted it into my vocabulary to better trigger the behavior I&rsquo;m loooking for.</p>
-<p>At the end of one of these requests, we get documents that are pruned of old detail, and only contain the necessary bits that are yet to be implemented. The agents are also smart enough to retain the items that are historical but highly relevant, like traps in the API or gaps in the machines expectations.</p>
-<p>Of course, you can always give these documets a manual once-over with your own eyes to see if they left any details in that should be stricken.</p>
-<h2 id="team-a-vs-team-b">Team A vs Team B</h2>
-<p>I have dominion over a number of repositories that are interlinked at various levels to each other, and I often have VSCode windows up and agents working on those repos simultaneusly. Sometimes, features co-develop across repositories and require two agents across repos to work in tandem.</p>
-<p>When this happens, I have Agent A in Repo 1 (1.A) work on some core feature, then ask for an Implementation Document for Agent B in Repo 2 (2.B).
-Then, I take that document, and give it directly to 2.B. Sometimes it becomes emergent that the feature set or details of the core project are missing something. To prevent 2.B from creating weird work-arounds or producing a sub-standard end result, I ask 2.B for a document outlining its requests for the Repo 1 Team, which it will write me, and then I can hand that document back to 1.A, which will address the issues, and the process repeats.</p>
-<p>This is a great way to get a really polished feature across two repositories simultanepusly. The agents are indirectly asking each other questions, refinidng their assumptions, and creating featuees, fixing bugs, or polishing the experience.</p>
-<p>I don&rsquo;t combine the agents into one singular one becaue at the context sizes I am working with, it&rsquo;s a lot easier and consistent to have each Repo Agent manage its own repo context. They can communicate to each other through me, and I can arbitrate their requests. Because ultimately, I am the consumer and the judge of their work product.</p>
-<p>I find this &ldquo;Team A vs Team B&rdquo; document passing to be really productive.</p>
-<h1 id="recent-worked-examples">Recent Worked Examples</h1>
-<p>I&rsquo;ll describe some thigs I&rsquo;ve had the agents do recently, beyond just the standard &ldquo;implement this feature&rdquo; and &lsquo;fix this bug&quot; requests.</p>
-<h2 id="reducing-token-spend-on-backtracking-during-failed-test-runs">Reducing Token Spend on Backtracking during Failed Test Runs</h2>
-<p>A Desktop GUI C# application has a dedicated test suite project. It&rsquo;s regular output contained all the successes and failures, but the failures were printed at the top of the output, and the agents have a habit of using <code>sed</code>, <code>trim</code>, and select-last in powershell, resulting in the test failures not being visible to the agent. What often happened is that it saw a generic failure (exit code 1), then re-ran the test suite with a new command just to get the failing test.</p>
-<p>The resolution was to reduce stdout noise and print detailed test failure output only, so the agents have visibility into the only part of the test suite that matters: whether a ran succeedd, and if not, which ones failed. As before, this saves tokens, context, and time.</p>
-<h2 id="test-suite-optimization">Test Suite Optimization</h2>
-<p>A perfect mix of three things that make LLM use optimal:</p>
-<ul>
-<li>A clear goal
-<ul>
-<li>
-<blockquote>
-<p>Bring the execution time of this test suite down to under 10 seconds</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>A way to measure
-<ul>
-<li><code>time</code> on the test suite executable</li>
-</ul>
-</li>
-<li>Knobs to change
-<ul>
-<li>The test suite source code</li>
-</ul>
-</li>
-</ul>
-<p>With these three items an LLM can really go into perfect overdrive to improve an outcome.</p>
-<p>In this specifi case, I was able to work with the LLM to iteraively reduce a naively built C#/XAML test suite from 5 minutes per run, all the way down to 10 seconds. The steps in between were 1 minute, 30 seconds, 16 seconds, then 8 seconds.</p>
-<p>The agent itself did a doggedly good job, but it was a tandem effort becaue I had to suggest paralleization and thread usage, eliminating old tests, and restructuring the project in ways that made it more amenable to testing.</p>
-<h2 id="automation-and-accessibility">Automation and Accessibility</h2>
-<p>WinUI3, Microsoft&rsquo;s modern desktop framework, supports <a href="https://learn.microsoft.com/en-us/dotnet/framework/ui-automation/ui-automation-properties-overview"target="_blank" rel="noopener noreferrer">Automation Properties</a>, which, if you are familiar with puppeteer or playwright, permits API control of the program. In the agentic era, a program that an agent can use, is a program that an agent can improve.</p>
-<p>The first problem was getting this application to have automation properties in the first place. The solution of course was to supply the relevant documetation and then set the agents on their first task:</p>
-<blockquote>
-<p>Add automation propreties this application</p>
-</blockquote>
-<p>Once that was done, an ADR was created saying that &ldquo;all UI elements must have automation properties&rdquo;.</p>
-<p>And finally, with it all in place, all future bug fix or feature implementation sessions can now be driven start to finish with the Agent all on its own, since it now has access to every part of the application.</p>
-<p>With vision capable models like the large frontier ones, an agent is now much more powerful and can make quite delicate judgements and assess its own work much more accurately, because now it can also drive the application on its own as well.</p>
-<h2 id="migrating-a-failing-robotics-sample-from-gazebo-to-mujoco">Migrating a Failing Robotics Sample From Gazebo to MuJoCo</h2>
-<p>A book I am following for robotics was built with the simulation program Gazebo, so all the examples in it are assuming and utilizing that program. However, Gazebo is widely understood to be bad, unreliable, have issues starting up, often misses messages passed between program nodes, and is generally a pain. This matches my experience. Some elder robotisics I have spoken to, when hearing of my woes, told me that I should spend my time in other simulators like Isaac or MuJoCo. So I had Opus take all the book&rsquo;s example and move them into MuJoCo automatically.</p>
-<p>It took about a week 12-hour days of time for Opus to churn through all the issues, but in the end, I had a proper simulator environent that had no runtime issues at all, and was very stable.</p>
-</article><section class="article labels"><a class="category" href=/categories/llm/>llm</a><a class="tag" href=/tags/llm/>llm</a></section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/oauth1/"><span class="iconfont icon-article"></span>Init</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2026</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div></section><script src="/js/core.min.39702cb95f7cf70f6dddc93246c80e02ba6bf318843f08ab21eff518160a6c40b563bcaa2aa342f4221ec7a0e60c64b8.js" integrity="sha384-OXAsuV989w9t3ckyRsgOArpr8xiEPwirIe/1GBYKbEC1Y7yqKqNC9CIex6DmDGS4"></script></body>
-
-</html>
-
+</code></pre><p>and it goes on like this. You can reference my standard <a href=https://github.com/0xNF/wtstandardrepo/blob/master/docs/repo/adr/0000-adr-format.md target=_blank rel="noopener noreferrer">ADR baseline documen.</a>.</p><p>Because these ADRs are so often references by the models, I endevaor to keep irrelevent information like History out of them. History is still important to maintain, so history goes into its own dedicatd history.md file.</p><p>The models really do reference ADRs all the time, and its been such a superpower that keeps them on track and consistent. It also catches my own inconsistencies, where the models will tell me that my own decision contradicts ADR #XYZ, which is a good moment for me to reflect on what I really want from a given session.</p><p>ADRs are not considered static &ndash; I edit them in place, and occasionally delete, reorganize, or adjust them as needed.</p><h2 id=investigations><code>investigations/</code></h2><p>Sometimes a problem is found during a session, like an intermittent crash. It is helpful to provide the agent a place to put repeated observations of an issue along with a summary of the issue in the investigations readme file. Once enough observations have been logged, it becomes its own dedicated session and can be used as the starting point for a full-on investigation. The benefit of doing it this way is that the agent won&rsquo;t get distracted during a session, can recognize known failurs, and eventually can work on this one problem full-time.</p><p>here are some example ongoing investigations I have open in one of my desktop applications:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>./
+</span></span><span class=line><span class=cl>├─── action-editor-hangs-on-load-and-selection
+</span></span><span class=line><span class=cl>│       README.md
+</span></span><span class=line><span class=cl>│
+</span></span><span class=line><span class=cl>├─── studio-fails-fast-returning-to-actions-list
+</span></span><span class=line><span class=cl>│       README.md
+</span></span><span class=line><span class=cl>│
+</span></span><span class=line><span class=cl>└─── studio-process-outlives-its-window
+</span></span><span class=line><span class=cl>        README.md
+</span></span></code></pre></div><p>And a brief excerpt of what one such readme looks like:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-markdown data-lang=markdown><span class=line><span class=cl><span class=gh># Studio&#39;s process can outlive its window and hold the layout
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gs>**Status: open.**</span> Seven sightings of a stuck exit or windowless process between 2026-10-03 and 2026-10-18, and four timed closes on 2026-10-07 that did not reproduce it. The cause is not known. The leading candidate is a clipboard flush at exit, and it has not been tested. A fifth sighting, on 2026-10-09, was a start that failed and never exited, which has a known cause of its own.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## The symptom
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>A Studio the user has closed stays alive with no window anyone knows of and one thread left, waiting in the kernel (state Wait, reason UserRequest). While it lives it holds the layout: refreshing it fails on <span class=sb>`gs.dll`</span> (robocopy exit 10), and <span class=sb>`Add-AppxPackage -Register`</span> fails with <span class=sb>`0x80073D02`</span>. Nothing on screen says why.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## Observations
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>| Sighting | Started                      | Remote Desktop | Copy before close | Threads, handles, memory | Exit code | Dump |
+</span></span><span class=line><span class=cl>| -------- | ---------------------------- | -------------- | ----------------- | ------------------------ | --------- | ---- |
+</span></span><span class=line><span class=cl>| 1        | 2026-10-03, how not recorded | not recorded   | not recorded      | 1, 918, 237 MB           | not read  | none |
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>### Sighting 1 -- 2026-10-03: alive eight minutes after its close
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>A Studio the user closed stayed alive for more than eight minutes.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## Candidates
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>### Ruled out
+</span></span></span><span class=line><span class=cl>[...]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>### Open
+</span></span></span><span class=line><span class=cl>[...]
+</span></span></code></pre></div><h2 id=tickets><code>tickets/</code></h2><p>Tickets are where defects, feature requests, and larger behavioral changes go. I have outstanding instructions for agents to create tickets for items they&rsquo;ve found during their sessions into this folder. The subfolder structure is less defined, but I currently have them organized by owner. For example, big items that are found in <em>this repository</em> are placed into <code>$projectName/</code>, while defects found in, for example, the backend repo thats owned by another team, goes in <code>dependencyName/</code>.</p><p>For example:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>.
+</span></span><span class=line><span class=cl>├── desktop_app/
+</span></span><span class=line><span class=cl>│   ├── camera-reset-keeps-selected-profile.md
+</span></span><span class=line><span class=cl>│   └── maintenance-max-log-days-drifts-on-disk.md
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>├── upstream_dep1/
+</span></span><span class=line><span class=cl>│   └── trigger-condition-schema-disagrees-with-the-hub.md
+</span></span><span class=line><span class=cl>└── README.md
+</span></span></code></pre></div><p>The structure of my tickets here are also fluid, but I&rsquo;m currently using this format for a ticket:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-markdown data-lang=markdown><span class=line><span class=cl>Reset leaves one setting in place
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## Assessment
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>-</span> **Priority:** Medium
+</span></span><span class=line><span class=cl><span class=k>-</span> **Category:** Correctness
+</span></span><span class=line><span class=cl><span class=k>-</span> **Validity:** Confirmed
+</span></span><span class=line><span class=cl><span class=k>-</span> **Assessed:** &lt;date&gt;
+</span></span><span class=line><span class=cl><span class=k>-</span> **Basis:** Reset promises the default state but keeps a manually chosen setting, so a bad choice can&#39;t be undone by resetting. Picking &#34;Auto&#34; explicitly still works as a workaround.
+</span></span><span class=line><span class=cl><span class=k>-</span> **Verification:** Confirmed by reading the source: the reset path applies defaults to every field except this one, and the code that reads the setting still honors any stored value. The API docs describe reset as a full restore with no exceptions. Not reproduced live, since no test device was in the required state.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>what the upstream system does:
+</span></span><span class=line><span class=cl>  Reset restores most fields to their defaults but skips one. A device pinned
+</span></span><span class=line><span class=cl>  to a manual setting comes back from a reset still pinned, while every other
+</span></span><span class=line><span class=cl>  field in the response is a default.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>what we need:
+</span></span><span class=line><span class=cl>  Reset should clear that setting too, so the result matches a fresh
+</span></span><span class=line><span class=cl>  registration. If that isn&#39;t wanted, the docs should say it&#39;s deliberately
+</span></span><span class=line><span class=cl>  excluded.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>impact:
+</span></span><span class=line><span class=cl>  A device pinned to a setting that no longer exists can&#39;t be recovered by
+</span></span><span class=line><span class=cl>  resetting it. It keeps failing, and the reset control reports success
+</span></span><span class=line><span class=cl>  without touching the field that matters.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>evidence:
+</span></span><span class=line><span class=cl>  The default-setting function covers six fields and omits this one. It&#39;s
+</span></span><span class=line><span class=cl>  called from the reset handler. Other device types have no equivalent
+</span></span><span class=line><span class=cl>  setting, so only this type is affected.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>workaround on our side:
+</span></span><span class=line><span class=cl>  None. The UI redraws from the reset response, so it shows the setting that
+</span></span><span class=line><span class=cl>  survived instead of hiding it. Users can still select Auto and save, which
+</span></span><span class=line><span class=cl>  does clear it.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>once fixed, on our side:
+</span></span><span class=line><span class=cl>  Nothing. The UI already renders whatever the response carries, so it will
+</span></span><span class=line><span class=cl>  show Auto on its own.
+</span></span></code></pre></div><p>The categories I&rsquo;m using belong to the set of</p><p><code>[Usability, Security, Correctness, Misc, Feature]</code>.</p><p>Occasionally I will request the agents go through each filed ticket and re-assess whether it&rsquo;s still true or not.
+The purpose of this ticket structure is that it outlines clearly why this is an issue, and what this current repo is doing to work around it.</p><h2 id=backlogmd><code>backlog.md</code></h2><p>One item I&rsquo;ve gotten a disproportionate amount of value from is the backlog.md file, which is the scratch space I provide to agents for them to put down small bugs, discrepencies, or things that need adjustment. This is similar to tickets, and indeed, until I decided that the tickets folder should also include the repo itself, is where feature requests and large changes went into. But after separating the two, this file is still very useful.</p><p>When an agent is working, it will often encounter problems. Depending on the agent, it may get distracted trying to solve them, or it may just forget about the issue by the end of the session. To make sure that this information isn&rsquo;t lost, they have standing orders to note any such defects into the backlog.md file immediately, and then to continue the main assigned work. This keeps them on task, and ensures that I have a decent accounting of bugs in my code.</p><p>Not everything they put in is necessary, so it is worthwhile to manually prune the file from time to time, but by and large, the defects that Claude and GPT find have been worth addressing.</p><p>The format of my backlog file is like so:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-markdown data-lang=markdown><span class=line><span class=cl><span class=gh># Code cleanup backlog
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Things found while working on something else: dead code, latent defects, and behaviour that looks wrong but was left alone because fixing it was outside the change at hand. Nothing here is blocking. Each entry is a decision for the user, not a task already agreed.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gs>**Add to this file rather than fixing in passing.**</span> When a change turns up an unrelated problem - an unreachable class, a notification that reaches nobody, a leak, a binding that has never worked - write it down here and carry on with the change you were making. Say what it is, where it is, what it costs to leave, and what fixing it would change. If you do fix one, delete it from this file.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gh># Methodology
+</span></span></span><span class=line><span class=cl><span class=k>-</span> Consider breaking tasks into sub-tasks 
+</span></span><span class=line><span class=cl><span class=k>-</span> You have a dev deploymemt of the application on this box and permission to use and modify it;
+</span></span><span class=line><span class=cl><span class=k>-</span> [...]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gh># Backlog
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=gu>## Release dependencies report unresolved trim and AOT analysis warnings
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The 2026-10-16 x64 <span class=sb>`just build aot`</span> run succeeds but reports IL2104 for <span class=sb>`WinUI.TableView`</span>,
+</span></span><span class=line><span class=cl><span class=sb>`Common.Logging`</span>, <span class=sb>`Microsoft.Data.SqlClient`</span>, <span class=sb>`Microsoft.Data.SqlClient.Internal.Logging`</span>
+</span></span><span class=line><span class=cl>and <span class=sb>`System.Configuration.ConfigurationManager`</span>, and IL3053 for <span class=sb>`Microsoft.Data.SqlClient`</span>.
+</span></span><span class=line><span class=cl>ILC also says <span class=sb>`Makaretu.Dns.LinuxHelper.ReuseAddresss(Socket)`</span> always throws because
+</span></span><span class=line><span class=cl><span class=sb>`Tmds.LibC`</span> cannot be loaded. No runtime failure was observed from these diagnostics; leaving
+</span></span><span class=line><span class=cl>them unresolved makes the Release build&#39;s analysis inconclusive for those dependency paths.
+</span></span><span class=line><span class=cl>Triage would inspect the detailed ILC diagnostics, determine which paths the Windows client
+</span></span><span class=line><span class=cl>can reach, and update or root the affected dependencies rather than suppressing the summaries.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[...]
+</span></span></code></pre></div><p>I&rsquo;ve found that the agents are exceptional at filling in this file, and on later dedicated passes, are equally exceptional at churning through it.</p><p>Many ADR discrepencies, usability problems, and bad bugs have been found this way, all without the agent getting distracted.</p><h1 id=verification-and-feedback>Verification and Feedback</h1><p>Agents work really well when they can correct their own assumptions in realtime. They react very well to negative feedback when they try something, such as compile-time failures or other errors that show them they had something incorrect.</p><p>You should encouage this by building and supplying tools that the agent can call. This can be as simple as supplying the language server for it to see diagnostic information in, or as complex as a custom constellation of scripts that do work in advance. For instance, in a desktop application, I have a series of scripts that check for banned APIs, or that certain structures aren&rsquo;t used:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>.
+</span></span><span class=line><span class=cl>├── check-serialization-contracts.ps1
+</span></span><span class=line><span class=cl>├── check-source-rules.ps1
+</span></span><span class=line><span class=cl>├── check-tooltips.ps1
+</span></span><span class=line><span class=cl>└── check-window-ownership.ps1
+</span></span></code></pre></div><p>Among manny others. The tools provide output like:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=m>2</span> failed: 
+</span></span><span class=line><span class=cl>Invalid API: src/models/ModelA.cs:76
+</span></span><span class=line><span class=cl><span class=o>{</span>Binding<span class=o>}</span> instead of <span class=o>{</span>x:Bind<span class=o>}</span>: src/views/LogView.xaml:862
+</span></span></code></pre></div><p>which tell the model where one of its assumptions went wrong, and what it needs to correct before continuing.</p><h2 id=repo-tools>Repo Tools</h2><p>In addition to tools that provide feedback, it&rsquo;s also useful to supply tools that give functionality that the agents keep writing for themselves.
+For instance, I noticed that the agents kept ad-hoc writing scripts to uninstall and reinstall an application, so instead of letting it waste tokens, and each time doing it slightly differnetly, I gave it a script that does it, consistently, every time. Now it knows to call <code>install_newest.ps1</code> and it will wait for it to finish before continuing.</p><p>It pays to pay attention to what the agents are doing, to work alongside them.</p><h1 id=agentsmd-and-memories>AGENTS.md and Memories</h1><p>A good AGENTS.md (née CLAUDE.md) file is mandatory for giving agents the initial overview and philosophy of your repository. Everyone knows this, so i won&rsquo;t spend muxh time on it here.</p><h2 id=agentsmd>AGENTS.md</h2><p>In my case, my AGENTS.md contains things like:</p><ul><li>a brief overview of what this repo hopes to accomplish</li><li>The toolchain used for building and deployment, with references to <code>building.md</code> for details</li><li>The style guidelines with references to <code>style.md</code> and <code>adr/</code> for details</li><li>The instructions for code backlog, ticketing, and investigations, with references to the appropriate README.md files</li><li>Other tools available on this dev box, like whether Python, ffmpeg, curl, imagemagick, etc are available</li></ul><h2 id=memories>Memories</h2><p>The purpose of memories, as distinct from AGENTS.md or specific repo tooling is that it is meant to represent things that are not globally applicable.</p><p>Agents will often collect memories on their own, but sometimes its useful when you see persistent errors being made to encourage them to create memories under your guidance. Since I do a lot of work on Windows, and Agents have a not-unreasonable expectation that they&rsquo;re in UNIX-land, I have make sure they have memories that relate to setting BOMs, and that the editors they often use eat backslashes and need different escapting rules.</p><p>I also use memories to give agents standing permission to do code commits, to make changes to the running development system, where to find temporary data, and what other nearby relevant repositories and documents are located that may be useful for the agent to be aware of.</p><p>These things are not global, and not applicable to other developers on this repository, so it&rsquo;s not appropriate to put them into the repo-permaent AGENTS.md.</p><blockquote><p>A side note: It <em>is</em> permissible to make tooling around these specific assumptions by using the <code>repotools/$username/</code> folders, which is where developer specific tooling should go. There is no expectation that tools under your own folder are useful, or indeed even run, under any other user. Repo-wide tools should graduate into the <code>repotools/public/</code> folder.</p><p>This is why I think there&rsquo;s a large synergy to be had with the repo tools folder in an agentic setting.</p></blockquote><h2 id=skills>Skills</h2><p>I have not generally found skills to be very useful. I have nothing in particular to write here on the subject.</p><h2 id=pruning-files-when-they-get-too-big-or-outdated>Pruning files when they get too big or outdated</h2><p>Token budgets are not unlimited, and context size must be managed. To that end, one must consider on occasion to revisit the files you are asking the agents to work with on every request.</p><p>AGENTS.md should be kept under <code>10,000</code> tokens, and even that is pushing it. Remember that this is sent on every request. It is worth looking at what needs to be understood all the time, versus what only needs to be understood some of the time, versus what doesnt need to be understood at all.</p><p>If assumptions are outdated or have conflicting instructions, delete them. If things only apply some of the time, extract those sections to their own ADR or Workflow documents, and then put a reference in instead.</p><p>As simple as it can get, but no simpler.</p><p>The same rules apply for your memory files, which can be found under <code>~/.claude/projects/$project/memory</code>, or other similar harness-dependent locations.</p><p>Condense, Extract, Delete.</p><h1 id=working-with-the-agents>Working with the Agents</h1><p>(LLM, Harness) pairs have their own runtime quirks and should be worked with the way a craftsman knows how to work with a powerdrill that whirls in one direction faster than the other, a hammer that isn&rsquo;t perfectly flat and thus has slight directional preference, or a car that has a very delicate accelerator. The quirks are worth learning and using to your advantage. Don&rsquo;t fight the agents, work with them.</p><h2 id=prompting-style>Prompting Style</h2><p>Because I have what I consider to be fairly well crafted initial documents and on-demand context available for the agents, I don&rsquo;t put too much effort into my prompts, which are concise and minimal.</p><ul><li>&ldquo;Read this $document, and address the issues&rdquo;</li><li>&ldquo;Fix the bugs describes by the cleanup&rdquo;</li><li>&ldquo;Continue working on this plan file&rdquo;</li></ul><p>Except in rare circumstances, I don&rsquo;t write any additional context, because I&rsquo;ve already given the context in the AGENTS.md, ADRs, and plan files.</p><p>Sometimes I have questions that require a more thorough examination before we can continue:</p><ul><li>Extamine the feasability of adding the following feature to this application, and consider how many dependencies it would require to accomplish</li><li>We are currently doing $X in our application, but I want to move to $Y instead, write a plan file for this process</li></ul><p>I have found it productive to speak in mechanical, precise terminology. I do not abridge my requests, use shorthand slang, or speak casually with the agents. I do my best to give them accurate and clear phrases to work with. It helps to orient their initial manifolds when you say things like &ldquo;Consider ahead-of-time compilation issues&rdquo;, or &ldquo;profile this slowdown and find whether a different algorithm should be used for this subroutine&rdquo;, instead of &ldquo;why is it slow&rdquo; or &ldquo;u should find the bug&rdquo;. LLMs are often reflections of the tone and skill of the user prompt, and if you are sloppy in your input you will find it is sloppy in its&rsquo; output.</p><h2 id=corrections>Corrections</h2><p>Sometimes the Agents are confident in their assertion that some things cannot be done. It may be the case that you know better than they do - in those situations it is important to supply them with relevant documentation, at which point they will happily change course and begin working.</p><p>Remember that they have cut-off dates for their training, so they will only recall information up to that point. Any change in status of something that happened after that date needs to be supplied to them.</p><h2 id=lean-into-their-biases-and-expectations-for-tools-and-docs>Lean into their biases and expectations for tools and docs</h2><p>Like said above, LLMs have quirks, biass and expectations, If you watch them long enough you&rsquo;ll pick up this fact because you&rsquo;ll see them say things like &ldquo;That API doesn&rsquo;t exist, I&rsquo;ll try a different one&rdquo;, or &ldquo;Turns out ffmpeg isn&rsquo;t found on this machine, so I&rsquo;ll write a small script in python instead&rdquo;.</p><p>These are opportunities to do two things:</p><ul><li>Make your token usage more efficient</li><li>Make your tools better</li></ul><p>Every time they backtrack on a choice is tokens that you&rsquo;re spending, time you&rsquo;re wasting, and context you&rsquo;re eating up. Not all situations are equal, but on balance, you should consider adding what they&rsquo;re expecting to your tools and your environment. They will be more competent in their tasks when they have what they want without the fuss of trying to work around it. They are also trained on those aspects, so they&rsquo;ll be good at using them.</p><p>Additionally, especially when it comes to API surfaces, misaligned expectations are a solid indicator that your API deisgn is lacking in crucial ways. If your agent is making these mistakes, other people&rsquo;s agents are also making the same mistake. And human users may also be under same misapprehension. It is worth considering deeply whether the design the agents expected is actually a better design &ndash; very often, it is.</p><h3 id=a-brief-methodology>A brief methodology</h3><p>I recently went through my Claude session transcripts of the past month with another agent (GPT-Luna-6.1 via <em>omp</em> because I was at my weekly Claude token limit at that time) with the instructions to:</p><blockquote><p>&ldquo;Read these session transscripts and find instances where the agent got confused, backtracked, realized a tool or program was missing, or used an API with an incorrect shape&rdquo;.</p></blockquote><p>The results were a useful set of places to start working some immediate remediation candidates. I was able to update a handful of checker scripts in the repo, and also file some tickets against a sister repository for improvements this way. Here are some samples of what that scan turned up, and the resolution I opted for.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-markdown data-lang=markdown><span class=line><span class=cl>1) 
+</span></span><span class=line><span class=cl>    <span class=k>-</span> Expected: ffmpeg to be installed to change the encoding a screenshot
+</span></span><span class=line><span class=cl>    <span class=k>-</span> Actual: not installed, wrote a python script to adjust the encoding by hand.
+</span></span><span class=line><span class=cl><span class=k>&gt; </span><span class=ge>Resolution: install ffmpeg
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2)
+</span></span><span class=line><span class=cl>    <span class=k>-</span> Expected: The same test date could be reused across pages.
+</span></span><span class=line><span class=cl>    <span class=k>-</span> Actual: The user clarified that Data Viewer needed September to get real data.
+</span></span><span class=line><span class=cl><span class=k>&gt; </span><span class=ge>Resolution: Add a script that seeds test data before certain diagnostic runs
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>3)
+</span></span><span class=line><span class=cl>    <span class=k>-</span> Expected: gsdrive can resize windows and click any named UI control.
+</span></span><span class=line><span class=cl>    <span class=k>-</span> Actual: It had no resize verb, resized by using pointer and click APIs manually.
+</span></span><span class=line><span class=cl><span class=k>&gt; </span><span class=ge>Resolution: Added a `resize` verb to the automation tooling
+</span></span></span></code></pre></div><h2 id=hooks-and-notifications>Hooks and notifications</h2><p>Agent harnesses have started to support <a href=https://code.claude.com/docs/en/hooks target=_blank rel="noopener noreferrer">Hooks</a>, which are a standard comcept, just applied to this new tech.
+Because I do most of my work in a Windows VM through a Linux host, and a lot of these tasks are long running, I am often delayed in returning to a session to assess output or answer questions. To address that problem, I built a <a href=https://github.com/0xNF/vm_llm_notify target=_blank rel="noopener noreferrer">KDE taskbar widget</a> that receives hooks from Claude Code. The taskbar widget lights up whenever an inner VM session is waiting for my assessment:</p><p><img loading=lazy src=https://github.com/0xNF/vm_llm_notify/raw/master/llm_notify.gif alt="KDE taskbar app that lights up when Claude requires attention"></p><h2 id=paralleization>Paralleization</h2><p>Sometimes I want to get multiple things done in one repo, and don&rsquo;t want to wait for a single agent to churn through the tasks sequentially.
+If I have a set of tasks that I think are decent candidates for doing in parallel, as in, they touch different files and wont step on each other&rsquo;s work, I open multiple panes of Claude Code and set them to their tasks. The first thing I writ in these prompts is:</p><blockquote><p>You are working in parallel with other agents in the same checkout of this git repo. Coordinate with each other as you work.</p></blockquote><p>I don&rsquo;t know about other harnesses, but for Claude Code, this works very well. The agents will then Post and Receive messages to each other, sharing their file lists, seeing who has the next build pipeline and if they can piggyback off it, taking turns driving the application test suites, and generally doing a good job together. In extreme cases the agents will often decide to make a new git worktree and rebase their changes onto the main delegate branch.</p><p>I&rsquo;ve found that I only have the mental capacity to kepe track about 4 agents at once, after that I begin to lose the ability to keep accurate tabs on their motion, and risk each agent going a bit off the rails.</p><h1 id=some-usage-patterns>Some Usage Patterns</h1><p>Here are some patterns of interaction I have and employ with this generation of agents.</p><h2 id=wrap-up>&ldquo;Wrap up&rdquo;</h2><p>This seems to be a keyword that the frontier models are highly trained on. &ldquo;Wrap up&rdquo; means to them that they should finish their work in a good stopping place, and relinquish their turn. Eager agents that normally consume work items will pause, tidy up their solution, run one final test suite, and then leave the turn for the user. This is very useful in combination with the next item, the handoff document.</p><h2 id=handoff-documents>Handoff Documents</h2><p>When context starts getting too packed, especially on long-running tasks that require sustained attention, I ask the agent to wrap up and produce a handoff document.</p><p>Handoff documents were a concept pioneered by the local agent harness crowd like the Pi harness, and has started to see adoption in other harnesses.</p><p>The idea is that the this agent will stop working, and a new, fresh agent will pick up the work. We don&rsquo;t want to start with the main plan file, which has too much context, and has an unclear current-position. The handoff document exists in tandem with the plan file and represents the current state of the implementation, plus what a new agent needs to to know to immediately pick up the work where it was left off.</p><p>n conjunction with the <code>plans/</code> folder from the above folder structure, a simple, sequential use of agents will produce a raw <code>handoff.md</code> file in the <code>plan/</code> directory, and a complicated plan will get its own dedicated folder with its own handoff document.</p><p><code>handoff.md</code> is a very temporary file, and is either constantly being rewritten depending on how extensive and token-intensive the task is, or just straight up deleted when no longer needed.</p><p>This goes hand-in-hand with the next item, &ldquo;rewrite to be forward looking&rdquo;.</p><h2 id=rewrite-to-be-forward-looking>Rewrite To Be Forward Looking</h2><p>Plan files and Handoff files often get polutted, as time goes on, with historical state of the repsitory and the plan being implemented. Lots of:</p><ul><li><p>(Done) Some Requsiite Feature A</p></li><li><p>(Done) Some Requisite Feature B</p></li><li><p>Previously we had bugs in Set A, but I fixed it for and Set B is now unblocked</p></li><li><p>[,,,]</p><p>and similar things. This is a quirk of the LLMs that may useful to them in the moment, but for new agents picking up work, is entirely unnecessary. At some point in becomes the prudent choice to tell the agent to</p><blockquote><p>rewrite this document to be foward looking</p></blockquote></li></ul><p>&ldquo;forward looking&rdquo; is a keyword taken from my observations of Opus. It often uses that phrase when it deletes old content, so I adopted it into my vocabulary to better trigger the behavior I&rsquo;m loooking for.</p><p>At the end of one of these requests, we get documents that are pruned of old detail, and only contain the necessary bits that are yet to be implemented. The agents are also smart enough to retain the items that are historical but highly relevant, like traps in the API or gaps in the machines expectations.</p><p>Of course, you can always give these documets a manual once-over with your own eyes to see if they left any details in that should be stricken.</p><h2 id=team-a-vs-team-b>Team A vs Team B</h2><p>I have dominion over a number of repositories that are interlinked at various levels to each other, and I often have VSCode windows up and agents working on those repos simultaneusly. Sometimes, features co-develop across repositories and require two agents across repos to work in tandem.</p><p>When this happens, I have Agent A in Repo 1 (1.A) work on some core feature, then ask for an Implementation Document for Agent B in Repo 2 (2.B).
+Then, I take that document, and give it directly to 2.B. Sometimes it becomes emergent that the feature set or details of the core project are missing something. To prevent 2.B from creating weird work-arounds or producing a sub-standard end result, I ask 2.B for a document outlining its requests for the Repo 1 Team, which it will write me, and then I can hand that document back to 1.A, which will address the issues, and the process repeats.</p><p>This is a great way to get a really polished feature across two repositories simultanepusly. The agents are indirectly asking each other questions, refinidng their assumptions, and creating featuees, fixing bugs, or polishing the experience.</p><p>I don&rsquo;t combine the agents into one singular one becaue at the context sizes I am working with, it&rsquo;s a lot easier and consistent to have each Repo Agent manage its own repo context. They can communicate to each other through me, and I can arbitrate their requests. Because ultimately, I am the consumer and the judge of their work product.</p><p>I find this &ldquo;Team A vs Team B&rdquo; document passing to be really productive.</p><h1 id=recent-worked-examples>Recent Worked Examples</h1><p>I&rsquo;ll describe some thigs I&rsquo;ve had the agents do recently, beyond just the standard &ldquo;implement this feature&rdquo; and &lsquo;fix this bug" requests.</p><h2 id=reducing-token-spend-on-backtracking-during-failed-test-runs>Reducing Token Spend on Backtracking during Failed Test Runs</h2><p>A Desktop GUI C# application has a dedicated test suite project. It&rsquo;s regular output contained all the successes and failures, but the failures were printed at the top of the output, and the agents have a habit of using <code>sed</code>, <code>trim</code>, and select-last in powershell, resulting in the test failures not being visible to the agent. What often happened is that it saw a generic failure (exit code 1), then re-ran the test suite with a new command just to get the failing test.</p><p>The resolution was to reduce stdout noise and print detailed test failure output only, so the agents have visibility into the only part of the test suite that matters: whether a ran succeedd, and if not, which ones failed. As before, this saves tokens, context, and time.</p><h2 id=test-suite-optimization>Test Suite Optimization</h2><p>A perfect mix of three things that make LLM use optimal:</p><ul><li>A clear goal<ul><li><blockquote><p>Bring the execution time of this test suite down to under 10 seconds</p></blockquote></li></ul></li><li>A way to measure<ul><li><code>time</code> on the test suite executable</li></ul></li><li>Knobs to change<ul><li>The test suite source code</li></ul></li></ul><p>With these three items an LLM can really go into perfect overdrive to improve an outcome.</p><p>In this specifi case, I was able to work with the LLM to iteraively reduce a naively built C#/XAML test suite from 5 minutes per run, all the way down to 10 seconds. The steps in between were 1 minute, 30 seconds, 16 seconds, then 8 seconds.</p><p>The agent itself did a doggedly good job, but it was a tandem effort becaue I had to suggest paralleization and thread usage, eliminating old tests, and restructuring the project in ways that made it more amenable to testing.</p><h2 id=automation-and-accessibility>Automation and Accessibility</h2><p>WinUI3, Microsoft&rsquo;s modern desktop framework, supports <a href=https://learn.microsoft.com/en-us/dotnet/framework/ui-automation/ui-automation-properties-overview target=_blank rel="noopener noreferrer">Automation Properties</a>, which, if you are familiar with puppeteer or playwright, permits API control of the program. In the agentic era, a program that an agent can use, is a program that an agent can improve.</p><p>The first problem was getting this application to have automation properties in the first place. The solution of course was to supply the relevant documetation and then set the agents on their first task:</p><blockquote><p>Add automation propreties this application</p></blockquote><p>Once that was done, an ADR was created saying that &ldquo;all UI elements must have automation properties&rdquo;.</p><p>And finally, with it all in place, all future bug fix or feature implementation sessions can now be driven start to finish with the Agent all on its own, since it now has access to every part of the application.</p><p>With vision capable models like the large frontier ones, an agent is now much more powerful and can make quite delicate judgements and assess its own work much more accurately, because now it can also drive the application on its own as well.</p><h2 id=migrating-a-failing-robotics-sample-from-gazebo-to-mujoco>Migrating a Failing Robotics Sample From Gazebo to MuJoCo</h2><p>A book I am following for robotics was built with the simulation program Gazebo, so all the examples in it are assuming and utilizing that program. However, Gazebo is widely understood to be bad, unreliable, have issues starting up, often misses messages passed between program nodes, and is generally a pain. This matches my experience. Some elder robotisics I have spoken to, when hearing of my woes, told me that I should spend my time in other simulators like Isaac or MuJoCo. So I had Opus take all the book&rsquo;s example and move them into MuJoCo automatically.</p><p>It took about a week 12-hour days of time for Opus to churn through all the issues, but in the end, I had a proper simulator environent that had no runtime issues at all, and was very stable.</p></article><section class="article labels"><a class=category href=/categories/llm/>llm</a><a class=tag href=/tags/llm/>llm</a></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/oauth1/><span class="iconfont icon-article"></span>Implementing OAuth 2.0 from the RFCs</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2026</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section><script src=/js/core.min.39702cb95f7cf70f6dddc93246c80e02ba6bf318843f08ab21eff518160a6c40b563bcaa2aa342f4221ec7a0e60c64b8.js integrity=sha384-OXAsuV989w9t3ckyRsgOArpr8xiEPwirIe/1GBYKbEC1Y7yqKqNC9CIex6DmDGS4></script></body></html>
